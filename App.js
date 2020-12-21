@@ -6,6 +6,7 @@ import { useColorScheme } from 'react-native-appearance';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import MasterNavigation from './src/navigation/MasterNavigation';
+// import ModalNavigation from './src/navigation/ModalNavigation';
 
 const MyDefaultTheme = {
   ...DefaultTheme,
@@ -48,7 +49,6 @@ const App = () => {
               headerShown: true,
               headerTransparent: 1,
               headerTintColor: currentTheme.colors.primary,
-              cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
             }}
           /> */}
         </RootStack.Navigator>

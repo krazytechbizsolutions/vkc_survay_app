@@ -1,20 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Form from '../../components/Form';
-import { initialValues, loginForm } from './fields';
+import TextEle from '../../components/TextEle';
 
-const Login = () => {
-  const insets = useSafeAreaInsets();
-  const onSubmit = values => {
-    console.log(values);
-  };
-
-  return (
-    <View style={{ flex: 1, paddingTop: insets.top }}>
-      <Form initialValues={initialValues} fields={loginForm} onSubmit={onSubmit} />
-    </View>
-  );
-};
+const Login = () => (
+  <View>
+    <TextEle>Hello</TextEle>
+  </View>
+);
 
 export default Login;
