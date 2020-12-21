@@ -1,0 +1,60 @@
+import React, { useEffect } from 'react';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { StatusBar } from 'react-native';
+import { useColorScheme } from 'react-native-appearance';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import SplashScreen from 'react-native-splash-screen';
+import MasterNavigation from './src/navigation/MasterNavigation';
+
+const MyDefaultTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#F6552E',
+  },
+};
+
+const MyDarkTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    primary: '#F6552E',
+  },
+};
+
+const RootStack = createStackNavigator();
+
+const App = () => {
+  const scheme = useColorScheme();
+  const currentTheme = scheme === 'dark' ? MyDarkTheme : MyDefaultTheme;
+
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+  return (
+    <SafeAreaProvider>
+      <StatusBar
+        backgroundColor={currentTheme.colors.card}
+        barStyle={scheme === 'dark' ? 'light-content' : 'dark-content'}
+      />
+      <NavigationContainer theme={currentTheme}>
+        <RootStack.Navigator mode="modal" headerMode="none">
+          <RootStack.Screen name="Main" component={MasterNavigation} />
+          {/* <RootStack.Screen
+            name="Modal"
+            component={ModalNavigation}
+            options={{
+              headerShown: true,
+              headerTransparent: 1,
+              headerTintColor: currentTheme.colors.primary,
+              cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+            }}
+          /> */}
+        </RootStack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );
+};
+
+export default App;
