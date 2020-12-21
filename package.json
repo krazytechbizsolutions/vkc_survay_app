@@ -27,6 +27,7 @@
     "radio-buttons-react-native": "^1.0.4",
     "react": "16.13.1",
     "react-native": "0.63.4",
+    "react-native-action-button": "^2.8.5",
     "react-native-appearance": "^0.3.4",
     "react-native-fullscreen-video": "^0.0.9",
     "react-native-gesture-handler": "^1.9.0",
