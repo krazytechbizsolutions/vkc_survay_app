@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import ActionButton from 'react-native-action-button';
 import Storefront from '../../assets/icons/Storefront.svg';
 import GroupAdd from '../../assets/icons/GroupAdd.svg';
@@ -8,20 +8,20 @@ const actionItem = [
   {
     path: 'AddRetailer',
     title: 'Create Retailer',
-    icon: <Storefront width={30} height={30} />,
+    icon: <Storefront width={30} height={30} fill="black" />,
     permission: 'createRetailer',
     type: 'Create',
   },
   {
     path: 'UnplannedVisit',
     title: 'Unplanned Visit',
-    icon: <GroupAdd width={30} height={30} />,
+    icon: <GroupAdd width={30} height={30} fill="black" />,
     permission: 'unplannedVisit',
     type: 'Create',
   },
 ];
 
-const Fab = ({ onSelect }) => (
+const Fab = () => (
   <ActionButton
     size={48}
     buttonColor="#79a4eb"
@@ -32,7 +32,7 @@ const Fab = ({ onSelect }) => (
         key={item}
         buttonColor="#fff"
         textStyle={{ color: '#000' }}
-        onPress={() => onSelect(item.path)}
+        onPress={() => {}}
         useNativeFeedback
         {...item}>
         {item.icon}
@@ -40,9 +40,5 @@ const Fab = ({ onSelect }) => (
     ))}
   </ActionButton>
 );
-
-Fab.propTypes = {
-  onSelect: PropTypes.func.isRequired,
-};
 
 export default memo(Fab);

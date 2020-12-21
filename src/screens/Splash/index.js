@@ -1,26 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { SafeAreaView } from 'react-native';
-import PropTypes from 'prop-types';
-import SplashScreen from 'react-native-splash-screen';
 import TextEle from '../../components/TextEle';
+import Fab from '../../components/Fab';
 
-const Splash = ({ navigation }) => {
-  useEffect(() => {
-    SplashScreen.hide();
-    navigation.navigate('Home');
-  }, [navigation]);
-
-  return (
-    <SafeAreaView>
-      <TextEle>Splash Screen here</TextEle>
-    </SafeAreaView>
-  );
-};
-
-Splash.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }).isRequired,
-};
+const Splash = () => (
+  <SafeAreaView style={{ flex: 1 }}>
+    <TextEle>Splash Screen here</TextEle>
+    <Fab />
+  </SafeAreaView>
+);
 
 export default Splash;
