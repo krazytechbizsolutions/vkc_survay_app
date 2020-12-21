@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-// import PropTypes from 'prop-types';
 import ActionButton from 'react-native-action-button';
 import Storefront from '../../assets/icons/Storefront.svg';
 import GroupAdd from '../../assets/icons/GroupAdd.svg';

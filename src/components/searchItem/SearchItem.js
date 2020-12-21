@@ -1,8 +1,10 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { View, TextInput, FlatList } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import Text from '../../components/text/Text';
+import Text from '../Text/Text';
 import styles from './styles';
+
 const data = [
   {
     id: '1',
@@ -41,34 +43,28 @@ const data = [
 const Model = ({ onSelect }) => {
   const [text, setText] = useState('');
 
-  const renderSearchBarInput = () => {
-    return (
-      <TextInput
-        style={styles.textInputStyle}
-        onChangeText={item => setText(item)}
-        value={text}
-        underlineColorAndroid="transparent"
-        placeholder="Search Here"
-        placeholderTextColor="#A2A2A2"
-      />
-    );
-  };
+  const renderSearchBarInput = () => (
+    <TextInput
+      style={styles.textInputStyle}
+      onChangeText={item => setText(item)}
+      value={text}
+      underlineColorAndroid="transparent"
+      placeholder="Search Here"
+      placeholderTextColor="#A2A2A2"
+    />
+  );
 
   const keyExtractor = item => item.fruit_name.toString();
 
-  const renderSeparator = () => {
-    return <View style={styles.lineStyle} />;
-  };
+  const renderSeparator = () => <View style={styles.lineStyle} />;
 
-  const renderItem = ({ item }) => {
-    return (
-      <RectButton onPress={() => onSelect(item)}>
-        <View style={styles.menuContainer}>
-          <Text variant="subtitle2">{item.fruit_name}</Text>
-        </View>
-      </RectButton>
-    );
-  };
+  const renderItem = ({ item }) => (
+    <RectButton onPress={() => onSelect(item)}>
+      <View style={styles.menuContainer}>
+        <Text variant="subtitle2">{item.fruit_name}</Text>
+      </View>
+    </RectButton>
+  );
 
   const renderFlatListItem = () => {
     const filteredData = data.filter(x => {
@@ -84,7 +80,7 @@ const Model = ({ onSelect }) => {
         keyExtractor={keyExtractor}
         ItemSeparatorComponent={renderSeparator}
         renderItem={renderItem}
-        enableEmptySections={true}
+        enableEmptySections
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       />

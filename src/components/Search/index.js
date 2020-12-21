@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { TextInput, View, ScrollView } from 'react-native';
 import TextEle from '../TextEle';
-import SearchSharp from '../../assets/icons/search-sharp.svg';
+import SearchSharp from '../../assets/icons/search.svg';
 
 const arr = ['Trending', 'Recently Added ', 'Rice Items', 'Sweets', 'Salads'];
 
