@@ -12,7 +12,7 @@ const Splash = ({ navigation }) => {
 
   return (
     <SafeAreaView>
-      <TextEle>Splash Screen</TextEle>
+      <TextEle>Splash Screen here</TextEle>
     </SafeAreaView>
   );
 };
