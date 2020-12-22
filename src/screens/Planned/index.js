@@ -44,7 +44,7 @@ ${data.street2}
 ${data.Landmark} 
 ${data.PinCode}`;
 
-const Planned = ({ OnStartPress }) => (
+const Planned = ({ navigation }) => (
   <View>
     {Company.map(item => (
       <>
@@ -67,7 +67,7 @@ const Planned = ({ OnStartPress }) => (
               backgroundColor: 'rgb(15, 212, 28)',
             }}
             title="start"
-            onPress={OnStartPress}>
+            onPress={() => navigation.navigate('SurveyQue')}>
             <Text style={{ marginHorizontal: 30 }}>Start</Text>
           </RectButton>
         </View>
@@ -81,7 +81,9 @@ const Planned = ({ OnStartPress }) => (
 );
 
 Planned.propTypes = {
-  OnStartPress: PropTypes.func.isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default Planned;

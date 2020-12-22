@@ -20,14 +20,13 @@ const actionItem = [
 ];
 
 const Fab = ({ onClick }) => (
-  <ActionButton size={48} buttonColor="#79a4eb" backgroundTappable={false}>
+  <ActionButton size={50} buttonColor="#79a4eb" backgroundTappable={false}>
     {actionItem.map(item => (
       <ActionButton.Item
         key={item}
         buttonColor="#fff"
         textStyle={{ color: '#000' }}
         onPress={() => onClick(item.path)}
-        useNativeFeedback
         {...item}>
         {item.icon}
       </ActionButton.Item>

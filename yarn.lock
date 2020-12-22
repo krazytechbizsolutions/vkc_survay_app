@@ -579,7 +579,7 @@
     "@babel/helper-simple-access" "^7.12.1"
     babel-plugin-dynamic-import-node "^2.3.3"
 
-"@babel/plugin-transform-object-assign@^7.0.0", "@babel/plugin-transform-object-assign@^7.10.4":
+"@babel/plugin-transform-object-assign@^7.0.0":
   version "7.12.1"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-object-assign/-/plugin-transform-object-assign-7.12.1.tgz#9102b06625f60a5443cc292d32b565373665e1e4"
   integrity sha512-geUHn4XwHznRAFiuROTy0Hr7bKbpijJCmr1Svt/VNGhpxmp0OrdxURNpWbOAf94nUbL+xj6gbxRVPHWIbRpRoA==
@@ -6680,14 +6680,12 @@ react-native-orientation-locker@^1.2.0:
   version "3.1.3"
   resolved "git+https://github.com/yamill/react-native-orientation.git#b45830cce0837fa668838554e023979497673c82"
 
-react-native-reanimated@^2.0.0-alpha.9.2:
-  version "2.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.0.0-rc.0.tgz#7a1b0bfd48e3de9dfa985a524463b6a216531358"
-  integrity sha512-v+SMpeSxQ8kO116B5q3/D6VlFSot4eIRASw0nxxU+6zh9wb4W8shMyQi7/ag/gt246FvjBZOPwxsBS2iTcw8Zg==
+react-native-reanimated@^1.13.2:
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.13.2.tgz#1ae5457b24b4913d173a5a064bb28eae7783d293"
+  integrity sha512-O+WhgxSjOIzcVdAAvx+h2DY331Ek1knKlaq+jsNLpC1fhRy9XTdOObovgob/aF2ve9uJfPEawCx8381g/tUJZQ==
   dependencies:
-    "@babel/plugin-transform-object-assign" "^7.10.4"
-    fbjs "^3.0.0"
-    string-hash-64 "^1.0.3"
+    fbjs "^1.0.0"
 
 react-native-redash@^15.11.1:
   version "15.11.1"
@@ -6703,10 +6701,10 @@ react-native-safe-area-context@^3.1.9:
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.1.9.tgz#48864ea976b0fa57142a2cc523e1fd3314e7247e"
   integrity sha512-wmcGbdyE/vBSL5IjDPReoJUEqxkZsywZw5gPwsVUV1NBpw5eTIdnL6Y0uNKHE25Z661moxPHQz6kwAkYQyorxA==
 
-react-native-screens@^2.15.0:
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.15.0.tgz#9b97c1881c4fcdf304bf363f0013225901625f44"
-  integrity sha512-qTSQPy0WKHtlb8xt5gY0Gt6sdvfQUQAnFSqgsggW9UEvySbkHzpqOrOYNA79Ca8oXO0dCFwp6X8buIiDefa7+Q==
+react-native-screens@^2.16.1:
+  version "2.16.1"
+  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.16.1.tgz#b105a127378d90018a46daf0c2f6518fca60c06f"
+  integrity sha512-WZ7m0sBDVaHbBnlHxwQnUlI6KNfQKHq+Unfw+VBuAlnSXvT+aw6Bb/K2bUlHzBgvrPjwY3Spc7ZERFuTwRLLwg==
 
 react-native-splash-screen@^3.2.0:
   version "3.2.0"
@@ -7586,11 +7584,6 @@ string-argv@0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/string-argv/-/string-argv-0.3.1.tgz#95e2fbec0427ae19184935f816d74aaa4c5c19da"
   integrity sha512-a1uQGz7IyVy9YwhqjZIZu1c8JO8dNIe20xBmSS6qu9kv++k3JGzCVmprbNN5Kn+BgzD5E7YYwg1CcjuJMRNsvg==
-
-string-hash-64@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/string-hash-64/-/string-hash-64-1.0.3.tgz#0deb56df58678640db5c479ccbbb597aaa0de322"
-  integrity sha512-D5OKWKvDhyVWWn2x5Y9b+37NUllks34q1dCDhk/vYcso9fmhs+Tl3KR/gE4v5UNj2UA35cnX4KdVVGkG1deKqw==
 
 string-length@^3.1.0:
   version "3.1.0"

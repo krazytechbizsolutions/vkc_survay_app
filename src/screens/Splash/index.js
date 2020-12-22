@@ -1,20 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SafeAreaView } from 'react-native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import TextEle from '../../components/TextEle';
 import Fab from '../../components/Fab';
 import SearchItem from '../../components/searchItem/SearchItem';
-import Planned from '../../components/Planned';
+import Planned from '../Planned';
+
+const Tab = createMaterialTopTabNavigator();
 
 const Splash = ({ navigation }) => (
   <SafeAreaView style={{ flex: 1 }}>
     <TextEle>Splash Screen here</TextEle>
     <SearchItem />
-    <Planned
-      OnStartPress={() => {
-        navigation.navigate('SurveyQue');
-      }}
-    />
+    <Tab.Navigator>
+      <Tab.Screen name="Planned" component={Planned} />
+    </Tab.Navigator>
     <Fab onClick={path => navigation.navigate(path)} />
   </SafeAreaView>
 );
