@@ -7,22 +7,49 @@ const Company = [
   {
     id: 1,
     CoName: 'Woodland',
+    Address: {
+      street1: 'Arjun Greens',
+      street2: 'Nilkanth mahadev ',
+      Landmark: 'Naranpura',
+      PinCode: '380013',
+      City: 'Ahmedabad',
+    },
   },
   {
     id: 2,
     CoName: 'Nike',
+    Address: {
+      street1: 'Arjun Greens',
+      street2: 'Nilkanth mahadev ',
+      Landmark: 'Naranpura',
+      PinCode: '380013',
+      City: 'Ahmedabad',
+    },
   },
   {
     id: 3,
     CoName: 'Adidas',
+    Address: {
+      street1: 'Arjun Greens',
+      street2: 'Nilkanth mahadev ',
+      Landmark: 'Naranpura',
+      PinCode: '380013',
+      City: 'Ahmedabad',
+    },
   },
 ];
+
+const addressString = data => `${data.street1} 
+${data.street2} 
+${data.Landmark} 
+${data.PinCode}`;
 
 const Planned = ({ OnStartPress }) => (
   <View>
     {Company.map(item => (
       <>
         <View
+          key={item.id}
           style={{
             marginVertical: 10,
             marginHorizontal: 20,
@@ -31,12 +58,20 @@ const Planned = ({ OnStartPress }) => (
           }}>
           <Text>{item.CoName}</Text>
           <RectButton
-            style={{ borderColor: 'black', borderWidth: 1, alignItems: 'center' }}
+            rippleColor="#D3D3D3"
+            style={{
+              borderWidth: 2,
+              height: 30,
+              justifyContent: 'center',
+              borderRadius: 20,
+              backgroundColor: 'rgb(15, 212, 28)',
+            }}
             title="start"
             onPress={OnStartPress}>
-            <Text>Start</Text>
+            <Text style={{ marginHorizontal: 30 }}>Start</Text>
           </RectButton>
         </View>
+        <Text style={{ marginHorizontal: 20, opacity: 0.4 }}>{addressString(item.Address)}</Text>
       </>
     ))}
     <View style={{ marginTop: 40, alignItems: 'center' }}>

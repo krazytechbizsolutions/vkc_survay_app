@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 
 const index = () => (
   <View>
-    <Text>Chalo</Text>
+    <Text>This is question</Text>
   </View>
 );
 
