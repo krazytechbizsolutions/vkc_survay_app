@@ -15,14 +15,13 @@ const Splash = ({ navigation }) => (
         navigation.navigate('SurveyQue');
       }}
     />
-    <Fab />
+    <Fab onClick={path => navigation.navigate(path)} />
   </SafeAreaView>
 );
 
 Splash.propTypes = {
   navigation: PropTypes.shape({
-    navigate: PropTypes.func,
+    navigate: PropTypes.func.isRequired,
   }).isRequired,
 };
-
 export default Splash;
