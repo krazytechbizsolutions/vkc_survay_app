@@ -7,7 +7,7 @@ const Model = () => {
   const [text, setText] = useState('');
 
   return (
-    <View style={{ flex: 1 }}>
+    <View>
       <TextInput
         style={styles.textInputStyle}
         onChangeText={() => setText()}

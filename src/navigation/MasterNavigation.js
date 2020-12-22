@@ -3,6 +3,7 @@ import { useTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import Splash from '../screens/Splash';
+import SurveyQue from '../screens/SurveyQue';
 
 const MainStack = createStackNavigator();
 
@@ -16,6 +17,7 @@ const MainStackScreen = () => {
         title: false,
       }}>
       <MainStack.Screen name="Splash" component={Splash} />
+      <MainStack.Screen name="SurveyQue" component={SurveyQue} />
     </MainStack.Navigator>
   );
 };
