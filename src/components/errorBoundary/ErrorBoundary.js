@@ -1,6 +1,6 @@
 import React from 'react';
-import ErrorScreen from '../errorScreen/ErrorScreen';
 import crashlytics from '@react-native-firebase/crashlytics';
+import ErrorScreen from '../errorScreen/ErrorScreen';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {

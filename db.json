@@ -1,0 +1,101 @@
+{
+  "plannedVisits": [
+    {
+      "id": 1,
+      "companyName": "Woodland",
+      "Address": {
+        "street1": "Arjun Greens",
+        "street2": "Nilkanth mahadev ",
+        "Landmark": "Naranpura",
+        "PinCode": "380013",
+        "City": "Ahmedabad"
+      }
+    },
+    {
+      "id": 2,
+      "companyName": "Nike",
+      "Address": {
+        "street1": "Arjun Greens",
+        "street2": "Nilkanth mahadev ",
+        "Landmark": "Naranpura",
+        "PinCode": "380013",
+        "City": "Ahmedabad"
+      }
+    },
+    {
+      "id": 3,
+      "companyName": "Adidas",
+      "Address": {
+        "street1": "Arjun Greens",
+        "street2": "Nilkanth mahadev ",
+        "Landmark": "Naranpura",
+        "PinCode": "380013",
+        "City": "Ahmedabad"
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "Type of shop?",
+      "questionType": "singleSelectRadio",
+      "options": [
+        {
+          "id": 1,
+          "text": "Fancy"
+        },
+        {
+          "id": 2,
+          "text": "Department Store"
+        },
+        {
+          "id": 3,
+          "text": "Platform Shop"
+        },
+        {
+          "id": 4,
+          "text": "Footware Shop"
+        },
+        {
+          "id": 5,
+          "text": "Showroom Medium"
+        },
+        {
+          "id": 6,
+          "text": "Showroom Large"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "question": "How long it will take to recover in normal position",
+      "questionType": "singleSelectList",
+      "options": [
+        {
+          "id": 1,
+          "text": "1 Month"
+        },
+        {
+          "id": 2,
+          "text": "2 Month"
+        },
+        {
+          "id": 3,
+          "text": "3 Month"
+        },
+        {
+          "id": 4,
+          "text": "4 Month"
+        },
+        {
+          "id": 5,
+          "text": "5 Month"
+        },
+        {
+          "id": 6,
+          "text": "6 Month"
+        }
+      ]
+    }
+  ]
+}

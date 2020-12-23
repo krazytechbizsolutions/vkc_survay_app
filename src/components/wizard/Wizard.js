@@ -78,7 +78,7 @@ export default class Wizard extends React.PureComponent {
                 keyboardShouldPersistTaps="always">
                 {fields.map((field, index) => {
                   if (page !== index) {
-                    return;
+                    return null;
                   }
                   <View key={index} style={commonStyle.mar10}>
                     {field.map(item => {

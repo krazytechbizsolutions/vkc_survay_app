@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
-import { useTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
+import { useTheme } from '@react-navigation/native';
 import Splash from '../screens/Splash';
 import SurveyQue from '../screens/SurveyQue';
 import AddRetailer from '../screens/AddRetailer';

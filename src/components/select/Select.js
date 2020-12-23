@@ -107,8 +107,7 @@ const Select = ({
               onPress={() => {
                 setFieldValue(name, '');
                 setText('');
-              }}
-            >
+              }}>
               <Cancel width={24} height={24} />
             </BorderlessButton>
           )}
@@ -118,8 +117,7 @@ const Select = ({
         isVisible={open}
         style={styles.modal}
         animationIn="slideInRight"
-        animationOut="slideOutRight"
-      >
+        animationOut="slideOutRight">
         <SafeAreaView style={[commonStyle.flex, commonStyle.bgColor]}>
           <SelectModel options={selectList} onSelect={onSelect} closeModal={closeModal} />
         </SafeAreaView>
