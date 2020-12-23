@@ -1,18 +1,21 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { View, TextInput, DatePickerAndroid } from 'react-native';
-import Text from '../text/Text';
 import crashlytics from '@react-native-firebase/crashlytics';
-import { OS } from '../../utils';
 import { format } from 'date-fns';
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { getIn } from 'formik';
+import { OS } from '../../utils';
 import DatePickerModal from './DatePickerModal';
+import Text from '../Text/Text';
 import Calendar from '../../assets/icons/calendar.svg';
 import styles from './styles';
 
 const Index = ({
   field: { name, value },
-  form: { touched, errors, setFieldValue, setFieldTouched }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+  form: { touched, errors, setFieldValue, setFieldTouched },
+  // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
   inputStyle,
   innerRef,
   label,
@@ -78,8 +81,7 @@ const Index = ({
           </View>
           <BorderlessButton
             style={[styles.textInputCancelStyle, { top: 8 }]}
-            onPress={openDatePicker}
-          >
+            onPress={openDatePicker}>
             <Calendar width={24} height={24} />
           </BorderlessButton>
         </View>

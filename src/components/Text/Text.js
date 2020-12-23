@@ -1,16 +1,15 @@
+/* eslint-disable react/prop-types */
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import { Text as RNText } from 'react-native';
 import styles from './styles';
 
-const Text = ({ children, variant, style, ...props }) => {
-  return (
-    <RNText style={[styles[variant], style]} {...props} allowFontScaling={false}>
-      {children}
-    </RNText>
-  );
-};
+const Text = ({ children, variant, style, ...props }) => (
+  <RNText style={[styles[variant], style]} {...props} allowFontScaling={false}>
+    {children}
+  </RNText>
+);
 
 Text.propTypes = {
   variant: PropTypes.oneOf([

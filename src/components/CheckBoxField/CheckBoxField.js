@@ -1,16 +1,16 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { BorderlessButton } from 'react-native-gesture-handler';
-import Checkbox from '../checkbox/Checkbox';
+import Checkbox from '../CheckBox/CheckBox';
 
 const CheckboxField = ({
   field: { name, value },
   form: { touched, errors, setFieldValue, setFieldTouched },
-}) => {
-  return (
-    <BorderlessButton onPress={() => setFieldValue(name, !value)}>
-      <Checkbox checked={value} />
-    </BorderlessButton>
-  );
-};
+}) => (
+  <BorderlessButton onPress={() => setFieldValue(name, !value)}>
+    <Checkbox checked={value} />
+  </BorderlessButton>
+);
 
 export default CheckboxField;

@@ -5,7 +5,7 @@ import React from 'react';
 import Splash from '../screens/Splash';
 import SurveyQue from '../screens/SurveyQue';
 import AddRetailer from '../screens/AddRetailer';
-import UnplannedVisit from '../screens/UnplannedVisit';
+import UnplannedVisits from '../screens/UnplannedVisits';
 
 const MainStack = createStackNavigator();
 
@@ -27,7 +27,7 @@ const MainStackScreen = () => {
       />
       <MainStack.Screen
         name="UnplannedVisit"
-        component={UnplannedVisit}
+        component={UnplannedVisits}
         options={{ headerShown: true, title: 'Unplanned Visit', headerTitleAlign: 'center' }}
       />
     </MainStack.Navigator>

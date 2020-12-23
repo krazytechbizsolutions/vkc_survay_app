@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
 import { DatePickerIOS, View, Text, Modal } from 'react-native';
@@ -14,16 +15,14 @@ const DatePicker = ({ visible, onClose, onSelect }) => {
             <TouchableWithoutFeedback
               onPress={onClose}
               underlayColor="#808080"
-              style={{ paddingHorizontal: 8 }}
-            >
-              <Text style={styles.cancelText}>{'Cancel'}</Text>
+              style={{ paddingHorizontal: 8 }}>
+              <Text style={styles.cancelText}>Cancel</Text>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback
               onPress={() => onSelect(chosenDate)}
               underlayColor="#808080"
-              style={{ paddingHorizontal: 8 }}
-            >
-              <Text style={styles.submitText}>{'Submit'}</Text>
+              style={{ paddingHorizontal: 8 }}>
+              <Text style={styles.submitText}>Submit</Text>
             </TouchableWithoutFeedback>
           </View>
           <DatePickerIOS

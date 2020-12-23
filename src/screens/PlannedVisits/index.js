@@ -44,7 +44,7 @@ ${data.street2}
 ${data.Landmark} 
 ${data.PinCode}`;
 
-const Planned = ({ navigation }) => (
+const PlannedVisits = ({ navigation }) => (
   <View>
     {Company.map(item => (
       <>
@@ -60,7 +60,6 @@ const Planned = ({ navigation }) => (
           <RectButton
             rippleColor="#D3D3D3"
             style={{
-              borderWidth: 2,
               height: 30,
               justifyContent: 'center',
               borderRadius: 20,
@@ -80,10 +79,10 @@ const Planned = ({ navigation }) => (
   </View>
 );
 
-Planned.propTypes = {
+PlannedVisits.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
 };
 
-export default Planned;
+export default PlannedVisits;

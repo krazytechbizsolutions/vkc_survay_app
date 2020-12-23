@@ -1,10 +1,15 @@
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { memo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { View, TextInput, ViewPropTypes, StyleSheet } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
-import Text from '../text/Text';
+import Text from '../Text/Text';
 import styles from './styles';
 import commonStyle from '../../commonStyle';
 import Cancel from '../../assets/icons/cancel.svg';
@@ -12,7 +17,8 @@ import MultiSelectModel from './MultiSelectModel';
 
 const Select = ({
   field: { name, value },
-  form: { values, touched, errors, setFieldValue, setFieldTouched }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+  form: { values, touched, errors, setFieldValue, setFieldTouched },
+  // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
   inputStyle,
   innerRef,
   options,
@@ -37,12 +43,10 @@ const Select = ({
   useEffect(() => {
     if (mapField && !values[mapField]) {
       setFieldValue(name, '');
+    } else if (value && value.length > 0 && values[mapField] === value[0].mapField) {
+      setFieldValue(name, value);
     } else {
-      if (value && value.length > 0 && values[mapField] == value[0].mapField) {
-        setFieldValue(name, value);
-      } else {
-        setFieldValue(name, '');
-      }
+      setFieldValue(name, '');
     }
     // setFieldValue(name, value);
     if (mapField === undefined) {
@@ -80,8 +84,7 @@ const Select = ({
             flexWrap: 'wrap',
             flexDirection: 'row',
             marginVertical: 4,
-          }}
-        >
+          }}>
           {value.map(x => (
             <View
               key={x.value}
@@ -97,14 +100,17 @@ const Select = ({
                 marginRight: 2,
                 paddingHorizontal: 5,
                 paddingVertical: 4,
-              }}
-            >
+              }}>
               <Text style={{ flexShrink: 1 }}>{x.text}</Text>
               {!disable && (
                 <BorderlessButton
                   style={{ marginLeft: 10 }}
-                  onPress={() => setFieldValue(name, value.filter(item => item.value !== x.value))}
-                >
+                  onPress={() =>
+                    setFieldValue(
+                      name,
+                      value.filter(item => item.value !== x.value),
+                    )
+                  }>
                   <Cancel width={24} height={24} />
                 </BorderlessButton>
               )}
@@ -116,8 +122,7 @@ const Select = ({
         isVisible={open}
         style={styles.modal}
         animationIn="slideInRight"
-        animationOut="slideOutRight"
-      >
+        animationOut="slideOutRight">
         <SafeAreaView style={[commonStyle.flex, commonStyle.bgColor]}>
           <MultiSelectModel
             options={selectList}

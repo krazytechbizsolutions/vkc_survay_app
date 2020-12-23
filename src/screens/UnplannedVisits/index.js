@@ -2,7 +2,7 @@ import { useTheme } from '@react-navigation/native';
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const UnplannedVisit = () => {
+const UnplannedVisits = () => {
   const { colors } = useTheme();
   return (
     <View>
@@ -11,4 +11,4 @@ const UnplannedVisit = () => {
   );
 };
 
-export default UnplannedVisit;
+export default UnplannedVisits;
