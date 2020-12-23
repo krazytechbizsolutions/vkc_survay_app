@@ -1,3 +1,6 @@
+/* eslint-disable react/no-deprecated */
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/static-property-placement */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -85,8 +88,7 @@ class index extends PureComponent<Props, State> {
               top: '80%',
               backgroundColor,
             },
-          ]}
-        >
+          ]}>
           <Text numberOfLines={1} style={[styles.toastBoxInsideText, { color: textColor }]}>
             {this.ToastMessage}
           </Text>
@@ -114,7 +116,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  null,
-)(index);
+export default connect(mapStateToProps, null)(index);

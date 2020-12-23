@@ -1,3 +1,6 @@
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { View, ViewPropTypes, Switch as RNSwitch } from 'react-native';

@@ -1,13 +1,15 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { View, TextInput, ViewPropTypes } from 'react-native';
 import { getIn } from 'formik';
-import Text from '../text/Text';
+import Text from '../Text/Text';
 import styles from './style';
 
 const index = ({
   field: { name, value },
-  form: { touched, errors, setFieldValue, setFieldTouched }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+  form: { touched, errors, setFieldValue, setFieldTouched },
+  // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
   inputStyle,
   innerRef,
   label,
