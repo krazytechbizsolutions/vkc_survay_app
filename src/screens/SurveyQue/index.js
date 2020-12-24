@@ -6,6 +6,7 @@ import useSWR from 'swr';
 import { Button, SafeAreaView, Text, ScrollView, View } from 'react-native';
 import SingleSelectRadio from '@components/SingleSelectRadio';
 import SingleSelectList from '@components/SingleSelectList';
+import LongText from '@components/LongText';
 
 const SurveyQue = ({ navigation, route }) => {
   const { questionId } = route.params;
@@ -24,6 +25,9 @@ const SurveyQue = ({ navigation, route }) => {
           </When>
           <When condition={data.questionType === 'singleSelectList'}>
             <SingleSelectList data={data} />
+          </When>
+          <When condition={data.questionType === 'LongText'}>
+            <LongText data={data} />
           </When>
           <Otherwise>
             <Text>ElseBlock</Text>
