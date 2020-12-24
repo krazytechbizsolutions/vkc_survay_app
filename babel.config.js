@@ -1,6 +1,7 @@
 module.exports = {
   presets: ['module:metro-react-native-babel-preset'],
   plugins: [
+    'jsx-control-statements',
     ['@babel/plugin-proposal-decorators', { legacy: true }],
     [
       'module-resolver',
