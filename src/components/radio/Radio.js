@@ -12,9 +12,9 @@ export const RadioCore = ({ option, value, onPress }) => (
   <RectButton onPress={onPress}>
     <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
       {value !== '' && value === option.value ? (
-        <RadioCheckedIcon width={24} height={24} />
+        <RadioCheckedIcon fill="blue" width={24} height={24} />
       ) : (
-        <RadioUncheckedIcon width={24} height={24} />
+        <RadioUncheckedIcon fill="blue" width={24} height={24} />
       )}
       <Text variant="label" style={{ marginHorizontal: 10 }}>
         {option.text}

@@ -72,5 +72,6 @@ module.exports = {
 
     // React-Native Plugin
     'react-native/no-inline-styles': 'warn',
+    'react/jsx-no-undef': [2, { allowGlobals: true }],
   },
 };

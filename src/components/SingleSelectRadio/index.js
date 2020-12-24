@@ -1,10 +1,23 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+/* eslint-disable react/prop-types */
+import { RadioCore } from '@components/radio/Radio';
+import TextEle from '@components/TextEle';
+import React, { useState } from 'react';
+import { View } from 'react-native';
 
-const index = () => (
-  <View>
-    <Text />
-  </View>
-);
+const SingleSelectRadio = ({ data }) => {
+  const [value, setValue] = useState();
+  return (
+    <View>
+      <TextEle variant="title">{data.question}</TextEle>
+      <For each="item" of={data.options}>
+        <RadioCore
+          option={{ text: item.text, value: item.text }}
+          value={value}
+          onPress={() => setValue(item.text)}
+        />
+      </For>
+    </View>
+  );
+};
 
-export default index;
+export default SingleSelectRadio;

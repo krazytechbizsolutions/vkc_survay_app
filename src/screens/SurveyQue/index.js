@@ -1,7 +1,8 @@
 /* eslint-disable */
 import React from 'react';
 import useSWR from 'swr';
-import { Button, SafeAreaView, Text } from 'react-native';
+import { Button, SafeAreaView, Text, ScrollView } from 'react-native';
+import SingleSelectRadio from '@components/SingleSelectRadio';
 
 const SurveyQue = ({ navigation, route }) => {
   const { questionId } = route.params;
@@ -12,16 +13,18 @@ const SurveyQue = ({ navigation, route }) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Choose>
-        <When condition={data.questionType === 'singleSelectRadio'}>
-          <Text>{data.question}</Text>
-        </When>
-        <When condition={data.questionType === 'singleSelectList'}></When>
-        <Otherwise>
-          <Text>ElseBlock</Text>
-        </Otherwise>
-      </Choose>
+    <SafeAreaView style={{ flex: 1, margin: 20 }}>
+      <ScrollView style={{ flex: 1 }}>
+        <Choose>
+          <When condition={data.questionType === 'singleSelectRadio'}>
+            <SingleSelectRadio data={data} />
+          </When>
+          <When condition={data.questionType === 'singleSelectList'}></When>
+          <Otherwise>
+            <Text>ElseBlock</Text>
+          </Otherwise>
+        </Choose>
+      </ScrollView>
       <Button
         title="next"
         onPress={() =>
