@@ -19,7 +19,7 @@ const MainStackScreen = () => {
         title: false,
       }}>
       <MainStack.Screen name="Splash" component={Splash} />
-      <MainStack.Screen name="SurveyQue" component={SurveyQue} />
+      <MainStack.Screen name="SurveyQue" component={SurveyQue} options={{ headerShown: true }} />
       <MainStack.Screen
         name="AddRetailer"
         component={AddRetailer}
