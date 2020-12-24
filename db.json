@@ -9,7 +9,8 @@
         "Landmark": "Naranpura",
         "PinCode": "380013",
         "City": "Ahmedabad"
-      }
+      },
+      "isCompleted":false
     },
     {
       "id": 2,
@@ -20,7 +21,8 @@
         "Landmark": "Naranpura",
         "PinCode": "380013",
         "City": "Ahmedabad"
-      }
+      },
+      "isCompleted":false
     },
     {
       "id": 3,
@@ -31,7 +33,8 @@
         "Landmark": "Naranpura",
         "PinCode": "380013",
         "City": "Ahmedabad"
-      }
+      },
+      "isCompleted":true
     }
   ],
   "questions": [
@@ -67,7 +70,7 @@
       ]
     },
     {
-      "id": 1,
+      "id": 2,
       "question": "How long it will take to recover in normal position",
       "questionType": "singleSelectList",
       "options": [
