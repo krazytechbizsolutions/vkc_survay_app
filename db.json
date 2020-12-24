@@ -105,6 +105,37 @@
       "question": "What is the main competitor brand",
       "questionType": "LongText",
       "TextInput": ""
+    },
+    {
+      "id": 4,
+      "question": "Stock level of VKC Brand",
+      "questionType": "selectGroup",
+      "options": [
+        {
+          "id": 1,
+          "text": "1 Month"
+        },
+        {
+          "id": 2,
+          "text": "2 Month"
+        },
+        {
+          "id": 3,
+          "text": "3 Month"
+        },
+        {
+          "id": 4,
+          "text": "4 Month"
+        },
+        {
+          "id": 5,
+          "text": "5 Month"
+        },
+        {
+          "id": 6,
+          "text": "6 Month"
+        }
+      ]
     }
   ]
 }

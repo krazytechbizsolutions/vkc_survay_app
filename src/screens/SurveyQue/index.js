@@ -7,6 +7,7 @@ import { Button, SafeAreaView, Text, ScrollView, View } from 'react-native';
 import SingleSelectRadio from '@components/SingleSelectRadio';
 import SingleSelectList from '@components/SingleSelectList';
 import LongText from '@components/LongText';
+import SelectGroup from '@components/SelectGroup';
 
 const SurveyQue = ({ navigation, route }) => {
   const { questionId } = route.params;
@@ -28,6 +29,9 @@ const SurveyQue = ({ navigation, route }) => {
           </When>
           <When condition={data.questionType === 'LongText'}>
             <LongText data={data} />
+          </When>
+          <When condition={data.questionType === 'selectGroup'}>
+            <SelectGroup data={data} />
           </When>
           <Otherwise>
             <Text>ElseBlock</Text>
