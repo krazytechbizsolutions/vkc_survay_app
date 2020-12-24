@@ -6,64 +6,11 @@
 /* eslint-disable camelcase */
 import { Platform, PermissionsAndroid, ToastAndroid, Alert } from 'react-native';
 import { startOfWeek, eachDayOfInterval, addDays } from 'date-fns';
-import crashlytics from '@react-native-firebase/crashlytics';
 import axios from 'axios';
 import Config from 'react-native-config';
 import Geolocation from 'react-native-geolocation-service';
 
 export const { OS } = Platform;
-
-const startWeek = startOfWeek(new Date(), { weekStartsOn: 1 });
-
-export const weekDays = eachDayOfInterval({
-  start: startWeek,
-  end: addDays(startWeek, 13),
-});
-
-export const Api = token => {
-  const AxiosInstance = axios.create({
-    baseURL: Config.BASE_URL,
-    timeout: 100000,
-    headers: {
-      accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  });
-
-  AxiosInstance.interceptors.request.use(
-    config => {
-      if (token) {
-        config.headers.authorization = token;
-      }
-      return config;
-    },
-    error => Promise.reject(error),
-  );
-
-  AxiosInstance.interceptors.response.use(
-    response => {
-      // if (response.data.statusMessage.toLowerCase() === 'success') {
-      //   return response;
-      // } else {
-      //   return Promise.reject(new Error(response.data.statusMessage));
-      // }
-      const { statusCode } = response.data;
-      if (parseInt(statusCode, 10) < 200 || parseInt(statusCode, 10) > 299) {
-        return Promise.reject(new Error(response.data.statusMessage));
-      }
-      return response;
-    },
-    error => {
-      const { status } = error.response;
-      if (status === 401) {
-        return Promise.reject(new Error('Session expired or invalid. Please Login Again.'));
-      }
-      return Promise.reject(error);
-    },
-  );
-
-  return AxiosInstance;
-};
 
 export const getToken = state => {
   const { access_token, token_type } = state.auth;
@@ -72,9 +19,6 @@ export const getToken = state => {
   }
   return '';
 };
-
-export const camalize = str =>
-  str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
 
 export const isConnected = state => state.network.isConnected;
 
@@ -145,23 +89,3 @@ export const getLocation = () =>
 
     Geolocation.getCurrentPosition(onChange, onError, defaultSettings);
   });
-
-export const registerCrashlytics = async user => {
-  try {
-    await Promise.all([
-      crashlytics().setUserId(user.Id),
-      crashlytics().setUserName(user.Username),
-      crashlytics().setUserEmail(user.Email),
-      crashlytics().setAttribute('UserType', user.UserType),
-      crashlytics().setAttribute('UserRoleId', user.UserRoleId),
-      crashlytics().setAttribute('Name', user.Name),
-      crashlytics().setAttribute('ProfileId', user.ProfileId),
-    ]);
-  } catch (error) {
-    console.warn('Crashlytics not registered');
-  }
-};
-
-export const recordError = error => {
-  crashlytics().recordError(error);
-};

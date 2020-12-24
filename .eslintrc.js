@@ -12,7 +12,14 @@ module.exports = {
     'prettier/react',
     'prettier/standard',
     'airbnb',
+    'plugin:import/errors',
+    'plugin:import/warnings',
   ],
+  settings: {
+    'import/resolver': {
+      'babel-module': {},
+    },
+  },
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -25,7 +32,7 @@ module.exports = {
     'arrow-parens': [1, 'as-needed'],
     'object-curly-newline': 0,
     'global-require': 'off',
-
+    'comma-dangle': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/state-in-constructor': [1, 'never'],
     'react/static-property-placement': [
