@@ -9,7 +9,7 @@ const LongText = ({ data }) => (
     <TextEle variant="title">{data.question}</TextEle>
     <TextInput
       multiline={true}
-      numberOfLines={5}
+      numberOfLines={10}
       style={{
         textAlignVertical: 'top',
         height: 200,
