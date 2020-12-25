@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://b12bd9293079.ngrok.io/',
+  baseURL: 'http://393eb5efc2f9.ngrok.io/',
   timeout: 3000,
 });
 

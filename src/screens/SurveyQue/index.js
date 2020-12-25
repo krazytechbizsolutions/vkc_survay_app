@@ -7,7 +7,11 @@ import { Button, SafeAreaView, Text, ScrollView, View } from 'react-native';
 import SingleSelectRadio from '@components/SingleSelectRadio';
 import SingleSelectList from '@components/SingleSelectList';
 import LongText from '@components/LongText';
-import SelectGroup from '@components/SelectGroup';
+// import SelectGroup from '@components/SelectGroup';
+import MultiSelection from '@components/MultiSelection';
+import IntegerInput from '@components/IntegerInput';
+import SliderQuestion from '@components/SliderQuestion';
+import StarRating from '@components/StarRating';
 
 const SurveyQue = ({ navigation, route }) => {
   const { questionId } = route.params;
@@ -27,12 +31,28 @@ const SurveyQue = ({ navigation, route }) => {
           <When condition={data.questionType === 'singleSelectList'}>
             <SingleSelectList data={data} />
           </When>
+          <When condition={data.questionType === 'MultiSelect'}>
+            <MultiSelection data={data} />
+          </When>
           <When condition={data.questionType === 'LongText'}>
             <LongText data={data} />
           </When>
-          <When condition={data.questionType === 'selectGroup'}>
-            <SelectGroup data={data} />
+          <When condition={data.questionType === 'integerInput'}>
+            <IntegerInput data={data} />
           </When>
+          <When condition={data.questionType === 'Slider'}>
+            <SliderQuestion data={data} />
+          </When>
+          <When condition={data.questionType === 'StarRating'}>
+            <StarRating data={data} />
+          </When>
+          <When condition={data.questionType === 'ImageSuggestion'}>
+            <SingleSelectRadio data={data} />
+          </When>
+
+          {/* <When condition={data.questionType === 'selectGroup'}>
+            <SelectGroup data={data} />
+          </When> */}
           <Otherwise>
             <Text>ElseBlock</Text>
           </Otherwise>
