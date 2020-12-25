@@ -10,13 +10,24 @@ const SelectGroup = ({ data }) => {
     <View>
       <TextEle variant="title">{data.question}</TextEle>
       <For each="item" of={data.options}>
-        {/* <For> */}
-        <RadioCore
-          option={{ text: item.text, value: item.text }}
-          value={value}
-          onPress={() => setValue(item.text)}
-        />
-        {/* </For> */}
+        <For each="index" of={data.options}>
+          <RadioCore
+            option={{ value: item.text }}
+            value={value}
+            onPress={() => setValue(item.text)}
+          />
+          <RadioCore
+            option={{ value: index.text }}
+            value={value}
+            onPress={() => {
+              // if (value.some(ele => ele === index.text)) {
+              //   setValue(value.filter(x => x !== index.text));
+              // } else {
+              //   setValue([...value, index.text]);
+              // }
+            }}
+          />
+        </For>
       </For>
     </View>
   );

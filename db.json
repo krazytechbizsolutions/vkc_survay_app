@@ -102,12 +102,6 @@
     },
     {
       "id": 3,
-      "question": "What is the main competitor brand",
-      "questionType": "LongText",
-      "TextInput": ""
-    },
-    {
-      "id": 4,
       "question": "Stock level of VKC Brand",
       "questionType": "selectGroup",
       "options": [
@@ -134,6 +128,80 @@
         {
           "id": 6,
           "text": "6 Month"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "question": "Product Category dealing with?",
+      "questionType": "MultiSelect",
+      "options": [
+        {
+          "id": 1,
+          "text": "Canva Shoes"
+        },
+        {
+          "id": 2,
+          "text": "Sport Shoes"
+        },
+        {
+          "id": 3,
+          "text": "Formal Shoes"
+        },
+        {
+          "id": 4,
+          "text": "Leather Shoes"
+        },
+        {
+          "id": 5,
+          "text": "Leaher Chappal"
+        },
+        {
+          "id": 6,
+          "text": "Stuckon Footwear"
+        },
+        {
+          "id": 7,
+          "text": "None of the above"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "question": "Leeds-Ladies art sales for last 2 weeks prs",
+      "questionType": "integerInput",
+      "TextInput": ""
+    },
+    {
+      "id": 6,
+      "question": "What is the main competitor brand",
+      "questionType": "LongText",
+      "TextInput": ""
+    },
+    {
+      "id": 7,
+      "question": "Customers Preferring VKC products?",
+      "questionType": "Slider",
+      "TextInput": ""
+    },
+    {
+      "id": 8,
+      "question": "Rate the Comfort",
+      "questionType": "StarRating",
+      "TextInput": ""
+    },
+    {
+      "id": 9,
+      "question": "Please share your suggestion of this image?",
+      "questionType": "ImageSuggestion",
+      "options": [
+        {
+          "id": 1,
+          "text": "good"
+        },
+        {
+          "id": 2,
+          "text": "poor"
         }
       ]
     }
