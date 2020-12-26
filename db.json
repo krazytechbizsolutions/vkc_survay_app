@@ -107,27 +107,273 @@
       "options": [
         {
           "id": 1,
-          "text": "1 Month"
+          "text": "VKC Pride",
+          "Rating": [
+            {
+              "id": 1,
+              "rate": "Nil"
+            },
+            {
+              "id": 2,
+              "rate": "Poor"
+            },
+            {
+              "id": 3,
+              "rate": "Average"
+            },
+            {
+              "id": 4,
+              "rate": "Good"
+            },
+            {
+              "id": 5,
+              "rate": "Very Good"
+            },
+            {
+              "id": 6,
+              "rate": "Excellent"
+            }
+          ]
         },
         {
           "id": 2,
-          "text": "2 Month"
+          "text": "VKC Lite",
+          "Rating": [
+            {
+              "id": 1,
+              "rate": "Nil"
+            },
+            {
+              "id": 2,
+              "rate": "Poor"
+            },
+            {
+              "id": 3,
+              "rate": "Average"
+            },
+            {
+              "id": 4,
+              "rate": "Good"
+            },
+            {
+              "id": 5,
+              "rate": "Very Good"
+            },
+            {
+              "id": 6,
+              "rate": "Excellent"
+            }
+          ]
         },
         {
           "id": 3,
-          "text": "3 Month"
+          "text": "VKC Stile",
+          "Rating": [
+            {
+              "id": 1,
+              "rate": "Nil"
+            },
+            {
+              "id": 2,
+              "rate": "Poor"
+            },
+            {
+              "id": 3,
+              "rate": "Average"
+            },
+            {
+              "id": 4,
+              "rate": "Good"
+            },
+            {
+              "id": 5,
+              "rate": "Very Good"
+            },
+            {
+              "id": 6,
+              "rate": "Excellent"
+            }
+          ]
         },
         {
           "id": 4,
-          "text": "4 Month"
+          "text": "Walkaroo",
+          "Rating": [
+            {
+              "id": 1,
+              "rate": "Nil"
+            },
+            {
+              "id": 2,
+              "rate": "Poor"
+            },
+            {
+              "id": 3,
+              "rate": "Average"
+            },
+            {
+              "id": 4,
+              "rate": "Good"
+            },
+            {
+              "id": 5,
+              "rate": "Very Good"
+            },
+            {
+              "id": 6,
+              "rate": "Excellent"
+            }
+          ]
         },
         {
           "id": 5,
-          "text": "5 Month"
+          "text": "Skalino",
+          "Rating": [
+            {
+              "id": 1,
+              "rate": "Nil"
+            },
+            {
+              "id": 2,
+              "rate": "Poor"
+            },
+            {
+              "id": 3,
+              "rate": "Average"
+            },
+            {
+              "id": 4,
+              "rate": "Good"
+            },
+            {
+              "id": 5,
+              "rate": "Very Good"
+            },
+            {
+              "id": 6,
+              "rate": "Excellent"
+            }
+          ]
         },
         {
           "id": 6,
-          "text": "6 Month"
+          "text": "VKC Trendz",
+          "Rating": [
+            {
+              "id": 1,
+              "rate": "Nil"
+            },
+            {
+              "id": 2,
+              "rate": "Poor"
+            },
+            {
+              "id": 3,
+              "rate": "Average"
+            },
+            {
+              "id": 4,
+              "rate": "Good"
+            },
+            {
+              "id": 5,
+              "rate": "Very Good"
+            },
+            {
+              "id": 6,
+              "rate": "Excellent"
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "text": "VKC Junior",
+          "Rating": [
+            {
+              "id": 1,
+              "rate": "Nil"
+            },
+            {
+              "id": 2,
+              "rate": "Poor"
+            },
+            {
+              "id": 3,
+              "rate": "Average"
+            },
+            {
+              "id": 4,
+              "rate": "Good"
+            },
+            {
+              "id": 5,
+              "rate": "Very Good"
+            },
+            {
+              "id": 6,
+              "rate": "Excellent"
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "text": "Smartak",
+          "Rating": [
+            {
+              "id": 1,
+              "rate": "Nil"
+            },
+            {
+              "id": 2,
+              "rate": "Poor"
+            },
+            {
+              "id": 3,
+              "rate": "Average"
+            },
+            {
+              "id": 4,
+              "rate": "Good"
+            },
+            {
+              "id": 5,
+              "rate": "Very Good"
+            },
+            {
+              "id": 6,
+              "rate": "Excellent"
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "text": "Slipons",
+          "Rating": [
+            {
+              "id": 1,
+              "rate": "Nil"
+            },
+            {
+              "id": 2,
+              "rate": "Poor"
+            },
+            {
+              "id": 3,
+              "rate": "Average"
+            },
+            {
+              "id": 4,
+              "rate": "Good"
+            },
+            {
+              "id": 5,
+              "rate": "Very Good"
+            },
+            {
+              "id": 6,
+              "rate": "Excellent"
+            }
+          ]
         }
       ]
     },
@@ -204,6 +450,18 @@
           "text": "poor"
         }
       ]
+    },
+    {
+      "id": 10,
+      "question": "Which is main competitor brand?",
+      "questionType": "Text",
+      "TextInput": ""
+    },
+    {
+      "id": 11,
+      "question": "Please share your feedback of his image.",
+      "questionType": "Feedback",
+      "TextInput": ""
     }
   ]
 }
