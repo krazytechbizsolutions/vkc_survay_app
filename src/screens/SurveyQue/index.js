@@ -7,11 +7,12 @@ import { Button, SafeAreaView, Text, ScrollView, View } from 'react-native';
 import SingleSelectRadio from '@components/SingleSelectRadio';
 import SingleSelectList from '@components/SingleSelectList';
 import LongText from '@components/LongText';
-// import SelectGroup from '@components/SelectGroup';
+import SelectGroup from '@components/SelectGroup';
 import MultiSelection from '@components/MultiSelection';
 import IntegerInput from '@components/IntegerInput';
 import SliderQuestion from '@components/SliderQuestion';
 import StarRating from '@components/StarRating';
+import TextInput from '@components/TextInput/TextInput';
 
 const SurveyQue = ({ navigation, route }) => {
   const { questionId } = route.params;
@@ -49,10 +50,15 @@ const SurveyQue = ({ navigation, route }) => {
           <When condition={data.questionType === 'ImageSuggestion'}>
             <SingleSelectRadio data={data} />
           </When>
-
-          {/* <When condition={data.questionType === 'selectGroup'}>
+          <When condition={data.questionType === 'selectGroup'}>
             <SelectGroup data={data} />
-          </When> */}
+          </When>
+          <When condition={data.questionType === 'Text'}>
+            <TextInput data={data} />
+          </When>
+          <When condition={data.questionType === 'Feedback'}>
+            <LongText data={data} />
+          </When>
           <Otherwise>
             <Text>ElseBlock</Text>
           </Otherwise>

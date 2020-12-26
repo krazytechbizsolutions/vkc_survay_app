@@ -26,7 +26,7 @@ const MainStackScreen = () => {
         component={SurveyQue}
         options={{
           headerShown: true,
-          headerRight: () => <Image style={{ width: 50, height: 50 }} source={VKCLogo} />,
+          headerRight: () => <Image style={{ width: 40, height: 40 }} source={VKCLogo} />,
           headerRightContainerStyle: { marginRight: 20 },
         }}
       />

@@ -11,6 +11,7 @@ const SingleSelectList = ({ data }) => {
       <TextEle variant="title">{data.question}</TextEle>
       <For each="item" of={data.options}>
         <CheckBoxFill
+          key={item.id}
           option={{ text: item.text, value: item.text }}
           value={value}
           onPress={() => {

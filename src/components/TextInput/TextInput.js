@@ -1,61 +1,21 @@
-/* eslint-disable react/forbid-prop-types */
-import React, { memo } from 'react';
-import PropTypes from 'prop-types';
-import { View, TextInput, ViewPropTypes } from 'react-native';
-import { getIn } from 'formik';
-import Text from '../Text/Text';
-import styles from './style';
+/* eslint-disable */
+import TextEle from '@components/TextEle';
+import React from 'react';
+import { View, Text } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 
-const index = ({
-  field: { name, value },
-  form: { touched, errors, setFieldValue, setFieldTouched },
-  // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-  inputStyle,
-  innerRef,
-  label,
-  editable,
-  disable,
-  isRequired,
-  ...props
-}) => {
-  const error = getIn(errors, name);
-  const touch = getIn(touched, name);
-  const errorMsg = touch && error ? error : null;
-  return (
-    <View>
-      {label && (
-        <Text variant="label">
-          {label}
-          {!!isRequired && <Text variant="error"> * </Text>}
-        </Text>
-      )}
-      <TextInput
-        {...props}
-        ref={innerRef}
-        style={[styles.textInput, inputStyle, errorMsg ? styles.errorBorder : {}]}
-        onChangeText={itemValue => {
-          setFieldValue(name, itemValue);
-        }}
-        onBlur={() => setFieldTouched(name)}
-        value={`${value || ''}`}
-        editable={editable || !disable}
-        autoCapitalize="none"
-      />
-      {errorMsg && <Text variant="error">{errorMsg}</Text>}
-    </View>
-  );
-};
+const LongText = ({ data }) => (
+  <View style={{ flex: 1, margin: 10 }}>
+    <TextEle variant="title">{data.question}</TextEle>
+    <TextInput
+      style={{
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: 'black',
+        marginVertical: 20,
+      }}
+    />
+  </View>
+);
 
-index.propTypes = {
-  field: PropTypes.object.isRequired,
-  form: PropTypes.object.isRequired,
-  inputRef: PropTypes.func,
-  inputStyle: ViewPropTypes.style,
-};
-
-index.defaultProps = {
-  inputStyle: {},
-  inputRef: () => {},
-};
-
-export default memo(index);
+export default LongText;
