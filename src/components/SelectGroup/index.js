@@ -10,10 +10,10 @@ const SelectGroup = ({ data }) => {
     <View>
       <TextEle variant="title">{data.question}</TextEle>
       <For each="item" of={data.options}>
-        <View style={{ flexDirection: 'row' }}>
+        <View key={item.id} style={{ flexDirection: 'row' }}>
           <Text style={{ fontSize: 8 }}>{item.text}</Text>
           <For each="ele" of={item.Rating}>
-            <View style={{ flex: 1 }}>
+            <View key={ele.id} style={{ flex: 1 }}>
               <Text style={{ fontSize: 8 }}>{ele.rate}</Text>
               <RadioCore
                 option={{ value: ele.rate }}

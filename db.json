@@ -420,7 +420,7 @@
     },
     {
       "id": 6,
-      "question": "What is the main competitor brand",
+      "question": "Name the wholesale dealers in orders",
       "questionType": "LongText",
       "TextInput": ""
     },

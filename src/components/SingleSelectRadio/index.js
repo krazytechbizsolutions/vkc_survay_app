@@ -11,6 +11,7 @@ const SingleSelectRadio = ({ data }) => {
       <TextEle variant="title">{data.question}</TextEle>
       <For each="item" of={data.options}>
         <RadioCore
+          key={item.id}
           option={{ text: item.text, value: item.text }}
           value={value}
           onPress={() => setValue(item.text)}

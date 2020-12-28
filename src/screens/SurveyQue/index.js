@@ -66,8 +66,8 @@ const SurveyQue = ({ navigation, route }) => {
       </ScrollView>
 
       {questionId > 1 ? (
-        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-          <View style={{ flex: 1 }}>
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex: 1, marginHorizontal: 10 }}>
             <Button
               title="Previous"
               onPress={() =>
