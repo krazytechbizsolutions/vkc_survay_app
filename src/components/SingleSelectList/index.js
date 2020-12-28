@@ -1,28 +1,21 @@
 /* eslint-disable react/prop-types */
 import TextEle from '@components/TextEle';
 import React, { useState } from 'react';
-import { View } from 'react-native';
-import { CheckBoxFill } from '@components/CheckBoxField/CheckBoxField';
+import { Picker, View } from 'react-native';
 
 const SingleSelectList = ({ data }) => {
   const [value, setValue] = useState([]);
   return (
     <View>
       <TextEle variant="title">{data.question}</TextEle>
-      <For each="item" of={data.options}>
-        <CheckBoxFill
-          key={item.id}
-          option={{ text: item.text, value: item.text }}
-          value={value}
-          onPress={() => {
-            if (value.some(ele => ele === item.text)) {
-              setValue(value.filter(x => x !== item.text));
-            } else {
-              setValue([...value, item.text]);
-            }
-          }}
-        />
-      </For>
+      <Picker
+        selectedValue={value}
+        style={{ height: 50 }}
+        onValueChange={itemValue => setValue(itemValue)}>
+        <For each="item" of={data.options}>
+          <Picker.Item label={item.text} value={item.text} />
+        </For>
+      </Picker>
     </View>
   );
 };

@@ -14,7 +14,7 @@ const MyDefaultTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#F6552E',
+    primary: 'rgb(255, 242, 242)',
   },
 };
 
@@ -22,7 +22,7 @@ const MyDarkTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    primary: '#F6552E',
+    primary: 'rgb(255, 242, 242)',
   },
 };
 

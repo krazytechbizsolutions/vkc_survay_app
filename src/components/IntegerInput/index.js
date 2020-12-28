@@ -14,7 +14,7 @@ const IntegerInput = ({ data }) => (
         height: 40,
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: '#009688',
+        borderColor: 'red',
         marginBottom: 10,
       }}
       keyboardType="numeric"

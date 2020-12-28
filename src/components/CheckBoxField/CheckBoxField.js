@@ -9,15 +9,15 @@ import CheckboxOutline from '../../assets/icons/check_box_outline.svg';
 
 export const CheckBoxFill = ({ option, value, onPress }) => (
   <RectButton onPress={onPress}>
-    <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
-      {value !== '' && value.includes(option.value) ? (
-        <CheckboxIcon width={24} height={24} fill="blue" />
-      ) : (
-        <CheckboxOutline width={24} height={24} fill="blue" />
-      )}
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10 }}>
       <Text variant="label" style={{ marginHorizontal: 10 }}>
         {option.text}
       </Text>
+      {value !== '' && value.includes(option.value) ? (
+        <CheckboxIcon width={24} height={24} fill="red" />
+      ) : (
+        <CheckboxOutline width={24} height={24} fill="red" />
+      )}
     </View>
   </RectButton>
 );

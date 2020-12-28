@@ -10,15 +10,17 @@ import RadioUncheckedIcon from '../../assets/icons/radio_button_unchecked.svg';
 
 export const RadioCore = ({ option, value, onPress }) => (
   <RectButton onPress={onPress}>
-    <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
-      {value !== '' && value === option.value ? (
-        <RadioCheckedIcon fill="blue" width={24} height={24} />
-      ) : (
-        <RadioUncheckedIcon fill="blue" width={24} height={24} />
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10 }}>
+      {option.text && (
+        <Text variant="label" style={{ marginHorizontal: 10 }}>
+          {option.text}
+        </Text>
       )}
-      <Text variant="label" style={{ marginHorizontal: 10 }}>
-        {option.text}
-      </Text>
+      {value !== '' && value === option.value ? (
+        <RadioCheckedIcon fill="red" width={24} height={24} />
+      ) : (
+        <RadioUncheckedIcon fill="red" width={24} height={24} />
+      )}
     </View>
   </RectButton>
 );
