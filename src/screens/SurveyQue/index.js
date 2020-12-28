@@ -3,7 +3,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import useSWR from 'swr';
-import { Button, SafeAreaView, Text, ScrollView, View } from 'react-native';
+import { SafeAreaView, Text, ScrollView, View } from 'react-native';
 import SingleSelectRadio from '@components/SingleSelectRadio';
 import SingleSelectList from '@components/SingleSelectList';
 import LongText from '@components/LongText';
@@ -13,8 +13,12 @@ import IntegerInput from '@components/IntegerInput';
 import SliderQuestion from '@components/SliderQuestion';
 import StarRating from '@components/StarRating';
 import TextInput from '@components/TextInput/TextInput';
+import { RectButton } from 'react-native-gesture-handler';
+import { useTheme } from '@react-navigation/native';
+import SubmitServey from '../../components/SubmitServey';
 
 const SurveyQue = ({ navigation, route }) => {
+  const { colors } = useTheme();
   const { questionId } = route.params;
   const { data } = useSWR(`/questions/${questionId}`);
 
@@ -23,8 +27,8 @@ const SurveyQue = ({ navigation, route }) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, margin: 20 }}>
-      <ScrollView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1, backgroundColor: colors.primary, padding: 20 }}>
         <Choose>
           <When condition={data.questionType === 'singleSelectRadio'}>
             <SingleSelectRadio data={data} />
@@ -59,45 +63,72 @@ const SurveyQue = ({ navigation, route }) => {
           <When condition={data.questionType === 'Feedback'}>
             <LongText data={data} />
           </When>
+          <When condition={data.questionType === 'servey'}>
+            <SubmitServey data={data} />
+          </When>
           <Otherwise>
             <Text>ElseBlock</Text>
           </Otherwise>
         </Choose>
       </ScrollView>
-
-      {questionId > 1 ? (
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex: 1, marginHorizontal: 10 }}>
-            <Button
-              title="Previous"
-              onPress={() =>
-                navigation.navigate('SurveyQue', {
-                  questionId: parseInt(questionId, 10) - 1,
-                })
-              }
-            />
+      <View style={{ backgroundColor: colors.primary }}>
+        {questionId > 1 ? (
+          <View style={{ flexDirection: 'row', margin: 20 }}>
+            <View style={{ flex: 1, marginHorizontal: 5 }}>
+              <RectButton
+                style={{
+                  backgroundColor: 'red',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 20,
+                  height: 40,
+                }}
+                onPress={() =>
+                  navigation.navigate('SurveyQue', {
+                    questionId: parseInt(questionId, 10) - 1,
+                  })
+                }>
+                <Text style={{ color: 'white' }}>Prev</Text>
+              </RectButton>
+            </View>
+            <View style={{ flex: 1, marginHorizontal: 5 }}>
+              <RectButton
+                style={{
+                  backgroundColor: 'red',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 20,
+                  height: 40,
+                }}
+                onPress={() =>
+                  navigation.navigate('SurveyQue', {
+                    questionId: parseInt(questionId, 10) + 1,
+                  })
+                }>
+                <Text style={{ color: 'white' }}>Next</Text>
+              </RectButton>
+            </View>
           </View>
-          <View style={{ flex: 1 }}>
-            <Button
-              title="next"
+        ) : (
+          <View style={{ margin: 20 }}>
+            <RectButton
+              style={{
+                backgroundColor: 'red',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 20,
+                height: 40,
+              }}
               onPress={() =>
                 navigation.navigate('SurveyQue', {
                   questionId: parseInt(questionId, 10) + 1,
                 })
-              }
-            />
+              }>
+              <Text style={{ color: 'white' }}>Next</Text>
+            </RectButton>
           </View>
-        </View>
-      ) : (
-        <Button
-          title="next"
-          onPress={() =>
-            navigation.navigate('SurveyQue', {
-              questionId: parseInt(questionId, 10) + 1,
-            })
-          }
-        />
-      )}
+        )}
+      </View>
     </SafeAreaView>
   );
 };

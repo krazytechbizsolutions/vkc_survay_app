@@ -4,12 +4,13 @@
       "id": 1,
       "companyName": "Woodland",
       "Address": {
-        "street1": "Arjun Greens",
+        "street1": "Arjun Homes",
         "street2": "Nilkanth mahadev ",
         "Landmark": "Naranpura",
-        "PinCode": "380013",
-        "City": "Ahmedabad"
+        "PinCode": "380028",
+        "City": "Banglore"
       },
+      "status": "Not Started",
       "isCompleted": false
     },
     {
@@ -19,9 +20,10 @@
         "street1": "Arjun Greens",
         "street2": "Nilkanth mahadev ",
         "Landmark": "Naranpura",
-        "PinCode": "380013",
-        "City": "Ahmedabad"
+        "PinCode": "361081",
+        "City": "Kolkata"
       },
+      "status": "Not Started",
       "isCompleted": false
     },
     {
@@ -31,15 +33,35 @@
         "street1": "Arjun Greens",
         "street2": "Nilkanth mahadev ",
         "Landmark": "Naranpura",
-        "PinCode": "380013",
-        "City": "Ahmedabad"
+        "PinCode": "361081",
+        "City": "Mumbai"
       },
+      "status": "Not Started",
       "isCompleted": true
     }
   ],
   "questions": [
     {
       "id": 1,
+      "question": "Select the Servey",
+      "questionType": "servey",
+      "options": [
+        {
+          "id": 1,
+          "text": "Survey 1"
+        },
+        {
+          "id": 2,
+          "text": "Servey 2"
+        },
+        {
+          "id": 3,
+          "text": "Servey 3"
+        }
+      ]
+    },
+    {
+      "id": 2,
       "question": "Type of shop?",
       "questionType": "singleSelectRadio",
       "options": [
@@ -70,315 +92,111 @@
       ]
     },
     {
-      "id": 2,
+      "id": 3,
       "question": "How long it will take to recover in normal position",
       "questionType": "singleSelectList",
       "options": [
         {
           "id": 1,
-          "text": "1 Month"
+          "text": "Select"
         },
         {
           "id": 2,
-          "text": "2 Month"
+          "text": "1 Month"
         },
         {
           "id": 3,
-          "text": "3 Month"
+          "text": "2 Month"
         },
         {
           "id": 4,
-          "text": "4 Month"
+          "text": "3 Month"
         },
         {
           "id": 5,
-          "text": "5 Month"
+          "text": "4 Month"
         },
         {
           "id": 6,
+          "text": "5 Month"
+        },
+        {
+          "id": 7,
           "text": "6 Month"
         }
       ]
     },
     {
-      "id": 3,
+      "id": 4,
       "question": "Stock level of VKC Brand",
       "questionType": "selectGroup",
-      "options": [
+      "row": [
         {
           "id": 1,
-          "text": "VKC Pride",
-          "Rating": [
-            {
-              "id": 1,
-              "rate": "Nil"
-            },
-            {
-              "id": 2,
-              "rate": "Poor"
-            },
-            {
-              "id": 3,
-              "rate": "Average"
-            },
-            {
-              "id": 4,
-              "rate": "Good"
-            },
-            {
-              "id": 5,
-              "rate": "Very Good"
-            },
-            {
-              "id": 6,
-              "rate": "Excellent"
-            }
-          ]
+          "text": "VKC Pride"
         },
         {
           "id": 2,
-          "text": "VKC Lite",
-          "Rating": [
-            {
-              "id": 1,
-              "rate": "Nil"
-            },
-            {
-              "id": 2,
-              "rate": "Poor"
-            },
-            {
-              "id": 3,
-              "rate": "Average"
-            },
-            {
-              "id": 4,
-              "rate": "Good"
-            },
-            {
-              "id": 5,
-              "rate": "Very Good"
-            },
-            {
-              "id": 6,
-              "rate": "Excellent"
-            }
-          ]
+          "text": "VKC Lite"
         },
         {
           "id": 3,
-          "text": "VKC Stile",
-          "Rating": [
-            {
-              "id": 1,
-              "rate": "Nil"
-            },
-            {
-              "id": 2,
-              "rate": "Poor"
-            },
-            {
-              "id": 3,
-              "rate": "Average"
-            },
-            {
-              "id": 4,
-              "rate": "Good"
-            },
-            {
-              "id": 5,
-              "rate": "Very Good"
-            },
-            {
-              "id": 6,
-              "rate": "Excellent"
-            }
-          ]
+          "text": "VKC Stile"
         },
         {
           "id": 4,
-          "text": "Walkaroo",
-          "Rating": [
-            {
-              "id": 1,
-              "rate": "Nil"
-            },
-            {
-              "id": 2,
-              "rate": "Poor"
-            },
-            {
-              "id": 3,
-              "rate": "Average"
-            },
-            {
-              "id": 4,
-              "rate": "Good"
-            },
-            {
-              "id": 5,
-              "rate": "Very Good"
-            },
-            {
-              "id": 6,
-              "rate": "Excellent"
-            }
-          ]
+          "text": "Walkaroo"
         },
         {
           "id": 5,
-          "text": "Skalino",
-          "Rating": [
-            {
-              "id": 1,
-              "rate": "Nil"
-            },
-            {
-              "id": 2,
-              "rate": "Poor"
-            },
-            {
-              "id": 3,
-              "rate": "Average"
-            },
-            {
-              "id": 4,
-              "rate": "Good"
-            },
-            {
-              "id": 5,
-              "rate": "Very Good"
-            },
-            {
-              "id": 6,
-              "rate": "Excellent"
-            }
-          ]
+          "text": "Skalino"
         },
         {
           "id": 6,
-          "text": "VKC Trendz",
-          "Rating": [
-            {
-              "id": 1,
-              "rate": "Nil"
-            },
-            {
-              "id": 2,
-              "rate": "Poor"
-            },
-            {
-              "id": 3,
-              "rate": "Average"
-            },
-            {
-              "id": 4,
-              "rate": "Good"
-            },
-            {
-              "id": 5,
-              "rate": "Very Good"
-            },
-            {
-              "id": 6,
-              "rate": "Excellent"
-            }
-          ]
+          "text": "VKC Trendz"
         },
         {
           "id": 7,
-          "text": "VKC Junior",
-          "Rating": [
-            {
-              "id": 1,
-              "rate": "Nil"
-            },
-            {
-              "id": 2,
-              "rate": "Poor"
-            },
-            {
-              "id": 3,
-              "rate": "Average"
-            },
-            {
-              "id": 4,
-              "rate": "Good"
-            },
-            {
-              "id": 5,
-              "rate": "Very Good"
-            },
-            {
-              "id": 6,
-              "rate": "Excellent"
-            }
-          ]
+          "text": "VKC Junior"
         },
         {
           "id": 8,
-          "text": "Smartak",
-          "Rating": [
-            {
-              "id": 1,
-              "rate": "Nil"
-            },
-            {
-              "id": 2,
-              "rate": "Poor"
-            },
-            {
-              "id": 3,
-              "rate": "Average"
-            },
-            {
-              "id": 4,
-              "rate": "Good"
-            },
-            {
-              "id": 5,
-              "rate": "Very Good"
-            },
-            {
-              "id": 6,
-              "rate": "Excellent"
-            }
-          ]
+          "text": "Smartak"
         },
         {
           "id": 9,
-          "text": "Slipons",
-          "Rating": [
-            {
-              "id": 1,
-              "rate": "Nil"
-            },
-            {
-              "id": 2,
-              "rate": "Poor"
-            },
-            {
-              "id": 3,
-              "rate": "Average"
-            },
-            {
-              "id": 4,
-              "rate": "Good"
-            },
-            {
-              "id": 5,
-              "rate": "Very Good"
-            },
-            {
-              "id": 6,
-              "rate": "Excellent"
-            }
-          ]
+          "text": "Slipons"
+        }
+      ],
+      "column": [
+        {
+          "id": 1,
+          "rate": "Nil"
+        },
+        {
+          "id": 2,
+          "rate": "Poor"
+        },
+        {
+          "id": 3,
+          "rate": "Average"
+        },
+        {
+          "id": 4,
+          "rate": "Good"
+        },
+        {
+          "id": 5,
+          "rate": "Very good"
+        },
+        {
+          "id": 6,
+          "rate": "Excellent"
         }
       ]
     },
     {
-      "id": 4,
+      "id": 5,
       "question": "Product Category dealing with?",
       "questionType": "MultiSelect",
       "options": [
@@ -413,31 +231,31 @@
       ]
     },
     {
-      "id": 5,
+      "id": 6,
       "question": "Leeds-Ladies art sales for last 2 weeks prs",
       "questionType": "integerInput",
       "TextInput": ""
     },
     {
-      "id": 6,
+      "id": 7,
       "question": "Name the wholesale dealers in orders",
       "questionType": "LongText",
       "TextInput": ""
     },
     {
-      "id": 7,
+      "id": 8,
       "question": "Customers Preferring VKC products?",
       "questionType": "Slider",
       "TextInput": ""
     },
     {
-      "id": 8,
+      "id": 9,
       "question": "Rate the Comfort",
       "questionType": "StarRating",
       "TextInput": ""
     },
     {
-      "id": 9,
+      "id": 10,
       "question": "Please share your suggestion of this image?",
       "questionType": "ImageSuggestion",
       "options": [
@@ -452,14 +270,14 @@
       ]
     },
     {
-      "id": 10,
+      "id": 11,
       "question": "Which is main competitor brand?",
       "questionType": "Text",
       "TextInput": ""
     },
     {
-      "id": 11,
-      "question": "Please share your feedback of his image.",
+      "id": 12,
+      "question": "Please share your feedback of this image.",
       "questionType": "Feedback",
       "TextInput": ""
     }

@@ -16,15 +16,15 @@ const year = new Date().getFullYear();
 
 const Splash = ({ navigation }) => (
   <SafeAreaView style={{ flex: 1 }}>
-    <View style={{ flexDirection: 'row', backgroundColor: 'white', alignItems: 'center' }}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
       <Image style={{ width: 40, height: 40, marginHorizontal: 15 }} source={VKCLogo} />
       <View style={{ flex: 1, marginRight: 10 }}>
         <SearchItem />
       </View>
     </View>
-    <View style={{ alignItems: 'center', backgroundColor: 'white' }}>
+    <View style={{ alignItems: 'center', marginVertical: 10 }}>
       <Text>
-        {date}/{month}/{year}
+        Date :- {date}/{month}/{year}
       </Text>
     </View>
     <Tab.Navigator>
