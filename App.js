@@ -8,13 +8,13 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import axios from '@utils/axios';
 import SplashScreen from 'react-native-splash-screen';
 import MasterNavigation from './src/navigation/MasterNavigation';
-// import ModalNavigation from './src/navigation/ModalNavigation';
 
 const MyDefaultTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: 'rgb(255, 242, 242)',
+    background: 'rgb(255, 242, 242)',
+    primary: 'red',
   },
 };
 
@@ -22,7 +22,8 @@ const MyDarkTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    primary: 'rgb(255, 242, 242)',
+    background: 'rgb(255, 242, 242)',
+    primary: 'red',
   },
 };
 
@@ -48,15 +49,6 @@ const App = () => {
         <NavigationContainer theme={currentTheme}>
           <RootStack.Navigator mode="modal" headerMode="none">
             <RootStack.Screen name="Main" component={MasterNavigation} />
-            {/* <RootStack.Screen
-            name="Modal"
-            component={ModalNavigation}
-            options={{
-              headerShown: true,
-              headerTransparent: 1,
-              headerTintColor: currentTheme.colors.primary,
-            }}
-          /> */}
           </RootStack.Navigator>
         </NavigationContainer>
       </SWRConfig>
