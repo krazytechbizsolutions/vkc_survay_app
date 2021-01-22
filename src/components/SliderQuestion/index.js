@@ -5,18 +5,17 @@ import TextEle from '@components/TextEle';
 
 const SliderQuestion = ({ data }) => (
   <View style={{ flex: 1 }}>
-    <TextEle variant="title">{data.question}</TextEle>
     <Slider
       style={{ marginTop: 20 }}
-      minimumValue={0}
-      maximumValue={1}
+      minimumValue={data.Min_Limit__c}
+      maximumValue={data.Max_Limit__c}
       thumbTintColor="red"
       minimumTrackTintColor="red"
       maximumTrackTintColor="#000000"
     />
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 10 }}>
-      <TextEle>0</TextEle>
-      <TextEle>100</TextEle>
+      <TextEle>{data.Min_Limit__c}</TextEle>
+      <TextEle>{data.Max_Limit__c}</TextEle>
     </View>
   </View>
 );
