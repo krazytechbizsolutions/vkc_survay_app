@@ -1,16 +1,14 @@
 /* eslint-disable react/prop-types */
-import TextEle from '@components/TextEle';
 import React, { useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { CheckBoxFill } from '@components/CheckBoxField/CheckBoxField';
 
-const SingleSelectList = ({ data }) => {
+const MultiSelection = ({ data }) => {
   const [value, setValue] = useState([]);
   return (
     <View>
-      <TextEle variant="title">{data.question}</TextEle>
       <FlatList
-        data={data.options}
+        data={data}
         ItemSeparatorComponent={() => (
           <View style={{ height: 1, flex: 1, backgroundColor: 'black' }} />
         )}
@@ -33,4 +31,4 @@ const SingleSelectList = ({ data }) => {
   );
 };
 
-export default SingleSelectList;
+export default MultiSelection;

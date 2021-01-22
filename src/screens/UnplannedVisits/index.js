@@ -5,7 +5,7 @@ import { View, Text } from 'react-native';
 const UnplannedVisits = () => {
   const { colors } = useTheme();
   return (
-    <View style={{ flex: 1, backgroundColor: colors.primary }}>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <Text style={{ color: colors.text }}>Unplanned Visit</Text>
     </View>
   );

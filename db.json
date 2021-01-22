@@ -281,5 +281,3426 @@
       "questionType": "Feedback",
       "TextInput": ""
     }
+  ],
+  "dayPlan": {
+    "UserId": "",
+    "DateVal": null,
+    "visits": [
+      {
+        "AreaName": "Vasavi Nagar",
+        "AreaId": "a071s000001Ccg3AAC",
+        "accType": "Dealer",
+        "accName": "Brand Bata",
+        "accId": "0011s00000SHifsAAD",
+        "surveys": [
+          {
+            "svyId": "a041s000002oXzKAAU"
+          },
+          {
+            "svyId": "a041s000002oYzKAAU"
+          }
+        ]
+      },
+      {
+        "AreaName": "Vasavi Nagar",
+        "AreaId": "a071s000001Ccg3AAC",
+        "accType": "Dealer",
+        "accName": "Wakmate",
+        "accId": "0011s00000SHiftAAD",
+        "surveys": [
+          {
+            "svyId": "a041s000002oXzKAAU"
+          }
+        ]
+      }
+    ],
+    "dealerAndRetailers": [
+      {
+        "state": "Karnataka",
+        "region": "EAST",
+        "country": "India",
+        "AreaName": "Jayanagar",
+        "AreaId": "a071s000001CcTUAA0",
+        "accType": "Dealer",
+        "accName": "Test Rollup",
+        "accId": "0011s00000TXuFMAA1"
+      },
+      {
+        "state": "Andhra Pradesh",
+        "region": "EAST",
+        "country": "India",
+        "AreaName": "Vasavi Nagar",
+        "AreaId": "a071s000001Ccg3AAC",
+        "accType": "Sub Dealer",
+        "accName": "Centro Stores **",
+        "accId": "0011s00000SGkLqAAL"
+      },
+      {
+        "state": "Karnataka",
+        "region": "EAST",
+        "country": "India",
+        "AreaName": "Jayanagar",
+        "AreaId": "a071s000001CcTUAA0",
+        "accType": "Retailer",
+        "accName": "Test VKC CLI",
+        "accId": "0011s00000TYMf1AAH"
+      }
+    ]
+  },
+  "survey": [
+    {
+      "toDate": "2021-01-31",
+      "surveyName": "Screenshot Survey",
+      "surveyId": "a041s000002oXzKAAU",
+      "Questions": [
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z8VAAQ"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z8VAAQ",
+            "Detailed_Survey_Question_Name__c": "Type of Shop?",
+            "Description__c": "Type of Shop?",
+            "Option_Type__c": "Single Select",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 1
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "Fancy",
+              "optionId": "a061s000001UKhVAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "Departmental Store",
+              "optionId": "a061s000001UKhWAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "Platform Shop",
+              "optionId": "a061s000001UKhXAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "Footwear Shop",
+              "optionId": "a061s000001UKhYAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "Showroom Medium",
+              "optionId": "a061s000001UKhZAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 6,
+              "score": null,
+              "optionName": "Showroom Large",
+              "optionId": "a061s000001UKhaAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z8aAAA"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z8aAAA",
+            "Detailed_Survey_Question_Name__c": "How long it will take to recover in normal position?",
+            "Description__c": "How long it will take to recover in normal position?",
+            "Option_Type__c": "Single Select List",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 2
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "1 Month",
+              "optionId": "a061s000001UKhbAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "2 Months",
+              "optionId": "a061s000001UKhcAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "3 Months",
+              "optionId": "a061s000001UKhdAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "4 Months",
+              "optionId": "a061s000001UKheAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "5 Months",
+              "optionId": "a061s000001UKhfAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z8WAAQ"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z8WAAQ",
+            "Detailed_Survey_Question_Name__c": "Stock Level of VKC Group?",
+            "Description__c": "Stock Level of VKC Group?",
+            "Option_Type__c": "Single Select Group",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 3
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "VKC Pride",
+              "optionId": "a061s000001UKhgAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "VKC Lite",
+              "optionId": "a061s000001UKhhAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "VKC Stile",
+              "optionId": "a061s000001UKhiAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "Walkroo",
+              "optionId": "a061s000001UKhjAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "Skalino",
+              "optionId": "a061s000001UKhkAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 6,
+              "score": null,
+              "optionName": "VKC Trendz",
+              "optionId": "a061s000001UKhlAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 7,
+              "score": null,
+              "optionName": "VKC Junior",
+              "optionId": "a061s000001UKhmAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 8,
+              "score": null,
+              "optionName": "Smartak",
+              "optionId": "a061s000001UKhnAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 9,
+              "score": null,
+              "optionName": "Slipons",
+              "optionId": "a061s000001UKhoAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "Nil",
+              "optionId": "a061s000001UKhpAAG",
+              "level": "Option 2",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "Poor",
+              "optionId": "a061s000001UKhqAAG",
+              "level": "Option 2",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "Average",
+              "optionId": "a061s000001UKhrAAG",
+              "level": "Option 2",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "Good",
+              "optionId": "a061s000001UKhsAAG",
+              "level": "Option 2",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "Very Good",
+              "optionId": "a061s000001UKhtAAG",
+              "level": "Option 2",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 6,
+              "score": null,
+              "optionName": "Excellent",
+              "optionId": "a061s000001UKhuAAG",
+              "level": "Option 2",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z8fAAA"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z8fAAA",
+            "Detailed_Survey_Question_Name__c": "Product Category Dealing With?",
+            "Description__c": "Product Category Dealing With?",
+            "Option_Type__c": "Multi Select",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 4
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "Canvas Shoes",
+              "optionId": "a061s000001UKhvAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "Sports Shoes",
+              "optionId": "a061s000001UKhwAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "Formal Shoes",
+              "optionId": "a061s000001UKhxAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "Leather Shoes",
+              "optionId": "a061s000001UKhyAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "Leather Chappal",
+              "optionId": "a061s000001UKhzAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 6,
+              "score": null,
+              "optionName": "Stuckon Footwear",
+              "optionId": "a061s000001UKi0AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 7,
+              "score": null,
+              "optionName": "None of the Above",
+              "optionId": "a061s000001UKi1AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z9DAAQ"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z9DAAQ",
+            "Detailed_Survey_Question_Name__c": "Ordering Question?",
+            "Description__c": "Ordering Question?",
+            "Option_Type__c": "Ordering Question",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 5
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "Credit",
+              "optionId": "a061s000001UKi7AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "Service",
+              "optionId": "a061s000001UKi8AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "All Models",
+              "optionId": "a061s000001UKi9AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "Door Delivery",
+              "optionId": "a061s000001UKiAAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "Cut Case",
+              "optionId": "a061s000001UKiBAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 6,
+              "score": null,
+              "optionName": "Price Discount",
+              "optionId": "a061s000001UKiCAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 7,
+              "score": null,
+              "optionName": "NA",
+              "optionId": "a061s000001UKiDAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z9IAAQ"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z9IAAQ",
+            "Detailed_Survey_Question_Name__c": "Leeds-Ladies art sales for last 2 weeks in prs?",
+            "Description__c": "Leeds-Ladies art sales for last 2 weeks in prs?",
+            "Option_Type__c": "Integer Enter Question",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 6
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z9qAAA"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z9qAAA",
+            "Detailed_Survey_Question_Name__c": "Which is main competitor brand?",
+            "Description__c": "Which is main competitor brand?",
+            "Option_Type__c": "Text",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 7
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z9vAAA"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z9vAAA",
+            "Detailed_Survey_Question_Name__c": "Customers preferring VKC Products?",
+            "Description__c": "Customers preferring VKC Products?",
+            "Option_Type__c": "Slider",
+            "Type__c": "Qualitative",
+            "Min_Limit__c": 0,
+            "Max_Limit__c": 100,
+            "Requires_Data_from_Database__c": false,
+            "Slider_Datatype__c": "Percent",
+            "Units__c": 1.0,
+            "Sequence_No__c": 8
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zA0AAI"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zA0AAI",
+            "Detailed_Survey_Question_Name__c": "Rate the Comfort",
+            "Description__c": "Rate the Comfort",
+            "Option_Type__c": "Star Rating",
+            "Type__c": "Qualitative",
+            "Max_Limit__c": 5,
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 9
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAAAAY"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAAAAY",
+            "Detailed_Survey_Question_Name__c": "Please choose which product you like",
+            "Description__c": "Please choose which product you like",
+            "Option_Type__c": "Question with Image as options",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 10
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "Image 01",
+              "optionId": "a061s000001UKiJAAW",
+              "level": "Option 1",
+              "imageUrl": "https://www.vkcgroup.com/product/vkc-pride-pg1302",
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "Image 11",
+              "optionId": "a061s000001UKiKAAW",
+              "level": "Option 1",
+              "imageUrl": "https://www.vkcgroup.com/product/vkc-pride-pg1306",
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "Image 21",
+              "optionId": "a061s000001UKiLAAW",
+              "level": "Option 1",
+              "imageUrl": "https://www.vkcgroup.com/product/vkc-pride-pl2705",
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAFAAY"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAFAAY",
+            "Detailed_Survey_Question_Name__c": "Image Upload Question",
+            "Description__c": "Image Upload Question",
+            "Option_Type__c": "Upload Image for choosing an Option",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 11
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAKAAY"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAKAAY",
+            "Detailed_Survey_Question_Name__c": "Name the Wholesale Dealers in Order",
+            "Description__c": "Name the Wholesale Dealers in Order",
+            "Option_Type__c": "Multi Text",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": true,
+            "Object__c": "Account",
+            "Filter_Type__c": "State",
+            "Sequence_No__c": 12
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAPAAY"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAPAAY",
+            "Detailed_Survey_Question_Name__c": "Please share your feedback of this Image",
+            "Description__c": "Please share your feedback of this Image",
+            "Option_Type__c": "Feedback",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 13
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z8gAAA"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z8gAAA",
+            "Detailed_Survey_Question_Name__c": "Sales Volume in Leather Footwear?",
+            "Description__c": "Sales Volume in Leather Footwear?",
+            "Option_Type__c": "Tabular Question",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 14
+          },
+          "Options": [
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKiVAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKiVAAW",
+                  "Detailed_Survey_Option_Name__c": "1000-1499",
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKiWAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKiWAAW",
+                  "Detailed_Survey_Option_Name__c": "1500-1999",
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKiXAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKiXAAW",
+                  "Detailed_Survey_Option_Name__c": "2000-2499",
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKiYAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKiYAAW",
+                  "Detailed_Survey_Option_Name__c": "2500-2999",
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKiZAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKiZAAW",
+                  "Detailed_Survey_Option_Name__c": "3000-3499",
+                  "Sequence_No__c": 5
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKiaAAG"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKiaAAG",
+                  "Detailed_Survey_Option_Name__c": "3500-4999",
+                  "Sequence_No__c": 6
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKibAAG"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKibAAG",
+                  "Detailed_Survey_Option_Name__c": "Above 5000",
+                  "Sequence_No__c": 7
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKicAAG"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKicAAG",
+                  "Detailed_Survey_Option_Name__c": "Others",
+                  "Sequence_No__c": 8
+                }
+              ],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "Volume",
+              "optionId": "a061s000001UKiTAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": "Picklist Value"
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "Pair",
+              "optionId": "a061s000001UKiUAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": "Entry Value"
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z9JAAQ"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z9JAAQ",
+            "Detailed_Survey_Question_Name__c": "Coupon",
+            "Description__c": "Coupon",
+            "Option_Type__c": "Coupon",
+            "Weightage__c": 40.0,
+            "Type__c": "Quantitative",
+            "Max_Limit__c": 1400,
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 15
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAeAAI"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAeAAI",
+            "Detailed_Survey_Question_Name__c": "Display",
+            "Description__c": "Display",
+            "Option_Type__c": "Display",
+            "Weightage__c": 20.0,
+            "Type__c": "Quantitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 16
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": "15.80",
+              "optionName": "VKC PRIDE",
+              "optionId": "a061s000001UKiqAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": "3.00",
+              "optionName": "VKC LITE",
+              "optionId": "a061s000001UKirAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": "1.00",
+              "optionName": "SMARTAK",
+              "optionId": "a061s000001UKisAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": "0.10",
+              "optionName": "SLIPONS",
+              "optionId": "a061s000001UKitAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": "0.02",
+              "optionName": "VKC STILE",
+              "optionId": "a061s000001UKiuAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 6,
+              "score": "0.01",
+              "optionName": "VKC TRENDZ",
+              "optionId": "a061s000001UKivAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 7,
+              "score": "0.07",
+              "optionName": "VKC JUNIOR",
+              "optionId": "a061s000001UKiwAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAjAAI"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAjAAI",
+            "Detailed_Survey_Question_Name__c": "Stock",
+            "Description__c": "Stock",
+            "Option_Type__c": "Stock",
+            "Weightage__c": 15.0,
+            "Type__c": "Quantitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 17
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": "7.90",
+              "optionName": "VKC PRIDE",
+              "optionId": "a061s000001UKjHAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": "1.50",
+              "optionName": "VKC LITE",
+              "optionId": "a061s000001UKjIAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": "0.50",
+              "optionName": "SMARTAK",
+              "optionId": "a061s000001UKjJAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": "0.05",
+              "optionName": "SLIPONS",
+              "optionId": "a061s000001UKjKAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": "0.01",
+              "optionName": "VKC STILE",
+              "optionId": "a061s000001UKjLAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 6,
+              "score": "0.03",
+              "optionName": "VKC TRENDZ",
+              "optionId": "a061s000001UKjMAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 7,
+              "score": "0.01",
+              "optionName": "VKC JUNIOR",
+              "optionId": "a061s000001UKjNAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAfAAI"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAfAAI",
+            "Detailed_Survey_Question_Name__c": "Performance in the area",
+            "Description__c": "Performance in the area",
+            "Option_Type__c": "Performance In the Area",
+            "Weightage__c": 5.0,
+            "Type__c": "Quantitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 18
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": "2.00",
+              "optionName": "P",
+              "optionId": "a061s000001UKizAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": "4.00",
+              "optionName": "A",
+              "optionId": "a061s000001UKj0AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": "6.00",
+              "optionName": "G",
+              "optionId": "a061s000001UKj1AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": "8.00",
+              "optionName": "V",
+              "optionId": "a061s000001UKjTAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": "10.00",
+              "optionName": "E",
+              "optionId": "a061s000001UKjUAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAoAAI"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAoAAI",
+            "Detailed_Survey_Question_Name__c": "Salesman Commit",
+            "Description__c": "Salesman Commit",
+            "Option_Type__c": "Salesman Commit",
+            "Weightage__c": 10.0,
+            "Type__c": "Quantitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 19
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": "2.00",
+              "optionName": "P",
+              "optionId": "a061s000001UKj8AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": "4.00",
+              "optionName": "A",
+              "optionId": "a061s000001UKj9AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": "6.00",
+              "optionName": "G",
+              "optionId": "a061s000001UKjAAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": "8.00",
+              "optionName": "V",
+              "optionId": "a061s000001UKjBAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": "10.00",
+              "optionName": "E",
+              "optionId": "a061s000001UKjYAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAtAAI"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAtAAI",
+            "Detailed_Survey_Question_Name__c": "Special Efforts",
+            "Description__c": "Special Efforts",
+            "Option_Type__c": "Special Efforts",
+            "Weightage__c": 10.0,
+            "Type__c": "Quantitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 20
+          },
+          "Options": [
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk0AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjsAAG",
+                  "Id": "a061s000001UKk0AAG",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.2,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk1AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjsAAG",
+                  "Id": "a061s000001UKk1AAG",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 0.4,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk2AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjsAAG",
+                  "Id": "a061s000001UKk2AAG",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk3AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjsAAG",
+                  "Id": "a061s000001UKk3AAG",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 0.8,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk4AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjsAAG",
+                  "Id": "a061s000001UKk4AAG",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 1.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "Light",
+              "optionId": "a061s000001UKjsAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk5AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjtAAG",
+                  "Id": "a061s000001UKk5AAG",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.2,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk6AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjtAAG",
+                  "Id": "a061s000001UKk6AAG",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 0.4,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk7AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjtAAG",
+                  "Id": "a061s000001UKk7AAG",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk8AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjtAAG",
+                  "Id": "a061s000001UKk8AAG",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 0.8,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk9AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjtAAG",
+                  "Id": "a061s000001UKk9AAG",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 1.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "Cut In",
+              "optionId": "a061s000001UKjtAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkAAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjuAAG",
+                  "Id": "a061s000001UKkAAAW",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.2,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkBAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjuAAG",
+                  "Id": "a061s000001UKkBAAW",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 0.4,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkCAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjuAAG",
+                  "Id": "a061s000001UKkCAAW",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkDAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjuAAG",
+                  "Id": "a061s000001UKkDAAW",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 0.8,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkEAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjuAAG",
+                  "Id": "a061s000001UKkEAAW",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 1.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "Cut Out",
+              "optionId": "a061s000001UKjuAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkFAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjvAAG",
+                  "Id": "a061s000001UKkFAAW",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.2,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkGAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjvAAG",
+                  "Id": "a061s000001UKkGAAW",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 0.4,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkHAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjvAAG",
+                  "Id": "a061s000001UKkHAAW",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkIAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjvAAG",
+                  "Id": "a061s000001UKkIAAW",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 0.8,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkJAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjvAAG",
+                  "Id": "a061s000001UKkJAAW",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 1.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "TV",
+              "optionId": "a061s000001UKjvAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkKAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjwAAG",
+                  "Id": "a061s000001UKkKAAW",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.2,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkLAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjwAAG",
+                  "Id": "a061s000001UKkLAAW",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 0.4,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkMAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjwAAG",
+                  "Id": "a061s000001UKkMAAW",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkNAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjwAAG",
+                  "Id": "a061s000001UKkNAAW",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 0.8,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkOAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjwAAG",
+                  "Id": "a061s000001UKkOAAW",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 1.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "Aquarium",
+              "optionId": "a061s000001UKjwAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkPAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjxAAG",
+                  "Id": "a061s000001UKkPAAW",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.2,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkQAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjxAAG",
+                  "Id": "a061s000001UKkQAAW",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 0.4,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkRAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjxAAG",
+                  "Id": "a061s000001UKkRAAW",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkSAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjxAAG",
+                  "Id": "a061s000001UKkSAAW",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 0.8,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkTAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjxAAG",
+                  "Id": "a061s000001UKkTAAW",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 1.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 6,
+              "score": null,
+              "optionName": "Standees",
+              "optionId": "a061s000001UKjxAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkUAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjyAAG",
+                  "Id": "a061s000001UKkUAAW",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.2,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkVAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjyAAG",
+                  "Id": "a061s000001UKkVAAW",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 0.4,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkWAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjyAAG",
+                  "Id": "a061s000001UKkWAAW",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkXAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjyAAG",
+                  "Id": "a061s000001UKkXAAW",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 0.8,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkYAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjyAAG",
+                  "Id": "a061s000001UKkYAAW",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 1.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 7,
+              "score": null,
+              "optionName": "External",
+              "optionId": "a061s000001UKjyAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkZAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjzAAG",
+                  "Id": "a061s000001UKkZAAW",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkaAAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjzAAG",
+                  "Id": "a061s000001UKkaAAG",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 1.2,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkbAAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjzAAG",
+                  "Id": "a061s000001UKkbAAG",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 1.8,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkcAAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjzAAG",
+                  "Id": "a061s000001UKkcAAG",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 2.4,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkdAAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjzAAG",
+                  "Id": "a061s000001UKkdAAG",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 3.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 8,
+              "score": null,
+              "optionName": "Others",
+              "optionId": "a061s000001UKjzAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        }
+      ],
+      "fromDate": "2021-01-01",
+      "filterValues": ";Karnataka",
+      "filterType": "State",
+      "assignedTo": [],
+      "applicableTo": "Retailers"
+    },
+    {
+      "toDate": "2021-01-31",
+      "surveyName": "Screenshot Survey",
+      "surveyId": "a041s000002oYzKAAU",
+      "Questions": [
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z8VAAQ"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z8VAAQ",
+            "Detailed_Survey_Question_Name__c": "Type of Shop?",
+            "Description__c": "Type of Shop?",
+            "Option_Type__c": "Single Select",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 1
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "Fancy",
+              "optionId": "a061s000001UKhVAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "Departmental Store",
+              "optionId": "a061s000001UKhWAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "Platform Shop",
+              "optionId": "a061s000001UKhXAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "Footwear Shop",
+              "optionId": "a061s000001UKhYAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "Showroom Medium",
+              "optionId": "a061s000001UKhZAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 6,
+              "score": null,
+              "optionName": "Showroom Large",
+              "optionId": "a061s000001UKhaAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z8aAAA"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z8aAAA",
+            "Detailed_Survey_Question_Name__c": "How long it will take to recover in normal position?",
+            "Description__c": "How long it will take to recover in normal position?",
+            "Option_Type__c": "Single Select List",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 2
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "1 Month",
+              "optionId": "a061s000001UKhbAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "2 Months",
+              "optionId": "a061s000001UKhcAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "3 Months",
+              "optionId": "a061s000001UKhdAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "4 Months",
+              "optionId": "a061s000001UKheAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "5 Months",
+              "optionId": "a061s000001UKhfAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z8WAAQ"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z8WAAQ",
+            "Detailed_Survey_Question_Name__c": "Stock Level of VKC Group?",
+            "Description__c": "Stock Level of VKC Group?",
+            "Option_Type__c": "Single Select Group",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 3
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "VKC Pride",
+              "optionId": "a061s000001UKhgAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "VKC Lite",
+              "optionId": "a061s000001UKhhAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "VKC Stile",
+              "optionId": "a061s000001UKhiAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "Walkroo",
+              "optionId": "a061s000001UKhjAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "Skalino",
+              "optionId": "a061s000001UKhkAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 6,
+              "score": null,
+              "optionName": "VKC Trendz",
+              "optionId": "a061s000001UKhlAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 7,
+              "score": null,
+              "optionName": "VKC Junior",
+              "optionId": "a061s000001UKhmAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 8,
+              "score": null,
+              "optionName": "Smartak",
+              "optionId": "a061s000001UKhnAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 9,
+              "score": null,
+              "optionName": "Slipons",
+              "optionId": "a061s000001UKhoAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "Nil",
+              "optionId": "a061s000001UKhpAAG",
+              "level": "Option 2",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "Poor",
+              "optionId": "a061s000001UKhqAAG",
+              "level": "Option 2",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "Average",
+              "optionId": "a061s000001UKhrAAG",
+              "level": "Option 2",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "Good",
+              "optionId": "a061s000001UKhsAAG",
+              "level": "Option 2",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "Very Good",
+              "optionId": "a061s000001UKhtAAG",
+              "level": "Option 2",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 6,
+              "score": null,
+              "optionName": "Excellent",
+              "optionId": "a061s000001UKhuAAG",
+              "level": "Option 2",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z8fAAA"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z8fAAA",
+            "Detailed_Survey_Question_Name__c": "Product Category Dealing With?",
+            "Description__c": "Product Category Dealing With?",
+            "Option_Type__c": "Multi Select",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 4
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "Canvas Shoes",
+              "optionId": "a061s000001UKhvAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "Sports Shoes",
+              "optionId": "a061s000001UKhwAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "Formal Shoes",
+              "optionId": "a061s000001UKhxAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "Leather Shoes",
+              "optionId": "a061s000001UKhyAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "Leather Chappal",
+              "optionId": "a061s000001UKhzAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 6,
+              "score": null,
+              "optionName": "Stuckon Footwear",
+              "optionId": "a061s000001UKi0AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 7,
+              "score": null,
+              "optionName": "None of the Above",
+              "optionId": "a061s000001UKi1AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z9DAAQ"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z9DAAQ",
+            "Detailed_Survey_Question_Name__c": "Ordering Question?",
+            "Description__c": "Ordering Question?",
+            "Option_Type__c": "Ordering Question",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 5
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "Credit",
+              "optionId": "a061s000001UKi7AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "Service",
+              "optionId": "a061s000001UKi8AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "All Models",
+              "optionId": "a061s000001UKi9AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "Door Delivery",
+              "optionId": "a061s000001UKiAAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "Cut Case",
+              "optionId": "a061s000001UKiBAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 6,
+              "score": null,
+              "optionName": "Price Discount",
+              "optionId": "a061s000001UKiCAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 7,
+              "score": null,
+              "optionName": "NA",
+              "optionId": "a061s000001UKiDAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z9IAAQ"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z9IAAQ",
+            "Detailed_Survey_Question_Name__c": "Leeds-Ladies art sales for last 2 weeks in prs?",
+            "Description__c": "Leeds-Ladies art sales for last 2 weeks in prs?",
+            "Option_Type__c": "Integer Enter Question",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 6
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z9qAAA"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z9qAAA",
+            "Detailed_Survey_Question_Name__c": "Which is main competitor brand?",
+            "Description__c": "Which is main competitor brand?",
+            "Option_Type__c": "Text",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 7
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z9vAAA"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z9vAAA",
+            "Detailed_Survey_Question_Name__c": "Customers preferring VKC Products?",
+            "Description__c": "Customers preferring VKC Products?",
+            "Option_Type__c": "Slider",
+            "Type__c": "Qualitative",
+            "Min_Limit__c": 0,
+            "Max_Limit__c": 100,
+            "Requires_Data_from_Database__c": false,
+            "Slider_Datatype__c": "Percent",
+            "Units__c": 1.0,
+            "Sequence_No__c": 8
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zA0AAI"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zA0AAI",
+            "Detailed_Survey_Question_Name__c": "Rate the Comfort",
+            "Description__c": "Rate the Comfort",
+            "Option_Type__c": "Star Rating",
+            "Type__c": "Qualitative",
+            "Max_Limit__c": 5,
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 9
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAAAAY"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAAAAY",
+            "Detailed_Survey_Question_Name__c": "Please choose which product you like",
+            "Description__c": "Please choose which product you like",
+            "Option_Type__c": "Question with Image as options",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 10
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "Image 01",
+              "optionId": "a061s000001UKiJAAW",
+              "level": "Option 1",
+              "imageUrl": "https://www.vkcgroup.com/product/vkc-pride-pg1302",
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "Image 11",
+              "optionId": "a061s000001UKiKAAW",
+              "level": "Option 1",
+              "imageUrl": "https://www.vkcgroup.com/product/vkc-pride-pg1306",
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "Image 21",
+              "optionId": "a061s000001UKiLAAW",
+              "level": "Option 1",
+              "imageUrl": "https://www.vkcgroup.com/product/vkc-pride-pl2705",
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAFAAY"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAFAAY",
+            "Detailed_Survey_Question_Name__c": "Image Upload Question",
+            "Description__c": "Image Upload Question",
+            "Option_Type__c": "Upload Image for choosing an Option",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 11
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAKAAY"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAKAAY",
+            "Detailed_Survey_Question_Name__c": "Name the Wholesale Dealers in Order",
+            "Description__c": "Name the Wholesale Dealers in Order",
+            "Option_Type__c": "Multi Text",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": true,
+            "Object__c": "Account",
+            "Filter_Type__c": "State",
+            "Sequence_No__c": 12
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAPAAY"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAPAAY",
+            "Detailed_Survey_Question_Name__c": "Please share your feedback of this Image",
+            "Description__c": "Please share your feedback of this Image",
+            "Option_Type__c": "Feedback",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 13
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z8gAAA"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z8gAAA",
+            "Detailed_Survey_Question_Name__c": "Sales Volume in Leather Footwear?",
+            "Description__c": "Sales Volume in Leather Footwear?",
+            "Option_Type__c": "Tabular Question",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 14
+          },
+          "Options": [
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKiVAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKiVAAW",
+                  "Detailed_Survey_Option_Name__c": "1000-1499",
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKiWAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKiWAAW",
+                  "Detailed_Survey_Option_Name__c": "1500-1999",
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKiXAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKiXAAW",
+                  "Detailed_Survey_Option_Name__c": "2000-2499",
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKiYAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKiYAAW",
+                  "Detailed_Survey_Option_Name__c": "2500-2999",
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKiZAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKiZAAW",
+                  "Detailed_Survey_Option_Name__c": "3000-3499",
+                  "Sequence_No__c": 5
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKiaAAG"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKiaAAG",
+                  "Detailed_Survey_Option_Name__c": "3500-4999",
+                  "Sequence_No__c": 6
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKibAAG"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKibAAG",
+                  "Detailed_Survey_Option_Name__c": "Above 5000",
+                  "Sequence_No__c": 7
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKicAAG"
+                  },
+                  "Main_Option__c": "a061s000001UKiTAAW",
+                  "Id": "a061s000001UKicAAG",
+                  "Detailed_Survey_Option_Name__c": "Others",
+                  "Sequence_No__c": 8
+                }
+              ],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "Volume",
+              "optionId": "a061s000001UKiTAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": "Picklist Value"
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "Pair",
+              "optionId": "a061s000001UKiUAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": "Entry Value"
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023z9JAAQ"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023z9JAAQ",
+            "Detailed_Survey_Question_Name__c": "Coupon",
+            "Description__c": "Coupon",
+            "Option_Type__c": "Coupon",
+            "Weightage__c": 40.0,
+            "Type__c": "Quantitative",
+            "Max_Limit__c": 1400,
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 15
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAeAAI"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAeAAI",
+            "Detailed_Survey_Question_Name__c": "Display",
+            "Description__c": "Display",
+            "Option_Type__c": "Display",
+            "Weightage__c": 20.0,
+            "Type__c": "Quantitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 16
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": "15.80",
+              "optionName": "VKC PRIDE",
+              "optionId": "a061s000001UKiqAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": "3.00",
+              "optionName": "VKC LITE",
+              "optionId": "a061s000001UKirAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": "1.00",
+              "optionName": "SMARTAK",
+              "optionId": "a061s000001UKisAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": "0.10",
+              "optionName": "SLIPONS",
+              "optionId": "a061s000001UKitAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": "0.02",
+              "optionName": "VKC STILE",
+              "optionId": "a061s000001UKiuAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 6,
+              "score": "0.01",
+              "optionName": "VKC TRENDZ",
+              "optionId": "a061s000001UKivAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 7,
+              "score": "0.07",
+              "optionName": "VKC JUNIOR",
+              "optionId": "a061s000001UKiwAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAjAAI"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAjAAI",
+            "Detailed_Survey_Question_Name__c": "Stock",
+            "Description__c": "Stock",
+            "Option_Type__c": "Stock",
+            "Weightage__c": 15.0,
+            "Type__c": "Quantitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 17
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": "7.90",
+              "optionName": "VKC PRIDE",
+              "optionId": "a061s000001UKjHAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": "1.50",
+              "optionName": "VKC LITE",
+              "optionId": "a061s000001UKjIAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": "0.50",
+              "optionName": "SMARTAK",
+              "optionId": "a061s000001UKjJAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": "0.05",
+              "optionName": "SLIPONS",
+              "optionId": "a061s000001UKjKAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": "0.01",
+              "optionName": "VKC STILE",
+              "optionId": "a061s000001UKjLAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 6,
+              "score": "0.03",
+              "optionName": "VKC TRENDZ",
+              "optionId": "a061s000001UKjMAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 7,
+              "score": "0.01",
+              "optionName": "VKC JUNIOR",
+              "optionId": "a061s000001UKjNAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAfAAI"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAfAAI",
+            "Detailed_Survey_Question_Name__c": "Performance in the area",
+            "Description__c": "Performance in the area",
+            "Option_Type__c": "Performance In the Area",
+            "Weightage__c": 5.0,
+            "Type__c": "Quantitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 18
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": "2.00",
+              "optionName": "P",
+              "optionId": "a061s000001UKizAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": "4.00",
+              "optionName": "A",
+              "optionId": "a061s000001UKj0AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": "6.00",
+              "optionName": "G",
+              "optionId": "a061s000001UKj1AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": "8.00",
+              "optionName": "V",
+              "optionId": "a061s000001UKjTAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": "10.00",
+              "optionName": "E",
+              "optionId": "a061s000001UKjUAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAoAAI"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAoAAI",
+            "Detailed_Survey_Question_Name__c": "Salesman Commit",
+            "Description__c": "Salesman Commit",
+            "Option_Type__c": "Salesman Commit",
+            "Weightage__c": 10.0,
+            "Type__c": "Quantitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 19
+          },
+          "Options": [
+            {
+              "subOptions": [],
+              "seqNo": 1,
+              "score": "2.00",
+              "optionName": "P",
+              "optionId": "a061s000001UKj8AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 2,
+              "score": "4.00",
+              "optionName": "A",
+              "optionId": "a061s000001UKj9AAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 3,
+              "score": "6.00",
+              "optionName": "G",
+              "optionId": "a061s000001UKjAAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 4,
+              "score": "8.00",
+              "optionName": "V",
+              "optionId": "a061s000001UKjBAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [],
+              "seqNo": 5,
+              "score": "10.00",
+              "optionName": "E",
+              "optionId": "a061s000001UKjYAAW",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000023zAtAAI"
+            },
+            "Survey_Master__c": "a041s000002oaPMAAY",
+            "Id": "a051s0000023zAtAAI",
+            "Detailed_Survey_Question_Name__c": "Special Efforts",
+            "Description__c": "Special Efforts",
+            "Option_Type__c": "Special Efforts",
+            "Weightage__c": 10.0,
+            "Type__c": "Quantitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 20
+          },
+          "Options": [
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk0AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjsAAG",
+                  "Id": "a061s000001UKk0AAG",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.2,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk1AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjsAAG",
+                  "Id": "a061s000001UKk1AAG",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 0.4,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk2AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjsAAG",
+                  "Id": "a061s000001UKk2AAG",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk3AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjsAAG",
+                  "Id": "a061s000001UKk3AAG",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 0.8,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk4AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjsAAG",
+                  "Id": "a061s000001UKk4AAG",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 1.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "Light",
+              "optionId": "a061s000001UKjsAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk5AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjtAAG",
+                  "Id": "a061s000001UKk5AAG",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.2,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk6AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjtAAG",
+                  "Id": "a061s000001UKk6AAG",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 0.4,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk7AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjtAAG",
+                  "Id": "a061s000001UKk7AAG",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk8AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjtAAG",
+                  "Id": "a061s000001UKk8AAG",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 0.8,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKk9AAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjtAAG",
+                  "Id": "a061s000001UKk9AAG",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 1.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "Cut In",
+              "optionId": "a061s000001UKjtAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkAAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjuAAG",
+                  "Id": "a061s000001UKkAAAW",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.2,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkBAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjuAAG",
+                  "Id": "a061s000001UKkBAAW",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 0.4,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkCAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjuAAG",
+                  "Id": "a061s000001UKkCAAW",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkDAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjuAAG",
+                  "Id": "a061s000001UKkDAAW",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 0.8,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkEAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjuAAG",
+                  "Id": "a061s000001UKkEAAW",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 1.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "Cut Out",
+              "optionId": "a061s000001UKjuAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkFAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjvAAG",
+                  "Id": "a061s000001UKkFAAW",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.2,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkGAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjvAAG",
+                  "Id": "a061s000001UKkGAAW",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 0.4,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkHAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjvAAG",
+                  "Id": "a061s000001UKkHAAW",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkIAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjvAAG",
+                  "Id": "a061s000001UKkIAAW",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 0.8,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkJAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjvAAG",
+                  "Id": "a061s000001UKkJAAW",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 1.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "TV",
+              "optionId": "a061s000001UKjvAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkKAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjwAAG",
+                  "Id": "a061s000001UKkKAAW",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.2,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkLAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjwAAG",
+                  "Id": "a061s000001UKkLAAW",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 0.4,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkMAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjwAAG",
+                  "Id": "a061s000001UKkMAAW",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkNAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjwAAG",
+                  "Id": "a061s000001UKkNAAW",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 0.8,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkOAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjwAAG",
+                  "Id": "a061s000001UKkOAAW",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 1.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "Aquarium",
+              "optionId": "a061s000001UKjwAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkPAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjxAAG",
+                  "Id": "a061s000001UKkPAAW",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.2,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkQAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjxAAG",
+                  "Id": "a061s000001UKkQAAW",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 0.4,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkRAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjxAAG",
+                  "Id": "a061s000001UKkRAAW",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkSAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjxAAG",
+                  "Id": "a061s000001UKkSAAW",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 0.8,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkTAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjxAAG",
+                  "Id": "a061s000001UKkTAAW",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 1.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 6,
+              "score": null,
+              "optionName": "Standees",
+              "optionId": "a061s000001UKjxAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkUAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjyAAG",
+                  "Id": "a061s000001UKkUAAW",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.2,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkVAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjyAAG",
+                  "Id": "a061s000001UKkVAAW",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 0.4,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkWAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjyAAG",
+                  "Id": "a061s000001UKkWAAW",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkXAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjyAAG",
+                  "Id": "a061s000001UKkXAAW",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 0.8,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkYAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjyAAG",
+                  "Id": "a061s000001UKkYAAW",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 1.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 7,
+              "score": null,
+              "optionName": "External",
+              "optionId": "a061s000001UKjyAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkZAAW"
+                  },
+                  "Main_Option__c": "a061s000001UKjzAAG",
+                  "Id": "a061s000001UKkZAAW",
+                  "Detailed_Survey_Option_Name__c": "P",
+                  "Score__c": 0.6,
+                  "Sequence_No__c": 1
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkaAAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjzAAG",
+                  "Id": "a061s000001UKkaAAG",
+                  "Detailed_Survey_Option_Name__c": "A",
+                  "Score__c": 1.2,
+                  "Sequence_No__c": 2
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkbAAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjzAAG",
+                  "Id": "a061s000001UKkbAAG",
+                  "Detailed_Survey_Option_Name__c": "G",
+                  "Score__c": 1.8,
+                  "Sequence_No__c": 3
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkcAAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjzAAG",
+                  "Id": "a061s000001UKkcAAG",
+                  "Detailed_Survey_Option_Name__c": "V",
+                  "Score__c": 2.4,
+                  "Sequence_No__c": 4
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UKkdAAG"
+                  },
+                  "Main_Option__c": "a061s000001UKjzAAG",
+                  "Id": "a061s000001UKkdAAG",
+                  "Detailed_Survey_Option_Name__c": "E",
+                  "Score__c": 3.0,
+                  "Sequence_No__c": 5
+                }
+              ],
+              "seqNo": 8,
+              "score": null,
+              "optionName": "Others",
+              "optionId": "a061s000001UKjzAAG",
+              "level": "Option 1",
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        }
+      ],
+      "fromDate": "2021-01-01",
+      "filterValues": ";Karnataka",
+      "filterType": "State",
+      "assignedTo": [],
+      "applicableTo": "Retailers"
+    }
   ]
 }

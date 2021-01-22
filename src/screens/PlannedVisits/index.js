@@ -5,64 +5,62 @@
 import React from 'react';
 import useSWR from 'swr';
 import PropTypes from 'prop-types';
-import { View, Text } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import { View, Text, FlatList } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-
-const addressString = data => `${data.Landmark}`;
+import axios from '@utils/axios';
+import VKCButton from '@components/VKCButton';
 
 const PlannedVisits = ({ navigation }) => {
-  const { data: plannedVisits, isValidating } = useSWR('/plannedVisits');
-
-  const displayRecords = arr => (
-    <View>
-      {arr.map(item => (
-        <>
-          <View
-            style={{
-              marginVertical: 10,
-              marginHorizontal: 20,
-              justifyContent: 'space-between',
-              flexDirection: 'row',
-              borderColor: 'green',
-              borderWidth: 1,
-              borderRadius: 20,
-            }}>
-            <RectButton
-              rippleColor="#D3D3D3"
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                marginHorizontal: 10,
-                marginVertical: 10,
-              }}
-              title="start"
-              onPress={() =>
-                navigation.navigate('SurveyQue', {
-                  questionId: 1,
-                })
-              }>
-              <Text>Retailer Name :{item.companyName}</Text>
-              <Text style={{ opacity: 0.4 }}>Beat Name : {addressString(item.Address)}</Text>
-              <Text style={{ opacity: 0.4 }}>Status : {item.status}</Text>
-            </RectButton>
-          </View>
-        </>
-      ))}
-    </View>
-  );
+  const { data: plannedVisits, isValidating } = useSWR('/dayPlan');
 
   if (isValidating) {
     return <Text>Loading...</Text>;
   }
+
   const { colors } = useTheme();
+
   return (
-    <View style={{ flex: 1, backgroundColor: colors.primary }}>
-      <View style={{ marginTop: 40 }}>
-        {displayRecords(plannedVisits?.filter(x => !x.isCompleted) || [])}
-        <Text style={{ textAlign: 'center' }}>Completed</Text>
-        {displayRecords(plannedVisits?.filter(x => x.isCompleted) || [])}
-      </View>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
+      <FlatList
+        data={plannedVisits?.visits || []}
+        renderItem={({ item }) => (
+          <View
+            style={{
+              backgroundColor: '#fff',
+              margin: 10,
+              padding: 10,
+              shadowColor: '#000',
+              borderRadius: 10,
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.23,
+              shadowRadius: 2.62,
+
+              elevation: 4,
+            }}>
+            <Text style={{ paddingVertical: 4 }}>{`Account Name: ${item.accName}`}</Text>
+            <Text style={{ paddingVertical: 4 }}>{`Area Name: ${item.AreaName}`}</Text>
+            <Text style={{ paddingVertical: 4 }}>{`Account Type: ${item.accType}`}</Text>
+            {item.surveys.map((x, i) => (
+              <VKCButton
+                variant="fill"
+                style={{ marginVertical: 5 }}
+                text={`Survey ${i + 1}`}
+                onPress={async () => {
+                  const res = await axios.get(`survey?surveyId=${x.svyId}`);
+                  navigation.navigate('SurveyQue', {
+                    questions: res.data[0]?.Questions,
+                    firstQuestion: true,
+                  });
+                }}
+              />
+            ))}
+          </View>
+        )}
+        keyExtractor={item => `${item.accId}`}
+      />
     </View>
   );
 };
