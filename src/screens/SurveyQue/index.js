@@ -8,11 +8,16 @@ import VKCButton from '@components/VKCButton';
 import SingleSelectRadio from '@components/SingleSelectRadio';
 import SingleSelectList from '@components/SingleSelectList';
 import MultiSelection from '@components/MultiSelection';
+import VKCDraggableList from '@components/VKCDraggableList';
+import VKCMediaPicker from '@components/VKCMediaPicker';
 // import LongText from '@components/LongText';
-// import SelectGroup from '@components/SelectGroup';
+import SelectGroup from '@components/SelectGroup';
 // import IntegerInput from '@components/IntegerInput';
-// import SliderQuestion from '@components/SliderQuestion';
-// import StarRating from '@components/StarRating';
+import SliderQuestion from '@components/SliderQuestion';
+import StarRating from '@components/StarRating';
+import TextEle from '@components/TextEle';
+import { TextInput } from 'react-native-gesture-handler';
+import MultiText from '@components/MultiText';
 // import TextInput from '@components/TextInput/TextInput';
 // import { RectButton } from 'react-native-gesture-handler';
 // import SubmitServey from '../../components/SubmitServey';
@@ -23,8 +28,8 @@ const SurveyQue = ({ navigation, route }) => {
   const [question, ...restQuestions] = questions;
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Text>{question.sQuestion.Detailed_Survey_Question_Name__c}</Text>
+    <SafeAreaView style={{ flex: 1, margin: 10 }}>
+      <TextEle variant="title">{question.sQuestion.Detailed_Survey_Question_Name__c}</TextEle>
       <ScrollView style={{ flex: 1 }}>
         <Choose>
           <When condition={question.sQuestion.Option_Type__c === 'Single Select'}>
@@ -44,7 +49,7 @@ const SurveyQue = ({ navigation, route }) => {
             />
           </When>
           <When condition={question.sQuestion.Option_Type__c === 'Single Select Group'}>
-            <Text>{question.sQuestion.Option_Type__c}</Text>
+            <SelectGroup data={question.Options} />
           </When>
           <When condition={question.sQuestion.Option_Type__c === 'Multi Select'}>
             <MultiSelection
@@ -55,32 +60,81 @@ const SurveyQue = ({ navigation, route }) => {
             />
           </When>
           <When condition={question.sQuestion.Option_Type__c === 'Ordering Question'}>
-            <Text>{question.sQuestion.Option_Type__c}</Text>
+            <VKCDraggableList data={question.Options} />
           </When>
           <When condition={question.sQuestion.Option_Type__c === 'Integer Enter Question'}>
-            <Text>{question.sQuestion.Option_Type__c}</Text>
+            <TextInput
+              style={{
+                height: 56,
+                paddingHorizontal: 24,
+                borderColor: 'black',
+                borderWidth: 2,
+                borderRadius: 32,
+                fontWeight: '500',
+                fontFamily: 'Inter-Medium',
+                fontSize: 15,
+                fontStyle: 'normal',
+                lineHeight: 18,
+                letterSpacing: 0.7,
+                textAlign: 'left',
+                marginVertical: 10,
+              }}
+              keyboardType="numeric"
+            />
           </When>
           <When condition={question.sQuestion.Option_Type__c === 'Text'}>
-            <Text>{question.sQuestion.Option_Type__c}</Text>
+            <TextInput
+              style={{
+                height: 56,
+                paddingHorizontal: 24,
+                borderColor: 'black',
+                borderWidth: 2,
+                borderRadius: 32,
+                fontWeight: '500',
+                fontFamily: 'Inter-Medium',
+                fontSize: 15,
+                fontStyle: 'normal',
+                lineHeight: 18,
+                letterSpacing: 0.7,
+                textAlign: 'left',
+                marginVertical: 10,
+              }}
+            />
           </When>
           <When condition={question.sQuestion.Option_Type__c === 'Slider'}>
-            <Text>{question.sQuestion.Option_Type__c}</Text>
+            <SliderQuestion data={question.sQuestion} />
           </When>
           <When condition={question.sQuestion.Option_Type__c === 'Star Rating'}>
-            <Text>{question.sQuestion.Option_Type__c}</Text>
+            <StarRating data={question.sQuestion} />
           </When>
           <When condition={question.sQuestion.Option_Type__c === 'Question with Image as options'}>
             <Text>{question.sQuestion.Option_Type__c}</Text>
           </When>
           <When
             condition={question.sQuestion.Option_Type__c === 'Upload Image for choosing an Option'}>
-            <Text>{question.sQuestion.Option_Type__c}</Text>
+            <VKCMediaPicker />
           </When>
           <When condition={question.sQuestion.Option_Type__c === 'Multi Text'}>
-            <Text>{question.sQuestion.Option_Type__c}</Text>
+            <MultiText />
           </When>
           <When condition={question.sQuestion.Option_Type__c === 'Feedback'}>
-            <Text>{question.sQuestion.Option_Type__c}</Text>
+            <TextInput
+              multiline
+              style={{
+                paddingHorizontal: 24,
+                borderColor: 'black',
+                borderWidth: 2,
+                borderRadius: 10,
+                fontWeight: '500',
+                fontFamily: 'Inter-Medium',
+                fontSize: 15,
+                fontStyle: 'normal',
+                lineHeight: 18,
+                letterSpacing: 0.7,
+                textAlign: 'left',
+                marginVertical: 10,
+              }}
+            />
           </When>
           <When condition={question.sQuestion.Option_Type__c === 'Tabular Question'}>
             <Text>{question.sQuestion.Option_Type__c}</Text>

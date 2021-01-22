@@ -11,19 +11,19 @@ const SelectGroup = ({ data }) => {
       <TextEle variant="title">{data.question}</TextEle>
       <View style={{ flexDirection: 'row' }}>
         <View style={{ width: 60 }} />
-        <For each="ele" of={data.column}>
-          <Text style={{ width: 60 }}>{ele.rate}</Text>
+        <For each="ele" of={data.filter(x => x.level === 'Option 2')}>
+          <Text style={{ width: 60 }}>{ele.optionName}</Text>
         </For>
       </View>
-      <For each="row" index="i" of={data.row}>
+      <For each="row" index="i" of={data.filter(x => x.level === 'Option 1')}>
         <View style={{ flexDirection: 'row' }}>
-          <Text style={{ width: 60 }}>{row.text}</Text>
-          <For each="column" of={data.column}>
+          <Text style={{ width: 60 }}>{row.optionName}</Text>
+          <For each="column" of={data.filter(x => x.level === 'Option 2')}>
             <View style={{ width: 60, alignItems: 'center' }}>
               <RadioCore
-                option={{ value: `${row.id}_${column.id}` }}
+                option={{ value: `${row.optionId}_${column.optionId}` }}
                 value={value}
-                onPress={() => setValue(`${row.id}_${column.id}`)}
+                onPress={() => setValue(`${row.optionId}_${column.optionId}`)}
               />
             </View>
           </For>
