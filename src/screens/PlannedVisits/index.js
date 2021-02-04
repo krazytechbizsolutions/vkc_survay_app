@@ -11,7 +11,9 @@ import axios from '@utils/axios';
 import VKCButton from '@components/VKCButton';
 
 const PlannedVisits = ({ navigation }) => {
-  const { data: plannedVisits, isValidating } = useSWR('/dayPlan.json');
+  const { data: plannedVisits, isValidating } = useSWR(
+    'https://projects.krazy-tech.com/vkc/dayPlan.json',
+  );
 
   if (isValidating) {
     return <Text>Loading...</Text>;
@@ -49,7 +51,7 @@ const PlannedVisits = ({ navigation }) => {
                 style={{ marginVertical: 5 }}
                 text={`Survey ${i + 1}`}
                 onPress={async () => {
-                  const res = await axios.get('survey.json');
+                  const res = await axios.get('https://projects.krazy-tech.com/vkc/survey.json');
                   navigation.navigate('SurveyQue', {
                     questions: res.data[0]?.Questions,
                     firstQuestion: true,

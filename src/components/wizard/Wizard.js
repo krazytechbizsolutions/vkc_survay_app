@@ -80,66 +80,70 @@ export default class Wizard extends React.PureComponent {
                   if (page !== index) {
                     return null;
                   }
-                  <View key={index} style={commonStyle.mar10}>
-                    {field.map(item => {
-                      if (
-                        item.onField &&
-                        item.onValue &&
-                        !item.onValue.split(',').includes(values[item.onField])
-                      ) {
-                        if (values[item.name] !== item.value) {
-                          setFieldValue(item.name, item.value);
+                  return (
+                    <View key={index} style={commonStyle.mar10}>
+                      {field.map(item => {
+                        if (
+                          item.onField &&
+                          item.onValue &&
+                          !item.onValue.split(',').includes(values[item.onField])
+                        ) {
+                          if (values[item.name] !== item.value) {
+                            setFieldValue(item.name, item.value);
+                          }
+                          return;
                         }
-                        return;
-                      }
-                      if (item.fieldArray) {
-                        <FieldArray
-                          key={item.name}
-                          name={item.name}
-                          render={arrayHelpers => (
-                            <>
-                              {values[item.name].map((_, index) => (
-                                <View
-                                  key={index}
-                                  style={{
-                                    flex: 1,
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                  }}>
-                                  <View style={{ flex: 1 }}>
-                                    {item.fieldArray.map(arr => (
-                                      <Field
-                                        key={arr.name}
-                                        {...arr}
-                                        name={`${item.name}[${index}].${arr.name}`}
+                        if (item.fieldArray) {
+                          return (
+                            <FieldArray
+                              key={item.name}
+                              name={item.name}
+                              render={arrayHelpers => (
+                                <>
+                                  {values[item.name].map((_, index) => (
+                                    <View
+                                      key={index}
+                                      style={{
+                                        flex: 1,
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                      }}>
+                                      <View style={{ flex: 1 }}>
+                                        {item.fieldArray.map(arr => (
+                                          <Field
+                                            key={arr.name}
+                                            {...arr}
+                                            name={`${item.name}[${index}].${arr.name}`}
+                                          />
+                                        ))}
+                                      </View>
+                                      <BorderlessButton
+                                        style={{ marginLeft: 10 }}
+                                        onPress={() => arrayHelpers.remove(index)}
                                       />
-                                    ))}
-                                  </View>
-                                  <BorderlessButton
-                                    style={{ marginLeft: 10 }}
-                                    onPress={() => arrayHelpers.remove(index)}
-                                  />
-                                </View>
-                              ))}
-                              {values[item.name].length < (item.maxLength || 3) && (
-                                <Button
-                                  style={{ flex: 1, marginVertical: 8 }}
-                                  viewStyle={{
-                                    paddingVertical: 10,
-                                    backgroundColor: '#ef4b4b',
-                                  }}
-                                  title={item.buttonTitle}
-                                  textStyle={{ color: '#fff' }}
-                                  onPress={() => arrayHelpers.push(item.addObject)}
-                                />
+                                    </View>
+                                  ))}
+                                  {values[item.name].length < (item.maxLength || 3) && (
+                                    <Button
+                                      style={{ flex: 1, marginVertical: 8 }}
+                                      viewStyle={{
+                                        paddingVertical: 10,
+                                        backgroundColor: '#ef4b4b',
+                                      }}
+                                      title={item.buttonTitle}
+                                      textStyle={{ color: '#fff' }}
+                                      onPress={() => arrayHelpers.push(item.addObject)}
+                                    />
+                                  )}
+                                </>
                               )}
-                            </>
-                          )}
-                        />;
-                      }
-                      <Field key={item.name} {...item} />;
-                    })}
-                  </View>;
+                            />
+                          );
+                        }
+                        return <Field key={item.name} {...item} />;
+                      })}
+                    </View>
+                  );
                 })}
               </ScrollView>
 

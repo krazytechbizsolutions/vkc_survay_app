@@ -1,11 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { TextInput, View } from 'react-native';
-import TextEle from '@components/TextEle';
 
-const IntegerInput = ({ data }) => (
+const IntegerInput = () => (
   <View style={{ flex: 1 }}>
-    <TextEle variant="title">{data.question}</TextEle>
     <TextInput
       placeholder="Enter the integer"
       underlineColorAndroid="transparent"

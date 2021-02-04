@@ -347,6 +347,561 @@
       }
     ]
   },
+  "surveyJSON": [
+    {
+      "toDate": "2021-02-28",
+      "surveyName": "Looping Question Sample JSON",
+      "surveyId": "a041s000002ohveAAA",
+      "Questions": [
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000024CsaAAE"
+            },
+            "Survey_Master__c": "a041s000002ohveAAA",
+            "Id": "a051s0000024CsaAAE",
+            "Detailed_Survey_Question_Name__c": "Main Question Single Select",
+            "Description__c": "Main Question Single Select",
+            "Option_Type__c": "Single Select",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 1,
+            "Is_Looping_Question__c": false
+          },
+          "Options": [
+            {
+              "subOrLoopingQtnOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UTPPAA4"
+                  },
+                  "Id": "a061s000001UTPPAA4",
+                  "Detailed_Survey_Option_Name__c": "CQ Option 1",
+                  "Sequence_No__c": 1,
+                  "Survey_Question_Master__c": "a051s0000024CstAAE"
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UTPQAA4"
+                  },
+                  "Id": "a061s000001UTPQAA4",
+                  "Detailed_Survey_Option_Name__c": "CQ Option 2",
+                  "Sequence_No__c": 2,
+                  "Survey_Question_Master__c": "a051s0000024CstAAE"
+                }
+              ],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "MQ SS Option 1",
+              "optionId": "a061s000001UTPHAA4",
+              "loopingQtnType": "Single Select",
+              "loopingQtnName": "Child Question Single Select",
+              "loopingQtnId": "a051s0000024CstAAE",
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": true,
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UTPRAA4"
+                  },
+                  "Id": "a061s000001UTPRAA4",
+                  "Detailed_Survey_Option_Name__c": "CQ Option 1",
+                  "Sequence_No__c": 1,
+                  "Survey_Question_Master__c": "a051s0000024CsuAAE"
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UTPSAA4"
+                  },
+                  "Id": "a061s000001UTPSAA4",
+                  "Detailed_Survey_Option_Name__c": "CQ Option 2",
+                  "Sequence_No__c": 2,
+                  "Survey_Question_Master__c": "a051s0000024CsuAAE"
+                }
+              ],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "MQ SS Option 2",
+              "optionId": "a061s000001UTPIAA4",
+              "loopingQtnType": "Single Select List",
+              "loopingQtnName": "Child Question Single Select List",
+              "loopingQtnId": "a051s0000024CsuAAE",
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": true,
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UTPZAA4"
+                  },
+                  "Id": "a061s000001UTPZAA4",
+                  "Detailed_Survey_Option_Name__c": "CQ Option 1",
+                  "Sequence_No__c": 1,
+                  "Survey_Question_Master__c": "a051s0000024CsyAAE"
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UTPaAAO"
+                  },
+                  "Id": "a061s000001UTPaAAO",
+                  "Detailed_Survey_Option_Name__c": "CQ Option 2",
+                  "Sequence_No__c": 2,
+                  "Survey_Question_Master__c": "a051s0000024CsyAAE"
+                }
+              ],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "MQ SS Option 3",
+              "optionId": "a061s000001UTPJAA4",
+              "loopingQtnType": "Multi Select",
+              "loopingQtnName": "Child Question Multi Select",
+              "loopingQtnId": "a051s0000024CsyAAE",
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": true,
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UTPeAAO"
+                  },
+                  "Id": "a061s000001UTPeAAO",
+                  "Detailed_Survey_Option_Name__c": "CQ Option 1",
+                  "Sequence_No__c": 1,
+                  "Survey_Question_Master__c": "a051s0000024Ct3AAE"
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UTPfAAO"
+                  },
+                  "Id": "a061s000001UTPfAAO",
+                  "Detailed_Survey_Option_Name__c": "CQ Option 2",
+                  "Sequence_No__c": 2,
+                  "Survey_Question_Master__c": "a051s0000024Ct3AAE"
+                }
+              ],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "MQ SS Option 4",
+              "optionId": "a061s000001UTPKAA4",
+              "loopingQtnType": "Ordering Question",
+              "loopingQtnName": "Child Question Ordering Question",
+              "loopingQtnId": "a051s0000024Ct3AAE",
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": true,
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "MQ SS Option 5",
+              "optionId": "a061s000001UTPLAA4",
+              "loopingQtnType": "Integer Enter Question",
+              "loopingQtnName": "Child Question Integer Question",
+              "loopingQtnId": "a051s0000024Ct8AAE",
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": true,
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [],
+              "seqNo": 6,
+              "score": null,
+              "optionName": "MQ SS Option 6",
+              "optionId": "a061s000001UTPMAA4",
+              "loopingQtnType": "Text",
+              "loopingQtnName": "Child Question Text Question",
+              "loopingQtnId": "a051s0000024CtDAAU",
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": true,
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [],
+              "seqNo": 7,
+              "score": null,
+              "optionName": "MQ SS Option 7",
+              "optionId": "a061s000001UTPNAA4",
+              "loopingQtnType": "Slider",
+              "loopingQtnName": "Child Question Slider Question",
+              "loopingQtnId": "a051s0000024CtIAAU",
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": true,
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [],
+              "seqNo": 8,
+              "score": null,
+              "optionName": "MQ SS Option 8",
+              "optionId": "a061s000001UTPOAA4",
+              "loopingQtnType": "Feedback",
+              "loopingQtnName": "Child Question Feedback Question",
+              "loopingQtnId": "a051s0000024CtEAAU",
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": true,
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000024CtJAAU"
+            },
+            "Survey_Master__c": "a041s000002ohveAAA",
+            "Id": "a051s0000024CtJAAU",
+            "Detailed_Survey_Question_Name__c": "Main Question Single Select List",
+            "Description__c": "Main Question Single Select List",
+            "Option_Type__c": "Single Select List",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 2,
+            "Is_Looping_Question__c": false
+          },
+          "Options": [
+            {
+              "subOrLoopingQtnOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UTPrAAO"
+                  },
+                  "Id": "a061s000001UTPrAAO",
+                  "Detailed_Survey_Option_Name__c": "CQ SS Option 1",
+                  "Sequence_No__c": 1,
+                  "Survey_Question_Master__c": "a051s0000024Ct9AAE"
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UTPsAAO"
+                  },
+                  "Id": "a061s000001UTPsAAO",
+                  "Detailed_Survey_Option_Name__c": "CQ SS Option 2",
+                  "Sequence_No__c": 2,
+                  "Survey_Question_Master__c": "a051s0000024Ct9AAE"
+                }
+              ],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "MQ SSL Option 1",
+              "optionId": "a061s000001UTPjAAO",
+              "loopingQtnType": "Single Select",
+              "loopingQtnName": "Child Question Single Select",
+              "loopingQtnId": "a051s0000024Ct9AAE",
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": true,
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "MQ SSL Option 2",
+              "optionId": "a061s000001UTPkAAO",
+              "loopingQtnType": null,
+              "loopingQtnName": null,
+              "loopingQtnId": null,
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": null,
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [],
+              "seqNo": 3,
+              "score": null,
+              "optionName": "MQ SSL Option 3",
+              "optionId": "a061s000001UTPlAAO",
+              "loopingQtnType": null,
+              "loopingQtnName": null,
+              "loopingQtnId": null,
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": null,
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [],
+              "seqNo": 4,
+              "score": null,
+              "optionName": "MQ SSL Option 4",
+              "optionId": "a061s000001UTPmAAO",
+              "loopingQtnType": null,
+              "loopingQtnName": null,
+              "loopingQtnId": null,
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": null,
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [],
+              "seqNo": 5,
+              "score": null,
+              "optionName": "MQ SSL Option 5",
+              "optionId": "a061s000001UTPnAAO",
+              "loopingQtnType": null,
+              "loopingQtnName": null,
+              "loopingQtnId": null,
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": null,
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [],
+              "seqNo": 6,
+              "score": null,
+              "optionName": "MQ SSL Option 6",
+              "optionId": "a061s000001UTPoAAO",
+              "loopingQtnType": null,
+              "loopingQtnName": null,
+              "loopingQtnId": null,
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": null,
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [],
+              "seqNo": 7,
+              "score": null,
+              "optionName": "MQ SSL Option 7",
+              "optionId": "a061s000001UTPpAAO",
+              "loopingQtnType": null,
+              "loopingQtnName": null,
+              "loopingQtnId": null,
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": null,
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [],
+              "seqNo": 8,
+              "score": null,
+              "optionName": "MQ SSL Option 8",
+              "optionId": "a061s000001UTPqAAO",
+              "loopingQtnType": null,
+              "loopingQtnName": null,
+              "loopingQtnId": null,
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": null,
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000024CtNAAU"
+            },
+            "Survey_Master__c": "a041s000002ohveAAA",
+            "Id": "a051s0000024CtNAAU",
+            "Detailed_Survey_Question_Name__c": "Main Question Ordering Question",
+            "Description__c": "Main Question Ordering Question",
+            "Option_Type__c": "Ordering Question",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 3,
+            "Is_Looping_Question__c": false
+          },
+          "Options": [
+            {
+              "subOrLoopingQtnOptions": [
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UTQ1AAO"
+                  },
+                  "Id": "a061s000001UTQ1AAO",
+                  "Detailed_Survey_Option_Name__c": "CQ SSL Option 1",
+                  "Sequence_No__c": 1,
+                  "Survey_Question_Master__c": "a051s0000024CtSAAU"
+                },
+                {
+                  "attributes": {
+                    "type": "Survey_Option_Master__c",
+                    "url": "/services/data/v51.0/sobjects/Survey_Option_Master__c/a061s000001UTQ2AAO"
+                  },
+                  "Id": "a061s000001UTQ2AAO",
+                  "Detailed_Survey_Option_Name__c": "CQ SSL Option 2",
+                  "Sequence_No__c": 2,
+                  "Survey_Question_Master__c": "a051s0000024CtSAAU"
+                }
+              ],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "MQ OQ Option 1",
+              "optionId": "a061s000001UTPwAAO",
+              "loopingQtnType": "Single Select List",
+              "loopingQtnName": "Child Question Single Select List",
+              "loopingQtnId": "a051s0000024CtSAAU",
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": true,
+              "imageUrl": null,
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "MQ OQ Option 2",
+              "optionId": "a061s000001UTPxAAO",
+              "loopingQtnType": null,
+              "loopingQtnName": null,
+              "loopingQtnId": null,
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": null,
+              "imageUrl": null,
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000024CtXAAU"
+            },
+            "Survey_Master__c": "a041s000002ohveAAA",
+            "Id": "a051s0000024CtXAAU",
+            "Detailed_Survey_Question_Name__c": "Main Question Star Rating",
+            "Description__c": "Main Question Star Rating",
+            "Option_Type__c": "Star Rating",
+            "Type__c": "Qualitative",
+            "Max_Limit__c": 5,
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 4,
+            "Is_Looping_Question__c": false
+          },
+          "Options": []
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000024CtmAAE"
+            },
+            "Survey_Master__c": "a041s000002ohveAAA",
+            "Id": "a051s0000024CtmAAE",
+            "Detailed_Survey_Question_Name__c": "Main Question Image as Options",
+            "Description__c": "Main Question Image as Options",
+            "Option_Type__c": "Question with Image as options",
+            "Type__c": "Qualitative",
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 5,
+            "Is_Looping_Question__c": false
+          },
+          "Options": [
+            {
+              "subOrLoopingQtnOptions": [],
+              "seqNo": 1,
+              "score": null,
+              "optionName": "Image 01",
+              "optionId": "a061s000001UTQ6AAO",
+              "loopingQtnType": null,
+              "loopingQtnName": null,
+              "loopingQtnId": null,
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": null,
+              "imageUrl": "https://drive.google.com/file/d/1A73xamImZg8tftpPl4_EbW5Y0s1RjO3m/view?usp=sharing",
+              "entryType": null
+            },
+            {
+              "subOrLoopingQtnOptions": [],
+              "seqNo": 2,
+              "score": null,
+              "optionName": "Image 11",
+              "optionId": "a061s000001UTQ7AAO",
+              "loopingQtnType": null,
+              "loopingQtnName": null,
+              "loopingQtnId": null,
+              "level": "Option 1",
+              "isNoneOfTheAbove": false,
+              "isLoopingQtn": null,
+              "imageUrl": "MQ Image as Option 2",
+              "entryType": null
+            }
+          ]
+        },
+        {
+          "sQuestion": {
+            "attributes": {
+              "type": "Survey_Question_Master__c",
+              "url": "/services/data/v51.0/sobjects/Survey_Question_Master__c/a051s0000024CtrAAE"
+            },
+            "Survey_Master__c": "a041s000002ohveAAA",
+            "Id": "a051s0000024CtrAAE",
+            "Detailed_Survey_Question_Name__c": "Coupon",
+            "Description__c": "Coupon",
+            "Option_Type__c": "Coupon",
+            "Weightage__c": 100,
+            "Type__c": "Quantitative",
+            "Max_Limit__c": 1400,
+            "Requires_Data_from_Database__c": false,
+            "Sequence_No__c": 6,
+            "Is_Looping_Question__c": false
+          },
+          "Options": []
+        }
+      ],
+      "fromDate": "2021-02-01",
+      "filterValues": "Karnataka;",
+      "filterType": "State",
+      "assignedTo": [],
+      "applicableTo": "Dealer;Retailer;Sub Dealer"
+    }
+  ],
   "survey": [
     {
       "toDate": "2021-01-31",
@@ -939,7 +1494,7 @@
               "optionName": "Image 01",
               "optionId": "a061s000001UKiJAAW",
               "level": "Option 1",
-              "imageUrl": "https://www.vkcgroup.com/product/vkc-pride-pg1302",
+              "imageUrl": "https://d23jrmnj7uqb0k.cloudfront.net/walkaroo/vkcgroup/Product/80x80/620200619122001img.jpg",
               "entryType": null
             },
             {
@@ -949,7 +1504,7 @@
               "optionName": "Image 11",
               "optionId": "a061s000001UKiKAAW",
               "level": "Option 1",
-              "imageUrl": "https://www.vkcgroup.com/product/vkc-pride-pg1306",
+              "imageUrl": "https://d23jrmnj7uqb0k.cloudfront.net/walkaroo/vkcgroup/Product/80x80/820200618112509img.jpg",
               "entryType": null
             },
             {
@@ -959,7 +1514,7 @@
               "optionName": "Image 21",
               "optionId": "a061s000001UKiLAAW",
               "level": "Option 1",
-              "imageUrl": "https://www.vkcgroup.com/product/vkc-pride-pl2705",
+              "imageUrl": "https://d23jrmnj7uqb0k.cloudfront.net/walkaroo/vkcgroup/Product/80x80/1220200618110048img.jpg",
               "entryType": null
             }
           ]
@@ -3695,7 +4250,7 @@
             }
           ]
         }
-      ],
+      ],  
       "fromDate": "2021-01-01",
       "filterValues": ";Karnataka",
       "filterType": "State",

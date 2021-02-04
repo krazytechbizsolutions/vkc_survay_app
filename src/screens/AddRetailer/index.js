@@ -1,15 +1,40 @@
-import { useTheme } from '@react-navigation/native';
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { View, Text } from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
+import WizardForm from '../../components/wizard/Wizard';
 
-const CreateRetailer = () => {
-  const { colors } = useTheme();
+import { fields } from './fields';
 
+const AddRetailer = () => {
+  const createRetailer = values => {
+    console.log(values);
+  };
   return (
-    <View>
-      <Text style={{ color: colors.text }}>Create Retailer</Text>
-    </View>
+    <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'never', bottom: 'always' }}>
+      <WizardForm
+        fields={fields}
+        initialValues={{
+          Name: '',
+          GSTIN__c: '',
+          GSTIN_Status__c: false,
+          Classification__c: '',
+          Region__c: '',
+          BillingCountry: 'India',
+          BillingState: '',
+          BillingCity: '',
+          BillingStreet: '',
+          BillingPostalCode: '',
+          FirstName: '',
+          LastName: '',
+          Email: '',
+          Phone: '',
+          Mobile: '',
+          Route__c: '',
+        }}
+        onSubmit={createRetailer}
+      />
+    </SafeAreaView>
   );
 };
 
-export default CreateRetailer;
+export default AddRetailer;

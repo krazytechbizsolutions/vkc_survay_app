@@ -19,8 +19,7 @@ TextEle.propTypes = {
   variant: PropTypes.oneOf([
     'header1',
     'header2',
-    'title1',
-    'title2',
+    'title',
     'subTitle1',
     'subTitle2',
     'body1',

@@ -10,7 +10,6 @@ const SelectGroup = ({ data }) => {
   return (
     <ScrollView horizontal>
       <View>
-        <TextEle variant="title">{data.question}</TextEle>
         <View style={{ flexDirection: 'row' }}>
           <View style={{ width: 100 }} />
           <For each="ele" of={data.filter(x => x.level === 'Option 2')}>

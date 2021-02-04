@@ -4,11 +4,10 @@ import TextEle from '@components/TextEle';
 import React, { useState } from 'react';
 import { FlatList, View } from 'react-native';
 
-const SingleSelectRadio = ({ data }) => {
+const SingleSelectRadio = () => {
   const [value, setValue] = useState();
   return (
     <View>
-      <TextEle variant="title">{data.question}</TextEle>
       <FlatList
         data={data.options}
         ItemSeparatorComponent={() => (
