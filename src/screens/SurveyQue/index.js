@@ -96,11 +96,21 @@ const SurveyQue = ({ navigation, route }) => {
                 <SelectGroup data={question.Options} />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Multi Select'}>
-                <MultiSelection
+                <Field
                   data={question.Options.map(x => ({
                     text: x.optionName,
                     value: x.optionId,
                   }))}
+                  component={MultiSelection}
+                  name={question.sQuestion.Id}
+                  value={values[question.sQuestion.Id]}
+                  question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  validate={value => {
+                    if (!value || value.length === 0) {
+                      return 'Please Enter Field Value';
+                    }
+                    return '';
+                  }}
                 />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Ordering Question'}>
