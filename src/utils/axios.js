@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3000/',
+  baseURL: 'https://projects.krazy-tech.com/vkc',
   timeout: 3000,
 });
 
