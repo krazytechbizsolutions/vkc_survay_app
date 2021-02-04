@@ -10,7 +10,7 @@ import RadioUncheckedIcon from '../../assets/icons/radio_button_unchecked.svg';
 
 export const RadioCore = ({ option, value, onPress }) => (
   <RectButton onPress={onPress}>
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10 }}>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
       {option.text && (
         <Text variant="label" style={{ marginHorizontal: 10 }}>
           {option.text}

@@ -7,6 +7,7 @@ import Splash from '@screens/Splash';
 import SurveyQue from '@screens/SurveyQue';
 import AddRetailer from '@screens/AddRetailer';
 import UnplannedVisits from '@screens/UnplannedVisits';
+import Login from '@screens/Login';
 import VKCLogo from '../assets/Logo/VKC_Logo.jpg';
 
 const MainStack = createStackNavigator();
@@ -21,6 +22,7 @@ const MainStackScreen = () => {
         title: false,
       }}>
       <MainStack.Screen name="Splash" component={Splash} />
+      <MainStack.Screen name="Login" component={Login} />
       <MainStack.Screen
         name="SurveyQue"
         component={SurveyQue}
