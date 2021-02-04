@@ -1,8 +1,11 @@
 /* eslint-disable */
 import axios from 'axios';
+import Config from 'react-native-config';
+
+console.log(Config.BASE_URL);
 
 const instance = axios.create({
-  baseURL: 'https://projects.krazy-tech.com/vkc',
+  baseURL: Config.BASE_URL,
   timeout: 3000,
 });
 
@@ -10,6 +13,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
+    console.log(config);
     return config;
   },
   function (error) {

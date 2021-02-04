@@ -9,15 +9,26 @@ import { startOfWeek, eachDayOfInterval, addDays } from 'date-fns';
 import axios from 'axios';
 import Config from 'react-native-config';
 import Geolocation from 'react-native-geolocation-service';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const { OS } = Platform;
 
-export const getToken = state => {
-  const { access_token, token_type } = state.auth;
-  if (token_type && access_token) {
-    return `${token_type} ${access_token}`;
+export const getToken = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('@token');
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
+  } catch (e) {
+    throw new Error('Something went wrong');
   }
-  return '';
+};
+
+export const storeToken = async value => {
+  try {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem('@token', jsonValue);
+  } catch (e) {
+    throw new Error('Something went wrong');
+  }
 };
 
 export const isConnected = state => state.network.isConnected;

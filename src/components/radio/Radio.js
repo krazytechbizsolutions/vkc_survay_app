@@ -1,7 +1,7 @@
 /* eslint-disable operator-linebreak */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { View } from 'react-native';
+import { View, TouchableWithoutFeedback } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { getIn } from 'formik';
 import Text from '../Text/Text';
@@ -9,20 +9,22 @@ import RadioCheckedIcon from '../../assets/icons/radio_button_checked.svg';
 import RadioUncheckedIcon from '../../assets/icons/radio_button_unchecked.svg';
 
 export const RadioCore = ({ option, value, onPress }) => (
-  <RectButton onPress={onPress}>
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-      {option.text && (
-        <Text variant="label" style={{ marginHorizontal: 10 }}>
-          {option.text}
-        </Text>
-      )}
-      {value !== '' && value === option.value ? (
-        <RadioCheckedIcon fill="red" width={24} height={24} />
-      ) : (
-        <RadioUncheckedIcon fill="red" width={24} height={24} />
-      )}
-    </View>
-  </RectButton>
+  <TouchableWithoutFeedback onPress={onPress}>
+    <RectButton>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
+        {option.text && (
+          <Text variant="label" style={{ marginHorizontal: 10 }}>
+            {option.text}
+          </Text>
+        )}
+        {value !== '' && value === option.value ? (
+          <RadioCheckedIcon fill="red" width={24} height={24} />
+        ) : (
+          <RadioUncheckedIcon fill="red" width={24} height={24} />
+        )}
+      </View>
+    </RectButton>
+  </TouchableWithoutFeedback>
 );
 
 const Radio = ({

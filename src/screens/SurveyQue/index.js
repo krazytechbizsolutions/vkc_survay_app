@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/prop-types */
-import React from 'react';
-import { SafeAreaView, Text, ScrollView, View } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, Text, ScrollView, View, Alert } from 'react-native';
 // import { useTheme } from '@react-navigation/native';
 import VKCButton from '@components/VKCButton';
 import SingleSelectRadio from '@components/SingleSelectRadio';
@@ -26,18 +26,20 @@ const SurveyQue = ({ navigation, route }) => {
   // const { colors } = useTheme();
   const { questions, firstQuestion } = route.params;
   const [question, ...restQuestions] = questions;
+  const [value, setValue] = useState('');
 
   return (
     <SafeAreaView style={{ flex: 1, margin: 10 }}>
-      <TextEle variant="title">{question.sQuestion.Detailed_Survey_Question_Name__c}</TextEle>
       <ScrollView style={{ flex: 1 }}>
         <Choose>
           <When condition={question.sQuestion.Option_Type__c === 'Single Select'}>
             <SingleSelectRadio
-              data={question.Options.map(x => ({
-                text: x.optionName,
-                value: x.optionId,
-              }))}
+              value={value}
+              onSelect={item => setValue(item)}
+              data={question.Options}
+              valueField="optionId"
+              textField="optionName"
+              question={question.sQuestion.Detailed_Survey_Question_Name__c}
             />
           </When>
           <When condition={question.sQuestion.Option_Type__c === 'Single Select List'}>
@@ -176,19 +178,6 @@ const SurveyQue = ({ navigation, route }) => {
             }
           />
         </When>
-        <When condition={restQuestions.length === 0}>
-          <VKCButton
-            variant="fill"
-            style={{ marginVertical: 5 }}
-            text="Submit"
-            onPress={() =>
-              navigation.push('SurveyQue', {
-                questions: restQuestions,
-                firstQuestion: false,
-              })
-            }
-          />
-        </When>
         <Otherwise>
           <View style={{ flexDirection: 'row' }}>
             <VKCButton
@@ -200,12 +189,19 @@ const SurveyQue = ({ navigation, route }) => {
             <VKCButton
               variant="fill"
               style={{ margin: 5, flex: 1 }}
-              text="Next"
+              text={restQuestions.length === 0 ? 'Submit' : 'Next'}
               onPress={() =>
-                navigation.push('SurveyQue', {
-                  questions: restQuestions,
-                  firstQuestion: false,
-                })
+                restQuestions.length === 0
+                  ? Alert.alert(
+                      'Completed',
+                      'Form Submition Completed',
+                      [{ text: 'OK', onPress: () => navigation.popToTop() }],
+                      { cancelable: false },
+                    )
+                  : navigation.push('SurveyQue', {
+                      questions: restQuestions,
+                      firstQuestion: false,
+                    })
               }
             />
           </View>

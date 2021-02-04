@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { Image } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-import Splash from '@screens/Splash';
+import Home from '@screens/Home';
 import SurveyQue from '@screens/SurveyQue';
 import AddRetailer from '@screens/AddRetailer';
 import UnplannedVisits from '@screens/UnplannedVisits';
@@ -21,8 +21,8 @@ const MainStackScreen = () => {
         headerTintColor: colors.text,
         title: false,
       }}>
-      <MainStack.Screen name="Splash" component={Splash} />
       <MainStack.Screen name="Login" component={Login} />
+      <MainStack.Screen name="Home" component={Home} />
       <MainStack.Screen
         name="SurveyQue"
         component={SurveyQue}

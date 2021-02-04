@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "precommit": "lint-staged",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
@@ -13,8 +12,10 @@
     "prettier": "prettier --write src/**/*.js"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.13.4",
     "@react-native-community/hooks": "^2.6.0",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-community/netinfo": "^5.9.10",
     "@react-native-community/slider": "^3.0.3",
     "@react-navigation/bottom-tabs": "^5.11.2",
     "@react-navigation/material-top-tabs": "^5.3.10",
@@ -30,7 +31,7 @@
     "react-native": "0.63.4",
     "react-native-action-button": "^2.8.5",
     "react-native-appearance": "^0.3.4",
-    "react-native-config": "^1.4.1",
+    "react-native-config": "^1.4.2",
     "react-native-draggable-flatlist": "^2.5.2",
     "react-native-fullscreen-video": "^0.0.9",
     "react-native-geolocation-service": "^5.1.1",
@@ -49,6 +50,7 @@
     "react-native-tab-view": "^2.15.2",
     "react-native-vector-icons": "^8.0.0",
     "react-native-webview": "^11.2.0",
+    "react-redux": "^7.2.2",
     "swr": "^0.3.11"
   },
   "devDependencies": {
@@ -79,17 +81,5 @@
   },
   "jest": {
     "preset": "react-native"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "eslint --fix",
-      "prettier --write",
-      "git add"
-    ]
   }
 }

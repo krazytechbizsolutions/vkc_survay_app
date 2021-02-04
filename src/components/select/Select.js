@@ -6,7 +6,7 @@ import { RectButton, BorderlessButton } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import { getIn } from 'formik';
 
-import Text from '../text/Text';
+import Text from '../Text/Text';
 import styles from './styles';
 import Cancel from '../../assets/icons/cancel.svg';
 import commonStyle from '../../commonStyle';

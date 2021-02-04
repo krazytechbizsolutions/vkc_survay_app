@@ -2,7 +2,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { View, TextInput, DatePickerAndroid } from 'react-native';
-import crashlytics from '@react-native-firebase/crashlytics';
 import { format } from 'date-fns';
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { getIn } from 'formik';
@@ -42,7 +41,6 @@ const Index = ({
         setFieldValue(name, new Date(year, month, day));
       }
     } catch (err) {
-      crashlytics().recordError(err);
       // eslint-disable-next-line no-alert
       alert(`Cannot open date picker: ${err.message}`);
     }
