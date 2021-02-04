@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { RadioCore } from '@components/radio/Radio';
 import TextEle from '@components/TextEle';
-import React, { useEffect, useState } from 'react';
+import { Field, useFormikContext } from 'formik';
+import React, { useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { RectButton, TextInput } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
@@ -10,35 +11,44 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 
 const SingleSelectRadio = ({
+  field: { name, value, onChange, onBlur },
+  form: { touched, errors, setFieldValue, setFieldTouched },
   data,
   valueField,
   textField,
-  value,
-  onSelect,
-  parentValue,
   placeholder = 'Please select value',
   question,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [childValue, setChildValue] = useState('');
+  const { values } = useFormikContext();
+  console.log('values[name]?.loopingQtnId', values[name]?.loopingQtnId);
 
-  useEffect(() => {
-    onSelect('');
-  }, [parentValue?.optionName]);
+  console.log(value && value[textField]);
 
   const onSelectValue = item => {
     setIsVisible(false);
-    onSelect(item);
+    setFieldValue(name, item);
   };
+
+  const errorStyle =
+    touched[name] && errors[name]
+      ? {
+          borderColor: 'red',
+        }
+      : {};
 
   return (
     <>
       <TextEle variant="title">{question}</TextEle>
-      <RectButton onPress={() => setIsVisible(true)}>
+      <RectButton
+        onPress={() => {
+          setIsVisible(true);
+          setFieldTouched(name, true);
+        }}>
         <View pointerEvents="none">
           <TextInput
-            style={styles.textInput}
-            value={value[textField]}
+            style={[styles.textInput, errorStyle]}
+            value={value ? value[textField] : ''}
             placeholder={placeholder}
             editable={false}
           />
@@ -50,6 +60,7 @@ const SingleSelectRadio = ({
           />
         </View>
       </RectButton>
+      {touched[name] && errors[name] && <TextEle>{errors[name]}</TextEle>}
       <Modal
         isVisible={isVisible}
         style={{ backgroundColor: '#fff', margin: 0 }}
@@ -72,15 +83,21 @@ const SingleSelectRadio = ({
           />
         </SafeAreaView>
       </Modal>
-      {value?.subOrLoopingQtnOptions?.length > 1 && (
-        <SingleSelectRadio
+      {value?.subOrLoopingQtnOptions?.length > 1 && values[name] && (
+        <Field
+          name="childField"
+          component={SingleSelectRadio}
           data={value.subOrLoopingQtnOptions}
+          value={values.childField}
           valueField="Id"
           textField="Detailed_Survey_Option_Name__c"
-          parentValue={value}
-          value={childValue}
-          onSelect={item => setChildValue(item)}
           question={value.loopingQtnName}
+          validate={val => {
+            if (!val) {
+              return 'Please Enter Field Value';
+            }
+            return '';
+          }}
         />
       )}
     </>
