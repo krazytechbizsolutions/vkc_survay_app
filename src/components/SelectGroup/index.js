@@ -8,7 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const SelectGroup = ({
   field: { name, value },
-  form: { touched, errors, setFieldValue, setFieldTouched },
+  form: { touched, errors, setFieldValue },
   question,
   data,
 }) => (
@@ -36,7 +36,6 @@ const SelectGroup = ({
                   option={{ value: `${row.optionId}_${column.optionId}` }}
                   value={(value && value.find(x => x.includes(`${row.optionId}`))) || ''}
                   onPress={() => {
-                    setFieldTouched(name, true);
                     const index =
                       (value && value.findIndex(x => x.includes(`${row.optionId}`))) || -1;
                     if (index === -1) {

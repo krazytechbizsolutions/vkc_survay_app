@@ -6,11 +6,16 @@ import TextEle from '@components/TextEle';
 
 const MultiSelection = ({
   field: { name, value },
-  form: { touched, errors, setFieldValue, setFieldTouched },
+  form: { touched, errors, setFieldValue },
   data,
   question,
 }) => (
   <View>
+    {touched[name] && errors[name] && (
+      <TextEle variant="caption" style={{ color: 'red', marginLeft: 5, marginVertical: 3 }}>
+        {errors[name]}
+      </TextEle>
+    )}
     <View style={{ marginVertical: 10 }}>
       <TextEle>{question}</TextEle>
     </View>
@@ -25,7 +30,6 @@ const MultiSelection = ({
           option={{ text: item.text, value: item.text }}
           value={value}
           onPress={() => {
-            setFieldTouched(name, true);
             if (value && value.some(ele => ele === item.text)) {
               setFieldValue(
                 name,
@@ -38,11 +42,6 @@ const MultiSelection = ({
         />
       )}
     />
-    {touched[name] && errors[name] && (
-      <TextEle variant="caption" style={{ color: 'red', marginLeft: 5, marginVertical: 3 }}>
-        {errors[name]}
-      </TextEle>
-    )}
   </View>
 );
 

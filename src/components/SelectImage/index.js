@@ -8,7 +8,7 @@ import RadioUncheckedIcon from '../../assets/icons/radio_button_unchecked.svg';
 
 const SelectImage = ({
   field: { name, value },
-  form: { touched, errors, setFieldValue, setFieldTouched },
+  form: { touched, errors, setFieldValue },
   data,
   valueField,
   imageField,
@@ -17,7 +17,7 @@ const SelectImage = ({
 }) => {
   const flastListRef = useRef();
   const onSelectValue = item => {
-    setFieldTouched(name, true);
+    // setFieldTouched(name, true);
     setFieldValue(name, item);
   };
 
