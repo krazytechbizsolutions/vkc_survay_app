@@ -13,14 +13,14 @@ const SelectGroup = ({ data }) => {
         <View style={{ flexDirection: 'row' }}>
           <View style={{ width: 100 }} />
           <For each="ele" of={data.filter(x => x.level === 'Option 2')}>
-            <Text style={{ width: 100, textAlign: 'center' }}>{ele.optionName}</Text>
+            <Text style={{ width: 65, textAlign: 'center' }}>{ele.optionName}</Text>
           </For>
         </View>
         <For each="row" index="i" of={data.filter(x => x.level === 'Option 1')}>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={{ width: 100 }}>{row.optionName}</Text>
+            <Text style={{ width: 100, marginVertical: 10 }}>{row.optionName}</Text>
             <For each="column" of={data.filter(x => x.level === 'Option 2')}>
-              <View style={{ width: 100, alignItems: 'center' }}>
+              <View style={{ width: 65, alignItems: 'center' }}>
                 <RadioCore
                   option={{ value: `${row.optionId}_${column.optionId}` }}
                   value={value?.find(x => x.includes(`${row.optionId}`)) || ''}
