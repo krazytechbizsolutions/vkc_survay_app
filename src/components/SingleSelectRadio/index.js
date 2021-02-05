@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 
 const SingleSelectRadio = ({
-  field: { name, value, onChange, onBlur },
+  field: { name, value },
   form: { touched, errors, setFieldValue, setFieldTouched },
   data,
   valueField,
@@ -21,7 +21,6 @@ const SingleSelectRadio = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const { values } = useFormikContext();
-  console.log('values[name]?.loopingQtnId', values[name]?.loopingQtnId);
 
   console.log(value && value[textField]);
 
@@ -75,7 +74,7 @@ const SingleSelectRadio = ({
               <RadioCore
                 key={item.id}
                 option={{ text: item[textField], value: item[valueField] }}
-                value={value}
+                value={value[valueField]}
                 onPress={() => onSelectValue(item)}
               />
             )}
@@ -88,6 +87,23 @@ const SingleSelectRadio = ({
           name="childField"
           component={SingleSelectRadio}
           data={value.subOrLoopingQtnOptions}
+          value={values.childField}
+          valueField="Id"
+          textField="Detailed_Survey_Option_Name__c"
+          question={value.loopingQtnName}
+          validate={val => {
+            if (!val) {
+              return 'Please Enter Field Value';
+            }
+            return '';
+          }}
+        />
+      )}
+      {value?.subOptions?.length > 1 && values[name] && (
+        <Field
+          name="childField"
+          component={SingleSelectRadio}
+          data={value.subOptions}
           value={values.childField}
           valueField="Id"
           textField="Detailed_Survey_Option_Name__c"

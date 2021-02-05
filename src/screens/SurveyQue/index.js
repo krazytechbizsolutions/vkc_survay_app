@@ -16,6 +16,7 @@ import SliderQuestion from '@components/SliderQuestion';
 import StarRating from '@components/StarRating';
 import MultiText from '@components/MultiText';
 import { Formik, Field } from 'formik';
+import SelectImage from '@components/SelectImage';
 import TextInput from '../../components/TextInput/TextInput';
 // import TextInput from '@components/TextInput/TextInput';
 // import { RectButton } from 'react-native-gesture-handler';
@@ -93,7 +94,19 @@ const SurveyQue = ({ navigation, route }) => {
                 />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Single Select Group'}>
-                <SelectGroup data={question.Options} />
+                <Field
+                  component={SelectGroup}
+                  data={question.Options}
+                  name={question.sQuestion.Id}
+                  value={values[question.sQuestion.Id] || []}
+                  question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  validate={value => {
+                    if (!value) {
+                      return 'Please Enter Field Value';
+                    }
+                    return '';
+                  }}
+                />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Multi Select'}>
                 <Field
@@ -119,7 +132,7 @@ const SurveyQue = ({ navigation, route }) => {
               <When condition={question.sQuestion.Option_Type__c === 'Integer Enter Question'}>
                 <Field
                   component={TextInput}
-                  multiline
+                  keyboardType="number-pad"
                   name={question.sQuestion.Id}
                   value={values[question.sQuestion.Id]}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
@@ -134,7 +147,6 @@ const SurveyQue = ({ navigation, route }) => {
               <When condition={question.sQuestion.Option_Type__c === 'Text'}>
                 <Field
                   component={TextInput}
-                  multiline
                   name={question.sQuestion.Id}
                   value={values[question.sQuestion.Id]}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
@@ -147,7 +159,19 @@ const SurveyQue = ({ navigation, route }) => {
                 />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Slider'}>
-                <SliderQuestion data={question.sQuestion} />
+                <Field
+                  component={SliderQuestion}
+                  data={question.sQuestion}
+                  name={question.sQuestion.Id}
+                  value={values[question.sQuestion.Id]}
+                  question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  validate={value => {
+                    if (!value) {
+                      return 'Please Enter Field Value';
+                    }
+                    return '';
+                  }}
+                />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Star Rating'}>
                 <Field
@@ -166,7 +190,22 @@ const SurveyQue = ({ navigation, route }) => {
               </When>
               <When
                 condition={question.sQuestion.Option_Type__c === 'Question with Image as options'}>
-                <Text>{question.sQuestion.Option_Type__c}</Text>
+                <Field
+                  name={question.sQuestion.Id}
+                  component={SelectImage}
+                  data={question.Options}
+                  value={values[question.sQuestion.Id]}
+                  valueField="optionId"
+                  textField="optionName"
+                  imageField="imageUrl"
+                  question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  validate={value => {
+                    if (!value) {
+                      return 'Please Enter Field Value';
+                    }
+                    return '';
+                  }}
+                />
               </When>
               <When
                 condition={
@@ -193,25 +232,130 @@ const SurveyQue = ({ navigation, route }) => {
                 />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Tabular Question'}>
-                <Text>{question.sQuestion.Option_Type__c}</Text>
+                <Field
+                  name={question.sQuestion.Id}
+                  component={SingleSelectRadio}
+                  data={question.Options}
+                  value={values[question.sQuestion.Id]}
+                  valueField="optionId"
+                  textField="optionName"
+                  question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  validate={value => {
+                    console.log(value);
+                    if (!value) {
+                      return 'Please Enter Field Value';
+                    }
+                    return '';
+                  }}
+                />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Coupon'}>
-                <Text>{question.sQuestion.Option_Type__c}</Text>
+                <Field
+                  component={TextInput}
+                  keyboardType="number-pad"
+                  name={question.sQuestion.Id}
+                  value={values[question.sQuestion.Id]}
+                  question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  validate={value => {
+                    if (!value) {
+                      return 'Please Enter Field Value';
+                    }
+                    if (value > question.sQuestion.Max_Limit__c) {
+                      return `value should not be greater then ${question.sQuestion.Max_Limit__c}`;
+                    }
+                    return '';
+                  }}
+                />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Display'}>
-                <Text>{question.sQuestion.Option_Type__c}</Text>
+                <Field
+                  name={question.sQuestion.Id}
+                  component={SingleSelectRadio}
+                  data={question.Options}
+                  value={values[question.sQuestion.Id]}
+                  valueField="optionId"
+                  textField="optionName"
+                  question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  validate={value => {
+                    console.log(value);
+                    if (!value) {
+                      return 'Please Enter Field Value';
+                    }
+                    return '';
+                  }}
+                />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Stock'}>
-                <Text>{question.sQuestion.Option_Type__c}</Text>
+                <Field
+                  name={question.sQuestion.Id}
+                  component={SingleSelectRadio}
+                  data={question.Options}
+                  value={values[question.sQuestion.Id]}
+                  valueField="optionId"
+                  textField="optionName"
+                  question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  validate={value => {
+                    console.log(value);
+                    if (!value) {
+                      return 'Please Enter Field Value';
+                    }
+                    return '';
+                  }}
+                />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Performance In the Area'}>
-                <Text>{question.sQuestion.Option_Type__c}</Text>
+                <Field
+                  name={question.sQuestion.Id}
+                  component={SingleSelectRadio}
+                  data={question.Options}
+                  value={values[question.sQuestion.Id]}
+                  valueField="optionId"
+                  textField="optionName"
+                  question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  validate={value => {
+                    console.log(value);
+                    if (!value) {
+                      return 'Please Enter Field Value';
+                    }
+                    return '';
+                  }}
+                />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Salesman Commit'}>
-                <Text>{question.sQuestion.Option_Type__c}</Text>
+                <Field
+                  name={question.sQuestion.Id}
+                  component={SingleSelectRadio}
+                  data={question.Options}
+                  value={values[question.sQuestion.Id]}
+                  valueField="optionId"
+                  textField="optionName"
+                  question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  validate={value => {
+                    console.log(value);
+                    if (!value) {
+                      return 'Please Enter Field Value';
+                    }
+                    return '';
+                  }}
+                />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Special Efforts'}>
-                <Text>{question.sQuestion.Option_Type__c}</Text>
+                <Field
+                  name={question.sQuestion.Id}
+                  component={SingleSelectRadio}
+                  data={question.Options}
+                  value={values[question.sQuestion.Id]}
+                  valueField="optionId"
+                  textField="optionName"
+                  question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  validate={value => {
+                    console.log(value);
+                    if (!value) {
+                      return 'Please Enter Field Value';
+                    }
+                    return '';
+                  }}
+                />
               </When>
               <Otherwise>
                 <Text>No Such Question type found</Text>
@@ -248,112 +392,6 @@ const SurveyQue = ({ navigation, route }) => {
       </Choose>
     </SafeAreaView>
   );
-
-  // return (
-  //   <SafeAreaView style={{ flex: 1 }}>
-  //     <ScrollView style={{ flex: 1, backgroundColor: colors.primary, padding: 20 }}>
-  //       <Choose>
-  //         <When condition={data.questionType === 'singleSelectRadio'}>
-  //           <SingleSelectRadio data={data} />
-  //         </When>
-  //         <When condition={data.questionType === 'singleSelectList'}>
-  //           <SingleSelectList data={data} />
-  //         </When>
-  //         <When condition={data.questionType === 'MultiSelect'}>
-  //           <MultiSelection data={data} />
-  //         </When>
-  //         <When condition={data.questionType === 'LongText'}>
-  //           <LongText data={data} />
-  //         </When>
-  //         <When condition={data.questionType === 'integerInput'}>
-  //           <IntegerInput data={data} />
-  //         </When>
-  //         <When condition={data.questionType === 'Slider'}>
-  //           <SliderQuestion data={data} />
-  //         </When>
-  //         <When condition={data.questionType === 'StarRating'}>
-  //           <StarRating data={data} />
-  //         </When>
-  //         <When condition={data.questionType === 'ImageSuggestion'}>
-  //           <SingleSelectRadio data={data} />
-  //         </When>
-  //         <When condition={data.questionType === 'selectGroup'}>
-  //           <SelectGroup data={data} />
-  //         </When>
-  //         <When condition={data.questionType === 'Text'}>
-  //           <TextInput data={data} />
-  //         </When>
-  //         <When condition={data.questionType === 'Feedback'}>
-  //           <LongText data={data} />
-  //         </When>
-  //         <When condition={data.questionType === 'servey'}>
-  //           <SubmitServey data={data} />
-  //         </When>
-  //         <Otherwise>
-  //           <Text>ElseBlock</Text>
-  //         </Otherwise>
-  //       </Choose>
-  //     </ScrollView>
-  //     <View style={{ backgroundColor: colors.primary }}>
-  //       {questionId > 1 ? (
-  //         <View style={{ flexDirection: 'row', margin: 20 }}>
-  //           <View style={{ flex: 1, marginHorizontal: 5 }}>
-  //             <RectButton
-  //               style={{
-  //                 backgroundColor: 'red',
-  //                 justifyContent: 'center',
-  //                 alignItems: 'center',
-  //                 borderRadius: 20,
-  //                 height: 40,
-  //               }}
-  //               onPress={() =>
-  //                 navigation.navigate('SurveyQue', {
-  //                   questionId: parseInt(questionId, 10) - 1,
-  //                 })
-  //               }>
-  //               <Text style={{ color: 'white' }}>Prev</Text>
-  //             </RectButton>
-  //           </View>
-  //           <View style={{ flex: 1, marginHorizontal: 5 }}>
-  //             <RectButton
-  //               style={{
-  //                 backgroundColor: 'red',
-  //                 justifyContent: 'center',
-  //                 alignItems: 'center',
-  //                 borderRadius: 20,
-  //                 height: 40,
-  //               }}
-  //               onPress={() =>
-  //                 navigation.navigate('SurveyQue', {
-  //                   questionId: parseInt(questionId, 10) + 1,
-  //                 })
-  //               }>
-  //               <Text style={{ color: 'white' }}>Next</Text>
-  //             </RectButton>
-  //           </View>
-  //         </View>
-  //       ) : (
-  //         <View style={{ margin: 20 }}>
-  //           <RectButton
-  //             style={{
-  //               backgroundColor: 'red',
-  //               justifyContent: 'center',
-  //               alignItems: 'center',
-  //               borderRadius: 20,
-  //               height: 40,
-  //             }}
-  //             onPress={() =>
-  //               navigation.navigate('SurveyQue', {
-  //                 questionId: parseInt(questionId, 10) + 1,
-  //               })
-  //             }>
-  //             <Text style={{ color: 'white' }}>Next</Text>
-  //           </RectButton>
-  //         </View>
-  //       )}
-  //     </View>
-  //   </SafeAreaView>
-  // );
 };
 
 export default SurveyQue;
