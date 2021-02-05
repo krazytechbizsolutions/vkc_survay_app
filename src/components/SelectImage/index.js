@@ -30,7 +30,11 @@ const SelectImage = ({
   return (
     <>
       <TextEle variant="title">{question}</TextEle>
-      {touched[name] && errors[name] && <TextEle>{errors[name]}</TextEle>}
+      {touched[name] && errors[name] && (
+        <TextEle variant="caption" style={{ color: 'red', marginLeft: 5, marginVertical: 3 }}>
+          {errors[name]}
+        </TextEle>
+      )}
       <FlatList
         ref={flastListRef}
         style={{ flex: 1 }}
