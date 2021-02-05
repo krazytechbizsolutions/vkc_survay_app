@@ -127,7 +127,10 @@ const SurveyQue = ({ navigation, route }) => {
                 />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Ordering Question'}>
-                <VKCDraggableList data={question.Options} />
+                <VKCDraggableList
+                  data={question.Options}
+                  question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Integer Enter Question'}>
                 <Field
