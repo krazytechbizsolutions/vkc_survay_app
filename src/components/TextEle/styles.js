@@ -42,6 +42,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '400',
   },
+  error: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: 'red',
+  },
 });
 
 export default styles;

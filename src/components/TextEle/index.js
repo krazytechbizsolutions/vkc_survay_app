@@ -9,7 +9,7 @@ const TextEle = ({ variant, style, ...rest }) => {
   return (
     <Text
       allowFontScaling={false}
-      style={[styles[variant], { color: colors.text }, style]}
+      style={[{ color: colors.text }, styles[variant], style]}
       {...rest}
     />
   );
@@ -27,6 +27,7 @@ TextEle.propTypes = {
     'caption',
     'buttonText',
     'overlineText',
+    'error',
   ]),
   style: Text.propTypes.style,
 };

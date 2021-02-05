@@ -29,16 +29,13 @@ const SingleSelectRadio = ({
     setFieldValue(name, item);
   };
 
-  const errorStyle =
-    touched[name] && errors[name]
-      ? {
-          borderColor: 'red',
-        }
-      : {};
+  const errorStyle = touched[name] && errors[name] ? { borderColor: 'red' } : {};
 
   return (
     <>
-      <TextEle variant="title">{question}</TextEle>
+      <TextEle variant="title" style={{ marginBottom: 10 }}>
+        {question}
+      </TextEle>
       <RectButton
         onPress={() => {
           setIsVisible(true);
@@ -59,7 +56,11 @@ const SingleSelectRadio = ({
           />
         </View>
       </RectButton>
-      {touched[name] && errors[name] && <TextEle>{errors[name]}</TextEle>}
+      {touched[name] && errors[name] && (
+        <TextEle variant="caption" style={{ color: 'red', marginLeft: 5, marginVertical: 3 }}>
+          {errors[name]}
+        </TextEle>
+      )}
       <Modal
         isVisible={isVisible}
         style={{ backgroundColor: '#fff', margin: 0 }}
