@@ -9,8 +9,12 @@ const StarRating = ({
   field: { name, value },
   form: { touched, errors, setFieldValue, setFieldTouched },
   data,
+  question,
 }) => (
   <View style={{ flex: 1 }}>
+    <TextEle variant="title" style={{ marginBottom: 10 }}>
+      {question}
+    </TextEle>
     <View style={{ marginTop: 30, margin: 10, flexDirection: 'column' }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
         <For each="item" of={[...Array(data.Max_Limit__c).keys()]}>

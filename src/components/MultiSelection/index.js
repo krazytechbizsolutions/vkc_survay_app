@@ -8,8 +8,12 @@ const MultiSelection = ({
   field: { name, value },
   form: { touched, errors, setFieldValue, setFieldTouched },
   data,
+  question,
 }) => (
   <View>
+    <View style={{ marginVertical: 10 }}>
+      <TextEle>{question}</TextEle>
+    </View>
     <FlatList
       data={data}
       ItemSeparatorComponent={() => (

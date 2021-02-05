@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { View, TextInput, ViewPropTypes } from 'react-native';
+import TextEle from '@components/TextEle';
 import { getIn } from 'formik';
 import Text from '../Text/Text';
 import styles from './style';
@@ -12,6 +13,7 @@ const index = ({
   innerRef,
   label,
   editable,
+  question,
   disable,
   isRequired,
   ...props
@@ -21,6 +23,9 @@ const index = ({
   const errorMsg = touch && error ? error : null;
   return (
     <View>
+      <TextEle variant="title" style={{ marginBottom: 10 }}>
+        {question}
+      </TextEle>
       {label && (
         <Text variant="label">
           {label}
