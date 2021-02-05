@@ -71,22 +71,6 @@ const VKCMediaPicker = ({ question }) => {
                 <Text>Take Photo...</Text>
               </RectButton>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback
-              onPress={() => {
-                launchImageLibrary(
-                  {
-                    mediaType: 'photo',
-                  },
-                  res => {
-                    setResponse(res);
-                  },
-                );
-                setVisible(false);
-              }}>
-              <RectButton style={{ padding: 20 }}>
-                <Text>Choose From Library...</Text>
-              </RectButton>
-            </TouchableWithoutFeedback>
             <View style={{ alignItems: 'flex-end', margin: 10 }}>
               <TouchableWithoutFeedback onPress={() => setVisible(false)}>
                 <RectButton style={{ padding: 10 }}>
