@@ -214,7 +214,7 @@ const SurveyQue = ({ navigation, route }) => {
                 condition={
                   question.sQuestion.Option_Type__c === 'Upload Image for choosing an Option'
                 }>
-                <VKCMediaPicker />
+                <VKCMediaPicker question={question.sQuestion.Detailed_Survey_Question_Name__c} />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Multi Text'}>
                 <MultiText question={question.sQuestion.Detailed_Survey_Question_Name__c} />

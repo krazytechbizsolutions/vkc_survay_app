@@ -12,8 +12,9 @@ import {
 import Modal from 'react-native-modal';
 import { RectButton, BorderlessButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
+import TextEle from '@components/TextEle';
 
-const VKCMediaPicker = () => {
+const VKCMediaPicker = ({ question }) => {
   const [response, setResponse] = useState(null);
   const [isVisible, setVisible] = useState(false);
 
@@ -55,6 +56,9 @@ const VKCMediaPicker = () => {
 
   return (
     <View style={{ margin: 20 }}>
+      <TextEle variant="title" style={{ marginBottom: 10 }}>
+        {question}
+      </TextEle>
       <VKCButton variant="fill" text="Select Image" onPress={selectImage} />
       {Platform.OS === 'android' && (
         <Modal isVisible={isVisible} onRequestClose={() => setVisible(false)}>

@@ -33,6 +33,7 @@ const VKCDraggableList = ({ data, question }) => {
             onPress={() => onSelect(item)}
             style={{
               backgroundColor: temp.some(x => x.optionId === item.optionId) ? 'red' : '#fff',
+
               margin: 5,
               padding: 10,
               shadowColor: '#000',
@@ -45,8 +46,16 @@ const VKCDraggableList = ({ data, question }) => {
               shadowRadius: 2.62,
               elevation: 4,
             }}>
-            <TextEle variant="body1">{index + 1}</TextEle>
-            <TextEle variant="body1">{item.optionName}</TextEle>
+            <TextEle
+              variant="body1"
+              style={{ color: temp.some(x => x.optionId === item.optionId) ? 'white' : 'black' }}>
+              {index + 1}
+            </TextEle>
+            <TextEle
+              variant="body1"
+              style={{ color: temp.some(x => x.optionId === item.optionId) ? 'white' : 'black' }}>
+              {item.optionName}
+            </TextEle>
           </RectButton>
         )}
         keyExtractor={item => `draggable-item-${item.optionId}`}
