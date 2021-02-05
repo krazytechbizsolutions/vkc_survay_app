@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable react/prop-types */
 import { RadioCore } from '@components/radio/Radio';
 import TextEle from '@components/TextEle';
@@ -8,6 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 const SelectGroup = ({
   field: { name, value },
   form: { touched, errors, setFieldValue, setFieldTouched },
+  question,
   data,
 }) => (
   <View>
@@ -16,6 +18,7 @@ const SelectGroup = ({
         {errors[name]}
       </TextEle>
     )}
+    <TextEle>{question}</TextEle>
     <ScrollView horizontal>
       <View>
         <View style={{ flexDirection: 'row' }}>
