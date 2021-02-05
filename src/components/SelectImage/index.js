@@ -53,7 +53,7 @@ const SelectImage = ({
               <View style={{ paddingHorizontal: 20 }}>
                 {item[imageField] && (
                   <Image
-                    style={{ height: 500, width: 150 }}
+                    style={{ height: 150, width: 150 }}
                     source={{
                       uri: item[imageField],
                     }}
