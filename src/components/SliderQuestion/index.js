@@ -7,7 +7,7 @@ const { width: screenWidth } = Dimensions.get('window');
 
 const SliderQuestion = ({
   field: { name, value = 0 },
-  form: { touched, errors, setFieldValue, setFieldTouched },
+  form: { touched, errors, setFieldValue },
   data,
   question,
 }) => {
@@ -28,7 +28,6 @@ const SliderQuestion = ({
         maximumTrackTintColor="#000000"
         onValueChange={val => {
           setFieldValue(name, val);
-          setFieldTouched(name, true);
         }}
       />
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 10 }}>

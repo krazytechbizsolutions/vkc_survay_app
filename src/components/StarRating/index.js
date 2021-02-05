@@ -2,6 +2,7 @@
 import TextEle from '@components/TextEle';
 import React from 'react';
 import { Pressable, View } from 'react-native';
+import { Rating } from 'react-native-ratings';
 import StarOutline from '../../assets/icons/star-outline.svg';
 import StarSharp from '../../assets/icons/star-sharp.svg';
 
@@ -17,20 +18,17 @@ const StarRating = ({
     </TextEle>
     <View style={{ marginTop: 30, margin: 10, flexDirection: 'column' }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-        <For each="item" of={[...Array(data.Max_Limit__c).keys()]}>
-          <Pressable
-            style={{ padding: 4 }}
-            onPress={() => {
-              setFieldValue(name, item + 1);
-              setFieldTouched(name, true);
-            }}>
-            {item < value ? (
-              <StarSharp height={32} width={32} fill="red" />
-            ) : (
-              <StarOutline height={32} width={32} fill="red" />
-            )}
-          </Pressable>
-        </For>
+        <Rating
+          type="custom"
+          ratingImage={require('../../assets/Logo/star.png')}
+          ratingColor="red"
+          ratingBackgroundColor="#fff"
+          onFinishRating={rating => setFieldValue(name, rating)}
+          showRating={false}
+          fractions={2}
+          startingValue={value || 0}
+          style={{ paddingVertical: 10 }}
+        />
       </View>
       <View style={{ flexDirection: 'row', marginTop: 10, justifyContent: 'center' }}>
         {touched[name] && errors[name] && (

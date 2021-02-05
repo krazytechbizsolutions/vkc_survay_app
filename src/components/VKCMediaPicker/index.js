@@ -22,7 +22,7 @@ const VKCMediaPicker = ({ question }) => {
     if (Platform.OS === 'ios') {
       ActionSheetIOS.showActionSheetWithOptions(
         {
-          options: ['Cancel', 'Take Photo...', 'Choose From Library...'],
+          options: ['Cancel', 'Take Photo...'],
           cancelButtonIndex: 0,
         },
         buttonIndex => {
@@ -30,15 +30,6 @@ const VKCMediaPicker = ({ question }) => {
             //
           } else if (buttonIndex === 1) {
             launchCamera(
-              {
-                mediaType: 'photo',
-              },
-              res => {
-                setResponse(res);
-              },
-            );
-          } else if (buttonIndex === 2) {
-            launchImageLibrary(
               {
                 mediaType: 'photo',
               },
