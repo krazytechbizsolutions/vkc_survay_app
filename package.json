@@ -9,7 +9,9 @@
     "test": "jest",
     "lint": "eslint . --quiet",
     "lint:write": "eslint . --fix --quiet",
-    "prettier": "prettier --write src/**/*.js"
+    "prettier": "prettier --write src/**/*.js",
+    "clean-build": "cd android && gradlew clean",
+    "release": "cd android && gradlew assembleRelease"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.4",
