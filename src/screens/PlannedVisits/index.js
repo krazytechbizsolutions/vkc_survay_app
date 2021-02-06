@@ -71,7 +71,7 @@ const PlannedVisits = ({ navigation }) => {
                 style={{ marginVertical: 5 }}
                 text={`Survey ${i + 1}`}
                 onPress={async () => {
-                  const res = await axios.get('https://projects.krazy-tech.com/vkc/survey.json');
+                  const res = await axios.post('/services/apexrest/SRVY_SurveyDataOffline_API');
                   navigation.navigate('SurveyQue', {
                     questions: res.data[0]?.Questions,
                     firstQuestion: true,
