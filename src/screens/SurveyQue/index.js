@@ -28,8 +28,13 @@ const SurveyQue = ({ navigation, route }) => {
   const [question, ...restQuestions] = questions;
   const formRef = useRef();
 
+  // ONLOAD... SEE IF THERE IS ANY ANSWER & SHOW THE ANSWER... 
+
   const onSubmit = values => {
     console.log(values);
+
+    // SAVE THE SELECTED ANSWER... BASICALLY LINK IT TO THE CURRENT QUESTION...
+
     if (restQuestions.length === 0) {
       Alert.alert(
         'Completed',
