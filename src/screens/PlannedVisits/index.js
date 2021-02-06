@@ -9,14 +9,34 @@ import { View, Text, FlatList } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import axios from '@utils/axios';
 import VKCButton from '@components/VKCButton';
+import { getToken } from '../../utils';
 
 const PlannedVisits = ({ navigation }) => {
-  const { data: plannedVisits, isValidating } = useSWR(
-    'https://projects.krazy-tech.com/vkc/dayPlan.json',
+
+  let userId = "";
+  let visitsEndpoint = '/services/apexrest/SRVY_DayPlanDataOffline_API';
+  const getData = async () => {
+    const token = await getToken();
+    if(token && token.id){
+      let idSplit = token.id.split('/');
+      userId = idSplit[idSplit.length-1];
+    }
+
+
+    let res = await axios.post(visitsEndpoint, { "UserId": userId, "DateVal": "" }); 
+    return res.data;
+  }
+
+  let { data: plannedVisits, isValidating } = useSWR(
+    visitsEndpoint, 
+    getData
   );
 
   if (isValidating) {
-    return <Text>Loading...</Text>;
+    return <Text style={{ paddingTop: 30, fontSize: 20, color:'#000', textAlign:"center" }} textBreakStrategy="simple">  Loading...  </Text>;
+  }
+  if(plannedVisits?.visits.length == 0){
+    return <Text style={{ paddingTop: 30, fontSize: 20, color:'#000', textAlign:"center" }} textBreakStrategy="simple">No Planned Visits</Text>;
   }
 
   const { colors } = useTheme();
