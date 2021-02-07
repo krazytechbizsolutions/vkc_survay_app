@@ -34,16 +34,26 @@ const SelectGroup = ({
               <View style={{ width: 65, alignItems: 'center' }}>
                 <RadioCore
                   option={{ value: `${row.optionId}_${column.optionId}` }}
-                  value={(value && value.find(x => x.includes(`${row.optionId}`))) || ''}
+                  value={value && value.find(x => x.value.includes(`${row.optionId}`))?.value}
                   onPress={() => {
                     const index =
-                      (value && value.findIndex(x => x.includes(`${row.optionId}`))) || -1;
+                      (value && value.findIndex(x => x.value.includes(`${row.optionId}`))) || -1;
+
                     if (index === -1) {
-                      setFieldValue(name, [...value, `${row.optionId}_${column.optionId}`]);
+                      setFieldValue(name, [
+                        ...value,
+                        {
+                          value: `${row.optionId}_${column.optionId}`,
+                          selectedOptions: [row, column],
+                        },
+                      ]);
                     } else {
                       setFieldValue(name, [
                         ...value.slice(0, index),
-                        `${row.optionId}_${column.optionId}`,
+                        {
+                          value: `${row.optionId}_${column.optionId}`,
+                          selectedOptions: [row, column],
+                        },
                         ...value.slice(index + 1),
                       ]);
                     }

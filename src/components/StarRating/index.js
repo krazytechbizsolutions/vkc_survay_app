@@ -1,15 +1,12 @@
 /* eslint-disable react/prop-types */
 import TextEle from '@components/TextEle';
 import React from 'react';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 import { Rating } from 'react-native-ratings';
-import StarOutline from '../../assets/icons/star-outline.svg';
-import StarSharp from '../../assets/icons/star-sharp.svg';
 
 const StarRating = ({
   field: { name, value },
-  form: { touched, errors, setFieldValue, setFieldTouched },
-  data,
+  form: { touched, errors, setFieldValue },
   question,
 }) => (
   <View style={{ flex: 1 }}>

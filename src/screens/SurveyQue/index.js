@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/prop-types */
-import React, { useRef } from 'react';
-import { SafeAreaView, Text, ScrollView, View, Alert } from 'react-native';
+import React, { useContext, useRef } from 'react';
+import { SafeAreaView, Text, ScrollView, View, Alert, Pressable } from 'react-native';
 // import { useTheme } from '@react-navigation/native';
 import VKCButton from '@components/VKCButton';
 import SingleSelectRadio from '@components/SingleSelectRadio';
@@ -14,9 +14,12 @@ import SelectGroup from '@components/SelectGroup';
 // import IntegerInput from '@components/IntegerInput';
 import SliderQuestion from '@components/SliderQuestion';
 import StarRating from '@components/StarRating';
-import MultiText from '@components/MultiText';
-import { Formik, Field } from 'formik';
+import { Formik, Field, FieldArray } from 'formik';
 import SelectImage from '@components/SelectImage';
+import TextEle from '@components/TextEle';
+import { SurveyContext } from 'src/context/surveyContext';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { ADD_SURVEY } from 'src/constants/actionTypes';
 import TextInput from '../../components/TextInput/TextInput';
 // import TextInput from '@components/TextInput/TextInput';
 // import { RectButton } from 'react-native-gesture-handler';
@@ -27,9 +30,9 @@ const SurveyQue = ({ navigation, route }) => {
   const { questions, firstQuestion } = route.params;
   const [question, ...restQuestions] = questions;
   const formRef = useRef();
+  const { survey, dispatchSurvey } = useContext(SurveyContext);
 
-  const onSubmit = values => {
-    console.log(values);
+  const onSubmit = selectedOptions => {
     if (restQuestions.length === 0) {
       Alert.alert(
         'Completed',
@@ -38,6 +41,14 @@ const SurveyQue = ({ navigation, route }) => {
         { cancelable: false },
       );
     } else {
+      const { sQuestion } = question;
+      dispatchSurvey({
+        type: 'ADD_SURVEY',
+        payload: {
+          sQuestion,
+          ...selectedOptions,
+        },
+      });
       navigation.push('SurveyQue', {
         questions: restQuestions,
         firstQuestion: false,
@@ -50,19 +61,22 @@ const SurveyQue = ({ navigation, route }) => {
       <ScrollView style={{ flex: 1 }}>
         <Formik
           innerRef={formRef}
-          initialValues={{
-            [question.sQuestion.Id]: '',
-            childField: '',
-          }}
+          initialValues={
+            (survey && survey.find(x => x.sQuestion.Id === question.sQuestion.Id)) || {
+              mainField: '',
+              childField: '',
+            }
+          }
+          enableReinitialize
           onSubmit={onSubmit}>
           {({ values }) => (
             <Choose>
               <When condition={question.sQuestion.Option_Type__c === 'Single Select'}>
                 <Field
-                  name={question.sQuestion.Id}
+                  name="mainField"
                   component={SingleSelectRadio}
                   data={question.Options}
-                  value={values[question.sQuestion.Id]}
+                  value={values.mainField}
                   valueField="optionId"
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
@@ -77,10 +91,10 @@ const SurveyQue = ({ navigation, route }) => {
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Single Select List'}>
                 <Field
-                  name={question.sQuestion.Id}
+                  name="mainField"
                   component={SingleSelectRadio}
                   data={question.Options}
-                  value={values[question.sQuestion.Id]}
+                  value={values.mainField}
                   valueField="optionId"
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
@@ -97,8 +111,8 @@ const SurveyQue = ({ navigation, route }) => {
                 <Field
                   component={SelectGroup}
                   data={question.Options}
-                  name={question.sQuestion.Id}
-                  value={values[question.sQuestion.Id] || []}
+                  name="mainField"
+                  value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
                     if (!value) {
@@ -110,13 +124,12 @@ const SurveyQue = ({ navigation, route }) => {
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Multi Select'}>
                 <Field
-                  data={question.Options.map(x => ({
-                    text: x.optionName,
-                    value: x.optionId,
-                  }))}
+                  data={question.Options}
+                  valueField="optionId"
+                  textField="optionName"
                   component={MultiSelection}
-                  name={question.sQuestion.Id}
-                  value={values[question.sQuestion.Id]}
+                  name="mainField"
+                  value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
                     if (!value || value.length === 0) {
@@ -127,17 +140,26 @@ const SurveyQue = ({ navigation, route }) => {
                 />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Ordering Question'}>
-                <VKCDraggableList
+                <Field
                   data={question.Options}
+                  component={VKCDraggableList}
+                  name="mainField"
+                  value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  validate={value => {
+                    if (!value) {
+                      return 'Please Enter Field Value';
+                    }
+                    return '';
+                  }}
                 />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Integer Enter Question'}>
                 <Field
                   component={TextInput}
                   keyboardType="number-pad"
-                  name={question.sQuestion.Id}
-                  value={values[question.sQuestion.Id]}
+                  name="mainField"
+                  value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
                     if (!value) {
@@ -150,8 +172,8 @@ const SurveyQue = ({ navigation, route }) => {
               <When condition={question.sQuestion.Option_Type__c === 'Text'}>
                 <Field
                   component={TextInput}
-                  name={question.sQuestion.Id}
-                  value={values[question.sQuestion.Id]}
+                  name="mainField"
+                  value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
                     if (!value) {
@@ -165,8 +187,8 @@ const SurveyQue = ({ navigation, route }) => {
                 <Field
                   component={SliderQuestion}
                   data={question.sQuestion}
-                  name={question.sQuestion.Id}
-                  value={values[question.sQuestion.Id]}
+                  name="mainField"
+                  value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
                     if (!value) {
@@ -180,8 +202,8 @@ const SurveyQue = ({ navigation, route }) => {
                 <Field
                   component={StarRating}
                   data={question.sQuestion}
-                  name={question.sQuestion.Id}
-                  value={values[question.sQuestion.Id]}
+                  name="mainField"
+                  value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
                     if (!value) {
@@ -194,10 +216,10 @@ const SurveyQue = ({ navigation, route }) => {
               <When
                 condition={question.sQuestion.Option_Type__c === 'Question with Image as options'}>
                 <Field
-                  name={question.sQuestion.Id}
+                  name="mainField"
                   component={SelectImage}
                   data={question.Options}
-                  value={values[question.sQuestion.Id]}
+                  value={values.mainField}
                   valueField="optionId"
                   textField="optionName"
                   imageField="imageUrl"
@@ -214,17 +236,57 @@ const SurveyQue = ({ navigation, route }) => {
                 condition={
                   question.sQuestion.Option_Type__c === 'Upload Image for choosing an Option'
                 }>
-                <VKCMediaPicker question={question.sQuestion.Detailed_Survey_Question_Name__c} />
+                <Field
+                  component={VKCMediaPicker}
+                  name="mainField"
+                  value={values.mainField}
+                  question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Multi Text'}>
-                <MultiText question={question.sQuestion.Detailed_Survey_Question_Name__c} />
+                <FieldArray
+                  name="mainField"
+                  render={arrayHelpers => (
+                    <View>
+                      <TextEle>{question.sQuestion.Detailed_Survey_Question_Name__c}</TextEle>
+                      {values.mainField && values.mainField.length > 0 ? (
+                        <View>
+                          <For each="ele" index="index" of={values.mainField}>
+                            <View key={index}>
+                              <Field name={`'mainField'.${index}`} component={TextInput} />
+                              <Pressable
+                                style={{ position: 'absolute', right: 10, top: 32 }}
+                                onPress={() => arrayHelpers.remove(index)}>
+                                <Icon name="close" size={24} color="red" />
+                              </Pressable>
+                            </View>
+                          </For>
+                          <VKCButton
+                            variant="fill"
+                            text="Add"
+                            style={{ marginVertical: 20 }}
+                            onPress={() => arrayHelpers.insert('')}
+                          />
+                        </View>
+                      ) : (
+                        <VKCButton
+                          variant="fill"
+                          text="Add"
+                          style={{ marginVertical: 20 }}
+                          onPress={() => arrayHelpers.push('')}
+                        />
+                      )}
+                    </View>
+                  )}
+                />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Feedback'}>
                 <Field
                   component={TextInput}
                   multiline
-                  name={question.sQuestion.Id}
-                  value={values[question.sQuestion.Id]}
+                  inputStyle={{ minHeight: 200 }}
+                  name="mainField"
+                  value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
                     if (!value) {
@@ -236,10 +298,10 @@ const SurveyQue = ({ navigation, route }) => {
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Tabular Question'}>
                 <Field
-                  name={question.sQuestion.Id}
+                  name="mainField"
                   component={SingleSelectRadio}
                   data={question.Options}
-                  value={values[question.sQuestion.Id]}
+                  value={values.mainField}
                   valueField="optionId"
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
@@ -256,8 +318,8 @@ const SurveyQue = ({ navigation, route }) => {
                 <Field
                   component={TextInput}
                   keyboardType="number-pad"
-                  name={question.sQuestion.Id}
-                  value={values[question.sQuestion.Id]}
+                  name="mainField"
+                  value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
                     if (!value) {
@@ -272,10 +334,10 @@ const SurveyQue = ({ navigation, route }) => {
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Display'}>
                 <Field
-                  name={question.sQuestion.Id}
+                  name="mainField"
                   component={SingleSelectRadio}
                   data={question.Options}
-                  value={values[question.sQuestion.Id]}
+                  value={values.mainField}
                   valueField="optionId"
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
@@ -290,10 +352,10 @@ const SurveyQue = ({ navigation, route }) => {
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Stock'}>
                 <Field
-                  name={question.sQuestion.Id}
+                  name="mainField"
                   component={SingleSelectRadio}
                   data={question.Options}
-                  value={values[question.sQuestion.Id]}
+                  value={values.mainField}
                   valueField="optionId"
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
@@ -308,10 +370,10 @@ const SurveyQue = ({ navigation, route }) => {
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Performance In the Area'}>
                 <Field
-                  name={question.sQuestion.Id}
+                  name="mainField"
                   component={SingleSelectRadio}
                   data={question.Options}
-                  value={values[question.sQuestion.Id]}
+                  value={values.mainField}
                   valueField="optionId"
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
@@ -326,10 +388,10 @@ const SurveyQue = ({ navigation, route }) => {
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Salesman Commit'}>
                 <Field
-                  name={question.sQuestion.Id}
+                  name="mainField"
                   component={SingleSelectRadio}
                   data={question.Options}
-                  value={values[question.sQuestion.Id]}
+                  value={values.mainField}
                   valueField="optionId"
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
@@ -344,10 +406,10 @@ const SurveyQue = ({ navigation, route }) => {
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Special Efforts'}>
                 <Field
-                  name={question.sQuestion.Id}
+                  name="mainField"
                   component={SingleSelectRadio}
                   data={question.Options}
-                  value={values[question.sQuestion.Id]}
+                  value={values.mainField}
                   valueField="optionId"
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}

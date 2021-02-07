@@ -1,6 +1,6 @@
 import VKCButton from '@components/VKCButton';
 import React, { useState } from 'react';
-import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
+import { launchCamera } from 'react-native-image-picker';
 import {
   ActionSheetIOS,
   View,
@@ -14,8 +14,11 @@ import { RectButton, BorderlessButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import TextEle from '@components/TextEle';
 
-const VKCMediaPicker = ({ question }) => {
-  const [response, setResponse] = useState(null);
+const VKCMediaPicker = ({
+  field: { name, value },
+  form: { touched, errors, setFieldValue },
+  question,
+}) => {
   const [isVisible, setVisible] = useState(false);
 
   const selectImage = () => {
@@ -34,7 +37,7 @@ const VKCMediaPicker = ({ question }) => {
                 mediaType: 'photo',
               },
               res => {
-                setResponse(res);
+                setFieldValue(name, res);
               },
             );
           }
@@ -47,6 +50,11 @@ const VKCMediaPicker = ({ question }) => {
 
   return (
     <View style={{ margin: 20 }}>
+      {touched[name] && errors[name] && (
+        <TextEle variant="error" style={{ textAlign: 'center', marginVertical: 10 }}>
+          {errors[name]}
+        </TextEle>
+      )}
       <TextEle variant="title" style={{ marginBottom: 10 }}>
         {question}
       </TextEle>
@@ -62,7 +70,7 @@ const VKCMediaPicker = ({ question }) => {
                     mediaType: 'photo',
                   },
                   res => {
-                    setResponse(res);
+                    setFieldValue(name, res);
                   },
                 );
                 setVisible(false);
@@ -82,10 +90,10 @@ const VKCMediaPicker = ({ question }) => {
         </Modal>
       )}
       <View style={{ margin: 40, alignItems: 'center' }}>
-        {response?.uri && (
+        {value?.uri && (
           <View>
             <BorderlessButton
-              onPress={() => setResponse(null)}
+              onPress={() => setFieldValue(name, null)}
               style={{
                 position: 'absolute',
                 right: -18,
@@ -97,7 +105,7 @@ const VKCMediaPicker = ({ question }) => {
               }}>
               <Icon name="close" size={24} color="red" />
             </BorderlessButton>
-            <Image source={{ uri: response.uri }} style={{ height: 200, width: 200 }} />
+            <Image source={{ uri: value.uri }} style={{ height: 200, width: 200 }} />
           </View>
         )}
       </View>
