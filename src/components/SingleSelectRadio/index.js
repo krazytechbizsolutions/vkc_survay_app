@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { RadioCore } from '@components/radio/Radio';
 import TextEle from '@components/TextEle';
-import { Field, useFormikContext } from 'formik';
+import { Field } from 'formik';
 import React, { useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { RectButton, TextInput } from 'react-native-gesture-handler';
@@ -12,7 +12,7 @@ import styles from './styles';
 
 const SingleSelectRadio = ({
   field: { name, value },
-  form: { touched, errors, setFieldValue, setFieldTouched },
+  form: { touched, errors, setFieldValue, setFieldTouched, values },
   data,
   valueField,
   textField,
@@ -20,13 +20,13 @@ const SingleSelectRadio = ({
   question,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const { values } = useFormikContext();
-
-  console.log(value && value[textField]);
 
   const onSelectValue = item => {
     setIsVisible(false);
     setFieldValue(name, item);
+    if (name !== 'childField') {
+      setFieldValue('childField', '');
+    }
   };
 
   const errorStyle = touched[name] && errors[name] ? { borderColor: 'red' } : {};
@@ -83,7 +83,7 @@ const SingleSelectRadio = ({
           />
         </SafeAreaView>
       </Modal>
-      {value?.subOrLoopingQtnOptions?.length > 1 && values[name] && (
+      {value?.subOrLoopingQtnOptions?.length > 1 && !!values[name] && (
         <Field
           name="childField"
           component={SingleSelectRadio}
@@ -100,7 +100,7 @@ const SingleSelectRadio = ({
           }}
         />
       )}
-      {value?.subOptions?.length > 1 && values[name] && (
+      {value?.subOptions?.length > 1 && !!values[name] && (
         <Field
           name="childField"
           component={SingleSelectRadio}
