@@ -9,6 +9,8 @@ const MultiSelection = ({
   form: { touched, errors, setFieldValue },
   data,
   question,
+  textField,
+  valueField,
 }) => (
   <View>
     {touched[name] && errors[name] && (
@@ -27,16 +29,13 @@ const MultiSelection = ({
       renderItem={({ item }) => (
         <CheckBoxFill
           key={item.id}
-          option={{ text: item.text, value: item.text }}
-          value={value}
+          option={{ text: item[textField], value: item[valueField] }}
+          value={value && value.map(x => x[valueField])}
           onPress={() => {
-            if (value && value.some(ele => ele === item.text)) {
-              setFieldValue(
-                name,
-                value.filter(x => x !== item.text),
-              );
+            if (value && value.some(x => x[valueField] === item[valueField])) {
+              setFieldValue(name, [item]);
             } else {
-              setFieldValue(name, [...(value || []), item.text]);
+              setFieldValue(name, [...(value || []), item]);
             }
           }}
         />
