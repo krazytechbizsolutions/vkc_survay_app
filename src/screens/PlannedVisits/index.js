@@ -73,7 +73,7 @@ const PlannedVisits = ({ navigation }) => {
                 onPress={async () => {
                   const res = await axios.post('/services/apexrest/SRVY_SurveyDataOffline_API');
                   navigation.navigate('SurveyQue', {
-                    questions: res.data[0]?.Questions,
+                    questions: res.data.filter(q => q.surveyId == x.svyId)[0]?.Questions,
                     firstQuestion: true,
                   });
                 }}
