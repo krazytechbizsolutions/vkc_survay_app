@@ -2,41 +2,72 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
-import React from 'react';
+import React, { useCallback } from 'react';
 import useSWR from 'swr';
 import PropTypes from 'prop-types';
 import { View, Text, FlatList } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import axios from '@utils/axios';
+import NetInfo from '@react-native-community/netinfo';
 import VKCButton from '@components/VKCButton';
-import { getToken } from '../../utils';
+import { getToken, storeData, getData } from '../../utils';
 
 const PlannedVisits = ({ navigation }) => {
-
-  let userId = "";
-  let visitsEndpoint = '/services/apexrest/SRVY_DayPlanDataOffline_API';
-  const getData = async () => {
+  const visitsEndpoint = '/services/apexrest/SRVY_DayPlanDataOffline_API';
+  const surveyEndpoint = '/services/apexrest/SRVY_SurveyDataOffline_API';
+  const getVisitData = useCallback(async () => {
     const token = await getToken();
-    if(token && token.id){
-      let idSplit = token.id.split('/');
-      userId = idSplit[idSplit.length-1];
+    let userId = '';
+    if (token && token.id) {
+      const idSplit = token.id.split('/');
+      userId = idSplit[idSplit.length - 1];
     }
+    const netInfo = await NetInfo.fetch();
+    if (netInfo.isConnected) {
+      const res = await axios.post(visitsEndpoint, { UserId: userId, DateVal: '' });
+      console.log(res.data);
+      await storeData(visitsEndpoint, res.data);
+      return res.data;
+    }
+    const data = await getData(visitsEndpoint);
+    return data;
+  }, []);
 
+  const getSurveyData = useCallback(async () => {
+    const netInfo = await NetInfo.fetch();
+    if (netInfo.isConnected) {
+      const res = await axios.post(surveyEndpoint);
+      await storeData(surveyEndpoint, res.data);
+      return res.data;
+    }
+    const data = await getData(surveyEndpoint);
+    return data;
+  }, []);
 
-    let res = await axios.post(visitsEndpoint, { "UserId": userId, "DateVal": "" }); 
-    return res.data;
-  }
-
-  let { data: plannedVisits, isValidating } = useSWR(
-    visitsEndpoint, 
-    getData
+  const { data: plannedVisits, isValidating } = useSWR(visitsEndpoint, getVisitData);
+  const { data: surveys, isValidating: isValidatingSurveys } = useSWR(
+    surveyEndpoint,
+    getSurveyData,
   );
 
   if (isValidating) {
-    return <Text style={{ paddingTop: 30, fontSize: 20, color:'#000', textAlign:"center" }} textBreakStrategy="simple">  Loading...  </Text>;
+    return (
+      <Text
+        style={{ paddingTop: 30, fontSize: 20, color: '#000', textAlign: 'center' }}
+        textBreakStrategy="simple">
+        {' '}
+        Loading...{' '}
+      </Text>
+    );
   }
-  if(plannedVisits?.visits.length == 0){
-    return <Text style={{ paddingTop: 30, fontSize: 20, color:'#000', textAlign:"center" }} textBreakStrategy="simple">No Planned Visits</Text>;
+  if (plannedVisits?.visits.length == 0) {
+    return (
+      <Text
+        style={{ paddingTop: 30, fontSize: 20, color: '#000', textAlign: 'center' }}
+        textBreakStrategy="simple">
+        No Planned Visits
+      </Text>
+    );
   }
 
   const { colors } = useTheme();
@@ -71,9 +102,9 @@ const PlannedVisits = ({ navigation }) => {
                 style={{ marginVertical: 5 }}
                 text={`Survey ${i + 1}`}
                 onPress={async () => {
-                  const res = await axios.post('/services/apexrest/SRVY_SurveyDataOffline_API');
+                  // surveys.find(y => y.surveyId === x.svyId).Questions
                   navigation.navigate('SurveyQue', {
-                    questions: res.data.filter(q => q.surveyId == x.svyId)[0]?.Questions,
+                    questions: surveys[0].Questions,
                     firstQuestion: true,
                   });
                 }}
