@@ -11,7 +11,7 @@ import VKCLogo from '../../assets/Logo/VKC_Logo.jpg';
 
 const Tab = createMaterialTopTabNavigator();
 const date = new Date().getDate();
-const month = new Date().getMonth();
+const month = new Date().getMonth() + 1;
 const year = new Date().getFullYear();
 
 const Splash = ({ navigation }) => (
