@@ -1,8 +1,7 @@
 /* eslint-disable */
 import axios from 'axios';
 import Config from 'react-native-config';
-
-console.log(Config.BASE_URL);
+import { storeToken, getToken } from './index';
 
 const instance = axios.create({
   baseURL: Config.BASE_URL,
@@ -11,9 +10,19 @@ const instance = axios.create({
 
 // Add a request interceptor
 instance.interceptors.request.use(
-  function (config) {
+  async function (config) {
     // Do something before request is sent
-    console.log(config);
+    const token = await getToken();
+
+    if (token) {
+      config.baseURL = token.instance_url;
+      config.headers['Authorization'] = 'Bearer ' + token.access_token;        
+      config.headers['Content-Type'] = 'application/json';
+      config.headers['x-requested-with'] = 'XMLHttpRequest';
+    } else {
+      config.baseURL = Config.BASE_URL;
+    }
+
     return config;
   },
   function (error) {
@@ -29,9 +38,14 @@ instance.interceptors.response.use(
     // Do something with response data
     return response;
   },
-  function (error) {
+  async function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
+
+    if (error.response.status === 401) {
+      await storeToken(null);
+    }
+
     return Promise.reject(error);
   },
 );

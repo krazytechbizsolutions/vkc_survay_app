@@ -59,7 +59,8 @@ const Login = ({ navigation }) => {
       await storeToken(res.data);
       navigation.navigate('Home');
     } catch (error) {
-      actions.setStatus({ serverError: error.message });
+      // actions.setStatus({ serverError: error.message });
+      actions.setStatus({ serverError: "Invalid Credentials" });
     } finally {
       actions.setSubmitting(false);
     }
