@@ -18,8 +18,11 @@ import { Formik, Field, FieldArray } from 'formik';
 import SelectImage from '@components/SelectImage';
 import TextEle from '@components/TextEle';
 import { SurveyContext } from 'src/context/surveyContext';
+import NetInfo from '@react-native-community/netinfo';
 import Icon from 'react-native-vector-icons/Ionicons';
+import axios from '@utils/axios';
 import { ADD_SURVEY } from 'src/constants/actionTypes';
+import { getData, storeData } from 'src/utils';
 import TextInput from '../../components/TextInput/TextInput';
 // import TextInput from '@components/TextInput/TextInput';
 // import { RectButton } from 'react-native-gesture-handler';
@@ -32,14 +35,29 @@ const SurveyQue = ({ navigation, route }) => {
   const formRef = useRef();
   const { survey, dispatchSurvey } = useContext(SurveyContext);
 
-  const onSubmit = selectedOptions => {
+  const onSubmit = async selectedOptions => {
+    const url = '/services/apexrest/SRVY_SvyCapture_API';
     if (restQuestions.length === 0) {
-      Alert.alert(
-        'Completed',
-        'Form Submition Completed',
-        [{ text: 'OK', onPress: () => navigation.popToTop() }],
-        { cancelable: false },
-      );
+      try {
+        const netInfo = await NetInfo.fetch();
+        if (netInfo.isConnected) {
+          await axios.post(url, survey);
+          Alert.alert(
+            'Completed',
+            'Form Submition Completed',
+            [{ text: 'OK', onPress: () => navigation.popToTop() }],
+            { cancelable: false },
+          );
+        } else {
+          throw new Error('No Internet');
+        }
+      } catch (error) {
+        Alert.alert('Fail', error.message, [{ text: 'OK', onPress: () => navigation.popToTop() }], {
+          cancelable: false,
+        });
+        // const data = await getData(url);
+        // await storeData(url, [...data, survey]);
+      }
     } else {
       const { sQuestion } = question;
       dispatchSurvey({
