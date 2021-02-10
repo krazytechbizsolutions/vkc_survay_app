@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import Home from '@screens/Home';
@@ -8,12 +8,14 @@ import SurveyQue from '@screens/SurveyQue';
 import AddRetailer from '@screens/AddRetailer';
 import UnplannedVisits from '@screens/UnplannedVisits';
 import Login from '@screens/Login';
+import { AuthContext } from 'src/context/authContext';
 import VKCLogo from '../assets/Logo/VKC_Logo.jpg';
 
 const MainStack = createStackNavigator();
 
 const MainStackScreen = () => {
   const { colors } = useTheme();
+  const { token } = useContext(AuthContext);
   return (
     <MainStack.Navigator
       screenOptions={{
@@ -21,7 +23,7 @@ const MainStackScreen = () => {
         headerTintColor: colors.text,
         title: false,
       }}>
-      <MainStack.Screen name="Login" component={Login} />
+      {!token && <MainStack.Screen name="Login" component={Login} />}
       <MainStack.Screen name="Home" component={Home} />
       <MainStack.Screen
         name="SurveyQue"
