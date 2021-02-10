@@ -96,19 +96,22 @@ const PlannedVisits = ({ navigation }) => {
             <Text style={{ paddingVertical: 4 }}>{`Account Name: ${item.accName}`}</Text>
             <Text style={{ paddingVertical: 4 }}>{`Area Name: ${item.AreaName}`}</Text>
             <Text style={{ paddingVertical: 4 }}>{`Account Type: ${item.accType}`}</Text>
-            {item.surveys.map((x, i) => (
-              <VKCButton
-                variant="fill"
-                style={{ marginVertical: 5 }}
-                text={`Survey ${i + 1}`}
-                onPress={async () => {
-                  navigation.navigate('SurveyQue', {
-                    questions: surveys.find(y => y.surveyId === x.svyId).Questions,
-                    firstQuestion: true,
-                  });
-                }}
-              />
-            ))}
+            {item.surveys.map((x, i) => {
+              let srvDetails = surveys.find(y => y.surveyId === x.svyId)
+              if(srvDetails){
+                return <VKCButton
+                  variant="fill"
+                  style={{ marginVertical: 5 }}
+                  text={srvDetails.surveyName}
+                  onPress={async () => {
+                    navigation.navigate('SurveyQue', {
+                      questions: srvDetails.Questions,
+                      firstQuestion: true,
+                    });
+                  }}
+                />
+              }
+            })}
           </View>
         )}
         keyExtractor={item => `${item.accId}`}
