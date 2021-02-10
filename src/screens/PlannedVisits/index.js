@@ -102,9 +102,8 @@ const PlannedVisits = ({ navigation }) => {
                 style={{ marginVertical: 5 }}
                 text={`Survey ${i + 1}`}
                 onPress={async () => {
-                  // surveys.find(y => y.surveyId === x.svyId).Questions
                   navigation.navigate('SurveyQue', {
-                    questions: surveys[0].Questions,
+                    questions: surveys.find(y => y.surveyId === x.svyId).Questions,
                     firstQuestion: true,
                   });
                 }}
