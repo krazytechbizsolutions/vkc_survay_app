@@ -22,7 +22,7 @@ const StarRating = ({
           ratingBackgroundColor="#fff"
           onFinishRating={rating => setFieldValue(name, rating)}
           showRating={false}
-          fractions={2}
+          fractions={1}
           startingValue={value || 0}
           style={{ paddingVertical: 10 }}
         />
