@@ -56,7 +56,7 @@ const SurveyQue = ({ navigation, route }) => {
           cancelable: false,
         });
         // const data = await getData(url);
-        // await storeData(url, [...data, survey]);
+        // await storeData(url, [...(data || []), survey]);
       }
     } else {
       const { sQuestion } = question;
