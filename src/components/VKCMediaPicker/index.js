@@ -37,7 +37,7 @@ const VKCMediaPicker = ({
                 mediaType: 'photo',
               },
               res => {
-                setFieldValue(name, res);
+                setFieldValue(name, [...(value || []), res]);
               },
             );
           }
@@ -70,7 +70,7 @@ const VKCMediaPicker = ({
                     mediaType: 'photo',
                   },
                   res => {
-                    setFieldValue(name, res);
+                    setFieldValue(name, [...(value || []), res]);
                   },
                 );
                 setVisible(false);
@@ -89,26 +89,33 @@ const VKCMediaPicker = ({
           </View>
         </Modal>
       )}
-      <View style={{ margin: 40, alignItems: 'center' }}>
-        {value?.uri && (
-          <View>
-            <BorderlessButton
-              onPress={() => setFieldValue(name, null)}
-              style={{
-                position: 'absolute',
-                right: -18,
-                top: -18,
-                backgroundColor: 'rgba(0,0,0,0.6)',
-                borderRadius: 18,
-                padding: 6,
-                zIndex: 10,
-              }}>
-              <Icon name="close" size={24} color="red" />
-            </BorderlessButton>
-            <Image source={{ uri: value.uri }} style={{ height: 200, width: 200 }} />
-          </View>
-        )}
-      </View>
+      {value?.map(x => (
+        <View style={{ margin: 40, alignItems: 'center' }}>
+          {x?.uri && (
+            <View>
+              <BorderlessButton
+                onPress={() =>
+                  setFieldValue(
+                    name,
+                    value.filter(y => y.uri !== x.uri),
+                  )
+                }
+                style={{
+                  position: 'absolute',
+                  right: -18,
+                  top: -18,
+                  backgroundColor: 'rgba(0,0,0,0.6)',
+                  borderRadius: 18,
+                  padding: 6,
+                  zIndex: 10,
+                }}>
+                <Icon name="close" size={24} color="red" />
+              </BorderlessButton>
+              <Image source={{ uri: x.uri }} style={{ height: 200, width: 200 }} />
+            </View>
+          )}
+        </View>
+      ))}
     </View>
   );
 };
