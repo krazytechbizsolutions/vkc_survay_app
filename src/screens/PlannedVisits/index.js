@@ -97,7 +97,7 @@ const PlannedVisits = ({ navigation }) => {
             <Text style={{ paddingVertical: 4 }}>{`Area Name: ${item.AreaName}`}</Text>
             <Text style={{ paddingVertical: 4 }}>{`Account Type: ${item.accType}`}</Text>
             {item.surveys.map((x, i) => {
-              let srvDetails = surveys.find(y => y.surveyId === x.svyId)
+              let srvDetails = (surveys || []).find(y => y.surveyId === x.svyId)
               if(srvDetails){
                 return <VKCButton
                   variant="fill"
