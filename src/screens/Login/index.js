@@ -1,9 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { useNetInfo } from '@react-native-community/netinfo';
 import SafeAreaView from 'react-native-safe-area-view';
 import Config from 'react-native-config';
+import { AuthContext } from 'src/context/authContext';
 import Form from '../../components/form/Form';
 import fields from './fields';
 import { storeToken, getToken } from '../../utils';
@@ -14,6 +15,7 @@ const Login = ({ navigation }) => {
   const netInfo = useNetInfo();
   const [loading, setLoading] = useState(false);
   const [error, seteError] = useState(false);
+  const { setToken } = useContext(AuthContext);
 
   const headerImage = () => (
     <Image
@@ -58,9 +60,10 @@ const Login = ({ navigation }) => {
       });
       await storeToken(res.data);
       navigation.navigate('Home');
+      setToken(res.data);
     } catch (error) {
       // actions.setStatus({ serverError: error.message });
-      actions.setStatus({ serverError: "Invalid Credentials" });
+      actions.setStatus({ serverError: 'Invalid Credentials' });
     } finally {
       actions.setSubmitting(false);
     }

@@ -8,6 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import axios from '@utils/axios';
 import SplashScreen from 'react-native-splash-screen';
 import SurveyProvider from 'src/context/surveyContext';
+import AuthProvider from 'src/context/authContext';
 import MasterNavigation from './src/navigation/MasterNavigation';
 
 const MyDefaultTheme = {
@@ -39,22 +40,24 @@ const App = () => {
   }, []);
   return (
     <SafeAreaProvider>
-      <SurveyProvider>
-        <StatusBar
-          backgroundColor={currentTheme.colors.card}
-          barStyle={scheme === 'dark' ? 'light-content' : 'dark-content'}
-        />
-        <SWRConfig
-          value={{
-            fetcher: (url, params) => axios.request({ url, ...params }).then(res => res.data),
-          }}>
-          <NavigationContainer theme={currentTheme}>
-            <RootStack.Navigator mode="modal" headerMode="none">
-              <RootStack.Screen name="Main" component={MasterNavigation} />
-            </RootStack.Navigator>
-          </NavigationContainer>
-        </SWRConfig>
-      </SurveyProvider>
+      <AuthProvider>
+        <SurveyProvider>
+          <StatusBar
+            backgroundColor={currentTheme.colors.card}
+            barStyle={scheme === 'dark' ? 'light-content' : 'dark-content'}
+          />
+          <SWRConfig
+            value={{
+              fetcher: (url, params) => axios.request({ url, ...params }).then(res => res.data),
+            }}>
+            <NavigationContainer theme={currentTheme}>
+              <RootStack.Navigator mode="modal" headerMode="none">
+                <RootStack.Screen name="Main" component={MasterNavigation} />
+              </RootStack.Navigator>
+            </NavigationContainer>
+          </SWRConfig>
+        </SurveyProvider>
+      </AuthProvider>
     </SafeAreaProvider>
   );
 };
