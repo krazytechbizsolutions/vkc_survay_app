@@ -371,7 +371,7 @@ const SurveyQue = ({ navigation, route }) => {
                       return 'Please Enter Field Value';
                     }
                     if (value > question.sQuestion.Max_Limit__c) {
-                      return `value should not be greater then ${question.sQuestion.Max_Limit__c}`;
+                      return `value should not be greater than ${question.sQuestion.Max_Limit__c}`;
                     }
                     return '';
                   }}

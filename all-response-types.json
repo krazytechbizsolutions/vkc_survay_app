@@ -1,0 +1,264 @@
+[
+    {
+        "userId": "0051s0000017UmxAAE",
+        "accountId": "a071s000002Gw3cAAC",
+        "surveyId": "a041s000002okuIAAQ",
+        "surveyDate": "2021-02-12",
+        "Questions": [
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FOBAA2",
+                    "qtnType": "Single Select List"
+                },
+                "selectedOptions": [
+                  {
+                    "seqNo": 4,
+                    "optionId": "a061s000001UXp2AAG",
+                    "isLoopingQtn": true,
+                    "loopingQtnId": "a051s0000024FOGAA2",
+                    "loopingQtnType": "Single Select",
+                    "selectedSubOrLoopingQtnOptions": [
+                      {
+                        "Id": "a061s000001UXp6AAG",
+                        "Sequence_No__c": 2
+                      }
+                    ]
+                  }
+                ]
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FOLAA2",
+                    "qtnType": "Single Select List"
+                },
+                "selectedOptions": [
+                  {
+                    "seqNo": 4,
+                    "optionId": "a061s000001UXpDAAW"
+                  }
+                ]
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FOaAAM",
+                    "qtnType": "Single Select Group"
+                },
+                "selectedOptions": [
+                  {
+                    "seqNo": 1,
+                    "optionId": "a061s000001UXpQAAW",
+                    "selectedSubOrLoopingQtnOptions": [
+                      {
+                        "Id": "a061s000001UXpaAAG",
+                        "Sequence_No__c": 2
+                      }
+                    ]
+                  },{
+                    "seqNo": 2,
+                    "optionId": "a061s000001UXpRAAW",
+                    "selectedSubOrLoopingQtnOptions": [
+                      {
+                        "Id": "a061s000001UXpbAAG",
+                        "Sequence_No__c": 3
+                      }
+                    ]
+                  },{
+                    "seqNo": 3,
+                    "optionId": "a061s000001UXpSAAW",
+                    "selectedSubOrLoopingQtnOptions": [
+                      {
+                        "Id": "a061s000001UXpcAAG",
+                        "Sequence_No__c": 4
+                      }
+                    ]
+                  },{
+                    "seqNo": 4,
+                    "optionId": "a061s000001UXpTAAW",
+                    "selectedSubOrLoopingQtnOptions": [
+                      {
+                        "Id": "a061s000001UXpdAAG",
+                        "Sequence_No__c": 5
+                      }
+                    ]
+                  }
+                ]
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FOfAAM",
+                    "qtnType": "Multi Select"
+                },
+                "selectedOptions": [
+                  {
+                    "seqNo": 2,
+                    "optionId": "a061s000001UXpgAAG"
+                  },{
+                    "seqNo": 3,
+                    "optionId": "a061s000001UXphAAG"
+                  },{
+                    "seqNo": 5,
+                    "optionId": "a061s000001UXpjAAG"
+                  },{
+                    "seqNo": 6,
+                    "optionId": "a061s000001UXpkAAG"
+                  }
+                ]
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FOuAAM",
+                    "qtnType": "Integer Enter Question",
+                    "answer": "4"
+                }
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FP9AAM",
+                    "qtnType": "Text",
+                    "answer": "joe"
+                }
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FPEAA2",
+                    "qtnType": "Slider",
+                    "answer": "71"
+                }
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FPTAA2",
+                    "qtnType": "Star Rating",
+                    "answer": "3.7"
+                }
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FPiAAM",
+                    "qtnType": "Question with Image as options"
+                },
+                "selectedOptions": [
+                  {
+                    "seqNo": 2,
+                    "optionId": "a061s000001UXqLAAW"
+                  }
+                ]
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FQbAAM",
+                    "qtnType": "Upload Image for choosing an Option",
+                    "imageBase64": "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mOsZvpfz0AEYBxVSF+FAEatE9lg66mYAAAAAElFTkSuQmCC"
+                }
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FOpAAM",
+                    "qtnType": "Ordering Question",
+                    "Sequence_No": 5
+                },
+                "selectedOptions": [
+                  {
+                    "seqNo": 5,
+                    "optionId": "a061s000001UXq5AAG"
+                  },{
+                    "seqNo": 4,
+                    "optionId": "a061s000001UXq4AAG"
+                  },{
+                    "seqNo": 2,
+                    "optionId": "a061s000001UXq2AAG"
+                  },{
+                    "seqNo": 6,
+                    "optionId": "a061s000001UXq6AAG"
+                  },{
+                    "seqNo": 1,
+                    "optionId": "a061s000001UXq1AAG"
+                  },{
+                    "seqNo": 3,
+                    "optionId": "a061s000001UXq3AAG"
+                  },{
+                    "seqNo": 7,
+                    "optionId": "a061s000001UXq7AAG"
+                  }
+                ]
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FQ7AAM",
+                    "qtnType": "Multi Text",
+                    "Sequence_No": 11
+                },
+                "selectedOptions": [
+                  {
+                    "seqNo": 1,
+                    "answer": "1 - This should be id from dealer & sub-dealer ajax"
+                  },{
+                    "seqNo": 2,
+                    "answer": "2 - This should be id from dealer & sub-dealer ajax"
+                  }
+                ]
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FQHAA2",
+                    "qtnType": "Feedback",
+                    "Sequence_No": 12,
+                    "answer": "This app is super easy to use"
+                }
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FQRAA2",
+                    "qtnType": "Tabular Question",
+                    "Sequence_No": 13
+                },
+                "selectedOptions": [
+                  {
+                    "seqNo": 2,
+                    "optionId": "a061s000001UXquAAG",
+                    "selectedSubOrLoopingQtnOptions": [
+                      {
+                        "Id": "a061s000001UXqzAAG",
+                        "Sequence_No__c": 2
+                      }
+                    ]
+                  }
+                ]
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FQgAAM",
+                    "qtnType": "Performance In the Area",
+                    "Sequence_No": 15
+                },
+                "selectedOptions": [
+                  {
+                    "seqNo": 4,
+                    "optionId": "a061s000001UXrCAAW"
+                  }
+                ]
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FR0AAM",
+                    "qtnType": "Salesman Commit",
+                    "Sequence_No": 16
+                },
+                "selectedOptions": [
+                  {
+                    "seqNo": 3,
+                    "optionId": "a061s000001UXrfAAG"
+                  }
+                ]
+            },
+            {
+                "sQuestion": {
+                    "qtnId": "a051s0000024FRAAA2",
+                    "qtnType": "Coupon",
+                    "Sequence_No": 17,
+                    "answer": "25"
+                }
+            }
+        ]
+    }
+]

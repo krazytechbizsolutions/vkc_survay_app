@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "1e0cf40e-9be2-483b-9c9e-55376ae0969e",
+		"name": "VKC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"token\", data.access_token);",
+							"postman.setEnvironmentVariable(\"instance_url\", data.instance_url);",
+							"",
+							"if(data.id){",
+							"    var idSplit = data.id.split('/');",
+							"    postman.setEnvironmentVariable(\"user_detail_url\", data.id);",
+							"    postman.setEnvironmentVariable(\"user_id\", idSplit[idSplit.length-1]);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://test.salesforce.com/services/oauth2/token?grant_type=password&client_id=3MVG9pcaEGrGRoTIzpWvl9_xA3rCHvV7x48exaQosfiTCBXhc1jD6T_7_Jwg6XTQvouuJsrRYT9P6H0G.pikL&client_secret=6F0844ABFE760BD8F3FC042633141F6AA6CD0D84D38D90F2D3CF05D8A5987519&username=prasanthtsa@vkc.com.dev&password=U4ic@vkc",
+					"protocol": "https",
+					"host": [
+						"test",
+						"salesforce",
+						"com"
+					],
+					"path": [
+						"services",
+						"oauth2",
+						"token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "password"
+						},
+						{
+							"key": "client_id",
+							"value": "3MVG9pcaEGrGRoTIzpWvl9_xA3rCHvV7x48exaQosfiTCBXhc1jD6T_7_Jwg6XTQvouuJsrRYT9P6H0G.pikL"
+						},
+						{
+							"key": "client_secret",
+							"value": "6F0844ABFE760BD8F3FC042633141F6AA6CD0D84D38D90F2D3CF05D8A5987519"
+						},
+						{
+							"key": "username",
+							"value": "prasanthtsa@vkc.com.dev"
+						},
+						{
+							"key": "password",
+							"value": "U4ic@vkc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Survey Day Plan Data",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \"UserId\": \"{{user_id}}\",  \"DateVal\": \"\"}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{instance_url}}/services/apexrest/SRVY_DayPlanDataOffline_API",
+					"host": [
+						"{{instance_url}}"
+					],
+					"path": [
+						"services",
+						"apexrest",
+						"SRVY_DayPlanDataOffline_API"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Survey Questions",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "{{instance_url}}/services/apexrest/SRVY_SurveyDataOffline_API",
+					"host": [
+						"{{instance_url}}"
+					],
+					"path": [
+						"services",
+						"apexrest",
+						"SRVY_SurveyDataOffline_API"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Retailer - Pending",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{instance_url}}/services/apexrest/",
+					"host": [
+						"{{instance_url}}"
+					],
+					"path": [
+						"services",
+						"apexrest",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Submit Survey",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"userId\": \"0051s0000017UmxAAE\",\n        \"accountId\": \"a071s000002Gw3cAAC\",\n        \"surveyId\": \"a041s000002okuIAAQ\",\n        \"surveyDate\": \"2021-02-12\",\n        \"Questions\": [\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FOBAA2\",\n                    \"qtnType\": \"Single Select List\"\n                },\n                \"selectedOptions\": [\n                  {\n                    \"seqNo\": 4,\n                    \"optionId\": \"a061s000001UXp2AAG\",\n                    \"isLoopingQtn\": true,\n                    \"loopingQtnId\": \"a051s0000024FOGAA2\",\n                    \"loopingQtnType\": \"Single Select\",\n                    \"selectedSubOrLoopingQtnOptions\": [\n                      {\n                        \"Id\": \"a061s000001UXp6AAG\",\n                        \"Sequence_No__c\": 2\n                      }\n                    ]\n                  }\n                ]\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FOLAA2\",\n                    \"qtnType\": \"Single Select List\"\n                },\n                \"selectedOptions\": [\n                  {\n                    \"seqNo\": 4,\n                    \"optionId\": \"a061s000001UXpDAAW\"\n                  }\n                ]\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FOaAAM\",\n                    \"qtnType\": \"Single Select Group\"\n                },\n                \"selectedOptions\": [\n                  {\n                    \"seqNo\": 1,\n                    \"optionId\": \"a061s000001UXpQAAW\",\n                    \"selectedSubOrLoopingQtnOptions\": [\n                      {\n                        \"Id\": \"a061s000001UXpaAAG\",\n                        \"Sequence_No__c\": 2\n                      }\n                    ]\n                  },{\n                    \"seqNo\": 2,\n                    \"optionId\": \"a061s000001UXpRAAW\",\n                    \"selectedSubOrLoopingQtnOptions\": [\n                      {\n                        \"Id\": \"a061s000001UXpbAAG\",\n                        \"Sequence_No__c\": 3\n                      }\n                    ]\n                  },{\n                    \"seqNo\": 3,\n                    \"optionId\": \"a061s000001UXpSAAW\",\n                    \"selectedSubOrLoopingQtnOptions\": [\n                      {\n                        \"Id\": \"a061s000001UXpcAAG\",\n                        \"Sequence_No__c\": 4\n                      }\n                    ]\n                  },{\n                    \"seqNo\": 4,\n                    \"optionId\": \"a061s000001UXpTAAW\",\n                    \"selectedSubOrLoopingQtnOptions\": [\n                      {\n                        \"Id\": \"a061s000001UXpdAAG\",\n                        \"Sequence_No__c\": 5\n                      }\n                    ]\n                  }\n                ]\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FOfAAM\",\n                    \"qtnType\": \"Multi Select\"\n                },\n                \"selectedOptions\": [\n                  {\n                    \"seqNo\": 2,\n                    \"optionId\": \"a061s000001UXpgAAG\"\n                  },{\n                    \"seqNo\": 3,\n                    \"optionId\": \"a061s000001UXphAAG\"\n                  },{\n                    \"seqNo\": 5,\n                    \"optionId\": \"a061s000001UXpjAAG\"\n                  },{\n                    \"seqNo\": 6,\n                    \"optionId\": \"a061s000001UXpkAAG\"\n                  }\n                ]\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FOuAAM\",\n                    \"qtnType\": \"Integer Enter Question\",\n                    \"answer\": \"4\"\n                }\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FP9AAM\",\n                    \"qtnType\": \"Text\",\n                    \"answer\": \"joe\"\n                }\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FPEAA2\",\n                    \"qtnType\": \"Slider\",\n                    \"answer\": \"71\"\n                }\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FPTAA2\",\n                    \"qtnType\": \"Star Rating\",\n                    \"answer\": \"3.7\"\n                }\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FPiAAM\",\n                    \"qtnType\": \"Question with Image as options\"\n                },\n                \"selectedOptions\": [\n                  {\n                    \"seqNo\": 2,\n                    \"optionId\": \"a061s000001UXqLAAW\"\n                  }\n                ]\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FQbAAM\",\n                    \"qtnType\": \"Upload Image for choosing an Option\",\n                    \"imageBase64\": \"iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mOsZvpfz0AEYBxVSF+FAEatE9lg66mYAAAAAElFTkSuQmCC\"\n                }\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FOpAAM\",\n                    \"qtnType\": \"Ordering Question\",\n                    \"Sequence_No\": 5\n                },\n                \"selectedOptions\": [\n                  {\n                    \"seqNo\": 5,\n                    \"optionId\": \"a061s000001UXq5AAG\"\n                  },{\n                    \"seqNo\": 4,\n                    \"optionId\": \"a061s000001UXq4AAG\"\n                  },{\n                    \"seqNo\": 2,\n                    \"optionId\": \"a061s000001UXq2AAG\"\n                  },{\n                    \"seqNo\": 6,\n                    \"optionId\": \"a061s000001UXq6AAG\"\n                  },{\n                    \"seqNo\": 1,\n                    \"optionId\": \"a061s000001UXq1AAG\"\n                  },{\n                    \"seqNo\": 3,\n                    \"optionId\": \"a061s000001UXq3AAG\"\n                  },{\n                    \"seqNo\": 7,\n                    \"optionId\": \"a061s000001UXq7AAG\"\n                  }\n                ]\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FQ7AAM\",\n                    \"qtnType\": \"Multi Text\",\n                    \"Sequence_No\": 11\n                },\n                \"selectedOptions\": [\n                  {\n                    \"seqNo\": 1,\n                    \"answer\": \"1 - This should be id from dealer & sub-dealer ajax\"\n                  },{\n                    \"seqNo\": 2,\n                    \"answer\": \"2 - This should be id from dealer & sub-dealer ajax\"\n                  }\n                ]\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FQHAA2\",\n                    \"qtnType\": \"Feedback\",\n                    \"Sequence_No\": 12,\n                    \"answer\": \"This app is super easy to use\"\n                }\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FQRAA2\",\n                    \"qtnType\": \"Tabular Question\",\n                    \"Sequence_No\": 13\n                },\n                \"selectedOptions\": [\n                  {\n                    \"seqNo\": 2,\n                    \"optionId\": \"a061s000001UXquAAG\",\n                    \"selectedSubOrLoopingQtnOptions\": [\n                      {\n                        \"Id\": \"a061s000001UXqzAAG\",\n                        \"Sequence_No__c\": 2,\n                      }\n                    ]\n                  }\n                ]\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FQgAAM\",\n                    \"qtnType\": \"Performance In the Area\",\n                    \"Sequence_No\": 15\n                },\n                \"selectedOptions\": [\n                  {\n                    \"seqNo\": 4,\n                    \"optionId\": \"a061s000001UXrCAAW\"\n                  }\n                ]\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FR0AAM\",\n                    \"qtnType\": \"Salesman Commit\",\n                    \"Sequence_No\": 16\n                },\n                \"selectedOptions\": [\n                  {\n                    \"seqNo\": 3,\n                    \"optionId\": \"a061s000001UXrfAAG\"\n                  }\n                ]\n            },\n            {\n                \"sQuestion\": {\n                    \"qtnId\": \"a051s0000024FRAAA2\",\n                    \"qtnType\": \"Coupon\",\n                    \"Sequence_No\": 17,\n                    \"answer\": \"25\"\n                }\n            }\n        ]\n    }\n]"
+				},
+				"url": {
+					"raw": "{{instance_url}}/services/apexrest/SRVY_SvyCapture_API",
+					"host": [
+						"{{instance_url}}"
+					],
+					"path": [
+						"services",
+						"apexrest",
+						"SRVY_SvyCapture_API"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
