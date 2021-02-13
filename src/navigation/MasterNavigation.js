@@ -14,8 +14,8 @@ import VKCLogo from '../assets/Logo/VKC_Logo.jpg';
 const MainStack = createStackNavigator();
 
 const MainStackScreen = () => {
-  const { colors } = useTheme();
   const { token } = useContext(AuthContext);
+  const { colors } = useTheme();
   return (
     <MainStack.Navigator
       screenOptions={{

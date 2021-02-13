@@ -58,7 +58,12 @@ const VKCMediaPicker = ({
       <TextEle variant="title" style={{ marginBottom: 10 }}>
         {question}
       </TextEle>
-      <VKCButton variant="fill" text="Select Image" onPress={selectImage} />
+      <VKCButton
+        disable={(value || []).length >= 10}
+        variant="fill"
+        text="Select Image"
+        onPress={selectImage}
+      />
       {Platform.OS === 'android' && (
         <Modal isVisible={isVisible} onRequestClose={() => setVisible(false)}>
           <View style={{ backgroundColor: '#fff' }}>
@@ -96,9 +101,9 @@ const VKCMediaPicker = ({
               <BorderlessButton
                 onPress={() =>
                   setFieldValue(
-                    name,
-                    value.filter(y => y.uri !== x.uri),
-                  )
+                  name,
+                  value.filter(y => y.uri !== x.uri),
+                )
                 }
                 style={{
                   position: 'absolute',
