@@ -23,6 +23,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import axios from '@utils/axios';
 import { ADD_SURVEY } from 'src/constants/actionTypes';
 import { getData, storeData } from 'src/utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import TextInput from '../../components/TextInput/TextInput';
 // import TextInput from '@components/TextInput/TextInput';
 // import { RectButton } from 'react-native-gesture-handler';
@@ -30,10 +31,10 @@ import TextInput from '../../components/TextInput/TextInput';
 
 const SurveyQue = ({ navigation, route }) => {
   // const { colors } = useTheme();
-  const { questions, firstQuestion } = route.params;
+  const { questions, firstQuestion, AreaId, accId, surveyId } = route.params;
   const [question, ...restQuestions] = questions;
-  const formRef = useRef();
   const { survey, dispatchSurvey } = useContext(SurveyContext);
+  const formRef = useRef();
 
   const onSubmit = async selectedOptions => {
     const url = '/services/apexrest/SRVY_SvyCapture_API';
@@ -49,7 +50,33 @@ const SurveyQue = ({ navigation, route }) => {
             { cancelable: false },
           );
         } else {
-          throw new Error('No Internet');
+          const data = await AsyncStorage.getItem('unSyncedQuestions');
+          if (data) {
+            await AsyncStorage.setItem(
+              'unSyncedQuestions',
+              JSON.stringify([
+                ...JSON.parse(data),
+                {
+                  AreaId,
+                  accId,
+                  surveyId,
+                  survey,
+                },
+              ]),
+            );
+          } else {
+            await AsyncStorage.setItem(
+              'unSyncedQuestions',
+              JSON.stringify([
+                {
+                  AreaId,
+                  accId,
+                  surveyId,
+                  survey,
+                },
+              ]),
+            );
+          }
         }
       } catch (error) {
         Alert.alert('Fail', error.message, [{ text: 'OK', onPress: () => navigation.popToTop() }], {

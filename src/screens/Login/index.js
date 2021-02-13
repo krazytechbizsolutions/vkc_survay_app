@@ -12,10 +12,10 @@ import axios from '../../utils/axios';
 import Loading from '../../components/loading/Loading';
 
 const Login = () => {
+  const { setToken } = useContext(AuthContext);
   const netInfo = useNetInfo();
   const [loading, setLoading] = useState(false);
   const [error, seteError] = useState(false);
-  const { setToken } = useContext(AuthContext);
 
   const headerImage = () => (
     <Image
