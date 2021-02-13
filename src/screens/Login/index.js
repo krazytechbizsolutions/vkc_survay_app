@@ -11,11 +11,11 @@ import { storeToken, getToken } from '../../utils';
 import axios from '../../utils/axios';
 import Loading from '../../components/loading/Loading';
 
-const Login = ({ navigation }) => {
+const Login = () => {
+  const { setToken } = useContext(AuthContext);
   const netInfo = useNetInfo();
   const [loading, setLoading] = useState(false);
   const [error, seteError] = useState(false);
-  const { setToken } = useContext(AuthContext);
 
   const headerImage = () => (
     <Image
@@ -59,7 +59,6 @@ const Login = ({ navigation }) => {
         },
       });
       await storeToken(res.data);
-      navigation.navigate('Home');
       setToken(res.data);
     } catch (error) {
       // actions.setStatus({ serverError: error.message });

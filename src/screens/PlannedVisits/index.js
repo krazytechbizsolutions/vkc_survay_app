@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import PropTypes from 'prop-types';
 import { View, Text, FlatList } from 'react-native';
@@ -11,6 +11,7 @@ import axios from '@utils/axios';
 import NetInfo from '@react-native-community/netinfo';
 import VKCButton from '@components/VKCButton';
 import { getToken, storeData, getData } from '../../utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PlannedVisits = ({ navigation }) => {
   const visitsEndpoint = '/services/apexrest/SRVY_DayPlanDataOffline_API';
@@ -32,6 +33,7 @@ const PlannedVisits = ({ navigation }) => {
     const data = await getData(visitsEndpoint);
     return data;
   }, []);
+  const [unSyncSurveys, setUnSyncSurveys] = useState([]);
 
   const getSurveyData = useCallback(async () => {
     const netInfo = await NetInfo.fetch();
@@ -49,6 +51,18 @@ const PlannedVisits = ({ navigation }) => {
     surveyEndpoint,
     getSurveyData,
   );
+
+  useEffect(() => {
+    const loadUnSyncSurvey = async () => {
+      const data = await AsyncStorage.getItem('unSyncedQuestions');
+      if (data) {
+        setUnSyncSurveys(JSON.parse(data));
+      }
+    };
+    loadUnSyncSurvey();
+  }, []);
+
+  const { colors } = useTheme();
 
   if (isValidating) {
     return (
@@ -69,8 +83,6 @@ const PlannedVisits = ({ navigation }) => {
       </Text>
     );
   }
-
-  const { colors } = useTheme();
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -97,19 +109,30 @@ const PlannedVisits = ({ navigation }) => {
             <Text style={{ paddingVertical: 4 }}>{`Area Name: ${item.AreaName}`}</Text>
             <Text style={{ paddingVertical: 4 }}>{`Account Type: ${item.accType}`}</Text>
             {item.surveys.map((x, i) => {
-              let srvDetails = (surveys || []).find(y => y.surveyId === x.svyId)
-              if(srvDetails){
-                return <VKCButton
-                  variant="fill"
-                  style={{ marginVertical: 5 }}
-                  text={srvDetails.surveyName}
-                  onPress={async () => {
-                    navigation.navigate('SurveyQue', {
-                      questions: srvDetails.Questions,
-                      firstQuestion: true,
-                    });
-                  }}
-                />
+              const srvDetails = (surveys || []).find(y => y.surveyId === x.svyId);
+              if (srvDetails) {
+                return (
+                  <VKCButton
+                    variant="fill"
+                    style={{ marginVertical: 5 }}
+                    text={srvDetails.surveyName}
+                    disable={unSyncSurveys.find(
+                      z =>
+                        z.surveyId === srvDetails.surveyId &&
+                        z.accId === item.accId &&
+                        z.AreaId === item.AreaId,
+                    )}
+                    onPress={async () => {
+                      navigation.navigate('SurveyQue', {
+                        questions: srvDetails.Questions,
+                        firstQuestion: true,
+                        AreaId: item.AreaId,
+                        accId: item.accId,
+                        surveyId: srvDetails.surveyId,
+                      });
+                    }}
+                  />
+                );
               }
             })}
           </View>
