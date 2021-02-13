@@ -1,10 +1,17 @@
 13-02-2021,
+	1. Confirmation on survey submit. 
 	1. Different account with same survey has answers duplicated across
 	2. Last question submit is not redirecting to home screen [when offline]
 	3. Non-synced survey button not in green & not disabled [when offline]
 	4. Feedback not retaining saved answer
 	5. Slider not selected for saved value
 	6. Invalid data pushed to server on submit [when online]
+	7. On network availability, saved survery push to server.
+	8. Provide the individual survey link for starting the survey directly.
+	9. Direct survey start implementation on the app.
+	10. "Multi Text" Question type - While typing, we should get the suggestion as per the Data from Database
+
+
 
 11-02-2021,
 
