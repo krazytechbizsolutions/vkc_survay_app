@@ -89,7 +89,7 @@ const VKCMediaPicker = ({
           </View>
         </Modal>
       )}
-      {value?.map(x => (
+      {(value || [])?.map(x => (
         <View style={{ margin: 40, alignItems: 'center' }}>
           {x?.uri && (
             <View>
