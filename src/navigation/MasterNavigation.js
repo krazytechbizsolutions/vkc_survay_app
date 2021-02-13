@@ -23,27 +23,32 @@ const MainStackScreen = () => {
         headerTintColor: colors.text,
         title: false,
       }}>
-      {!token && <MainStack.Screen name="Login" component={Login} />}
-      <MainStack.Screen name="Home" component={Home} />
-      <MainStack.Screen
-        name="SurveyQue"
-        component={SurveyQue}
-        options={{
-          headerShown: true,
-          headerRight: () => <Image style={{ width: 40, height: 40 }} source={VKCLogo} />,
-          headerRightContainerStyle: { marginRight: 20 },
-        }}
-      />
-      <MainStack.Screen
-        name="AddRetailer"
-        component={AddRetailer}
-        options={{ headerShown: true, title: 'Add Retailer', headerTitleAlign: 'center' }}
-      />
-      <MainStack.Screen
-        name="UnplannedVisit"
-        component={UnplannedVisits}
-        options={{ headerShown: true, title: 'Unplanned Visit', headerTitleAlign: 'center' }}
-      />
+      {token ? (
+        <>
+          <MainStack.Screen name="Home" component={Home} />
+          <MainStack.Screen
+            name="SurveyQue"
+            component={SurveyQue}
+            options={{
+              headerShown: true,
+              headerRight: () => <Image style={{ width: 40, height: 40 }} source={VKCLogo} />,
+              headerRightContainerStyle: { marginRight: 20 },
+            }}
+          />
+          <MainStack.Screen
+            name="AddRetailer"
+            component={AddRetailer}
+            options={{ headerShown: true, title: 'Add Retailer', headerTitleAlign: 'center' }}
+          />
+          <MainStack.Screen
+            name="UnplannedVisit"
+            component={UnplannedVisits}
+            options={{ headerShown: true, title: 'Unplanned Visit', headerTitleAlign: 'center' }}
+          />
+        </>
+      ) : (
+        <MainStack.Screen name="Login" component={Login} />
+      )}
     </MainStack.Navigator>
   );
 };
