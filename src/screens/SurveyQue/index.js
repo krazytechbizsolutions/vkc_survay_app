@@ -77,6 +77,12 @@ const SurveyQue = ({ navigation, route }) => {
               ]),
             );
           }
+          Alert.alert(
+            'UnSync',
+            'Form Submition Completed but not sync with database',
+            [{ text: 'OK', onPress: () => navigation.popToTop() }],
+            { cancelable: false },
+          );
         }
       } catch (error) {
         Alert.alert('Fail', error.message, [{ text: 'OK', onPress: () => navigation.popToTop() }], {
