@@ -21,8 +21,6 @@ import { SurveyContext } from 'src/context/surveyContext';
 import NetInfo from '@react-native-community/netinfo';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from '@utils/axios';
-import { ADD_SURVEY } from 'src/constants/actionTypes';
-import { getData, storeData } from 'src/utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TextInput from '../../components/TextInput/TextInput';
 // import TextInput from '@components/TextInput/TextInput';
@@ -113,7 +111,17 @@ const SurveyQue = ({ navigation, route }) => {
         <Formik
           innerRef={formRef}
           initialValues={
-            (survey && survey.find(x => x.sQuestion.Id === question.sQuestion.Id)) || {
+            (survey &&
+              survey.find(
+                x =>
+                  x.sQuestion.Id === question.sQuestion.Id &&
+                  x.accId === accId &&
+                  x.surveyId === surveyId &&
+                  x.AreaId === AreaId,
+              )) || {
+              AreaId,
+              accId,
+              surveyId,
               mainField: '',
               childField: '',
             }
