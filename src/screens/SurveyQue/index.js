@@ -23,7 +23,7 @@ import TextInput from '../../components/TextInput/TextInput';
 
 const SurveyQue = ({ navigation, route }) => {
   // const { colors } = useTheme();
-  const { questions, firstQuestion, AreaId, accId, surveyId } = route.params;
+  const { questions, firstQuestion, AreaId, accId, surveyId, UserId } = route.params;
   const [question, ...restQuestions] = questions;
   const { survey, dispatchSurvey } = useContext(SurveyContext);
   const formRef = useRef();
@@ -52,6 +52,7 @@ const SurveyQue = ({ navigation, route }) => {
                   AreaId,
                   accId,
                   surveyId,
+                  UserId,
                   survey,
                 },
               ]),
@@ -64,6 +65,7 @@ const SurveyQue = ({ navigation, route }) => {
                   AreaId,
                   accId,
                   surveyId,
+                  UserId,
                   survey,
                 },
               ]),
@@ -204,11 +206,13 @@ const SurveyQue = ({ navigation, route }) => {
                   x.sQuestion.Id === question.sQuestion.Id &&
                   x.accId === accId &&
                   x.surveyId === surveyId &&
+                  x.UserId === UserId &&
                   x.AreaId === AreaId,
               )) || {
               AreaId,
               accId,
               surveyId,
+              UserId,
               mainField: '',
               childField: '',
             }
