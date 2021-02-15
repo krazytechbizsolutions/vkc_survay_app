@@ -117,7 +117,13 @@ const PlannedVisits = ({ navigation }) => {
                     variant="fill"
                     style={{ marginVertical: 5 }}
                     text={srvDetails.surveyName}
-                    disable={false}
+                    disable={unSyncSurveys?.find(
+                      z =>
+                        z.surveyId === srvDetails.surveyId &&
+                        z.accId === item.accId &&
+                        z.AreaId === item.AreaId && 
+                        z.UserId === item.UserId
+                    )}
                     onPress={async () => {
                       navigation.navigate('SurveyQue', {
                         questions: srvDetails.Questions,
@@ -125,6 +131,7 @@ const PlannedVisits = ({ navigation }) => {
                         AreaId: item.AreaId,
                         accId: item.accId,
                         surveyId: srvDetails.surveyId,
+                        UserId: item.UserId
                       });
                     }}
                   />
