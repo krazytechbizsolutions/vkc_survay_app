@@ -55,6 +55,7 @@ const PlannedVisits = ({ navigation }) => {
     const loadUnSyncSurvey = async () => {
       const data = await AsyncStorage.getItem('unSyncedQuestions');
       console.warn('loadUnSyncSurvey', data);
+      console.log(data);
       if (data) {
         setUnSyncSurveys(JSON.parse(data));
       }
@@ -116,12 +117,7 @@ const PlannedVisits = ({ navigation }) => {
                     variant="fill"
                     style={{ marginVertical: 5 }}
                     text={srvDetails.surveyName}
-                    disable={unSyncSurveys?.find(
-                      z =>
-                        z.surveyId === srvDetails.surveyId &&
-                        z.accId === item.accId &&
-                        z.AreaId === item.AreaId,
-                    )}
+                    disable={false}
                     onPress={async () => {
                       navigation.navigate('SurveyQue', {
                         questions: srvDetails.Questions,

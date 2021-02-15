@@ -3,15 +3,12 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useRef } from 'react';
 import { SafeAreaView, Text, ScrollView, View, Alert, Pressable } from 'react-native';
-// import { useTheme } from '@react-navigation/native';
 import VKCButton from '@components/VKCButton';
 import SingleSelectRadio from '@components/SingleSelectRadio';
 import MultiSelection from '@components/MultiSelection';
 import VKCDraggableList from '@components/VKCDraggableList';
 import VKCMediaPicker from '@components/VKCMediaPicker';
-// import LongText from '@components/LongText';
 import SelectGroup from '@components/SelectGroup';
-// import IntegerInput from '@components/IntegerInput';
 import SliderQuestion from '@components/SliderQuestion';
 import StarRating from '@components/StarRating';
 import { Formik, Field, FieldArray } from 'formik';
@@ -23,9 +20,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import axios from '@utils/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TextInput from '../../components/TextInput/TextInput';
-// import TextInput from '@components/TextInput/TextInput';
-// import { RectButton } from 'react-native-gesture-handler';
-// import SubmitServey from '../../components/SubmitServey';
 
 const SurveyQue = ({ navigation, route }) => {
   // const { colors } = useTheme();
@@ -90,12 +84,105 @@ const SurveyQue = ({ navigation, route }) => {
         // await storeData(url, [...(data || []), survey]);
       }
     } else {
+      console.log(JSON.stringify(selectedOptions));
       const { sQuestion } = question;
+      const Sequence_No = sQuestion.Sequence_No__c
+        ? {
+            Sequence_No: sQuestion.Sequence_No__c,
+          }
+        : {};
+
+      let answer = {};
+      if (
+        sQuestion.Option_Type__c === 'Integer Enter Question' ||
+        sQuestion.Option_Type__c === 'Text' ||
+        sQuestion.Option_Type__c === 'Slider' ||
+        sQuestion.Option_Type__c === 'Star Rating' ||
+        sQuestion.Option_Type__c === 'Feedback' ||
+        sQuestion.Option_Type__c === 'Coupon'
+      ) {
+        answer = {
+          answer: selectedOptions.mainField,
+        };
+      }
+
+      let selOptions = {};
+      if (
+        sQuestion.Option_Type__c === 'Single Select' ||
+        sQuestion.Option_Type__c === 'Single Select List' ||
+        sQuestion.Option_Type__c === 'Tabular Question' ||
+        sQuestion.Option_Type__c === 'Display' ||
+        sQuestion.Option_Type__c === 'Stock' ||
+        sQuestion.Option_Type__c === 'Performance In the Area' ||
+        sQuestion.Option_Type__c === 'Salesman Commit' ||
+        sQuestion.Option_Type__c === 'Special Efforts' ||
+        sQuestion.Option_Type__c === 'Question with Image as options'
+      ) {
+        let selectedSubOrLoopingQtnOptions = {};
+        if (selectedOptions.childField && selectedOptions.mainField.isLoopingQtn) {
+          selectedSubOrLoopingQtnOptions = {
+            selectedSubOrLoopingQtnOptions: [
+              {
+                Id: selectedOptions.childField.Id,
+                Sequence_No__c: selectedOptions.childField.Sequence_No__c,
+              },
+            ],
+          };
+        }
+
+        selOptions = {
+          selectedOptions: [
+            {
+              seqNo: selectedOptions.mainField.seqNo,
+              optionId: selectedOptions.mainField.optionId,
+              isLoopingQtn: selectedOptions.mainField.isLoopingQtn,
+              loopingQtnId: selectedOptions.mainField.loopingQtnId,
+              loopingQtnType: selectedOptions.mainField.loopingQtnType,
+              ...selectedSubOrLoopingQtnOptions,
+            },
+          ],
+        };
+      } else if (
+        sQuestion.Option_Type__c === 'Ordering Question' ||
+        sQuestion.Option_Type__c === 'Multi Select'
+      ) {
+        selOptions = {
+          selectedOptions: selectedOptions.mainField.map(x => ({
+            seqNo: x.seqNo,
+            optionId: x.optionId,
+            isLoopingQtn: x.isLoopingQtn,
+            loopingQtnId: x.loopingQtnId,
+            loopingQtnType: x.loopingQtnType,
+          })),
+        };
+      } else if (sQuestion.Option_Type__c === 'Multi Text') {
+        selOptions = {
+          selectedOptions: selectedOptions.mainField.map((x, i) => ({
+            seqNo: i + 1,
+            answer: x,
+          })),
+        };
+      }
+
+      const data = {
+        qtnId: sQuestion.Id,
+        qtnType: sQuestion.Option_Type__c,
+        ...Sequence_No,
+        ...answer,
+      };
+
+      console.log(
+        JSON.stringify({
+          sQuestion: data,
+          ...selOptions,
+        }),
+      );
+
       dispatchSurvey({
         type: 'ADD_SURVEY',
         payload: {
-          sQuestion,
-          ...selectedOptions,
+          sQuestion: data,
+          ...selOptions,
         },
       });
       navigation.push('SurveyQue', {
@@ -310,7 +397,7 @@ const SurveyQue = ({ navigation, route }) => {
                         <View>
                           <For each="ele" index="index" of={values.mainField}>
                             <View key={index}>
-                              <Field name={`'mainField'.${index}`} component={TextInput} />
+                              <Field name={`mainField.${index}`} component={TextInput} />
                               <Pressable
                                 style={{ position: 'absolute', right: 10, top: 32 }}
                                 onPress={() => arrayHelpers.remove(index)}>
