@@ -6,7 +6,6 @@ import fields from './fields';
 
 const UnplannedVisit = () => {
   const createUnplannedVisit = values => {
-    console.log(values);
   };
 
   return (
