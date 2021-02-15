@@ -140,7 +140,6 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    console.log(value);
                     if (!value) {
                       return 'Please Enter Field Value';
                     }
@@ -158,7 +157,6 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    console.log(value);
                     if (!value) {
                       return 'Please Enter Field Value';
                     }
@@ -365,7 +363,6 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    console.log(value);
                     if (!value) {
                       return 'Please Enter Field Value';
                     }
@@ -401,7 +398,6 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    console.log(value);
                     if (!value) {
                       return 'Please Enter Field Value';
                     }
@@ -419,7 +415,6 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    console.log(value);
                     if (!value) {
                       return 'Please Enter Field Value';
                     }
@@ -437,7 +432,6 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    console.log(value);
                     if (!value) {
                       return 'Please Enter Field Value';
                     }
@@ -455,7 +449,6 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    console.log(value);
                     if (!value) {
                       return 'Please Enter Field Value';
                     }
@@ -473,7 +466,6 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    console.log(value);
                     if (!value) {
                       return 'Please Enter Field Value';
                     }

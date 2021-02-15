@@ -26,6 +26,7 @@ const SliderQuestion = ({
         thumbTintColor="red"
         minimumTrackTintColor="red"
         maximumTrackTintColor="#000000"
+        value={value || data.Min_Limit__c}
         onValueChange={val => {
           setFieldValue(name, val);
         }}

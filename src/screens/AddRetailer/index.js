@@ -7,7 +7,7 @@ import { fields } from './fields';
 
 const AddRetailer = () => {
   const createRetailer = values => {
-    console.log(values);
+    // console.log(values);
   };
   return (
     <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'never', bottom: 'always' }}>

@@ -8,10 +8,10 @@ import PropTypes from 'prop-types';
 import { View, Text, FlatList } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import axios from '@utils/axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import VKCButton from '@components/VKCButton';
 import { getToken, storeData, getData } from '../../utils';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PlannedVisits = ({ navigation }) => {
   const visitsEndpoint = '/services/apexrest/SRVY_DayPlanDataOffline_API';
@@ -26,7 +26,6 @@ const PlannedVisits = ({ navigation }) => {
     const netInfo = await NetInfo.fetch();
     if (netInfo.isConnected) {
       const res = await axios.post(visitsEndpoint, { UserId: userId, DateVal: '' });
-      console.log(res.data);
       await storeData(visitsEndpoint, res.data);
       return res.data;
     }
@@ -55,6 +54,7 @@ const PlannedVisits = ({ navigation }) => {
   useEffect(() => {
     const loadUnSyncSurvey = async () => {
       const data = await AsyncStorage.getItem('unSyncedQuestions');
+      console.warn('loadUnSyncSurvey', data);
       if (data) {
         setUnSyncSurveys(JSON.parse(data));
       }
@@ -116,7 +116,7 @@ const PlannedVisits = ({ navigation }) => {
                     variant="fill"
                     style={{ marginVertical: 5 }}
                     text={srvDetails.surveyName}
-                    disable={unSyncSurveys.find(
+                    disable={unSyncSurveys?.find(
                       z =>
                         z.surveyId === srvDetails.surveyId &&
                         z.accId === item.accId &&
