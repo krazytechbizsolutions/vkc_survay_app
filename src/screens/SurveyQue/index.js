@@ -35,7 +35,7 @@ const SurveyQue = ({ navigation, route }) => {
         const netInfo = await NetInfo.fetch();
         if (netInfo.isConnected) {
           await axios.post(url, {
-            userId: '0051s0000017UmxAAE',
+            userId: UserId,
             accountId: accId,
             surveyId,
             surveyDate: new Date(),
