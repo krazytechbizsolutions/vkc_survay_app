@@ -1,3 +1,27 @@
+1. "Multi Text" --> response type ---> implement as per discussion
+2. "Single Select Group" ---> already correct format
+3. "Tabular Question" ---> already correct format
+
+
+1. New API for "Sub Dealers & Sub-Dealers" <---- "Multi-Text" Component
+	- Type or state or region or country
+	- Persist the data
+	- On component, apply filter before display [when user types show as suggestions]
+	- Until api is received, make the question as optional
+2. Tabular Question with multiple options to be captured & display as card to accommodate multiple data
+
+
+
+
+
+Display --> options with score [entry based]
+Stock --> options with score [entry based]
+Special Efforts --> options with score [selection]
+
+
+================================================================================================
+
+
 13-02-2021,
 	1. Confirmation on survey submit. 
 	1. Different account with same survey has answers duplicated across
