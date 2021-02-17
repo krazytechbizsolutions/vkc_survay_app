@@ -53,7 +53,7 @@ Special Efforts --> options with score [selection]
 	12. [DONE] [JOE] Enable the rating label to show above the stars.
 	13. [DONE] Multiple image issue still persists.
 	14. [DONE] Multiple image capture is allowed till 10.
-	15. Is it possible to control the image size based on quality. This is to reduce the file size.
+	15. [IGNORED] Is it possible to control the image size based on quality. This is to reduce the file size.
 
 
 
