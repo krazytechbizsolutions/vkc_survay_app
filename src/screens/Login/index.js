@@ -10,6 +10,7 @@ import fields from './fields';
 import { storeToken, getToken } from '../../utils';
 import axios from '../../utils/axios';
 import Loading from '../../components/loading/Loading';
+import NetInfo from '@react-native-community/netinfo';
 
 const Login = () => {
   const { setToken } = useContext(AuthContext);
@@ -50,16 +51,21 @@ const Login = () => {
 
   const login = async (values, actions) => {
     try {
-      const res = await axios.post('oauth2/token', null, {
-        params: {
-          grant_type: 'password',
-          client_id: Config.CLIENT_ID,
-          client_secret: Config.CLIENT_SECRET,
-          ...values,
-        },
-      });
-      await storeToken(res.data);
-      setToken(res.data);
+      const netInfo = await NetInfo.fetch();
+      if (netInfo.isConnected) {
+        const res = await axios.post('oauth2/token', null, {
+          params: {
+            grant_type: 'password',
+            client_id: Config.CLIENT_ID,
+            client_secret: Config.CLIENT_SECRET,
+            ...values,
+          },
+        });
+        await storeToken(res.data);
+        setToken(res.data);
+      } else {
+        actions.setStatus({ serverError: 'No internet' });
+      }
     } catch (error) {
       // actions.setStatus({ serverError: error.message });
       actions.setStatus({ serverError: 'Invalid Credentials' });
