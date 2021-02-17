@@ -1,3 +1,20 @@
+1. [DONE] Testing of online submit
+2. Offline, push of unsynced data to server
+3. Multi text suggestions and api integration and response type
+4. Tabular question with multiple options
+5. Display, stock, special efforts to be tested
+6. Confirmation on submit
+7. Non-synced survey to be greyed out testing
+8. Provide individual survey link for starting survey directly
+
+Blocker,
+	1. Day plan api still gives the submitted survey id.
+	2. Image api integration
+	3. 
+
+============================================================================================
+
+
 1. "Multi Text" --> response type ---> implement as per discussion
 2. "Single Select Group" ---> already correct format
 3. "Tabular Question" ---> already correct format
@@ -53,7 +70,7 @@ Special Efforts --> options with score [selection]
 	12. [DONE] [JOE] Enable the rating label to show above the stars.
 	13. [DONE] Multiple image issue still persists.
 	14. [DONE] Multiple image capture is allowed till 10.
-	15. Is it possible to control the image size based on quality. This is to reduce the file size.
+	15. [IGNORED] Is it possible to control the image size based on quality. This is to reduce the file size.
 
 
 
