@@ -23,7 +23,7 @@ import TextInput from '../../components/TextInput/TextInput';
 
 const SurveyQue = ({ navigation, route }) => {
   // const { colors } = useTheme();
-  const { questions, firstQuestion, AreaId, accId, surveyId, UserId } = route.params;
+  const { questions, firstQuestion, accId, surveyId, UserId } = route.params;
   const [question, ...restQuestions] = questions;
   const { survey, dispatchSurvey } = useContext(SurveyContext);
   const formRef = useRef();
@@ -33,10 +33,12 @@ const SurveyQue = ({ navigation, route }) => {
     if (restQuestions.length === 0) {
       try {
         const netInfo = await NetInfo.fetch();
+
+        const date = new Date().getDate();
+        const month = new Date().getMonth() + 1;
+        const year = new Date().getFullYear();
+
         if (netInfo.isConnected) {
-          const date = new Date().getDate();
-          const month = new Date().getMonth() + 1;
-          const year = new Date().getFullYear();
           await axios.post(url, [
             {
               userId: UserId,
@@ -60,11 +62,11 @@ const SurveyQue = ({ navigation, route }) => {
               JSON.stringify([
                 ...JSON.parse(data),
                 {
-                  AreaId,
-                  accId,
+                  userId: UserId,
+                  accountId: accId,
                   surveyId,
-                  UserId,
-                  survey,
+                  surveyDate: [year, ('0' + month).slice(-2), ('0' + date).slice(-2)].join('-'),
+                  Questions: survey,
                 },
               ]),
             );
@@ -73,11 +75,11 @@ const SurveyQue = ({ navigation, route }) => {
               'unSyncedQuestions',
               JSON.stringify([
                 {
-                  AreaId,
-                  accId,
+                  userId: UserId,
+                  accountId: accId,
                   surveyId,
-                  UserId,
-                  survey,
+                  surveyDate: [year, ('0' + month).slice(-2), ('0' + date).slice(-2)].join('-'),
+                  Questions: survey,
                 },
               ]),
             );
@@ -201,7 +203,6 @@ const SurveyQue = ({ navigation, route }) => {
       navigation.push('SurveyQue', {
         questions: restQuestions,
         firstQuestion: false,
-        AreaId,
         accId,
         surveyId,
         UserId,
@@ -221,10 +222,8 @@ const SurveyQue = ({ navigation, route }) => {
                   x.sQuestion.Id === question.sQuestion.Id &&
                   x.accId === accId &&
                   x.surveyId === surveyId &&
-                  x.UserId === UserId &&
-                  x.AreaId === AreaId,
+                  x.UserId === UserId,
               )) || {
-              AreaId,
               accId,
               surveyId,
               UserId,

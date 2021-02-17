@@ -119,16 +119,14 @@ const PlannedVisits = ({ navigation }) => {
                     text={srvDetails.surveyName}
                     disable={unSyncSurveys?.find(
                       z =>
-                        z.surveyId === srvDetails.surveyId &&
-                        z.accId === item.accId &&
-                        z.AreaId === item.AreaId &&
-                        z.UserId === plannedVisits.UserId,
+                        z.userId === plannedVisits.UserId &&
+                        z.accountId === item.accId &&
+                        z.surveyId === srvDetails.surveyId,
                     )}
                     onPress={async () => {
                       navigation.navigate('SurveyQue', {
                         questions: srvDetails.Questions,
                         firstQuestion: true,
-                        AreaId: item.AreaId,
                         accId: item.accId,
                         surveyId: srvDetails.surveyId,
                         UserId: plannedVisits.UserId,
