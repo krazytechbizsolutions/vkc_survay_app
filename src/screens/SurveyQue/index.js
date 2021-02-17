@@ -34,13 +34,18 @@ const SurveyQue = ({ navigation, route }) => {
       try {
         const netInfo = await NetInfo.fetch();
         if (netInfo.isConnected) {
-          await axios.post(url, [{
-            userId: UserId,
-            accountId: accId,
-            surveyId,
-            surveyDate: new Date(),
-            Questions: survey,
-          }]);
+          const date = new Date().getDate();
+          const month = new Date().getMonth() + 1;
+          const year = new Date().getFullYear();
+          await axios.post(url, [
+            {
+              userId: UserId,
+              accountId: accId,
+              surveyId,
+              surveyDate: [year, ('0' + month).slice(-2), ('0' + date).slice(-2)].join('-'),
+              Questions: survey,
+            },
+          ]);
           Alert.alert(
             'Completed',
             'Form Submition Completed',
@@ -196,6 +201,10 @@ const SurveyQue = ({ navigation, route }) => {
       navigation.push('SurveyQue', {
         questions: restQuestions,
         firstQuestion: false,
+        AreaId,
+        accId,
+        surveyId,
+        UserId,
       });
     }
   };
