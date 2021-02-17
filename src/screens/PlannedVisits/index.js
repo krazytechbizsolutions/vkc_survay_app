@@ -6,7 +6,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import PropTypes from 'prop-types';
 import { View, Text, FlatList } from 'react-native';
-import { useTheme } from '@react-navigation/native';
+import { useFocusEffect, useTheme } from '@react-navigation/native';
 import axios from '@utils/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
@@ -45,23 +45,26 @@ const PlannedVisits = ({ navigation }) => {
     return data;
   }, []);
 
-  const { data: plannedVisits, isValidating } = useSWR(visitsEndpoint, getVisitData);
+  const { data: plannedVisits, isValidating, mutate } = useSWR(visitsEndpoint, getVisitData);
   const { data: surveys, isValidating: isValidatingSurveys } = useSWR(
     surveyEndpoint,
     getSurveyData,
   );
 
-  useEffect(() => {
-    const loadUnSyncSurvey = async () => {
-      const data = await AsyncStorage.getItem('unSyncedQuestions');
-      console.warn('loadUnSyncSurvey', data);
-      console.log(data);
-      if (data) {
-        setUnSyncSurveys(JSON.parse(data));
-      }
-    };
-    loadUnSyncSurvey();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      const loadUnSyncSurvey = async () => {
+        const data = await AsyncStorage.getItem('unSyncedQuestions');
+        if (data) {
+          setUnSyncSurveys(JSON.parse(data));
+        }
+      };
+      loadUnSyncSurvey();
+      mutate();
+    }, [mutate]),
+  );
+
+  useEffect(() => {}, []);
 
   const { colors } = useTheme();
 
