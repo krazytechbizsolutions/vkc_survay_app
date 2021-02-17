@@ -172,7 +172,7 @@ const SurveyQue = ({ navigation, route }) => {
         };
       } else if (sQuestion.Option_Type__c === 'Multi Text') {
         selOptions = {
-          selectedOptions: selectedOptions.mainField.map((x, i) => ({
+          selectedOptions: selectedOptions.mainField?.map((x, i) => ({
             seqNo: i + 1,
             answer: x,
           })),
