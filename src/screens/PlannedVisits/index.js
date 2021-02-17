@@ -121,8 +121,8 @@ const PlannedVisits = ({ navigation }) => {
                       z =>
                         z.surveyId === srvDetails.surveyId &&
                         z.accId === item.accId &&
-                        z.AreaId === item.AreaId && 
-                        z.UserId === item.UserId
+                        z.AreaId === item.AreaId &&
+                        z.UserId === plannedVisits.UserId,
                     )}
                     onPress={async () => {
                       navigation.navigate('SurveyQue', {
@@ -131,7 +131,7 @@ const PlannedVisits = ({ navigation }) => {
                         AreaId: item.AreaId,
                         accId: item.accId,
                         surveyId: srvDetails.surveyId,
-                        UserId: item.UserId
+                        UserId: plannedVisits.UserId,
                       });
                     }}
                   />
