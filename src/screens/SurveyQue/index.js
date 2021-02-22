@@ -6,6 +6,7 @@ import { SafeAreaView, Text, ScrollView, View, Alert, Pressable } from 'react-na
 import VKCButton from '@components/VKCButton';
 import SingleSelectRadio from '@components/SingleSelectRadio';
 import MultiSelection from '@components/MultiSelection';
+import { format } from 'date-fns';
 import VKCDraggableList from '@components/VKCDraggableList';
 import VKCMediaPicker from '@components/VKCMediaPicker';
 import SelectGroup from '@components/SelectGroup';
@@ -34,9 +35,6 @@ const SurveyQue = ({ navigation, route }) => {
       try {
         const netInfo = await NetInfo.fetch();
 
-        const date = new Date().getDate();
-        const month = new Date().getMonth() + 1;
-        const year = new Date().getFullYear();
 
         if (netInfo.isConnected) {
           await axios.post(url, [
@@ -44,7 +42,7 @@ const SurveyQue = ({ navigation, route }) => {
               userId: UserId,
               accountId: accId,
               surveyId,
-              surveyDate: [year, ('0' + month).slice(-2), ('0' + date).slice(-2)].join('-'),
+              surveyDate: format(new Date(), 'yyyy-MM-dd'),
               Questions: survey,
             },
           ]);
@@ -65,7 +63,7 @@ const SurveyQue = ({ navigation, route }) => {
                   userId: UserId,
                   accountId: accId,
                   surveyId,
-                  surveyDate: [year, ('0' + month).slice(-2), ('0' + date).slice(-2)].join('-'),
+                  surveyDate: format(new Date(), 'yyyy-MM-dd'),
                   Questions: survey,
                 },
               ]),
@@ -78,7 +76,7 @@ const SurveyQue = ({ navigation, route }) => {
                   userId: UserId,
                   accountId: accId,
                   surveyId,
-                  surveyDate: [year, ('0' + month).slice(-2), ('0' + date).slice(-2)].join('-'),
+                  surveyDate: format(new Date(), 'yyyy-MM-dd'),
                   Questions: survey,
                 },
               ]),
