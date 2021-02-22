@@ -81,6 +81,7 @@ const PlannedVisits = ({ navigation }) => {
           }
         }
         const data = await AsyncStorage.setItem('unSyncedQuestions', JSON.stringify(unSyncData));
+        mutate();
       }
     }
   }, []);
@@ -103,8 +104,7 @@ const PlannedVisits = ({ navigation }) => {
       <Text
         style={{ paddingTop: 30, fontSize: 20, color: '#000', textAlign: 'center' }}
         textBreakStrategy="simple">
-        {' '}
-        Loading...{' '}
+        Loading...
       </Text>
     );
   }
