@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import VKCButton from '@components/VKCButton';
 import { getToken, storeData, getData } from '../../utils';
+import axios from '@utils/axios';
 
 const PlannedVisits = ({ navigation }) => {
   const visitsEndpoint = '/services/apexrest/SRVY_DayPlanDataOffline_API';
@@ -64,7 +65,36 @@ const PlannedVisits = ({ navigation }) => {
     }, [mutate]),
   );
 
-  useEffect(() => {}, []);
+  const syncData = useCallback(async () => {
+    const data = await AsyncStorage.getItem('unSyncedQuestions');
+    if (data) {
+      const unSyncedQuestions = JSON.parse(data);
+      if (unSyncedQuestions.length > 0) {
+        const unSyncData = [];
+        const url = '/services/apexrest/SRVY_SvyCapture_API';
+        for (let i = 0; i < unSyncedQuestions.length; i++) {
+          try {
+            await axios.post(url, unSyncedQuestions[i]);
+          } catch (error) {
+            unSyncData.push(unSyncedQuestions[i]);
+            continue;
+          }
+        }
+        const data = await AsyncStorage.setItem('unSyncedQuestions', JSON.stringify(unSyncData));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      if (state.isConnected) {
+        syncData();
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const { colors } = useTheme();
 
