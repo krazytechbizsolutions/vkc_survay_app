@@ -16,6 +16,7 @@ import { getToken, storeData, getData } from '../../utils';
 const PlannedVisits = ({ navigation }) => {
   const visitsEndpoint = '/services/apexrest/SRVY_DayPlanDataOffline_API';
   const surveyEndpoint = '/services/apexrest/SRVY_SurveyDataOffline_API';
+
   const getVisitData = useCallback(async () => {
     const token = await getToken();
     let userId = '';
@@ -27,6 +28,7 @@ const PlannedVisits = ({ navigation }) => {
     if (netInfo.isConnected) {
       const res = await axios.post(visitsEndpoint, { UserId: userId, DateVal: '' });
       await storeData(visitsEndpoint, res.data);
+      console.log("31",res.data)
       return res.data;
     }
     const data = await getData(visitsEndpoint);
@@ -45,7 +47,9 @@ const PlannedVisits = ({ navigation }) => {
     return data;
   }, []);
 
+  
   const { data: plannedVisits, isValidating, mutate } = useSWR(visitsEndpoint, getVisitData);
+  console.log("51",mutate)
   const { data: surveys, isValidating: isValidatingSurveys } = useSWR(
     surveyEndpoint,
     getSurveyData,
