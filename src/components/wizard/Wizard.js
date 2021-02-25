@@ -42,6 +42,7 @@ export default class Wizard extends React.PureComponent {
   // };
 
   handleSubmit = (values, bag) => {
+    console("In Handle Submit")
     const { fields, onSubmit } = this.props;
     const { page } = this.state;
     const isLastPage = page === fields.length - 1;

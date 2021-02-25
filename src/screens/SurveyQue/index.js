@@ -5,6 +5,7 @@ import React, { useContext, useRef } from 'react';
 import { SafeAreaView, Text, ScrollView, View, Alert, Pressable } from 'react-native';
 import VKCButton from '@components/VKCButton';
 import SingleSelectRadio from '@components/SingleSelectRadio';
+import Tabular from '@components/Tabular';
 import MultiSelection from '@components/MultiSelection';
 import { format } from 'date-fns';
 import VKCDraggableList from '@components/VKCDraggableList';
@@ -29,33 +30,43 @@ const SurveyQue = ({ navigation, route }) => {
   const { survey, dispatchSurvey } = useContext(SurveyContext);
   const formRef = useRef();
 
+  // console.log("32",formRef.current.handleSubmit);
   const onSubmit = async selectedOptions => {
+    console.log("OnSubmit",selectedOptions)
     const url = '/services/apexrest/SRVY_SvyCapture_API';
+    console.log("RestQuestion",restQuestions)
     if (restQuestions.length === 0) {
       try {
         const netInfo = await NetInfo.fetch();
 
 
         if (netInfo.isConnected) {
-          await axios.post(url, [
-            {
-              userId: UserId,
-              accountId: accId,
-              surveyId,
-              surveyDate: format(new Date(), 'yyyy-MM-dd'),
-              Questions: survey,
-            },
-          ]);
-          Alert.alert(
-            'Completed',
-            'Form Submition Completed',
-            [{ text: 'OK', onPress: () => navigation.popToTop() }],
-            { cancelable: false },
-          );
+
+          console.log("Final Submit",JSON.stringify(survey))
+          // console.log("43",survey[3]);
+          // console.log("43.1",survey[3].selectedOptions);
+          // console.log("44",survey[4].selectedOptions);
+
+          // await axios.post(url, [
+          //   {
+          //     userId: UserId,
+          //     accountId: accId,
+          //     surveyId,
+          //     surveyDate: format(new Date(), 'yyyy-MM-dd'),
+          //     Questions: survey,
+          //   },
+          // ]);
+          // Alert.alert(
+          //   'Completed',
+          //   'Form Submition Completed',
+          //   [{ text: 'OK', onPress: () => navigation.popToTop() }],
+          //   { cancelable: false },
+          // );
         } else {
+          console.log("In else")
           const data = await AsyncStorage.getItem('unSyncedQuestions');
           if (data) {
-            await AsyncStorage.setItem(
+            let newData = await AsyncStorage.setItem(
               'unSyncedQuestions',
               JSON.stringify([
                 ...JSON.parse(data),
@@ -68,8 +79,11 @@ const SurveyQue = ({ navigation, route }) => {
                 },
               ]),
             );
+
+            console.log("73",newData);
+            
           } else {
-            await AsyncStorage.setItem(
+           let newData = await AsyncStorage.setItem(
               'unSyncedQuestions',
               JSON.stringify([
                 {
@@ -81,6 +95,8 @@ const SurveyQue = ({ navigation, route }) => {
                 },
               ]),
             );
+
+            console.log("89",newData);
           }
           Alert.alert(
             'UnSync',
@@ -97,8 +113,9 @@ const SurveyQue = ({ navigation, route }) => {
         // await storeData(url, [...(data || []), survey]);
       }
     } else {
-      console.log(JSON.stringify(selectedOptions));
+      console.log("101",JSON.stringify(selectedOptions));
       const { sQuestion } = question;
+      console.log("110",sQuestion.Option_Type__c)
       const Sequence_No = sQuestion.Sequence_No__c
         ? {
             Sequence_No: sQuestion.Sequence_No__c,
@@ -133,6 +150,7 @@ const SurveyQue = ({ navigation, route }) => {
       ) {
         let selectedSubOrLoopingQtnOptions = {};
         if (selectedOptions.childField && selectedOptions.mainField.isLoopingQtn) {
+          // console.log("144")
           selectedSubOrLoopingQtnOptions = {
             selectedSubOrLoopingQtnOptions: [
               {
@@ -155,6 +173,7 @@ const SurveyQue = ({ navigation, route }) => {
             },
           ],
         };
+        console.log("168",selOptions)
       } else if (
         sQuestion.Option_Type__c === 'Ordering Question' ||
         sQuestion.Option_Type__c === 'Multi Select'
@@ -184,7 +203,7 @@ const SurveyQue = ({ navigation, route }) => {
         ...answer,
       };
 
-      console.log(
+      console.log("188",
         JSON.stringify({
           sQuestion: data,
           ...selOptions,
@@ -198,6 +217,7 @@ const SurveyQue = ({ navigation, route }) => {
           ...selOptions,
         },
       });
+
       navigation.push('SurveyQue', {
         questions: restQuestions,
         firstQuestion: false,
@@ -459,13 +479,15 @@ const SurveyQue = ({ navigation, route }) => {
               <When condition={question.sQuestion.Option_Type__c === 'Tabular Question'}>
                 <Field
                   name="mainField"
-                  component={SingleSelectRadio}
+                  component={Tabular}
                   data={question.Options}
+                  userId={UserId}
                   value={values.mainField}
                   valueField="optionId"
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
+                    
                     if (!value) {
                       return 'Please Enter Field Value';
                     }
