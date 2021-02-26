@@ -140,7 +140,6 @@ const SurveyQue = ({ navigation, route }) => {
       if (
         sQuestion.Option_Type__c === 'Single Select' ||
         sQuestion.Option_Type__c === 'Single Select List' ||
-        sQuestion.Option_Type__c === 'Tabular Question' ||
         sQuestion.Option_Type__c === 'Display' ||
         sQuestion.Option_Type__c === 'Stock' ||
         sQuestion.Option_Type__c === 'Performance In the Area' ||
@@ -194,6 +193,21 @@ const SurveyQue = ({ navigation, route }) => {
             answer: x,
           })),
         };
+      }
+      else if(sQuestion.Option_Type__c === 'Tabular Question')
+      {
+        selOptions = {}
+        let Options=[]
+      
+        selectedOptions.mainField.forEach((result,index) =>{
+          Options.push({ 
+              seqNo:result.seqNo,
+              selectedSubOrLoopingQtnOptions:selectedOptions.childField[index]
+            })
+        })
+        selOptions.selectedOptions = Options;
+        // console.log(selectedOptions.mainField)
+        console.log("212",selOptions);
       }
 
       const data = {
