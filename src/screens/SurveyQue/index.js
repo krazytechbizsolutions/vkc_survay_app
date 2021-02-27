@@ -187,11 +187,12 @@ const SurveyQue = ({ navigation, route }) => {
             loopingQtnType: x.loopingQtnType,
           })),
         };
-      } else if (sQuestion.Option_Type__c === 'Multi Text') {
+      }
+       else if (sQuestion.Option_Type__c === 'Multi Text') {
         selOptions = {
           selectedOptions: selectedOptions.mainField?.map((x, i) => ({
             seqNo: i + 1,
-            answer: x,
+            optionId: x.accId,
           })),
         };
       }

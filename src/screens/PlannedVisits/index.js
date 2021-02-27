@@ -12,6 +12,9 @@ import NetInfo from '@react-native-community/netinfo';
 import axios from '@utils/axios';
 import VKCButton from '@components/VKCButton';
 import { getToken, storeData, getData } from '../../utils';
+import {SData} from './TempSurveyData';
+
+
 
 const PlannedVisits = ({ navigation }) => {
   const visitsEndpoint = '/services/apexrest/SRVY_DayPlanDataOffline_API';
@@ -98,6 +101,7 @@ const PlannedVisits = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
+    console.log("104",SData);
     GetAccountData();
     const unsubscribe = NetInfo.addEventListener(state => {
       if (state.isConnected) {
@@ -156,7 +160,9 @@ const PlannedVisits = ({ navigation }) => {
             <Text style={{ paddingVertical: 4 }}>{`Area Name: ${item.AreaName}`}</Text>
             <Text style={{ paddingVertical: 4 }}>{`Account Type: ${item.accType}`}</Text>
             {item.surveys.map((x, i) => {
-              const srvDetails = (surveys || []).find(y => y.surveyId === x.svyId);
+              
+              // const srvDetails = surveys.find(y => y.surveyId === x.svyId);
+              const srvDetails = SData.find(y => y.surveyId === x.svyId);
               if (srvDetails) {
                 return (
                   <VKCButton
