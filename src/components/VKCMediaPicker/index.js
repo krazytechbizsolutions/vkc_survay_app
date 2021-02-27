@@ -1,5 +1,5 @@
 import VKCButton from '@components/VKCButton';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { launchCamera } from 'react-native-image-picker';
 import {
   ActionSheetIOS,
@@ -13,13 +13,18 @@ import Modal from 'react-native-modal';
 import { RectButton, BorderlessButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import TextEle from '@components/TextEle';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const VKCMediaPicker = ({
   field: { name, value },
   form: { touched, errors, setFieldValue },
   question,
+  surveyId,
+  accountId,
+  userId
 }) => {
   const [isVisible, setVisible] = useState(false);
+  const [ImageData,setImageData] = useState([]);
 
   const selectImage = () => {
     if (Platform.OS === 'ios') {
@@ -48,6 +53,39 @@ const VKCMediaPicker = ({
     }
   };
 
+ const StoreImageLocal = (ImgData) =>{
+      AsyncStorage.setItem(question,JSON.stringify(ImgData)).then(res =>{
+        AsyncStorage.getItem(question).then(res => {
+          console.log("59",res)
+        })
+        console.log("Images Stored Successfully");
+        }).catch(err => {
+          console.log("Error Storing Values",err)
+        })
+ }
+
+  useEffect(()=>{
+    AsyncStorage.getItem(question).then(res => {
+      let Images = JSON.parse(res);
+      console.log("70",Images);
+      setImageData([...Images])
+    })
+  },[])
+
+  const SetImage = (ImageObj) => {
+      let TempImageData = ImageData;
+      TempImageData.push(ImageObj);
+      StoreImageLocal(TempImageData);
+      setImageData([...TempImageData])
+  }
+
+  const onDeleteData=(index)=>{
+    let TempImageData = ImageData;
+    TempImageData.splice(index, 1);
+    StoreImageLocal(TempImageData);
+    setImageData([...TempImageData]);
+  }
+
   return (
     <View style={{ margin: 20 }}>
       {touched[name] && errors[name] && (
@@ -72,9 +110,11 @@ const VKCMediaPicker = ({
               onPress={() => {
                 launchCamera(
                   {
-                    mediaType: 'photo',
+                    mediaType: 'photo'
                   },
                   res => {
+                    // console.log("78",res);
+                    SetImage(res);
                     setFieldValue(name, [...(value || []), res]);
                   },
                 );
@@ -94,16 +134,13 @@ const VKCMediaPicker = ({
           </View>
         </Modal>
       )}
-      {(value || [])?.map(x => (
+      {(ImageData || [])?.map((x,index) => (
         <View style={{ margin: 40, alignItems: 'center' }}>
           {x?.uri && (
             <View>
               <BorderlessButton
-                onPress={() =>
-                  setFieldValue(
-                  name,
-                  value.filter(y => y.uri !== x.uri),
-                )
+                onPress={() =>{
+                  onDeleteData(index);}
                 }
                 style={{
                   position: 'absolute',

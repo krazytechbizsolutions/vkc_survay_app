@@ -212,27 +212,31 @@ const SurveyQue = ({ navigation, route }) => {
         console.log("212",selOptions);
       }
 
-      const data = {
-        qtnId: sQuestion.Id,
-        qtnType: sQuestion.Option_Type__c,
-        ...Sequence_No,
-        ...answer,
-      };
-
-      console.log("188",
-        JSON.stringify({
-          sQuestion: data,
-          ...selOptions,
-        }),
-      );
-
-      dispatchSurvey({
-        type: 'ADD_SURVEY',
-        payload: {
-          sQuestion: data,
-          ...selOptions,
-        },
-      });
+      if(sQuestion.Option_Type__c !== 'Upload Image for choosing an Option')
+      {
+        const data = {
+          qtnId: sQuestion.Id,
+          qtnType: sQuestion.Option_Type__c,
+          ...Sequence_No,
+          ...answer,
+        };
+  
+        console.log("188",
+          JSON.stringify({
+            sQuestion: data,
+            ...selOptions,
+          }),
+        );
+  
+        dispatchSurvey({
+          type: 'ADD_SURVEY',
+          payload: {
+            sQuestion: data,
+            ...selOptions,
+          },
+        });
+      }
+      
 
       navigation.push('SurveyQue', {
         questions: restQuestions,
@@ -436,6 +440,9 @@ const SurveyQue = ({ navigation, route }) => {
                   component={VKCMediaPicker}
                   name="mainField"
                   value={values.mainField}
+                  surveyId={surveyId}
+                  accountId={accId}
+                  userId={UserId}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                 />
               </When>
@@ -445,41 +452,6 @@ const SurveyQue = ({ navigation, route }) => {
                   name="mainField"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                 />
-                {/* <FieldArray
-                  name="mainField"
-                  render={arrayHelpers => (
-                    <View>
-                      <TextEle>{question.sQuestion.Detailed_Survey_Question_Name__c}</TextEle>
-                      {values.mainField && values.mainField.length > 0 ? (
-                        <View>
-                          <For each="ele" index="index" of={values.mainField}>
-                            <View key={index}>
-                              <Field name={`mainField.${index}`} component={TextInput} />
-                              <Pressable
-                                style={{ position: 'absolute', right: 10, top: 32 }}
-                                onPress={() => arrayHelpers.remove(index)}>
-                                <Icon name="close" size={24} color="red" />
-                              </Pressable>
-                            </View>
-                          </For>
-                          <VKCButton
-                            variant="fill"
-                            text="Add"
-                            style={{ marginVertical: 20 }}
-                            onPress={() => arrayHelpers.insert('')}
-                          />
-                        </View>
-                      ) : (
-                        <VKCButton
-                          variant="fill"
-                          text="Add"
-                          style={{ marginVertical: 20 }}
-                          onPress={() => arrayHelpers.push('')}
-                        />
-                      )}
-                    </View>
-                  )}
-                /> */}
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Feedback'}>
                 <Field
