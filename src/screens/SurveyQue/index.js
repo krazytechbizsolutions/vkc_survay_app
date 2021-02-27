@@ -22,6 +22,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import axios from '@utils/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TextInput from '../../components/TextInput/TextInput';
+import CustomMultiText from '@components/CustomMultiText';
 
 const SurveyQue = ({ navigation, route }) => {
   // const { colors } = useTheme();
@@ -47,21 +48,21 @@ const SurveyQue = ({ navigation, route }) => {
           // console.log("43.1",survey[3].selectedOptions);
           // console.log("44",survey[4].selectedOptions);
 
-          // await axios.post(url, [
-          //   {
-          //     userId: UserId,
-          //     accountId: accId,
-          //     surveyId,
-          //     surveyDate: format(new Date(), 'yyyy-MM-dd'),
-          //     Questions: survey,
-          //   },
-          // ]);
-          // Alert.alert(
-          //   'Completed',
-          //   'Form Submition Completed',
-          //   [{ text: 'OK', onPress: () => navigation.popToTop() }],
-          //   { cancelable: false },
-          // );
+          await axios.post(url, [
+            {
+              userId: UserId,
+              accountId: accId,
+              surveyId,
+              surveyDate: format(new Date(), 'yyyy-MM-dd'),
+              Questions: survey,
+            },
+          ]);
+          Alert.alert(
+            'Completed',
+            'Form Submition Completed',
+            [{ text: 'OK', onPress: () => navigation.popToTop() }],
+            { cancelable: false },
+          );
         } else {
           console.log("In else")
           const data = await AsyncStorage.getItem('unSyncedQuestions');
@@ -438,7 +439,12 @@ const SurveyQue = ({ navigation, route }) => {
                 />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Multi Text'}>
-                <FieldArray
+                <Field
+                  component={CustomMultiText}
+                  name="mainField"
+                  question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                />
+                {/* <FieldArray
                   name="mainField"
                   render={arrayHelpers => (
                     <View>
@@ -472,7 +478,7 @@ const SurveyQue = ({ navigation, route }) => {
                       )}
                     </View>
                   )}
-                />
+                /> */}
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Feedback'}>
                 <Field
