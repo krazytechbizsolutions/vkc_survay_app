@@ -2,7 +2,7 @@ import TextEle from '@components/TextEle';
 import VKCButton from '@components/VKCButton';
 import { Field } from 'formik';
 import React, { useState,useEffect } from 'react';
-import { View, TextInput, Pressable } from 'react-native';
+import { View, TextInput, Pressable,FlatList,TouchableOpacity,Modal} from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from '@utils/axios';
@@ -35,7 +35,7 @@ const CustomMultiText = ({
         tmpSelectedData.push(item)
         setSelectedData([...tmpSelectedData]);
         setIsVisible(false)
-        setFieldValue('mainField',ShowAccountData);
+        setFieldValue('mainField',SelectedData);
         setFieldValue('childField',[]);
       }
     
@@ -65,16 +65,16 @@ const CustomMultiText = ({
     return(
         <View style={{width: '100%'}}>
             <TextEle>{question}</TextEle>
-            <View style={{flex: 1,backgroundColor: '#fff',alignItems: 'center',justifyContent: 'flex-start',padding:10}}>
+            <View style={{flex: 1,alignItems: 'center',justifyContent: 'flex-start',padding:10}}>
                 <View style={{width:'100%',justifyContent: 'center',marginTop:20}}>
                         <FlatList
                             data={SelectedData}
                             renderItem={({ item,index }) => (
                                     <View style={{width:'100%',padding:10,borderRadius:10,justifyContent:'flex-start',borderWidth:1,marginVertical:10}}>
-                                        <Text style={{color:'grey',marginVertical:3}}>Account Name : {item.accName}</Text>
-                                        <Text style={{color:'grey',marginVertical:3}}>Account Type : {item.accType}</Text>
-                                        <Text style={{color:'grey',marginVertical:3}}>Area Name : {item.AreaName}</Text>
-                                        <Text style={{color:'grey',marginVertical:3}}>State : {item.state}</Text>
+                                        <TextEle style={{color:'grey',marginVertical:3}}>Account Name : {item.accName}</TextEle>
+                                        <TextEle style={{color:'grey',marginVertical:3}}>Account Type : {item.accType}</TextEle>
+                                        <TextEle style={{color:'grey',marginVertical:3}}>Area Name : {item.AreaName}</TextEle>
+                                        <TextEle style={{color:'grey',marginVertical:3}}>State : {item.state}</TextEle>
                                     </View>
                             )}
                             keyExtractor={(item,index) => `${index}`}
@@ -83,7 +83,7 @@ const CustomMultiText = ({
 
                 <TouchableOpacity onPress={()=>setIsVisible(true)} style={{width:'100%'}}>
                     <View style={{width:'100%',height:50,borderRadius:10,backgroundColor:"red",alignItems:'center',justifyContent:'center'}}>
-                        <Text style={{color:'white',fontSize:20}}>Add</Text>
+                        <TextEle style={{color:'white',fontSize:20}}>Add</TextEle>
                     </View>
                 </TouchableOpacity>
 
@@ -92,13 +92,13 @@ const CustomMultiText = ({
                     style={{  marginTop:20, alignItems: 'center', justifyContent: 'center',padding:10 }}
                     onRequestClose={() => setIsVisible(false)}>
                         <View style={{width:'100%',flexDirection:'row',padding:10,justifyContent:'space-between'}}>
-                            <View style={{width:'75%',borderWidth:1,height:45,borderRadius:5,padding:10}}>
-                                <TextInput value={searchTextInput} onChangeText={SearchTextInput} />
+                            <View style={{width:'75%',borderWidth:1,height:45,borderRadius:5}}>
+                                <TextInput value={searchTextInput} style={{height:45}} onChangeText={SearchTextInput} />
                             </View>
 
                             <View style={{width:'20%',alignItems:'center', justifyContent: 'center'}}>
                                 <TouchableOpacity onPress={()=>setIsVisible(false)}>
-                                    <Text style={{color:'black',fontSize:14}}>Cancel</Text>
+                                    <TextEle style={{color:'black',fontSize:14}}>Cancel</TextEle>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -109,10 +109,10 @@ const CustomMultiText = ({
                             renderItem={({ item,index }) => (
                                 <TouchableOpacity onPress={()=>onAddSelectedData(item)} style={{width:'100%',alignItems:'center',justifyContent: 'center'}}>
                                     <View style={{width:'90%',padding:10,borderRadius:10,justifyContent:'flex-start',borderWidth:1,marginVertical:10}}>
-                                        <Text style={{color:'grey',marginVertical:3}}>Account Name : {item.accName}</Text>
-                                        <Text style={{color:'grey',marginVertical:3}}>Account Type : {item.accType}</Text>
-                                        <Text style={{color:'grey',marginVertical:3}}>Area Name : {item.AreaName}</Text>
-                                        <Text style={{color:'grey',marginVertical:3}}>State : {item.state}</Text>
+                                        <TextEle style={{color:'grey',marginVertical:3}}>Account Name : {item.accName}</TextEle>
+                                        <TextEle style={{color:'grey',marginVertical:3}}>Account Type : {item.accType}</TextEle>
+                                        <TextEle style={{color:'grey',marginVertical:3}}>Area Name : {item.AreaName}</TextEle>
+                                        <TextEle style={{color:'grey',marginVertical:3}}>State : {item.state}</TextEle>
                                     </View>
                                 </TouchableOpacity>
                             )}
