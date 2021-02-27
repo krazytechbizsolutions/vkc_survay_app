@@ -16,6 +16,14 @@ import { getToken, storeData, getData } from '../../utils';
 const PlannedVisits = ({ navigation }) => {
   const visitsEndpoint = '/services/apexrest/SRVY_DayPlanDataOffline_API';
   const surveyEndpoint = '/services/apexrest/SRVY_SurveyDataOffline_API';
+  const accountData = '/services/apexrest/SRVY_AccDataOffline_API';
+
+  const GetAccountData=()=>{
+    axios.get(accountData, []).then(response =>{
+      console.log("23",response.data.length);
+      AsyncStorage.setItem("AccountData",JSON.stringify(response.data));
+    })
+  }
 
   const getVisitData = useCallback(async () => {
     const token = await getToken();
@@ -90,6 +98,7 @@ const PlannedVisits = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
+    GetAccountData();
     const unsubscribe = NetInfo.addEventListener(state => {
       if (state.isConnected) {
         syncData();
