@@ -74,7 +74,7 @@ const SingleSelectRadio = ({
                 Id: result.Price.Id // INCASE OF ENTRY TYPE AS PICKLIST
               },{
                 Sequence_No__c: 4,
-                answer: typeof result.Quantity ? result.Quantity.Id : result.Quantity  // INCASE OF ENTRY TYPE AS TEXTFIELD
+                answer: typeof result.Quantity === "object" ? result.Quantity.Id : result.Quantity  // INCASE OF ENTRY TYPE AS TEXTFIELD
           }])
         })
        

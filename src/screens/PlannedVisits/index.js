@@ -161,8 +161,8 @@ const PlannedVisits = ({ navigation }) => {
             <Text style={{ paddingVertical: 4 }}>{`Account Type: ${item.accType}`}</Text>
             {item.surveys.map((x, i) => {
               
-              // const srvDetails = surveys.find(y => y.surveyId === x.svyId);
-              const srvDetails = SData.find(y => y.surveyId === x.svyId);
+              const srvDetails = (surveys || []).find(y => y.surveyId === x.svyId);
+              // const srvDetails = SData.find(y => y.surveyId === x.svyId);
               if (srvDetails) {
                 return (
                   <VKCButton

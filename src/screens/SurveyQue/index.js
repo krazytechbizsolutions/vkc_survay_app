@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/prop-types */
-import React, { useContext, useRef } from 'react';
+import React, { useState,useContext,useEffect,useRef } from 'react';
 import { SafeAreaView, Text, ScrollView, View, Alert, Pressable } from 'react-native';
 import VKCButton from '@components/VKCButton';
 import SingleSelectRadio from '@components/SingleSelectRadio';
@@ -17,106 +17,36 @@ import { Formik, Field, FieldArray } from 'formik';
 import SelectImage from '@components/SelectImage';
 import TextEle from '@components/TextEle';
 import { SurveyContext } from 'src/context/surveyContext';
+import { ImageContext } from 'src/context/imgContext';
 import NetInfo from '@react-native-community/netinfo';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from '@utils/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TextInput from '../../components/TextInput/TextInput';
 import CustomMultiText from '@components/CustomMultiText';
+import RNFS from 'react-native-fs';
 
+console.disableYellowBox = true;
+let survey = []
+let Images = []
+console.log("survey",survey);
 const SurveyQue = ({ navigation, route }) => {
   // const { colors } = useTheme();
   const { questions, firstQuestion, accId, surveyId, UserId } = route.params;
   const [question, ...restQuestions] = questions;
-  const { survey, dispatchSurvey } = useContext(SurveyContext);
+  // const [Images,setImages] = useState([]);
+  // const { survey, dispatchSurvey } = useContext(SurveyContext);
+  // const { ImgSurvey, dispatchImgSurvey } = useContext(ImageContext);
   const formRef = useRef();
-
   // console.log("32",formRef.current.handleSubmit);
   const onSubmit = async selectedOptions => {
-    console.log("OnSubmit",selectedOptions)
+    // console.log("OnSubmit",selectedOptions)
+ 
     const url = '/services/apexrest/SRVY_SvyCapture_API';
-    console.log("RestQuestion",restQuestions)
-    if (restQuestions.length === 0) {
-      try {
-        const netInfo = await NetInfo.fetch();
-
-
-        if (netInfo.isConnected) {
-
-          console.log("Final Submit",JSON.stringify(survey))
-          // console.log("43",survey[3]);
-          // console.log("43.1",survey[3].selectedOptions);
-          // console.log("44",survey[4].selectedOptions);
-
-          await axios.post(url, [
-            {
-              userId: UserId,
-              accountId: accId,
-              surveyId,
-              surveyDate: format(new Date(), 'yyyy-MM-dd'),
-              Questions: survey,
-            },
-          ]);
-          Alert.alert(
-            'Completed',
-            'Form Submition Completed',
-            [{ text: 'OK', onPress: () => navigation.popToTop() }],
-            { cancelable: false },
-          );
-        } else {
-          console.log("In else")
-          const data = await AsyncStorage.getItem('unSyncedQuestions');
-          if (data) {
-            let newData = await AsyncStorage.setItem(
-              'unSyncedQuestions',
-              JSON.stringify([
-                ...JSON.parse(data),
-                {
-                  userId: UserId,
-                  accountId: accId,
-                  surveyId,
-                  surveyDate: format(new Date(), 'yyyy-MM-dd'),
-                  Questions: survey,
-                },
-              ]),
-            );
-
-            console.log("73",newData);
-            
-          } else {
-           let newData = await AsyncStorage.setItem(
-              'unSyncedQuestions',
-              JSON.stringify([
-                {
-                  userId: UserId,
-                  accountId: accId,
-                  surveyId,
-                  surveyDate: format(new Date(), 'yyyy-MM-dd'),
-                  Questions: survey,
-                },
-              ]),
-            );
-
-            console.log("89",newData);
-          }
-          Alert.alert(
-            'UnSync',
-            'Form Submition Completed but not sync with database',
-            [{ text: 'OK', onPress: () => navigation.popToTop() }],
-            { cancelable: false },
-          );
-        }
-      } catch (error) {
-        Alert.alert('Fail', error.message, [{ text: 'OK', onPress: () => navigation.popToTop() }], {
-          cancelable: false,
-        });
-        // const data = await getData(url);
-        // await storeData(url, [...(data || []), survey]);
-      }
-    } else {
-      console.log("101",JSON.stringify(selectedOptions));
+    // console.log("RestQuestion",restQuestions.length)
+      // console.log("101",JSON.stringify(selectedOptions));
       const { sQuestion } = question;
-      console.log("110",sQuestion.Option_Type__c)
+      // console.log("110",sQuestion.Option_Type__c)
       const Sequence_No = sQuestion.Sequence_No__c
         ? {
             Sequence_No: sQuestion.Sequence_No__c,
@@ -161,6 +91,8 @@ const SurveyQue = ({ navigation, route }) => {
           };
         }
 
+
+
         selOptions = {
           selectedOptions: [
             {
@@ -173,7 +105,7 @@ const SurveyQue = ({ navigation, route }) => {
             },
           ],
         };
-        console.log("168",selOptions)
+        // console.log("168",selOptions)
       } else if (
         sQuestion.Option_Type__c === 'Ordering Question' ||
         sQuestion.Option_Type__c === 'Multi Select'
@@ -188,11 +120,25 @@ const SurveyQue = ({ navigation, route }) => {
           })),
         };
       }
-       else if (sQuestion.Option_Type__c === 'Multi Text') {
+      else if (sQuestion.Option_Type__c === 'Single Select Group')
+      {
+        selOptions={
+          selectedOptions:[]
+        }
+
+        selectedOptions.mainField.forEach((val,index) =>{
+              selOptions.selectedOptions.push({
+                seqNo: selOptions.selectedOptions.length + 1, 
+                optionId: val.selectedOptions[1].optionId
+              })
+          })
+        //  console.log("MainField",JSON.stringify(selectedOptions.mainField));
+      }
+      else if (sQuestion.Option_Type__c === 'Multi Text') {
         selOptions = {
           selectedOptions: selectedOptions.mainField?.map((x, i) => ({
             seqNo: i + 1,
-            optionId: x.accId,
+            answer: x.accId,
           })),
         };
       }
@@ -209,7 +155,7 @@ const SurveyQue = ({ navigation, route }) => {
         })
         selOptions.selectedOptions = Options;
         // console.log(selectedOptions.mainField)
-        console.log("212",selOptions);
+        // console.log("212",selOptions);
       }
 
       if(sQuestion.Option_Type__c !== 'Upload Image for choosing an Option')
@@ -221,31 +167,171 @@ const SurveyQue = ({ navigation, route }) => {
           ...answer,
         };
   
-        console.log("188",
-          JSON.stringify({
-            sQuestion: data,
-            ...selOptions,
-          }),
-        );
+        // console.log("188",
+        //   JSON.stringify({
+        //     sQuestion: data,
+        //     ...selOptions,
+        //   }),
+        // );
+        
+        survey.unshift({
+          sQuestion: data,
+          ...selOptions,
+        })
+        
+      }
+      else
+      {
+        AsyncStorage.getItem(`IMG-${surveyId}-${accId}-${UserId}-${sQuestion.Id}`).then(res => {
+              
+              if(res !== null)
+              {
+                let ImgData = JSON.parse(res);
+                // console.log("266",`IMG-${surveyId}-${accId}-${UserId}-${sQuestion.Id}`,ImgData)
+                ImgData.forEach((Img,index) => {
+                  let payload ={
+                    "surveyId": surveyId,
+                    "accountId": accId,
+                    "userId": UserId,
+                    "qtnId": sQuestion.Id,
+                    "Sequence_No": Images.length + 1,
+                    "imageName": Img.fileName,
+                    "imageType": Img.type,
+                    "imageURL": Img.Uri
+                  }
+                  Images.unshift(payload);
+                })
+                 console.log("210",Images)
+              }
+              else{
+                console.log("In Image Else")
+                Images.unshift({});
+              }
+              console.log("217",Images)
+          })
+      }
+      // console.log("216",survey.reverse());
+
+      if (restQuestions.length === 0) {
+        try {
+          const netInfo = await NetInfo.fetch();
+          if (netInfo.isConnected) {
+            
+            // console.log("Final Submit",JSON.stringify(survey))
+            let AllQId=[];
+            let FinalSubmitSurvey = survey.filter((surveyQuestion)=>{
+                if(AllQId.includes(surveyQuestion.sQuestion.qtnId)) {
+                    return false;
+                }
+                else
+                {
+                  AllQId.push(surveyQuestion.sQuestion.qtnId);
+                  return true;
+                }
+            })  
+
+            // console.log("237",Images)
+
+            FinalSubmitSurvey.reverse();
+            console.log("Here 236",JSON.stringify({
+              userId: UserId,
+              accountId: accId,
+              surveyId,
+              surveyDate: format(new Date(), 'yyyy-MM-dd'),
+              Questions: FinalSubmitSurvey,
+            }))
+
+            console.log("Final Submit",JSON.stringify(FinalSubmitSurvey))
+             axios.post(url, [
+              {
+                userId: UserId,
+                accountId: accId,
+                surveyId,
+                surveyDate: format(new Date(), 'yyyy-MM-dd'),
+                Questions: FinalSubmitSurvey,
+              },
+            ]).then(result=>{
+              Alert.alert(
+                'Completed',
+                `${JSON.stringify(result.data)}`,
+                [{ text: 'OK', onPress: () => {} }],
+                { cancelable: false },
+              );
+            }).catch(error=>{
+              Alert.alert(
+                'Error',
+                `${error}`,
+                [{ text: 'OK', onPress: () => {} }],
+                { cancelable: false },
+              );
+            });
+            
+          } else {
+            // console.log("In else")
+            const data = await AsyncStorage.getItem('unSyncedQuestions');
+            if (data) {
+              let newData = await AsyncStorage.setItem(
+                'unSyncedQuestions',
+                JSON.stringify([
+                  ...JSON.parse(data),
+                  {
+                    userId: UserId,
+                    accountId: accId,
+                    surveyId,
+                    surveyDate: format(new Date(), 'yyyy-MM-dd'),
+                    Questions: survey,
+                  },
+                ]),
+              );
   
-        dispatchSurvey({
-          type: 'ADD_SURVEY',
-          payload: {
-            sQuestion: data,
-            ...selOptions,
-          },
+              // console.log("73",newData);
+              
+            } 
+            else 
+            {
+             let newData = await AsyncStorage.setItem(
+                'unSyncedQuestions',
+                JSON.stringify([
+                  {
+                    userId: UserId,
+                    accountId: accId,
+                    surveyId,
+                    surveyDate: format(new Date(), 'yyyy-MM-dd'),
+                    Questions: survey,
+                  },
+                ]),
+              );
+  
+              // console.log("89",newData);
+            }
+            Alert.alert(
+              'UnSync',
+              'Form Submition Completed but not sync with database',
+              [{ text: 'OK', onPress: () => navigation.popToTop() }],
+              { cancelable: false },
+            );
+          }
+        } catch (error) {
+          Alert.alert('Fail', error.message, [{ text: 'OK', onPress: () => {} }], {
+            cancelable: true,
+          });
+          // const data = await getData(url);
+          // await storeData(url, [...(data || []), survey]);
+        }
+      } 
+      
+      if(restQuestions.length !== 0)
+      {
+        navigation.push('SurveyQue', {
+          questions: restQuestions,
+          firstQuestion: false,
+          accId,
+          surveyId,
+          UserId,
         });
       }
+    
       
-
-      navigation.push('SurveyQue', {
-        questions: restQuestions,
-        firstQuestion: false,
-        accId,
-        surveyId,
-        UserId,
-      });
-    }
   };
 
   return (
@@ -444,6 +530,7 @@ const SurveyQue = ({ navigation, route }) => {
                   accountId={accId}
                   userId={UserId}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  questionId={question.sQuestion.Id}
                 />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Multi Text'}>

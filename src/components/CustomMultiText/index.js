@@ -25,7 +25,7 @@ const CustomMultiText = ({
     useEffect(() =>{
         AsyncStorage.getItem('AccountData').then(data=>{
             let AccountDataJSON = JSON.parse(data);
-            console.log("23",AccountDataJSON)
+            // console.log("23",AccountDataJSON)
             setAccountData(AccountDataJSON)
         })
     },[])
