@@ -75,8 +75,7 @@ const SurveyQue = ({ navigation, route }) => {
         sQuestion.Option_Type__c === 'Stock' ||
         sQuestion.Option_Type__c === 'Performance In the Area' ||
         sQuestion.Option_Type__c === 'Salesman Commit' ||
-        sQuestion.Option_Type__c === 'Special Efforts' ||
-        sQuestion.Option_Type__c === 'Question with Image as options'
+        sQuestion.Option_Type__c === 'Special Efforts' 
       ) {
         let selectedSubOrLoopingQtnOptions = {};
         if (selectedOptions.childField && selectedOptions.mainField.isLoopingQtn) {
@@ -128,8 +127,14 @@ const SurveyQue = ({ navigation, route }) => {
 
         selectedOptions.mainField.forEach((val,index) =>{
               selOptions.selectedOptions.push({
-                seqNo: selOptions.selectedOptions.length + 1, 
-                optionId: val.selectedOptions[1].optionId
+                seqNo: val.selectedOptions[0].seqNo, 
+                optionId: val.selectedOptions[0].optionId,
+                selectedSubOrLoopingQtnOptions: [
+                  {
+                    Id: val.selectedOptions[1].optionId,
+                    Sequence_No__c: val.selectedOptions[1].seqNo
+                  }
+                ]
               })
           })
         //  console.log("MainField",JSON.stringify(selectedOptions.mainField));
@@ -158,7 +163,38 @@ const SurveyQue = ({ navigation, route }) => {
         // console.log("212",selOptions);
       }
 
-      if(sQuestion.Option_Type__c !== 'Upload Image for choosing an Option')
+      if(sQuestion.Option_Type__c === 'Upload Image for choosing an Option')
+      {
+
+        AsyncStorage.getItem(`IMG-${surveyId}-${accId}-${UserId}-${sQuestion.Id}`).then(res => {
+              
+          if(res !== null)
+          {
+            let ImgData = JSON.parse(res);
+            console.log("266",`IMG-${surveyId}-${accId}-${UserId}-${sQuestion.Id}`,ImgData)
+            ImgData.forEach((Img,index) => {
+              let payload ={
+                "surveyId": surveyId,
+                "accountId": accId,
+                "userId": UserId,
+                "qtnId": sQuestion.Id,
+                "Sequence_No": Images.length + 1,
+                "imageName": Img.fileName,
+                "imageType": Img.type,
+                "imageURL": Img.uri
+              }
+              Images.unshift(payload);
+            })
+             console.log("210",Images)
+          }
+          else{
+            console.log("In Image Else")
+            Images.unshift({});
+          }
+          console.log("217",Images)
+        })
+      }
+      else
       {
         const data = {
           qtnId: sQuestion.Id,
@@ -167,48 +203,17 @@ const SurveyQue = ({ navigation, route }) => {
           ...answer,
         };
   
-        // console.log("188",
-        //   JSON.stringify({
-        //     sQuestion: data,
-        //     ...selOptions,
-        //   }),
-        // );
+        console.log("188",
+          JSON.stringify({
+            sQuestion: data,
+            ...selOptions,
+          }),
+        );
         
         survey.unshift({
           sQuestion: data,
           ...selOptions,
         })
-        
-      }
-      else
-      {
-        AsyncStorage.getItem(`IMG-${surveyId}-${accId}-${UserId}-${sQuestion.Id}`).then(res => {
-              
-              if(res !== null)
-              {
-                let ImgData = JSON.parse(res);
-                // console.log("266",`IMG-${surveyId}-${accId}-${UserId}-${sQuestion.Id}`,ImgData)
-                ImgData.forEach((Img,index) => {
-                  let payload ={
-                    "surveyId": surveyId,
-                    "accountId": accId,
-                    "userId": UserId,
-                    "qtnId": sQuestion.Id,
-                    "Sequence_No": Images.length + 1,
-                    "imageName": Img.fileName,
-                    "imageType": Img.type,
-                    "imageURL": Img.Uri
-                  }
-                  Images.unshift(payload);
-                })
-                 console.log("210",Images)
-              }
-              else{
-                console.log("In Image Else")
-                Images.unshift({});
-              }
-              console.log("217",Images)
-          })
       }
       // console.log("216",survey.reverse());
 
@@ -241,7 +246,27 @@ const SurveyQue = ({ navigation, route }) => {
               Questions: FinalSubmitSurvey,
             }))
 
-            console.log("Final Submit",JSON.stringify(FinalSubmitSurvey))
+            
+            let ImgUri = []
+            let FinalImages =Images.filter((val,index)=>{
+                if(Object.keys(val).length === 0)
+                {
+                  return false;
+                }
+                else if(ImgUri.includes(val.uri))
+                {
+                  return false;
+                }
+                else
+                {
+                  ImgUri.push(val.uri)
+                  return true;
+                }
+              })
+
+             console.log("Final Submit Images",FinalImages);
+             console.log("268",Images);
+              console.log("Final Submit",JSON.stringify(FinalSubmitSurvey))
              axios.post(url, [
               {
                 userId: UserId,
