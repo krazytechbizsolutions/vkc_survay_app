@@ -21,7 +21,8 @@ const VKCMediaPicker = ({
   question,
   surveyId,
   accountId,
-  userId
+  userId,
+  questionId
 }) => {
   const [isVisible, setVisible] = useState(false);
   const [ImageData,setImageData] = useState([]);
@@ -54,8 +55,8 @@ const VKCMediaPicker = ({
   };
 
  const StoreImageLocal = (ImgData) =>{
-      AsyncStorage.setItem(question,JSON.stringify(ImgData)).then(res =>{
-        AsyncStorage.getItem(question).then(res => {
+      AsyncStorage.setItem(`IMG-${surveyId}-${accountId}-${userId}-${questionId}`,JSON.stringify(ImgData)).then(res =>{
+        AsyncStorage.getItem(`IMG-${surveyId}-${accountId}-${userId}-${questionId}`).then(res => {
           console.log("59",res)
         })
         console.log("Images Stored Successfully");
@@ -65,10 +66,13 @@ const VKCMediaPicker = ({
  }
 
   useEffect(()=>{
-    AsyncStorage.getItem(question).then(res => {
-      let Images = JSON.parse(res);
-      console.log("70",Images);
-      setImageData([...Images])
+    AsyncStorage.getItem(`IMG-${surveyId}-${accountId}-${userId}-${questionId}`).then(res => {
+      if(res !== null)
+      {
+        let Images = JSON.parse(res);
+        console.log("70",Images);
+        setImageData([...Images])
+      }
     })
   },[])
 
