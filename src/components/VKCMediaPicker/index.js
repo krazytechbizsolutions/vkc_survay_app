@@ -114,7 +114,9 @@ const VKCMediaPicker = ({
               onPress={() => {
                 launchCamera(
                   {
-                    mediaType: 'photo'
+                    mediaType: 'photo',
+                    maxWidth:500,
+                    maxHeight:500
                   },
                   res => {
                     // console.log("78",res);
