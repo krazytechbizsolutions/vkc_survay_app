@@ -74,7 +74,7 @@ const SingleSelectRadio = ({
                 Id: result.Price.Id // INCASE OF ENTRY TYPE AS PICKLIST
               },{
                 Sequence_No__c: 4,
-                answer: result.Quantity // INCASE OF ENTRY TYPE AS TEXTFIELD
+                answer: typeof result.Quantity === "object" ? result.Quantity.Id : result.Quantity  // INCASE OF ENTRY TYPE AS TEXTFIELD
           }])
         })
        
@@ -134,11 +134,11 @@ const SingleSelectRadio = ({
   }
 
   const GetData=(val,optionName)=>{
-      // console.log("123",val,optionName);
+      console.log("123",val,optionName);
       let tempSingleData=SingleDispData
       tempSingleData[optionName] = val;
       setSingleDispData(tempSingleData);
-      // console.log("120",Object.keys(SingleDispData).length)
+      console.log("120",Object.keys(SingleDispData).length)
       if(Object.keys(SingleDispData).length === data.length)
       {
         setAddData(false)
@@ -217,7 +217,7 @@ const SingleSelectRadio = ({
                     </TextEle>
 
                     <TextEle style={{color:'black',marginVertical:5}}>
-                        Quantity : {item.Quantity}
+                        Quantity : {typeof item.Quantity === 'object' ? item.Quantity.Detailed_Survey_Option_Name__c : item.Quantity}
                     </TextEle>
                   </View>
                 )}

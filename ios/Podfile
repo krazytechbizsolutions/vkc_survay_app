@@ -8,6 +8,8 @@ target 'VKC_App' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
   target 'VKC_AppTests' do
     inherit! :complete
     # Pods for testing
