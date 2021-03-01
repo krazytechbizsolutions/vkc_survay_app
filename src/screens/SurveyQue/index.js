@@ -214,47 +214,6 @@ const SurveyQue = ({ navigation, route }) => {
 
       if (restQuestions.length === 0) {
         try {
-
-          // console.log("In else")
-          const data = await AsyncStorage.getItem('unSyncedQuestions');
-          if (data) {
-            let newData = await AsyncStorage.setItem(
-              'unSyncedQuestions',
-              JSON.stringify([
-                ...JSON.parse(data),
-                {
-                  userId: UserId,
-                  accountId: accId,
-                  surveyId,
-                  surveyDate: format(new Date(), 'yyyy-MM-dd'),
-                  syncStatus: false,
-                  Questions: survey,
-                },
-              ]),
-            );
-
-            // console.log("73",newData);
-            
-          } 
-          else 
-          {
-           let newData = await AsyncStorage.setItem(
-              'unSyncedQuestions',
-              JSON.stringify([
-                {
-                  userId: UserId,
-                  accountId: accId,
-                  surveyId,
-                  surveyDate: format(new Date(), 'yyyy-MM-dd'),
-                  syncStatus: false,
-                  Questions: survey,
-                },
-              ]),
-            );
-
-            // console.log("89",newData);
-          }
-
           const netInfo = await NetInfo.fetch();
           if (netInfo.isConnected) {
             
