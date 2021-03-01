@@ -1,6 +1,6 @@
 export const LOAD_SURVEY = 'LOAD_SURVEY';
 export const ADD_SURVEY = 'ADD_SURVEY';
-
+export const ADD_IMAGE = 'ADD_IMAGE';
 export const LOGOUT = 'LOGOUT';
 export const REQUEST = 'REQUEST';
 export const SUCCESS = 'SUCCESS';
