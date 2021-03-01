@@ -21,6 +21,9 @@ const SingleSelectRadio = ({
   textField,
   placeholder = 'Please select value',
   question,
+  surveyId,
+  questionId,
+  accountId
 }) => {
 
   // console.log("22",JSON.stringify(data));
@@ -45,10 +48,14 @@ const SingleSelectRadio = ({
   },[])
 
   const GetLocalData=()=>{
-     AsyncStorage.getItem(`${userId}`).then(data=>{
+    // console.log('114',`Tab-${userId}-${questionId}-${surveyId}`)
+     AsyncStorage.getItem(`Tab-${userId}-${questionId}-${surveyId}-${accountId}`).then(data=>{
+       if(data !== null)
+       {
         let LocalDispData = JSON.parse(data);
         setDispData(LocalDispData);
         setValue(LocalDispData) 
+       }
      })
   }
 
@@ -106,7 +113,8 @@ const SingleSelectRadio = ({
 
   const SaveData=async ()=>{
     try {
-      await AsyncStorage.setItem(`${userId}`,JSON.stringify(DispData));
+      console.log('114',`Tab-${userId}-${questionId}-${surveyId}`)
+      await AsyncStorage.setItem(`Tab-${userId}-${questionId}-${surveyId}-${accountId}`,JSON.stringify(DispData));
       Alert.alert(
         "Data Saved",
         "Your Data Has Been Locally Saved Successfully",

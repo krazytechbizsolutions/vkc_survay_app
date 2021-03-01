@@ -14,8 +14,6 @@ import VKCButton from '@components/VKCButton';
 import { getToken, storeData, getData } from '../../utils';
 import {SData} from './TempSurveyData';
 
-
-
 const PlannedVisits = ({ navigation }) => {
   const visitsEndpoint = '/services/apexrest/SRVY_DayPlanDataOffline_API';
   const surveyEndpoint = '/services/apexrest/SRVY_SurveyDataOffline_API';
@@ -74,6 +72,7 @@ const PlannedVisits = ({ navigation }) => {
           setUnSyncSurveys(JSON.parse(data));
         }
       };
+      // console.log("Focus")
       loadUnSyncSurvey();
       mutate();
     }, [mutate]),
@@ -101,7 +100,8 @@ const PlannedVisits = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    console.log("104",SData);
+    // console.log("104",SData);
+    // console.log("Effect")
     GetAccountData();
     const unsubscribe = NetInfo.addEventListener(state => {
       if (state.isConnected) {
@@ -171,9 +171,9 @@ const PlannedVisits = ({ navigation }) => {
                     text={srvDetails.surveyName}
                     disable={unSyncSurveys?.find(
                       z =>
-                        z.userId === plannedVisits.UserId &&
+                        z.userId === plannedVisits.UserId && //Change this Back
                         z.accountId === item.accId &&
-                        z.surveyId === srvDetails.surveyId,
+                        z.surveyId === srvDetails.surveyId,   
                     )}
                     onPress={async () => {
                       navigation.navigate('SurveyQue', {
@@ -181,7 +181,7 @@ const PlannedVisits = ({ navigation }) => {
                         firstQuestion: true,
                         accId: item.accId,
                         surveyId: srvDetails.surveyId,
-                        UserId: plannedVisits.UserId,
+                        UserId: plannedVisits.UserId,  //Change this Back
                       });
                     }}
                   />
