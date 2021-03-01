@@ -266,7 +266,7 @@ const SurveyQue = ({ navigation, route }) => {
                 Questions: FinalSubmitSurvey,
               },
             ]).then(result=>{
-                if(result.data.status !== 'Success')
+                if(result.data.status === 'Success')
                 {
                   //Submitting Images
                   // Remove Saved Tabular Data
