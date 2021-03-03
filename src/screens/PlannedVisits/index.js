@@ -5,7 +5,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import PropTypes from 'prop-types';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList,Modal } from 'react-native';
 import { useFocusEffect, useTheme } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
@@ -13,12 +13,15 @@ import axios from '@utils/axios';
 import VKCButton from '@components/VKCButton';
 import { getToken, storeData, getData } from '../../utils';
 import {SData} from './TempSurveyData';
+import SubmitModal from '@components/SubmitModal'
 
 const PlannedVisits = ({ navigation }) => {
   const visitsEndpoint = '/services/apexrest/SRVY_DayPlanDataOffline_API';
   const surveyEndpoint = '/services/apexrest/SRVY_SurveyDataOffline_API';
   const accountData = '/services/apexrest/SRVY_AccDataOffline_API';
 
+  const [ShowModal,setShowModal] = useState(false);
+  
   const GetAccountData=()=>{
     axios.get(accountData, []).then(response =>{
       console.log("23",response.data.length);
@@ -56,6 +59,10 @@ const PlannedVisits = ({ navigation }) => {
     return data;
   }, []);
 
+  const NavigateToHome=()=>{
+    navigation.popToTop();
+  }
+
   
   const { data: plannedVisits, isValidating, mutate } = useSWR(visitsEndpoint, getVisitData);
   console.log("51",mutate)
@@ -80,21 +87,12 @@ const PlannedVisits = ({ navigation }) => {
 
   const syncData = useCallback(async () => {
     const data = await AsyncStorage.getItem('unSyncedQuestions');
+    console.log("92",data)
     if (data) {
       const unSyncedQuestions = JSON.parse(data);
+      console.log("92",unSyncedQuestions)
       if (unSyncedQuestions.length > 0) {
-        const unSyncData = [];
-        const url = '/services/apexrest/SRVY_SvyCapture_API';
-        for (let i = 0; i < unSyncedQuestions.length; i++) {
-          try {
-            await axios.post(url, unSyncedQuestions[i]);
-          } catch (error) {
-            unSyncData.push(unSyncedQuestions[i]);
-            continue;
-          }
-        }
-        const data = await AsyncStorage.setItem('unSyncedQuestions', JSON.stringify(unSyncData));
-        mutate();
+        setShowModal(true)
       }
     }
   }, []);
@@ -192,6 +190,21 @@ const PlannedVisits = ({ navigation }) => {
         )}
         keyExtractor={item => `${item.accId}`}
       />
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={false}
+        onRequestClose={() => {
+        }}
+      >
+        <SubmitModal
+          SurveyId = {""}
+          AccId = {""}
+          UserId = {""}
+          BackToHome = {NavigateToHome}  />
+      </Modal>           
+
     </View>
   );
 };

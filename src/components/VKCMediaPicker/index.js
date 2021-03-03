@@ -22,7 +22,8 @@ const VKCMediaPicker = ({
   surveyId,
   accountId,
   userId,
-  questionId
+  questionId,
+  seqNo
 }) => {
   const [isVisible, setVisible] = useState(false);
   const [ImageData,setImageData] = useState([]);
@@ -77,6 +78,8 @@ const VKCMediaPicker = ({
   },[])
 
   const SetImage = (ImageObj) => {
+      ImageObj.QId = questionId;
+      ImageObj.SqNo = seqNo;
       let TempImageData = ImageData;
       TempImageData.push(ImageObj);
       StoreImageLocal(TempImageData);

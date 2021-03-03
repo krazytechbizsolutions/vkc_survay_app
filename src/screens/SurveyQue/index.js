@@ -2,7 +2,7 @@
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/prop-types */
 import React, { useState,useContext,useEffect,useRef } from 'react';
-import { SafeAreaView, Text, ScrollView, View, Alert, Pressable } from 'react-native';
+import { SafeAreaView, Text, ScrollView, View, Alert, Pressable,Modal } from 'react-native';
 import VKCButton from '@components/VKCButton';
 import SingleSelectRadio from '@components/SingleSelectRadio';
 import Tabular from '@components/Tabular';
@@ -24,6 +24,7 @@ import axios from '@utils/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TextInput from '../../components/TextInput/TextInput';
 import CustomMultiText from '@components/CustomMultiText';
+import SubmitModal from '@components/SubmitModal';
 import RNFS from 'react-native-fs';
 
 console.disableYellowBox = true;
@@ -36,15 +37,15 @@ const SurveyQue = ({ navigation, route }) => {
   const [question, ...restQuestions] = questions;
   const [SurveySubmit,setSurveySubmit]=useState(false);
   const [ImageSubmit,setImage]=useState(false);
+  const [ShowSubmitModal,setSubmitModal]=useState(false);
  
   const formRef = useRef();
-
   const onSubmit = async selectedOptions => {
-  
+    
     const url = '/services/apexrest/SRVY_SvyCapture_API';
     const ImgAPI = '/services/apexrest/SRVY_SvyCaptureImage_API';
       const { sQuestion } = question;
-      // console.log("110",sQuestion.Option_Type__c)
+      console.log("48",sQuestion)
       const Sequence_No = sQuestion.Sequence_No__c
         ? {
             Sequence_No: sQuestion.Sequence_No__c,
@@ -181,13 +182,13 @@ const SurveyQue = ({ navigation, route }) => {
               }
               Images.unshift(payload);
             })
-             console.log("210",Images)
+            //  console.log("210",Images)
           }
           else{
-            console.log("In Image Else")
+            // console.log("In Image Else")
             Images.unshift({});
           }
-          console.log("217",Images)
+          // console.log("217",Images)
         })
       }
       else
@@ -210,6 +211,13 @@ const SurveyQue = ({ navigation, route }) => {
           sQuestion: data,
           ...selOptions,
         })
+
+        let LocalStorageSurveyData = {
+          sQuestion: data,
+          ...selOptions,
+        }
+
+        setIntoLocalStorage(UserId,accId,surveyId,sQuestion.Id,LocalStorageSurveyData)
       }
 
       if (restQuestions.length === 0) {
@@ -238,8 +246,38 @@ const SurveyQue = ({ navigation, route }) => {
               accountId: accId,
               surveyId,
               surveyDate: format(new Date(), 'yyyy-MM-dd'),
-              Questions: FinalSubmitSurvey,
+              Questions: await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`),
             }))
+
+
+            let UnsyncedQues = await AsyncStorage.getItem('unSyncedQuestions');
+            
+            if(UnsyncedQues === null)
+            {
+              UnsyncedQues = [];
+            }
+            else
+            {
+              UnsyncedQues = JSON.parse(UnsyncedQues);
+            }
+
+            let TotalSurveyData = await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`);
+            TotalSurveyData =JSON.parse(TotalSurveyData)
+
+            UnsyncedQues.push({
+              userId: UserId,
+              accountId: accId,
+              surveyId,
+              surveyDate: format(new Date(), 'yyyy-MM-dd'),
+              Questions:TotalSurveyData ,
+            })
+            console.log("257",UnsyncedQues)
+            await AsyncStorage.setItem('unSyncedQuestions',JSON.stringify(UnsyncedQues));
+            await AsyncStorage.removeItem(`UnSync-${UserId}-${accId}-${surveyId}`)
+            setSubmitModal(true);
+
+
+
 
             let FinalImages =Images.filter((val,index)=>{
                 if(Object.keys(val).length === 0)
@@ -257,98 +295,98 @@ const SurveyQue = ({ navigation, route }) => {
                 }
               })
 
-             axios.post(url, [
-              {
-                userId: UserId,
-                accountId: accId,
-                surveyId,
-                surveyDate: format(new Date(), 'yyyy-MM-dd'),
-                Questions: FinalSubmitSurvey,
-              },
-            ]).then(result=>{
-                if(result.data.status === 'Success')
-                {
-                  //Submitting Images
-                  // Remove Saved Tabular Data
-                  console.log("290","Survey Submitted");
-                  FinalImages.forEach((Img)=>{
-                    RNFS.readFile(Img.imageURL, 'base64')
-                    .then(res =>{
-                        let SubmitImg={
-                          "surveyId": surveyId,
-                          "accountId": accId,
-                          "userId": UserId,
-                          "qtnId": Img.qtnId,
-                          "Sequence_No": Img.Sequence_No,
-                          "imageName": Img.imageName,
-                          "imageType": "JPG",
-                          "imageBase64": res
-                      } 
-                      axios.post(ImgAPI, SubmitImg).then(result=>{
-                          if(result.data.status === "Success"){
-                                //Remove Images
-                                console.log("307","Images Submitted");
-                          }
-                          else
-                          {
-                            SubmitImage = false;
-                            Alert.alert(
-                                'Error Uploading Image',
-                                `${JSON.stringify(result.data)}`,
-                                [{ text: 'OK', onPress: () => {} }],
-                                { cancelable: false },
-                              );
-                            }
-                          }).catch(err => {
+            //  axios.post(url, [
+            //   {
+            //     userId: UserId,
+            //     accountId: accId,
+            //     surveyId,
+            //     surveyDate: format(new Date(), 'yyyy-MM-dd'),
+            //     Questions: FinalSubmitSurvey,
+            //   },
+            // ]).then(result=>{
+            //     if(result.data.status === 'Success')
+            //     {
+            //       //Submitting Images
+            //       // Remove Saved Tabular Data
+            //       console.log("290","Survey Submitted");
+            //       FinalImages.forEach((Img)=>{
+            //         RNFS.readFile(Img.imageURL, 'base64')
+            //         .then(res =>{
+            //             let SubmitImg={
+            //               "surveyId": surveyId,
+            //               "accountId": accId,
+            //               "userId": UserId,
+            //               "qtnId": Img.qtnId,
+            //               "Sequence_No": Img.Sequence_No,
+            //               "imageName": Img.imageName,
+            //               "imageType": "JPG",
+            //               "imageBase64": res
+            //           } 
+            //           axios.post(ImgAPI, SubmitImg).then(result=>{
+            //               if(result.data.status === "Success"){
+            //                     //Remove Images
+            //                     console.log("307","Images Submitted");
+            //               }
+            //               else
+            //               {
+            //                 SubmitImage = false;
+            //                 Alert.alert(
+            //                     'Error Uploading Image',
+            //                     `${JSON.stringify(result.data)}`,
+            //                     [{ text: 'OK', onPress: () => {} }],
+            //                     { cancelable: false },
+            //                   );
+            //                 }
+            //               }).catch(err => {
 
-                            SubmitImage = false;
-                            Alert.alert(
-                              'Error Uploading Image',
-                              `${Img.imageName}`,
-                              [{ text: 'OK', onPress: () => {} }],
-                              { cancelable: false },
-                            );
+            //                 SubmitImage = false;
+            //                 Alert.alert(
+            //                   'Error Uploading Image',
+            //                   `${Img.imageName}`,
+            //                   [{ text: 'OK', onPress: () => {} }],
+            //                   { cancelable: false },
+            //                 );
 
-                        })    
-                    });
-                  })
+            //             })    
+            //         });
+            //       })
 
-                  if(SubmitImage)
-                  {
-                      Alert.alert(
-                        'Survey Completed',
-                        `Survey Submitted Successfully`,
-                        [{ text: 'OK', onPress: () => navigation.popToTop() }],
-                        { cancelable: false },
-                      );
-                  }
-                  else
-                  {
-                    Alert.alert(
-                      'Survey Completed With Exeptions',
-                      `Survey Submitted But Some Images Were Not Uploaded`,
-                      [{ text: 'OK', onPress: () => navigation.popToTop() }],
-                      { cancelable: false },
-                    );
-                  }
-                }
-                else
-                {
-                  Alert.alert(
-                    'Some Error Occured',
-                    `${JSON.stringify(result.data)}`,
-                    [{ text: 'OK', onPress: () => navigation.popToTop() }],
-                    { cancelable: false },
-                  );
-                }
-            }).catch(error=>{
-              Alert.alert(
-                'Error',
-                `${error}`,
-                [{ text: 'OK', onPress: () => {} }],
-                { cancelable: false },
-              );
-            });
+            //       if(SubmitImage)
+            //       {
+            //           Alert.alert(
+            //             'Survey Completed',
+            //             `Survey Submitted Successfully`,
+            //             [{ text: 'OK', onPress: () => navigation.popToTop() }],
+            //             { cancelable: false },
+            //           );
+            //       }
+            //       else
+            //       {
+            //         Alert.alert(
+            //           'Survey Completed With Exeptions',
+            //           `Survey Submitted But Some Images Were Not Uploaded`,
+            //           [{ text: 'OK', onPress: () => navigation.popToTop() }],
+            //           { cancelable: false },
+            //         );
+            //       }
+            //     }
+            //     else
+            //     {
+            //       Alert.alert(
+            //         'Some Error Occured',
+            //         `${JSON.stringify(result.data)}`,
+            //         [{ text: 'OK', onPress: () => navigation.popToTop() }],
+            //         { cancelable: false },
+            //       );
+            //     }
+            // }).catch(error=>{
+            //   Alert.alert(
+            //     'Error',
+            //     `${error}`,
+            //     [{ text: 'OK', onPress: () => {} }],
+            //     { cancelable: false },
+            //   );
+            // });
           } else {
             // console.log("In else")
             const data = await AsyncStorage.getItem('unSyncedQuestions');
@@ -405,10 +443,56 @@ const SurveyQue = ({ navigation, route }) => {
           surveyId,
           UserId,
         });
-      }
-    
-      
+      }  
   };
+
+  const setIntoLocalStorage = async(
+    UserId,
+    accId,
+    surveyId,
+    questionId,
+    survData
+    ) => {
+    let data = await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`);
+   
+    if(data === null){
+      let TempData = [];
+      TempData.push(survData)
+      AsyncStorage.setItem(`UnSync-${UserId}-${accId}-${surveyId}`,JSON.stringify(TempData)).then(()=>{
+        AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`).then((res)=>{
+          console.log("Async data",res)
+        })
+      }) 
+    }
+    else
+    {
+      let TempData = JSON.parse(data);
+      // console.log("436",TempData)
+       let Search = TempData.findIndex((res)=>{
+              console.log(res.sQuestion.qtnId,questionId)
+              return res.sQuestion.qtnId === questionId
+       })
+       
+       if (Search >= 0)
+       {
+        TempData[Search] = survData;
+       }
+       else
+       {
+        TempData.push(survData)
+       }
+       
+       AsyncStorage.setItem(`UnSync-${UserId}-${accId}-${surveyId}`,JSON.stringify(TempData)).then(()=>{
+        AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`).then((res)=>{
+          console.log("Async data",res)
+        })
+      }) 
+    }
+  }
+
+  const NavigateToHome=()=>{
+    navigation.popToTop();
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, margin: 10 }}>
@@ -607,6 +691,8 @@ const SurveyQue = ({ navigation, route }) => {
                   userId={UserId}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   questionId={question.sQuestion.Id}
+                  seqNo={question.sQuestion.Sequence_No__c}
+
                 />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Multi Text'}>
@@ -790,6 +876,21 @@ const SurveyQue = ({ navigation, route }) => {
           </View>
         </Otherwise>
       </Choose>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={ShowSubmitModal}
+        onRequestClose={() => {
+        }}
+      >
+        <SubmitModal
+          SurveyId = {surveyId}
+          AccId = {accId}
+          UserId = {UserId}
+          BackToHome = {NavigateToHome}  />
+      </Modal>           
+
     </SafeAreaView>
   );
 };
