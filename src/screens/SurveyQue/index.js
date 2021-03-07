@@ -26,6 +26,7 @@ import TextInput from '../../components/TextInput/TextInput';
 import CustomMultiText from '@components/CustomMultiText';
 import SubmitModal from '@components/SubmitModal';
 import RNFS from 'react-native-fs';
+import SpecialEfforts from '@components/CustomSpecialEfforts'
 
 console.disableYellowBox = true;
 let survey = []
@@ -74,8 +75,7 @@ const SurveyQue = ({ navigation, route }) => {
         sQuestion.Option_Type__c === 'Display' ||
         sQuestion.Option_Type__c === 'Stock' ||
         sQuestion.Option_Type__c === 'Performance In the Area' ||
-        sQuestion.Option_Type__c === 'Salesman Commit' ||
-        sQuestion.Option_Type__c === 'Special Efforts' 
+        sQuestion.Option_Type__c === 'Salesman Commit' 
       ) {
         let selectedSubOrLoopingQtnOptions = {};
         if (selectedOptions.childField && selectedOptions.mainField.isLoopingQtn) {
@@ -135,6 +135,26 @@ const SurveyQue = ({ navigation, route }) => {
                 ]
               })
           })   
+      }
+      else if(sQuestion.Option_Type__c === 'Special Efforts')
+      {
+        selOptions={
+          selectedOptions:[]
+        }
+
+        selectedOptions.mainField.forEach((val,index) =>{
+              selOptions.selectedOptions.push({
+                seqNo: val.selectedOptions[0].seqNo, 
+                optionId: val.selectedOptions[0].optionId,
+                selectedSubOrLoopingQtnOptions: [
+                  {
+                    Id: val.selectedOptions[1].optionId,
+                    Sequence_No__c: val.selectedOptions[1].seqNo,
+                    Score__c:val.selectedOptions[1].Score__c
+                  }
+                ]
+              })
+          }) 
       }
       else if (sQuestion.Option_Type__c === 'Multi Text') {
         selOptions = {
@@ -732,21 +752,20 @@ const SurveyQue = ({ navigation, route }) => {
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Special Efforts'}>
                 <Field
-                  name="mainField"
-                  component={SingleSelectRadio}
+                  component={SpecialEfforts}
                   data={question.Options}
+                  name="mainField"
                   value={values.mainField}
-                  valueField="optionId"
-                  textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
-                      return 'Please Enter Field Value';
+                    console.log("484",question.Options)
+                    if (question.Options.filter((x)=> x.level === 'Option 1').length !== value.length) {
+                      return 'Please Select All Options';
                     }
                     return '';
                   }}
                 />
-              </When>
+                </When>
               <Otherwise>
                 <Text>No Such Question type found</Text>
               </Otherwise>
