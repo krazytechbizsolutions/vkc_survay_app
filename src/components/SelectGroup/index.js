@@ -38,8 +38,8 @@ const SelectGroup = ({
                   
                   onPress={() => {
                     const index =
-                      (value && value.findIndex(x => x.value.includes(`${row.optionId}`))) || -1;
-                      console.log("42",index)
+                      (value && value.findIndex(x => x.value.includes(`${row.optionId}`)));
+                      
                     if (index === -1) {
                       setFieldValue(name, [
                         ...value,

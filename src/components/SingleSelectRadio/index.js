@@ -38,9 +38,6 @@ const SingleSelectRadio = ({
       <SafeAreaView style={{ flex: 1 }}>
           <FlatList
             data={data}
-            ItemSeparatorComponent={() => (
-              <View />
-            )}
             renderItem={({ item }) => (
               <RadioCore
                 key={item.id}
