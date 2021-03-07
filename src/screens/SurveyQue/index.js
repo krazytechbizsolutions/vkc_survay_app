@@ -60,7 +60,8 @@ const SurveyQue = ({ navigation, route }) => {
         sQuestion.Option_Type__c === 'Star Rating' ||
         sQuestion.Option_Type__c === 'Feedback' ||
         sQuestion.Option_Type__c === 'Coupon'
-      ) {
+      ) 
+      {
         answer = {
           answer: selectedOptions.mainField,
         };
@@ -88,9 +89,7 @@ const SurveyQue = ({ navigation, route }) => {
             ],
           };
         }
-
-
-
+        
         selOptions = {
           selectedOptions: [
             {
@@ -276,9 +275,6 @@ const SurveyQue = ({ navigation, route }) => {
             await AsyncStorage.removeItem(`UnSync-${UserId}-${accId}-${surveyId}`)
             setSubmitModal(true);
 
-
-
-
             let FinalImages =Images.filter((val,index)=>{
                 if(Object.keys(val).length === 0)
                 {
@@ -294,99 +290,6 @@ const SurveyQue = ({ navigation, route }) => {
                   return true;
                 }
               })
-
-            //  axios.post(url, [
-            //   {
-            //     userId: UserId,
-            //     accountId: accId,
-            //     surveyId,
-            //     surveyDate: format(new Date(), 'yyyy-MM-dd'),
-            //     Questions: FinalSubmitSurvey,
-            //   },
-            // ]).then(result=>{
-            //     if(result.data.status === 'Success')
-            //     {
-            //       //Submitting Images
-            //       // Remove Saved Tabular Data
-            //       console.log("290","Survey Submitted");
-            //       FinalImages.forEach((Img)=>{
-            //         RNFS.readFile(Img.imageURL, 'base64')
-            //         .then(res =>{
-            //             let SubmitImg={
-            //               "surveyId": surveyId,
-            //               "accountId": accId,
-            //               "userId": UserId,
-            //               "qtnId": Img.qtnId,
-            //               "Sequence_No": Img.Sequence_No,
-            //               "imageName": Img.imageName,
-            //               "imageType": "JPG",
-            //               "imageBase64": res
-            //           } 
-            //           axios.post(ImgAPI, SubmitImg).then(result=>{
-            //               if(result.data.status === "Success"){
-            //                     //Remove Images
-            //                     console.log("307","Images Submitted");
-            //               }
-            //               else
-            //               {
-            //                 SubmitImage = false;
-            //                 Alert.alert(
-            //                     'Error Uploading Image',
-            //                     `${JSON.stringify(result.data)}`,
-            //                     [{ text: 'OK', onPress: () => {} }],
-            //                     { cancelable: false },
-            //                   );
-            //                 }
-            //               }).catch(err => {
-
-            //                 SubmitImage = false;
-            //                 Alert.alert(
-            //                   'Error Uploading Image',
-            //                   `${Img.imageName}`,
-            //                   [{ text: 'OK', onPress: () => {} }],
-            //                   { cancelable: false },
-            //                 );
-
-            //             })    
-            //         });
-            //       })
-
-            //       if(SubmitImage)
-            //       {
-            //           Alert.alert(
-            //             'Survey Completed',
-            //             `Survey Submitted Successfully`,
-            //             [{ text: 'OK', onPress: () => navigation.popToTop() }],
-            //             { cancelable: false },
-            //           );
-            //       }
-            //       else
-            //       {
-            //         Alert.alert(
-            //           'Survey Completed With Exeptions',
-            //           `Survey Submitted But Some Images Were Not Uploaded`,
-            //           [{ text: 'OK', onPress: () => navigation.popToTop() }],
-            //           { cancelable: false },
-            //         );
-            //       }
-            //     }
-            //     else
-            //     {
-            //       Alert.alert(
-            //         'Some Error Occured',
-            //         `${JSON.stringify(result.data)}`,
-            //         [{ text: 'OK', onPress: () => navigation.popToTop() }],
-            //         { cancelable: false },
-            //       );
-            //     }
-            // }).catch(error=>{
-            //   Alert.alert(
-            //     'Error',
-            //     `${error}`,
-            //     [{ text: 'OK', onPress: () => {} }],
-            //     { cancelable: false },
-            //   );
-            // });
           } else {
             // console.log("In else")
             const data = await AsyncStorage.getItem('unSyncedQuestions');
