@@ -50,7 +50,7 @@ const SpecialEfforts = ({
                       setFieldValue(name, [
                         ...value,
                         {
-                          value: `${row.optionId}_${column.optionId}`,
+                          value: `${row.optionId}_${column.Id}`,
                           selectedOptions: [row, column],
                         },
                       ]);
@@ -58,7 +58,7 @@ const SpecialEfforts = ({
                       setFieldValue(name, [
                         ...value.slice(0, index),
                         {
-                          value: `${row.optionId}_${column.optionId}`,
+                          value: `${row.optionId}_${column.Id}`,
                           selectedOptions: [row, column],
                         },
                         ...value.slice(index + 1),
