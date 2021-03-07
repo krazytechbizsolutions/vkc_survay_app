@@ -117,7 +117,6 @@ class SubmitModal extends React.Component{
                     AsyncStorage.removeItem('unSyncedQuestions');
                 })
                 this.setState({SubmitFinished:true})
-                
             }
             
             

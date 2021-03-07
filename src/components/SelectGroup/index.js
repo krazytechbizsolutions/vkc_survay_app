@@ -35,10 +35,11 @@ const SelectGroup = ({
                 <RadioCore
                   option={{ value: `${row.optionId}_${column.optionId}` }}
                   value={value && value.find(x => x.value.includes(`${row.optionId}`))?.value}
+                  
                   onPress={() => {
                     const index =
                       (value && value.findIndex(x => x.value.includes(`${row.optionId}`))) || -1;
-
+                      console.log("42",index)
                     if (index === -1) {
                       setFieldValue(name, [
                         ...value,

@@ -49,24 +49,18 @@ const CustomMultiText = ({
           let tempShowAccountData = [];
     
           AccountData.every((element,index)=>{
-              if(tempShowAccountData.length > 4)
-              {
-                return false
-              }
-              if(element.customer_code !== null)
-              {
-                if(element.accName.includes(e) || element.customer_code.includes(e))
+              if(tempShowAccountData.length < 5){
+                if(element.accName.includes(e) ||(element.customer_code &&  element.customer_code.includes(e)))
                 {
                   tempShowAccountData.push(element);
-                  return true
                 }
                 return true;
               }
-              else
-              {
-                return true
-              }
           })
+          /*
+            AccountData.filter((element)=>{ return (element.accName.includes(e) ||(element.customer_code &&  element.customer_code.includes(e))); }}).splice(0, 5);
+          */
+
 
           tempShowAccountData.sort((a,b) => a.accName.localeCompare(b.accName));
            setShowAccountData([...tempShowAccountData])

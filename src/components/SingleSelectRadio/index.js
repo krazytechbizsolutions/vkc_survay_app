@@ -35,40 +35,11 @@ const SingleSelectRadio = ({
       <TextEle variant="title" style={{ marginBottom: 10 }}>
         {question}
       </TextEle>
-      <RectButton
-        onPress={() => {
-          setIsVisible(true);
-          setFieldTouched(name, true);
-        }}>
-        <View pointerEvents="none">
-          <TextInput
-            style={[styles.textInput, errorStyle]}
-            value={value ? value[textField] : ''}
-            placeholder={placeholder}
-            editable={false}
-          />
-          <Icon
-            name="caret-down-outline"
-            style={{ position: 'absolute', right: 10, top: 7 }}
-            size={24}
-            color="red"
-          />
-        </View>
-      </RectButton>
-      {touched[name] && errors[name] && (
-        <TextEle variant="caption" style={{ color: 'red', marginLeft: 5, marginVertical: 3 }}>
-          {errors[name]}
-        </TextEle>
-      )}
-      <Modal
-        isVisible={isVisible}
-        style={{ backgroundColor: '#fff', margin: 0 }}
-        onRequestClose={() => setIsVisible(false)}>
-        <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
           <FlatList
             data={data}
             ItemSeparatorComponent={() => (
-              <View style={{ height: 1, flex: 1, backgroundColor: 'black' }} />
+              <View />
             )}
             renderItem={({ item }) => (
               <RadioCore
@@ -81,6 +52,17 @@ const SingleSelectRadio = ({
             keyExtractor={item => `${item.Id}`}
           />
         </SafeAreaView>
+     
+      {touched[name] && errors[name] && (
+        <TextEle variant="caption" style={{ color: 'red', marginLeft: 5, marginVertical: 3 }}>
+          {errors[name]}
+        </TextEle>
+      )}
+      <Modal
+        isVisible={isVisible}
+        style={{ backgroundColor: '#fff', margin: 0 }}
+        onRequestClose={() => setIsVisible(false)}>
+       
       </Modal>
       {value?.subOrLoopingQtnOptions?.length > 1 && !!values[name] && (
         <Field
