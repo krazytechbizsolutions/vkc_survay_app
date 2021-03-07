@@ -6,6 +6,7 @@ import RNFS from 'react-native-fs';
 import TextEle from '@components/TextEle';
 const url = '/services/apexrest/SRVY_SvyCapture_API';
 const ImgAPI = '/services/apexrest/SRVY_SvyCaptureImage_API';
+import { format } from 'date-fns';
 
 class SubmitModal extends React.Component{
     constructor()
@@ -51,7 +52,13 @@ class SubmitModal extends React.Component{
 
     GetNumbers = async () =>{
         let Unsyncquestion = await AsyncStorage.getItem('unSyncedQuestions');
-        let ParsedSurvey = JSON.parse(Unsyncquestion);
+        let ParsedSurvey = [];
+        JSON.parse(Unsyncquestion).forEach(res=>{
+            if(res.surveyDate === format(new Date(), 'yyyy-MM-dd'))
+            {
+                ParsedSurvey.push(res)
+            }
+        })
         this.setState({TotalSurvey:ParsedSurvey.length})
         let AllKeys = await AsyncStorage.getAllKeys();
         let chk = AllKeys.findIndex(keys => keys.includes('IMG'));
@@ -105,7 +112,10 @@ class SubmitModal extends React.Component{
             }
             else
             {
-                this.setState({ErrorMsg:JSON.stringify(res.data)})
+                this.setState({ErrorMsg:JSON.stringify(res.data)},()=>{
+                    console.log("109",this.state.ErrorMsg)
+                    AsyncStorage.removeItem('unSyncedQuestions');
+                })
                 this.setState({SubmitFinished:true})
                 
             }
@@ -113,7 +123,9 @@ class SubmitModal extends React.Component{
             
         }).catch(e=>{
             this.setState({SubmitFinished:true})
-            this.setState({ErrorMsg:e})
+            this.setState({ErrorMsg:e},()=>{
+                console.log("120",this.state.ErrorMsg)
+            })
             console.log(e)
         })
     }
@@ -161,7 +173,9 @@ class SubmitModal extends React.Component{
                })             
             }).catch(e=>{
                this.setState({SubmitFinished:true})
-               this.setState({ErrorMsg:e})
+               this.setState({ErrorMsg:e},()=>{
+                console.log("170",this.state.ErrorMsg)
+               })
                 })
             }
         } 
@@ -182,6 +196,7 @@ class SubmitModal extends React.Component{
         }
         
         return(
+           
             <View style={{width:'100%',height:'100%',backgroundColor:'white',marginTop:200,borderRadius:20,elevation:5,padding:10,alignItems:'center'}}>
            { this.state.SubmitFinished ? 
                 this.state.SurveySubmited ? 
@@ -199,7 +214,7 @@ class SubmitModal extends React.Component{
                     <View style={{width:'100%',height:'100%',alignItems:'center',padding:15}}>
                         <Image style={{width:125,height:125}} source={require('./warning.png')}/>
                         <TextEle style={{textAlign:'center',marginTop:25}}>All Your Survey Were Submitted But Some Of Your Image Were Not Able to Upload.Please Try Again</TextEle>
-                        <TextEle style={{textAlign:'center',marginTop:25}}>{this.state.ErrorMsg}</TextEle>
+                        <TextEle style={{textAlign:'center',marginTop:25}}>{typeof this.state.ErrorMsg === 'object' ? JSON.stringify(this.state.ErrorMsg) :this.state.ErrorMsg}</TextEle>
                         <TouchableOpacity onPress={()=>this.props.BackToHome()} style={{width:'100%',marginTop:25}}>
                             <View style={{width:'100%',height:50,borderRadius:10,backgroundColor:"red",alignItems:'center',justifyContent:'center'}}>
                                 <TextEle style={{color:'white',fontSize:20}}>Proceed</TextEle>
@@ -210,7 +225,7 @@ class SubmitModal extends React.Component{
                     <View style={{width:'100%',height:'100%',alignItems:'center',padding:15}}>
                         <Image style={{width:125,height:125}} source={require('./close.png')}/>
                         <TextEle style={{textAlign:'center',marginTop:25}}>Your Survey Was Not Recorded.Please Contact Support</TextEle>
-                        <TextEle style={{textAlign:'center',marginTop:15}}>{this.state.ErrorMsg}</TextEle>
+                        <TextEle style={{textAlign:'center',marginTop:15}}>{typeof this.state.ErrorMsg === 'object' ? JSON.stringify(this.state.ErrorMsg) :this.state.ErrorMsg}</TextEle>
                         <TouchableOpacity onPress={()=>this.props.BackToHome()} style={{width:'100%',marginTop:25}}>
                             <View style={{width:'100%',height:50,borderRadius:10,backgroundColor:"red",alignItems:'center',justifyContent:'center'}}>
                                 <TextEle style={{color:'white',fontSize:20}}>Proceed</TextEle>
@@ -229,6 +244,7 @@ class SubmitModal extends React.Component{
                     </>
                 }
             </View>
+         
         )
     }
 }

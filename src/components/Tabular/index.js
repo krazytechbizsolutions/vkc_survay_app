@@ -62,31 +62,32 @@ const SingleSelectRadio = ({
   const setValue = (DisplayData)=> {
     let MainField=[];
     let ChildField = []; 
-      // console.log("77",DisplayData)
+      console.log("77",JSON.stringify(DisplayData))
 
       DisplayData.forEach((result,index)=>{
           MainField.push({
             seqNo:index + 1,
             selectedSubOrLoopingQtnOptions:[]
           })
+            console.log(result);
 
-          ChildField.push([{
-                Sequence_No__c: 1,
-                Id: result.Gender.Id // INCASE OF ENTRY TYPE AS PICKLIST
-              },{
-                Sequence_No__c: 2,
-                Id: result.Brand.Id// INCASE OF ENTRY TYPE AS PICKLIST
-              },{
-                Sequence_No__c: 3,
-                Id: result.Price.Id // INCASE OF ENTRY TYPE AS PICKLIST
-              },{
-                Sequence_No__c: 4,
-                answer: typeof result.Quantity === "object" ? result.Quantity.Id : result.Quantity  // INCASE OF ENTRY TYPE AS TEXTFIELD
-          }])
+            let ChildObj = Object.keys(result).map((e,index)=>{
+              let objChild = {
+                "Sequence_No__c": index + 1
+              }
+
+              typeof result[e] === 'object' ? objChild.Id = result[e].Id : objChild.answer = result[e];
+
+              return objChild
+              
+            }) 
+
+            // console.log("ChildObj",ChildObj);
+          ChildField.push(ChildObj);
         })
        
 
-      console.log("76","MainField" + JSON.stringify(MainField),"ChildField" +JSON.stringify(ChildField));
+       console.log("76","MainField" + JSON.stringify(MainField),"ChildField" +JSON.stringify(ChildField));
 
     setFieldValue('mainField',MainField);
     setFieldValue('childField',ChildField);
@@ -94,7 +95,7 @@ const SingleSelectRadio = ({
   }
 
   const AddEditData=(value)=>{
-    
+
     let TempDispData=DispData;
     if(EditIndex === null)
     {    
@@ -185,14 +186,11 @@ const SingleSelectRadio = ({
                 renderItem={({ item,index }) => (
                   <View style={{width:'100%',padding:10,backgroundColor:'white',borderRadius:10,borderWidth:1,marginTop:10}}>
                     
-                    <View style={{width:'100%',flexDirection:'row',justifyContent: 'space-between',alignItems: 'center'}}>
-                      <TextEle style={{color:'black'}}>
-                          Gender : {item.Gender.Detailed_Survey_Option_Name__c}
-                      </TextEle>
-                      <View style={{flexDirection:'row',justifyContent: 'space-between',alignItems: 'center',width:90,marginTop:10}}>
+                     
+                      <View style={{flexDirection:'row',justifyContent: 'flex-end',alignItems: 'center',width:'100%',marginTop:10,zIndex:2}}>
                         
                         <TouchableOpacity onPress={()=>onEditPressed(item,index)}>
-                          <View style={{width:35,height:35,backgroundColor:'red',justifyContent:'center',alignItems: 'center',borderRadius:100}}>
+                          <View style={{width:35,height:35,backgroundColor:'red',justifyContent:'center',alignItems: 'center',borderRadius:100,marginRight:25}}>
                             <Icon
                               name="md-pencil-sharp"
                               style={{ right: 0, top: 0 }}
@@ -213,20 +211,16 @@ const SingleSelectRadio = ({
                           </View>
                         </TouchableOpacity> 
                       </View>
+                    
+                    <View style={{marginTop:-35,zIndex:1}}>
+                    {
+                      Object.keys(item).map(e => (
+                          <TextEle style={{color:'black',marginVertical:5}}>
+                              {e} : {typeof item[e] === 'object' ? item[e].Detailed_Survey_Option_Name__c : item[e]}
+                          </TextEle>
+                      ))
+                    }
                     </View>
-
-
-                    <TextEle style={{color:'black',marginVertical:5}}>
-                        Brand : {item.Brand.Detailed_Survey_Option_Name__c}
-                    </TextEle>
-
-                    <TextEle style={{color:'black',marginVertical:5}}>
-                        Price : {item.Price.Detailed_Survey_Option_Name__c}
-                    </TextEle>
-
-                    <TextEle style={{color:'black',marginVertical:5}}>
-                        Quantity : {typeof item.Quantity === 'object' ? item.Quantity.Detailed_Survey_Option_Name__c : item.Quantity}
-                    </TextEle>
                   </View>
                 )}
                 keyExtractor={(item,index) => `${index}`}

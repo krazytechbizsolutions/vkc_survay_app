@@ -14,6 +14,7 @@ import VKCButton from '@components/VKCButton';
 import { getToken, storeData, getData } from '../../utils';
 import {SData} from './TempSurveyData';
 import SubmitModal from '@components/SubmitModal'
+import { format } from 'date-fns';
 
 const PlannedVisits = ({ navigation }) => {
   const visitsEndpoint = '/services/apexrest/SRVY_DayPlanDataOffline_API';
@@ -24,7 +25,7 @@ const PlannedVisits = ({ navigation }) => {
   
   const GetAccountData=()=>{
     axios.get(accountData, []).then(response =>{
-      console.log("23",response.data.length);
+    // console.log("23",response.data.length);
       AsyncStorage.setItem("AccountData",JSON.stringify(response.data));
     })
   }
@@ -40,7 +41,7 @@ const PlannedVisits = ({ navigation }) => {
     if (netInfo.isConnected) {
       const res = await axios.post(visitsEndpoint, { UserId: userId, DateVal: '' });
       await storeData(visitsEndpoint, res.data);
-      console.log("31",res.data)
+     // console.log("31",res.data)
       return res.data;
     }
     const data = await getData(visitsEndpoint);
@@ -65,7 +66,7 @@ const PlannedVisits = ({ navigation }) => {
 
   
   const { data: plannedVisits, isValidating, mutate } = useSWR(visitsEndpoint, getVisitData);
-  console.log("51",mutate)
+  //("51",mutate)
   const { data: surveys, isValidating: isValidatingSurveys } = useSWR(
     surveyEndpoint,
     getSurveyData,
@@ -75,9 +76,14 @@ const PlannedVisits = ({ navigation }) => {
     React.useCallback(() => {
       const loadUnSyncSurvey = async () => {
         const data = await AsyncStorage.getItem('unSyncedQuestions');
-        if (data) {
-          setUnSyncSurveys(JSON.parse(data));
-        }
+        // console.log("78",data)
+        // if (data) {
+        //   setUnSyncSurveys(JSON.parse(data));
+        // }
+        // const keys = await AsyncStorage.getAllKeys()
+        // await AsyncStorage.multiRemove(keys)
+        // let key1 = await AsyncStorage.getAllKeys()
+        // console.log('key1',key1);
       };
       // console.log("Focus")
       loadUnSyncSurvey();
@@ -86,11 +92,20 @@ const PlannedVisits = ({ navigation }) => {
   );
 
   const syncData = useCallback(async () => {
+    
     const data = await AsyncStorage.getItem('unSyncedQuestions');
-    console.log("92",data)
+    // console.log("92",data)
     if (data) {
-      const unSyncedQuestions = JSON.parse(data);
-      console.log("92",unSyncedQuestions)
+      const unSyncedQuestions = [];
+    
+      JSON.parse(data).forEach(res=>{
+        if(res.surveyDate === format(new Date(), 'yyyy-MM-dd'))
+        {
+          unSyncedQuestions.push(res)
+        }
+      })
+      
+      console.log("108",JSON.stringify(unSyncedQuestions))
       if (unSyncedQuestions.length > 0) {
         setShowModal(true)
       }
@@ -100,9 +115,11 @@ const PlannedVisits = ({ navigation }) => {
   useEffect(() => {
     // console.log("104",SData);
     // console.log("Effect")
+
     GetAccountData();
     const unsubscribe = NetInfo.addEventListener(state => {
       if (state.isConnected) {
+        console.log("Synced")
         syncData();
       }
     });
@@ -194,7 +211,7 @@ const PlannedVisits = ({ navigation }) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={false}
+        visible={ShowModal}
         onRequestClose={() => {
         }}
       >

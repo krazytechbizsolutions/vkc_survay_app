@@ -26,9 +26,13 @@ const CustomMultiText = ({
         AsyncStorage.getItem('AccountData').then(data=>{
             let AccountDataJSON = JSON.parse(data);
             // console.log("23",AccountDataJSON)
-            setAccountData(AccountDataJSON)
+            setAccountData([...AccountDataJSON])
         })
     },[])
+
+    useEffect(()=>{
+        SearchTextInput("")
+    },[AccountData])
 
     const onAddSelectedData=(item)=>{
         let tmpSelectedData = SelectedData;
@@ -49,16 +53,22 @@ const CustomMultiText = ({
               {
                 return false
               }
-              else if(element.accName.includes(e))
+              if(element.customer_code !== null)
               {
-                tempShowAccountData.push(element);
-                return true
+                if(element.accName.includes(e) || element.customer_code.includes(e))
+                {
+                  tempShowAccountData.push(element);
+                  return true
+                }
+                return true;
               }
               else
               {
                 return true
               }
           })
+
+          tempShowAccountData.sort((a,b) => a.accName.localeCompare(b.accName));
            setShowAccountData([...tempShowAccountData])
       }
 
@@ -70,11 +80,11 @@ const CustomMultiText = ({
                         <FlatList
                             data={SelectedData}
                             renderItem={({ item,index }) => (
-                                    <View style={{width:'100%',padding:10,borderRadius:10,justifyContent:'flex-start',borderWidth:1,marginVertical:10}}>
-                                        <TextEle style={{color:'grey',marginVertical:3}}>Account Name : {item.accName}</TextEle>
-                                        <TextEle style={{color:'grey',marginVertical:3}}>Account Type : {item.accType}</TextEle>
-                                        <TextEle style={{color:'grey',marginVertical:3}}>Area Name : {item.AreaName}</TextEle>
-                                        <TextEle style={{color:'grey',marginVertical:3}}>State : {item.state}</TextEle>
+                                    <View style={{width:'100%',padding:10,borderRadius:10,justifyContent:'flex-start',borderWidth:1,borderColor:'grey',marginVertical:10}}>
+                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Name : {item.accName}</TextEle>
+                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Type : {item.accType}</TextEle>
+                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Area Name : {item.AreaName}</TextEle>
+                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>State : {item.state}</TextEle>
                                     </View>
                             )}
                             keyExtractor={(item,index) => `${index}`}
@@ -108,11 +118,11 @@ const CustomMultiText = ({
                             data={ShowAccountData}
                             renderItem={({ item,index }) => (
                                 <TouchableOpacity onPress={()=>onAddSelectedData(item)} style={{width:'100%',alignItems:'center',justifyContent: 'center'}}>
-                                    <View style={{width:'90%',padding:10,borderRadius:10,justifyContent:'flex-start',borderWidth:1,marginVertical:10}}>
-                                        <TextEle style={{color:'grey',marginVertical:3}}>Account Name : {item.accName}</TextEle>
-                                        <TextEle style={{color:'grey',marginVertical:3}}>Account Type : {item.accType}</TextEle>
-                                        <TextEle style={{color:'grey',marginVertical:3}}>Area Name : {item.AreaName}</TextEle>
-                                        <TextEle style={{color:'grey',marginVertical:3}}>State : {item.state}</TextEle>
+                                    <View style={{width:'90%',padding:10,borderRadius:5,justifyContent:'flex-start',borderWidth:1,marginVertical:10,borderColor:'grey'}}>
+                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Name : {item.accName}</TextEle>
+                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Type : {item.accType}</TextEle>
+                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Area Name : {item.AreaName}</TextEle>
+                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>State : {item.state}</TextEle>
                                     </View>
                                 </TouchableOpacity>
                             )}
