@@ -464,8 +464,9 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
-                      return 'Please Enter Field Value';
+                    console.log("484",question.Options)
+                    if (question.Options.filter((x)=> x.level === 'Option 1').length !== value.length) {
+                      return 'Please Select All Options';
                     }
                     return '';
                   }}
