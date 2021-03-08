@@ -148,9 +148,8 @@ const SurveyQue = ({ navigation, route }) => {
                 optionId: val.selectedOptions[0].optionId,
                 selectedSubOrLoopingQtnOptions: [
                   {
-                    Id: val.selectedOptions[1].optionId,
-                    Sequence_No__c: val.selectedOptions[1].seqNo,
-                    Score__c:val.selectedOptions[1].Score__c
+                    Id: val.selectedOptions[1].Id,
+                    Sequence_No__c: val.selectedOptions[1].Sequence_No__c
                   }
                 ]
               })
