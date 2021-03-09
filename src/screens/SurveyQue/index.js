@@ -27,7 +27,6 @@ import CustomMultiText from '@components/CustomMultiText';
 import SubmitModal from '@components/SubmitModal';
 import RNFS from 'react-native-fs';
 import SpecialEfforts from '@components/CustomSpecialEfforts'
-import { format } from 'date-fns';
 
 console.disableYellowBox = true;
 let survey = []
