@@ -11,28 +11,7 @@ const AddRetailer = () => {
   };
   return (
     <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'never', bottom: 'always' }}>
-      <WizardForm
-        fields={fields}
-        initialValues={{
-          Name: '',
-          GSTIN__c: '',
-          GSTIN_Status__c: false,
-          Classification__c: '',
-          Region__c: '',
-          BillingCountry: 'India',
-          BillingState: '',
-          BillingCity: '',
-          BillingStreet: '',
-          BillingPostalCode: '',
-          FirstName: '',
-          LastName: '',
-          Email: '',
-          Phone: '',
-          Mobile: '',
-          Route__c: '',
-        }}
-        onSubmit={createRetailer}
-      />
+    
     </SafeAreaView>
   );
 };
