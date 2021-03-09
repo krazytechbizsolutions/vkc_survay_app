@@ -195,6 +195,7 @@ const PlannedVisits = ({ navigation }) => {
                         questions: srvDetails.Questions,
                         firstQuestion: true,
                         accId: item.accId,
+                        accName: item.accName,
                         surveyId: srvDetails.surveyId,
                         UserId: plannedVisits.UserId,  //Change this Back
                       });
