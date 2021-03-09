@@ -1,10 +1,8 @@
 import React from 'react';
-import { Animated, SafeAreaView, Text, ScrollView, View, Alert, Pressable,Modal,StyleSheet,Image,TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNFS from 'react-native-fs';
 import { format } from 'date-fns';
 import axios from '@utils/axios';
-import TextEle from '@components/TextEle';
 
 const captureSurveyApi = '/services/apexrest/SRVY_SvyCapture_API';
 const captureImageApi = '/services/apexrest/SRVY_SvyCaptureImage_API';
@@ -13,45 +11,21 @@ const today = format(new Date(), 'yyyy-MM-dd');
 class SubmitModal extends React.Component{
     constructor() {
         super();
-        this.state={
-            outerProgressWidth: 0,
-            progressWidth: new Animated.Value(30),
-            totalSurvey: 0,
-            totalImages: 0,
-            imagesErrorCount: 0,
-            surveySubmitted: false,
-            submitFinished: false,
-            Images:[],
-            imageCount: 0,
-            errorMsg: ""
-        }
     }
 
-    componentDidMount()
-    {
+    componentDidMount() {
         this.performSync();
     }
 
-    setProgressBar =(val)=>{
-        Animated.timing(this.state.progressWidth,{
-            toValue: isNaN(val) ? 30 :val,
-            timing: 5000
-        }).start();
-    }
+    getUnsyncedDataFromStorage = async (key) => {
+        let unSyncedData = await AsyncStorage.getItem(key);
+        if(!unSyncedData) return [];
 
-    removeImages = async()=>{
-        let AllKeys = await AsyncStorage.getAllKeys();
-            AllKeys.forEach((result,index)=>{
-                if(result.includes('IMG'))
-                {
-                    AsyncStorage.removeItem(result)
-                }
-            })
-    }
+        return JSON.parse(unSyncedData);
+    } 
 
     getUnsyncedDataOfCurrentDayFromStorage = async (key) => {
-        let unSyncedData = JSON.parse(await AsyncStorage.getItem(key))
-        if(!unSyncedData) return [];
+        let unSyncedData = getUnsyncedDataFromStorage(key);
 
         unSyncedData = unSyncedData.filter(ud => ud.surveyDate === today && ud.syncStatus === 0)
         if(unSyncedData.length > 0){
@@ -61,8 +35,9 @@ class SubmitModal extends React.Component{
     }
 
     updateFailedDataBackToUnSyncedStatusInStorage = async (key) => {
-        let unSyncedData = JSON.parse(await AsyncStorage.getItem(key))
-        if(unSyncedData && unSyncedData.length > 0){
+        let unSyncedData = getUnsyncedDataFromStorage(key);
+
+        if(unSyncedData.length > 0){
             // get current day syncStatus = 1, update it to 0 & set it back to storage...
             await AsyncStorage.setItem(key, JSON.stringify(unSyncedData.map(ud => {
                 if(ud.surveyDate === today && ud.syncStatus === 1) {
@@ -74,10 +49,26 @@ class SubmitModal extends React.Component{
     }
 
     removeUnSyncedStatusSuccessDataInStorage = async (key) => {
-        let unSyncedData = JSON.parse(await AsyncStorage.getItem(key))
+        let unSyncedData = getUnsyncedDataFromStorage(key);
         if(unSyncedData && unSyncedData.length > 0){
             // get current day syncStatus = 0 & set it back to storage... this will force remove syncStatus = 1...
             await AsyncStorage.setItem(key, JSON.stringify(unSyncedData.filter(ud => (ud.surveyDate === today && ud.syncStatus === 0))));
+        }
+    }
+
+    updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage = async (key, eName, eValue, isRemove) => {
+        let unSyncedData = getUnsyncedDataFromStorage(key);
+
+        if(isRemove){
+            // get where array[eName] !== eValue & set it back to storage... this will force remove array[eName] === eValue...
+            await AsyncStorage.setItem(key, JSON.stringify(unSyncedData.filter(ud => (ud[eName] !== eValue))));
+        } else {
+            await AsyncStorage.setItem(key, JSON.stringify(unSyncedData.map(ud => {
+                if(ud[eName] === eValue) {
+                    ud.syncStatus = 0;
+                }
+                return ud;
+            })));
         }
     }
 
@@ -121,79 +112,17 @@ class SubmitModal extends React.Component{
                 delete data.uri;
                 
                 axios.post(captureImageApi, data).then(res=>{
-                    if(res.data.status === "Success") {
-                        removeUnSyncedStatusSuccessDataInStorage('unSyncedQuestions');
-                    } else {
-                        updateFailedDataBackToUnSyncedStatusInStorage('unSyncedQuestions');
-                    }
+                    updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.imageName, res.data.status === "Success");
                 }).catch(e=>{
-                   
+                    updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.imageName, false);
                 })
             }
         }      
     }
 
-  
-
-    render()
-    {
-        const animatedStyle={
-            width: this.state.progressWidth
-        }
-        
-        const msgWithButton = (imgSrc, displayText, errorMsg) => {
-            imgSrc = './' + imgSrc;
-            return <View style={{ width:'100%', height:'100%', alignItems:'center', padding:15 }}>
-                <Image style={{width: 125, height: 125}} source={imgSrc}/>
-                <TextEle style={{textAlign: 'center', marginTop: 25}}>{displayText}</TextEle>
-                <TextEle style={{textAlign:'center',marginTop:25}}>{errorMsg}</TextEle>
-                <TouchableOpacity onPress={() => this.props.BackToHome()} style={{ width:'100%', marginTop: 25}}>
-                    <View style={{width: '100%', height: 50, borderRadius: 10, backgroundColor: "red", alignItems: 'center', justifyContent: 'center'}}>
-                        <TextEle style={{color: 'white', fontSize: 20}}>Proceed</TextEle>
-                    </View>
-                </TouchableOpacity>
-            </View>
-        }
-
-        return(
-           
-            <View style={{width:'100%',height:'100%',backgroundColor:'white',marginTop:200,borderRadius:20,elevation:5,padding:10,alignItems:'center'}}>
-            { 
-                this.state.submitFinished 
-                    ? 
-                        this.state.surveySubmitted 
-                            ? 
-                                this.state.imageCount === this.state.Images.length ?
-                                    msgWithButton('checked.png', 'Your Survey Has Been Sucessfully Submitted.', '')
-                                :
-                                    msgWithButton('warning.png', 'All Your Survey Were Submitted But Some Of Your Image Were Not Able to Upload. Please Try Again', this.state.errorMsg)                            
-                            :
-                                msgWithButton('close.png', 'Your Survey Was Not Recorded. Please Contact Support', this.state.errorMsg)// Show Error
-                    :
-                        <>
-                           <TextEle style={{marginTop:10}}>Uploading {this.state.totalSurvey} Survey and {this.state.totalImages} Images....</TextEle>
-                           <View onLayout={(event)=>{
-                                let {width}=event.nativeEvent.layout;
-                                this.setState({outerProgressWidth: parseInt(width)})
-                            }} style={{marginTop:30,width:'90%',height:25,borderRadius:10,backgroundColor:'#e0e0de'}}>
-                                <Animated.View style={[styles.progress, animatedStyle]}/>
-                            </View>
-                        </>
-                }
-            </View>
-         
-        )
+    render() {
+        return <></>;
     }
 }
-
-const styles = StyleSheet.create({
-    progress: {
-        width:'10%',
-        height:25,
-        borderRadius:10,
-        backgroundColor:'red'
-    }
-})
-
 
 export default SubmitModal;
