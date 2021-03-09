@@ -34,7 +34,7 @@ let Images = []
 console.log("survey",survey);
 const SurveyQue = ({ navigation, route }) => {
   // const { colors } = useTheme();
-  const { questions, firstQuestion, accId, surveyId, UserId } = route.params;
+  const { questions, firstQuestion, accId, accName, surveyId, UserId } = route.params;
   const [question, ...restQuestions] = questions;
   const [SurveySubmit,setSurveySubmit]=useState(false);
   const [ImageSubmit,setImage]=useState(false);
@@ -148,9 +148,8 @@ const SurveyQue = ({ navigation, route }) => {
                 optionId: val.selectedOptions[0].optionId,
                 selectedSubOrLoopingQtnOptions: [
                   {
-                    Id: val.selectedOptions[1].optionId,
-                    Sequence_No__c: val.selectedOptions[1].seqNo,
-                    Score__c:val.selectedOptions[1].Score__c
+                    Id: val.selectedOptions[1].Id,
+                    Sequence_No__c: val.selectedOptions[1].Sequence_No__c
                   }
                 ]
               })
@@ -195,7 +194,7 @@ const SurveyQue = ({ navigation, route }) => {
                 "userId": UserId,
                 "qtnId": sQuestion.Id,
                 "Sequence_No": sQuestion.Sequence_No__c,
-                "imageName": Img.fileName,
+                "imageName": accName + "_" + format(new Date(), 'yyyy-MM-dd') + sQuestion.Sequence_No__c + "_",
                 "imageType": Img.type,
                 "imageURL": Img.uri
               }
@@ -363,6 +362,7 @@ const SurveyQue = ({ navigation, route }) => {
           questions: restQuestions,
           firstQuestion: false,
           accId,
+          accName,
           surveyId,
           UserId,
         });
