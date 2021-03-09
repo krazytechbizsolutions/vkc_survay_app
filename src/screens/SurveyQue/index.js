@@ -27,6 +27,7 @@ import CustomMultiText from '@components/CustomMultiText';
 import SubmitModal from '@components/SubmitModal';
 import RNFS from 'react-native-fs';
 import SpecialEfforts from '@components/CustomSpecialEfforts'
+import { format } from 'date-fns';
 
 console.disableYellowBox = true;
 let survey = []
@@ -34,7 +35,7 @@ let Images = []
 console.log("survey",survey);
 const SurveyQue = ({ navigation, route }) => {
   // const { colors } = useTheme();
-  const { questions, firstQuestion, accId, surveyId, UserId } = route.params;
+  const { questions, firstQuestion, accId, accName, surveyId, UserId } = route.params;
   const [question, ...restQuestions] = questions;
   const [SurveySubmit,setSurveySubmit]=useState(false);
   const [ImageSubmit,setImage]=useState(false);
@@ -194,7 +195,7 @@ const SurveyQue = ({ navigation, route }) => {
                 "userId": UserId,
                 "qtnId": sQuestion.Id,
                 "Sequence_No": sQuestion.Sequence_No__c,
-                "imageName": Img.fileName,
+                "imageName": accName + "_" + format(new Date(), 'yyyy-MM-dd') + sQuestion.Sequence_No__c + "_",
                 "imageType": Img.type,
                 "imageURL": Img.uri
               }
@@ -362,6 +363,7 @@ const SurveyQue = ({ navigation, route }) => {
           questions: restQuestions,
           firstQuestion: false,
           accId,
+          accName,
           surveyId,
           UserId,
         });
