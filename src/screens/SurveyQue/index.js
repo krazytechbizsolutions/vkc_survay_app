@@ -798,7 +798,7 @@ const SurveyQue = ({ navigation, route }) => {
         </Otherwise>
       </Choose>
 
-      <Modal
+      {/* <Modal
         animationType="slide"
         transparent={true}
         visible={ShowSubmitModal}
@@ -810,7 +810,7 @@ const SurveyQue = ({ navigation, route }) => {
           AccId = {accId}
           UserId = {UserId}
           BackToHome = {NavigateToHome}  />
-      </Modal>           
+      </Modal>            */}
 
     </SafeAreaView>
   );
