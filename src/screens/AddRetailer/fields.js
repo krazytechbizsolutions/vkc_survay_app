@@ -7,299 +7,349 @@ export const fields = [
   {
     label:'Record Type',
     value:'',
-    name:'Record Type'
+    name:'Record Type',
     type:1,
     editable:false,
     isVisible:false,
     errorMessage:null,
     isImportant:true,
-    validate:() => {
-      if(!value.length)
+    validate:function() {
+      if(!this.value.length > 0)
       {
-        errorMessage = 'This Field cannot be empty'
+        this.errorMessage = 'This Field cannot be empty';
+        return;
       }
-      errorMessage = ''
+      this.errorMessage = null;
     }
   },
   {
     label:'Account Name',
     value:'',
-    name:'Account Name'
+    name:'Account Name',
     type:1,
     editable:true,
     isVisible:true,
     errorMessage:null,
     isImportant:true,
-    validate:() => {
-      if(!value.length)
+    validate:function() {
+      if(!this.value.length > 0)
       {
-        errorMessage = 'This Field cannot be empty'
+        this.errorMessage = 'This Field cannot be empty'
+        return
       }
-      errorMessage = ''
+      this.errorMessage = null;
     }
   },
   {
     label:'Sales Officer Name',
     value:'',
-    name:'Sales_Officer_Name_c'
+    name:'Sales_Officer_Name_c',
     type:1,
     editable:false,
     isVisible:false,
     errorMessage:null,
     isImportant:true,
-    validate:() => {
-      if(!value.length)
+    validate:function() {
+      if(!this.value.length > 0)
       {
-        errorMessage = 'Sales Officer Id Invalid'
+        this.errorMessage = 'Sales Officer Id Invalid'
+        return
       }
-      errorMessage = ''
+      this.errorMessage = null;
     }
   },
   {
     label:'Date Of Appointment',
     value:'',
-    name:'Date_Of_Appointment_c'
+    name:'Date_Of_Appointment_c',
     type:2,
     editable:false,
     isVisible:false,
     errorMessage:null,
     isImportant:true,
-    validate:() => {
-      if(!value.length)
+    validate:function() {
+      if(!this.value.length > 0)
       {
-        errorMessage = 'This Field cannot be empty'
+        this.errorMessage = 'This Field cannot be empty'
+        return
       }
-      errorMessage = ''
+      this.errorMessage = null;
     }
   },
   {
     label:'Street',
     value:'',
-    name:'BillingStreet'
-    type:3,
-    editable:true,
-    isVisible:true,
-    errorMessage:null,
-    isImportant:false,
-    validate:() =>{
-
-      }
-  },
-  {
-    label:'City',
-    value:'',
-    name:'BillingCity'
+    name:'BillingStreet',
     type:1,
     editable:true,
     isVisible:true,
     errorMessage:null,
     isImportant:false,
-    validate:() =>{
-
+    validate:function() {
+      if(!this.value.length > 0)
+      {
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return
       }
+      this.errorMessage = null;
+    }
   },
   {
     label:'City',
     value:'',
-    name:'BillingCity'
+    name:'BillingCity',
     type:1,
     editable:true,
     isVisible:true,
     errorMessage:null,
     isImportant:false,
-    validate:() =>{
-
+    validate:function() {
+      if(!this.value.length > 0)
+      {
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return
       }
+      this.errorMessage = null;
+    }
   },
   {
     label:'District',
     value:'',
-    name:'District'
+    name:'District',
     type:1,
     editable:true,
     isVisible:true,
     errorMessage:null,
     isImportant:true,
-    validate:() => {
-      if(!value.length)
+    validate:function() {
+      if(!this.value.length > 0)
       {
-        errorMessage = 'This Field cannot be empty'
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return
       }
-      errorMessage = ''
+      this.errorMessage = null;
     }
   },
   {
     label:'State/Province',
     value:'',
-    name:'State_c'
+    name:'State_c',
     type:4,
     options:[],
     editable:true,
     isVisible:true,
     errorMessage:null,
     isImportant:true,
-    validate:() => {
-      if(!value.length)
+    validate:function() {
+      if(!this.value.length > 0)
       {
-        errorMessage = 'This Field cannot be empty'
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return
       }
-      errorMessage = ''
+      this.errorMessage = null;
     }
   },
   {
     label:'Zip/Postal Code',
     value:'',
-    name:'BillingPostalCode'
+    name:'BillingPostalCode',
     type:1,
     editable:true,
     isVisible:true,
     errorMessage:null,
     isImportant:true,
-    validate:() => {
-      if(!value.length)
+    validate:function() {
+      if(!this.value.length > 0)
       {
-        errorMessage = 'This Field cannot be empty'
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return
       }
-      errorMessage = ''
+      this.errorMessage = null;
     }
   },
   {
     label:'Country',
     value:'',
-    name:'Country_c'
+    name:'Country_c',
     type:4,
     options:[],
     editable:true,
     isVisible:true,
     errorMessage:null,
     isImportant:true,
-    validate:() => {
-      if(!value.length)
+    validate:function() {
+      if(!this.value.length > 0)
       {
-        errorMessage = 'This Field cannot be empty'
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return
       }
-      errorMessage = ''
+      this.errorMessage = null;
     }
   },
   {
     label:'Name Of Proprietor Partners',
     value:'',
-    name:'Name_Of_ProPrietor_Partners_c'
+    name:'Name_Of_ProPrietor_Partners_c',
     type:1,
     editable:true,
     isVisible:true,
     errorMessage:null,
     isImportant:true,
-    validate:() => {
-      if(!value.length)
+    validate:function() {
+      if(!this.value.length > 0)
       {
-        errorMessage = 'This Field cannot be empty'
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return
       }
-      errorMessage = ''
+      this.errorMessage = null;
     }
   },
   {
     label:'Phone',
     value:'',
-    name:'Phone'
+    name:'Phone',
     type:4,
     options:[],
     editable:true,
     isVisible:true,
     errorMessage:null,
     isImportant:true,
-    validate:() => {
-      if(value.length !== 10)
+    validate:function() {
+      if(!this.value.length > 0)
       {
-        errorMessage = 'Please Enter A Valid Phone No.'
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return
       }
-      errorMessage = ''
+      this.errorMessage = null;
     }
   },
   {
     label:'WhatsApp Number',
     value:'',
-    name:'Whatsapp Number'
+    name:'Whatsapp Number',
     type:1,
     editable:true,
     isVisible:true,
     errorMessage:null,
     isImportant:false,
-    validate:() => {}
+    validate:function() {
+      if(!this.value.length > 0)
+      {
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return
+      }
+      this.errorMessage = null;
+    }
   },
-  {
+    {
     label:'Email',
     value:'',
-    name:'Email'
+    name:'Email',
     type:1,
     editable:true,
     isVisible:true,
     errorMessage:null,
     isImportant:false,
-    validate:() => {}
+    validate:function() {
+      if(!this.value.length > 0)
+      {
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return
+      }
+      this.errorMessage = null;
+    }
   },
   {
     label:'Shop Space',
     value:'Yes',
-    name:'Shop_Space_c'
+    name:'Shop_Space_c',
     type:4,
     options:["Yes","No"],
     editable:true,
     isVisible:true,
     errorMessage:null,
     isImportant:false,
-    validate:() => {}
+    validate:function() {
+      if(!this.value.length > 0)
+      {
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return
+      }
+      this.errorMessage = null;
+    }
   },
   {
     label:'Class',
     value:'A',
-    name:'Retail_Class_c'
+    name:'Retail_Class_c',
     type:4,
     options:["A","B","C","D"],
     editable:true,
     isVisible:true,
     errorMessage:null,
     isImportant:false,
-    validate:() => {}
+    validate:function() {
+      if(!this.value.length > 0)
+      {
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return
+      }
+      this.errorMessage = null;
+    }
   },
   {
     label:'Location Type',
     value:'Urban',
-    name:'Location_Type_c'
+    name:'Location_Type_c',
     type:4,
     options:["Urban","Semi-Urban","Rural"],
     editable:true,
     isVisible:true,
     errorMessage:null,
     isImportant:false,
-    validate:() => {}
+    validate:function() {
+      if(!this.value.length > 0)
+      {
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return
+      }
+      this.errorMessage = null;
+    }
   },
   {
     label:'Shop Registration No',
     value:'',
-    name:'Shop_Registration_No_c'
+    name:'Shop_Registration_No_c',
     type:1,
     editable:true,
     isVisible:true,
     errorMessage:null,
     isImportant:false,
-    validate:() => {}
+    validate:function() {
+      if(!this.value.length > 0)
+      {
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return
+      }
+      this.errorMessage = null;
+    }
   },
   {
     label:'Geo Tag',
     value:'',
-    name:'Geo_Tag_c'
+    name:'Geo_Tag_c',
     type:1,
     editable:false,
     isVisible:false,
     errorMessage:null,
     isImportant:false,
-    validate:() => {
-      if(!value.length)
+    validate:function() {
+      if(!this.value.length > 0)
       {
-        errorMessage = 'Geolocation not valid'
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return
       }
-      errorMessage = ''
+      this.errorMessage = null;
     }
   }
 ]

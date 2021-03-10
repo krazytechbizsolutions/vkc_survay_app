@@ -130,6 +130,10 @@ const PlannedVisits = ({ navigation }) => {
 
   const { colors } = useTheme();
 
+  const disableModal =()=>{
+    setShowModal(false)
+  }
+
   if (isValidating) {
     return (
       <Text
@@ -220,7 +224,7 @@ const PlannedVisits = ({ navigation }) => {
           SurveyId = {""}
           AccId = {""}
           UserId = {""}
-          BackToHome = {NavigateToHome}  />
+          BackToHome = {disableModal}  />
       </Modal>           
 
     </View>
