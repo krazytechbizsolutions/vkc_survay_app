@@ -43,8 +43,6 @@ const SurveyQue = ({ navigation, route }) => {
   const formRef = useRef();
   const onSubmit = async selectedOptions => {
     
-    const url = '/services/apexrest/SRVY_SvyCapture_API';
-    const ImgAPI = '/services/apexrest/SRVY_SvyCaptureImage_API';
       const { sQuestion } = question;
       console.log("48",sQuestion)
       const Sequence_No = sQuestion.Sequence_No__c
@@ -189,14 +187,14 @@ const SurveyQue = ({ navigation, route }) => {
             console.log("266",`IMG-${surveyId}-${accId}-${UserId}-${sQuestion.Id}`,ImgData)
             ImgData.forEach((Img,index) => {
               let payload ={
-                "surveyId": surveyId,
-                "accountId": accId,
-                "userId": UserId,
-                "qtnId": sQuestion.Id,
-                "Sequence_No": sQuestion.Sequence_No__c,
-                "imageName": accName + "_" + format(new Date(), 'yyyy-MM-dd') + sQuestion.Sequence_No__c + "_",
-                "imageType": Img.type,
-                "imageURL": Img.uri
+                surveyId,
+                accountId: accId,
+                userId: UserId,
+                qtnId: sQuestion.Id,
+                Sequence_No: sQuestion.Sequence_No__c,
+                imageName: accName + "_" + format(new Date(), 'yyyy-MM-dd') + sQuestion.Sequence_No__c + "_",
+                imageType: Img.type,
+                imageURL: Img.uri
               }
               Images.unshift(payload);
             })
