@@ -212,7 +212,7 @@ const PlannedVisits = ({ navigation }) => {
         )}
         keyExtractor={item => `${item.accId}`}
       />
-
+{/* 
       <Modal
         animationType="slide"
         transparent={true}
@@ -225,7 +225,7 @@ const PlannedVisits = ({ navigation }) => {
           AccId = {""}
           UserId = {""}
           BackToHome = {disableModal}  />
-      </Modal>           
+      </Modal>            */}
 
     </View>
   );

@@ -7,8 +7,11 @@ import { Rating } from 'react-native-ratings';
 const StarRating = ({
   field: { name, value },
   form: { touched, errors, setFieldValue },
+  data,
   question,
-}) => (
+}) => 
+
+(
   <View style={{ flex: 1 }}>
     <TextEle variant="title" style={{ marginBottom: 10 }}>
       {question}
@@ -25,6 +28,7 @@ const StarRating = ({
           fractions={1}
           startingValue={value || 0}
           style={{ paddingVertical: 10 }}
+          ratingCount={data.Max_Limit_c}
         />
       </View>
       <View style={{ flexDirection: 'row', marginTop: 10, justifyContent: 'center' }}>
