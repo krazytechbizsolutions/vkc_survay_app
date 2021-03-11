@@ -15,6 +15,7 @@ import { getToken, storeData, getData } from '../../utils';
 import {SData} from './TempSurveyData';
 import SubmitModal from '@components/SubmitModal'
 import { format } from 'date-fns';
+import {visits,schema} from '../../components/BackgroundSync/tempdata.js'
 
 const PlannedVisits = ({ navigation }) => {
   const visitsEndpoint = '/services/apexrest/SRVY_DayPlanDataOffline_API';
@@ -120,7 +121,7 @@ const PlannedVisits = ({ navigation }) => {
     const unsubscribe = NetInfo.addEventListener(state => {
       if (state.isConnected) {
         console.log("Synced")
-        syncData();
+        
       }
     });
     return () => {
@@ -181,7 +182,7 @@ const PlannedVisits = ({ navigation }) => {
             {item.surveys.map((x, i) => {
               
               const srvDetails = (surveys || []).find(y => y.surveyId === x.svyId);
-              // const srvDetails = SData.find(y => y.surveyId === x.svyId);
+              // const srvDetails = schema.find(y => y.surveyId === x.svyId);
               if (srvDetails) {
                 return (
                   <VKCButton

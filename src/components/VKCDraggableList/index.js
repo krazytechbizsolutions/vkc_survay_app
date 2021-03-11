@@ -15,10 +15,13 @@ const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue }, dat
     const index = temp.findIndex(x => x.optionId === item.optionId);
     let arr = [];
     if (index === -1) {
+      item.IsSelected = true;
       arr = [...temp, item];
     } else {
       arr = [...temp.slice(0, index), ...temp.slice(index + 1)];
     }
+
+    console.log("24",arr);
     const filteredStateData = value.filter(x => !arr.some(y => y.optionId === x.optionId));
     setFieldValue(
       name,
