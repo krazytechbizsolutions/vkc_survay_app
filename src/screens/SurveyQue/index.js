@@ -102,11 +102,27 @@ const SurveyQue = ({ navigation, route }) => {
         };
   
       } else if (
-        sQuestion.Option_Type__c === 'Ordering Question' ||
         sQuestion.Option_Type__c === 'Multi Select'
       ) {
         selOptions = {
           selectedOptions: selectedOptions.mainField.map(x => ({
+            seqNo: x.seqNo,
+            optionId: x.optionId,
+            isLoopingQtn: x.isLoopingQtn,
+            loopingQtnId: x.loopingQtnId,
+            loopingQtnType: x.loopingQtnType,
+          })),
+        };
+      }
+      else if(sQuestion.Option_Type__c === 'Ordering Question')
+      {
+       let selQues = selectedOptions.mainField.filter((res) => {
+          return res.IsSelected === true
+        })
+        
+
+        selOptions = {
+          selectedOptions: selQues.map(x => ({
             seqNo: x.seqNo,
             optionId: x.optionId,
             isLoopingQtn: x.isLoopingQtn,
@@ -178,7 +194,6 @@ const SurveyQue = ({ navigation, route }) => {
 
       if(sQuestion.Option_Type__c === 'Upload Image for choosing an Option')
       {
-
         AsyncStorage.getItem(`IMG-${surveyId}-${accId}-${UserId}-${sQuestion.Id}`).then(res => {
               
           if(res !== null)
@@ -237,79 +252,30 @@ const SurveyQue = ({ navigation, route }) => {
       }
 
       if (restQuestions.length === 0) {
+
+        let allKeys = await AsyncStorage.getAllKeys();
+        console.log("241",allKeys);
+        let unSyncedImages = [];
+        for (let i = 0;i < allKeys.length; i++)
+        {
+          console.log("244",allKeys[i])
+          if(allKeys[i].includes('IMG'))
+          {
+            unSyncedImages.push(JSON.parse(await AsyncStorage.getItem(allKeys[i])))
+          }
+        }
+
+        // console.log("UnSynced Images",unSyncedImages[0]);
+
+        await AsyncStorage.setItem('unSyncedImages',JSON.stringify(unSyncedImages[0]));
+
+
+
         try {
           const netInfo = await NetInfo.fetch();
-          if (netInfo.isConnected) {
-            
-            let AllQId=[];
-            let ImgNames = [];
-            let SubmitImage=true;
-
-            let FinalSubmitSurvey = survey.filter((surveyQuestion)=>{
-                if(AllQId.includes(surveyQuestion.sQuestion.qtnId)) {
-                    return false;
-                }
-                else
-                {
-                  AllQId.push(surveyQuestion.sQuestion.qtnId);
-                  return true;
-                }
-            })  
-
-            FinalSubmitSurvey.reverse();
-            console.log("Here 236",JSON.stringify({
-              userId: UserId,
-              accountId: accId,
-              surveyId,
-              surveyDate: format(new Date(), 'yyyy-MM-dd'),
-              Questions: await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`),
-            }))
-
-
-            let UnsyncedQues = await AsyncStorage.getItem('unSyncedQuestions');
-            
-            if(UnsyncedQues === null)
-            {
-              UnsyncedQues = [];
-            }
-            else
-            {
-              UnsyncedQues = JSON.parse(UnsyncedQues);
-            }
-
-            let TotalSurveyData = await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`);
-            TotalSurveyData =JSON.parse(TotalSurveyData)
-
-            UnsyncedQues.push({
-              userId: UserId,
-              accountId: accId,
-              surveyId,
-              surveyDate: format(new Date(), 'yyyy-MM-dd'),
-              Questions:TotalSurveyData ,
-            })
-            console.log("257",UnsyncedQues)
-            await AsyncStorage.setItem('unSyncedQuestions',JSON.stringify(UnsyncedQues));
-            await AsyncStorage.removeItem(`UnSync-${UserId}-${accId}-${surveyId}`)
-            setSubmitModal(true);
-
-            let FinalImages =Images.filter((val,index)=>{
-                if(Object.keys(val).length === 0)
-                {
-                  return false;
-                }
-                else if(ImgNames.includes(val.imageName))
-                {
-                  return false;
-                }
-                else
-                {
-                  ImgNames.push(val.imageName)
-                  return true;
-                }
-              })
-          } else {
             // console.log("In else")
             const data = await AsyncStorage.getItem('unSyncedQuestions');
+            
             if (data) {
               let newData = await AsyncStorage.setItem(
                 'unSyncedQuestions',
@@ -324,6 +290,8 @@ const SurveyQue = ({ navigation, route }) => {
                   },
                 ]),
               );
+
+              console.log("After Storing 1",newData);
             } 
             else 
             {
@@ -339,14 +307,17 @@ const SurveyQue = ({ navigation, route }) => {
                   },
                 ]),
               );
+
+              console.log("After Storing 2",newData);
             }
+
+            
             Alert.alert(
-              'UnSync',
-              'Form Submition Completed but not sync with database',
+              'Survey Recorded',
+              'Your Survey Has Been Recorder',
               [{ text: 'OK', onPress: () => navigation.popToTop() }],
               { cancelable: false },
             );
-          }
         } catch (error) {
           Alert.alert('Fail', error.message, [{ text: 'OK', onPress: () => {} }], {
             cancelable: true,
