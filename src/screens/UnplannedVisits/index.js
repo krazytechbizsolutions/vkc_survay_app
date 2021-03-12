@@ -1,39 +1,36 @@
 /* eslint-disable react-native/no-inline-styles */
+import TextEle from '@components/TextEle';
 import React from 'react';
+import { View,Picker,TouchableOpacity } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import Form from '../../components/form/Form';
 import fields from './fields';
 
-const UnplannedVisit = () => {
+const UnPlannedVisit = () => {
   const createUnplannedVisit = values => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'never', bottom: 'always' }}>
-      <Form
-        initialValues={{
-          Subject: 'Call',
-          Region__c: null,
-          Retailer__c: [],
-          Route__c: null,
-          Description: '',
-          ActivityDate: new Date(),
-          Status: 'Not Started',
-          Unplanned_Visit__c: true,
-          ExternaIdOfTask__c: '',
-        }}
-        validate={values => {
-          const errors = {};
-          if (values.Status !== 'Not Started' && !values.Description) {
-            errors.Description = 'Required';
-          }
-          return errors;
-        }}
-        onSubmit={createUnplannedVisit}
-        fields={fields}
-      />
-    </SafeAreaView>
+    <View style={{flex:1,width:'100%',padding:10}}>
+        <TextEle style={{opacity:0.7,fontSize:20}}>Retailers</TextEle>
+        <View style={{width:'100%',borderWidth:1,borderRadius:5,borderColor:'#90a4ae',marginTop:10}}>
+            <Picker
+                  selectedValue={""}
+                  style={{ height: 50, width: '100%' }}
+                  onValueChange={(e)=>{}}
+                >
+            </Picker>
+        </View>
+        <TouchableOpacity style={{width:'100%',padding:15}} onPress={()=>{}}>
+              <View style={{width:'100%',height:50,borderRadius:15,backgroundColor:"#ef4b4b",justifyContent: 'center',alignItems: 'center'}}>
+                  <TextEle style={{color:'#fff'}}>
+                      Save
+                  </TextEle>
+              </View>
+        </TouchableOpacity>
+        
+    </View>
   );
 };
 
-export default UnplannedVisit;
+export default UnPlannedVisit;

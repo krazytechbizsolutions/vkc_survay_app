@@ -5,7 +5,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import PropTypes from 'prop-types';
-import { View, Text, FlatList,Modal } from 'react-native';
+import { View, Text, FlatList,Modal, RefreshControl,ActivityIndicator } from 'react-native';
 import { useFocusEffect, useTheme } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
@@ -15,15 +15,22 @@ import { getToken, storeData, getData } from '../../utils';
 import {SData} from './TempSurveyData';
 import SubmitModal from '@components/SubmitModal'
 import { format } from 'date-fns';
-import {visits,schema} from '../../components/BackgroundSync/tempdata.js'
+import {plannedVisists,schema} from '../../components/BackgroundSync/tempdata.js'
+import TextEle from '@components/TextEle';
+// console.log("20",plannedVisists)
 
 const PlannedVisits = ({ navigation }) => {
   const visitsEndpoint = '/services/apexrest/SRVY_DayPlanDataOffline_API';
   const surveyEndpoint = '/services/apexrest/SRVY_SurveyDataOffline_API';
   const accountData = '/services/apexrest/SRVY_AccDataOffline_API';
 
-  const [ShowModal,setShowModal] = useState(false);
-  
+  const [visits,setVisits] =useState({});
+  const [refreshing,setRefreshing] = useState(false);
+  const [surveys,setSurvey] =useState([]);
+  const [unSyncSurveys, setUnSyncSurveys] = useState([]);
+  const [isLoading,setIsLoading] = useState(false);
+
+
   const GetAccountData=()=>{
     axios.get(accountData, []).then(response =>{
     // console.log("23",response.data.length);
@@ -31,7 +38,14 @@ const PlannedVisits = ({ navigation }) => {
     })
   }
 
-  const getVisitData = useCallback(async () => {
+  const onRefreshVisits =()=>{
+    setRefreshing(true)
+    getVisitData();
+  }
+
+  const getVisitData = async() => {
+    console.log("Getting Visits")
+    setIsLoading(true);
     const token = await getToken();
     let userId = '';
     if (token && token.id) {
@@ -40,56 +54,60 @@ const PlannedVisits = ({ navigation }) => {
     }
     const netInfo = await NetInfo.fetch();
     if (netInfo.isConnected) {
-      const res = await axios.post(visitsEndpoint, { UserId: userId, DateVal: '' });
-      await storeData(visitsEndpoint, res.data);
-     // console.log("31",res.data)
-      return res.data;
+      try 
+      {
+        const res = await axios.post(visitsEndpoint, { UserId: userId, DateVal: '' });
+        if(res.data.status === 'Success')
+        {
+          console.log("57",res.data)
+          await storeData(visitsEndpoint, res.data);
+          setVisits(res.data)
+          setRefreshing(false)
+          setIsLoading(false);
+          return; 
+        }
+        setIsLoading(false);
+        setVisits({});
+      }
+      catch(e)
+      {
+        setIsLoading(false);
+        console.log(e)
+      }
     }
-    const data = await getData(visitsEndpoint);
-    return data;
-  }, []);
-  const [unSyncSurveys, setUnSyncSurveys] = useState([]);
-
-  const getSurveyData = useCallback(async () => {
-    const netInfo = await NetInfo.fetch();
-    if (netInfo.isConnected) {
-      const res = await axios.post(surveyEndpoint);
-      await storeData(surveyEndpoint, res.data);
-      return res.data;
-    }
-    const data = await getData(surveyEndpoint);
-    return data;
-  }, []);
-
-  const NavigateToHome=()=>{
-    navigation.popToTop();
-  }
+  };
 
   
-  const { data: plannedVisits, isValidating, mutate } = useSWR(visitsEndpoint, getVisitData);
-  //("51",mutate)
-  const { data: surveys, isValidating: isValidatingSurveys } = useSWR(
-    surveyEndpoint,
-    getSurveyData,
-  );
+  const getSurveyData = async () => {
+    console.log("Getting Surveys")
+    const netInfo = await NetInfo.fetch();
+    if (netInfo.isConnected) {
+      try{
+        
+        const res = await axios.post(surveyEndpoint);
+        console.log("Got The Surveys Master");
+        await storeData(surveyEndpoint, res.data);
+        setSurvey([...res.data])
+      }
+      catch(e)
+      {
+        setSurvey([]);
+        console.log(e)
+      }
+    }
+  };
 
   useFocusEffect(
     React.useCallback(() => {
       const loadUnSyncSurvey = async () => {
-        const data = await AsyncStorage.getItem('unSyncedQuestions');
-        // console.log("78",data)
-        // if (data) {
-        //   setUnSyncSurveys(JSON.parse(data));
-        // }
-        // const keys = await AsyncStorage.getAllKeys()
-        // await AsyncStorage.multiRemove(keys)
-        // let key1 = await AsyncStorage.getAllKeys()
-        // console.log('key1',key1);
+        getVisitData();
+        syncData();
+        getSurveyData() ;
       };
       // console.log("Focus")
       loadUnSyncSurvey();
-      mutate();
-    }, [mutate]),
+      
+    }, []),
   );
 
   const syncData = useCallback(async () => {
@@ -108,57 +126,33 @@ const PlannedVisits = ({ navigation }) => {
       
       console.log("108",JSON.stringify(unSyncedQuestions))
       if (unSyncedQuestions.length > 0) {
-        setShowModal(true)
       }
     }
   }, []);
 
-  useEffect(() => {
-    // console.log("104",SData);
-    // console.log("Effect")
-
-    GetAccountData();
-    const unsubscribe = NetInfo.addEventListener(state => {
-      if (state.isConnected) {
-        console.log("Synced")
-        
-      }
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
 
   const { colors } = useTheme();
-
-  const disableModal =()=>{
-    setShowModal(false)
-  }
-
-  if (isValidating) {
-    return (
-      <Text
-        style={{ paddingTop: 30, fontSize: 20, color: '#000', textAlign: 'center' }}
-        textBreakStrategy="simple">
-        Loading...
-      </Text>
-    );
-  }
-
-  if (plannedVisits?.visits.length == 0) {
-    return (
-      <Text
-        style={{ paddingTop: 30, fontSize: 20, color: '#000', textAlign: 'center' }}
-        textBreakStrategy="simple">
-        No Planned Visits
-      </Text>
-    );
-  }
-
+  // console.log("Visits",visits)
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
+
+      {
+        isLoading ? 
+        
+        <View style={{width:'100%',flex:1,justifyContent:'center',alignItems:'center'}}>
+          <ActivityIndicator size="large" color="#EF4B4A"/>
+          <TextEle style={{opacity:0.7,fontSize:20,marginTop:10}}>Fetching Planned Visits ...</TextEle>
+        </View>
+        
+        :
+
       <FlatList
-        data={plannedVisits?.visits || []}
+        data={visits?.visits || []}
+        refreshControl={
+          <RefreshControl 
+          onRefresh = {()=> onRefreshVisits()}
+          refreshing={refreshing}/>
+        }
         renderItem={({ item }) => (
           <View
             style={{
@@ -179,6 +173,7 @@ const PlannedVisits = ({ navigation }) => {
             <Text style={{ paddingVertical: 4 }}>{`Account Name: ${item.accName}`}</Text>
             <Text style={{ paddingVertical: 4 }}>{`Area Name: ${item.AreaName}`}</Text>
             <Text style={{ paddingVertical: 4 }}>{`Account Type: ${item.accType}`}</Text>
+           
             {item.surveys.map((x, i) => {
               
               const srvDetails = (surveys || []).find(y => y.surveyId === x.svyId);
@@ -191,7 +186,7 @@ const PlannedVisits = ({ navigation }) => {
                     text={srvDetails.surveyName}
                     disable={unSyncSurveys?.find(
                       z =>
-                        z.userId === plannedVisits.UserId && //Change this Back
+                        z.userId === visits.UserId && //Change this Back
                         z.accountId === item.accId &&
                         z.surveyId === srvDetails.surveyId,   
                     )}
@@ -202,7 +197,7 @@ const PlannedVisits = ({ navigation }) => {
                         accId: item.accId,
                         accName: item.accName,
                         surveyId: srvDetails.surveyId,
-                        UserId: plannedVisits.UserId,  //Change this Back
+                        UserId: visits.UserId,  //Change this Back
                       });
                     }}
                   />
@@ -213,22 +208,8 @@ const PlannedVisits = ({ navigation }) => {
         )}
         keyExtractor={item => `${item.accId}`}
       />
-{/* 
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={ShowModal}
-        onRequestClose={() => {
-        }}
-      >
-        <SubmitModal
-          SurveyId = {""}
-          AccId = {""}
-          UserId = {""}
-          BackToHome = {disableModal}  />
-      </Modal>            */}
-
-    </View>
+    }
+  </View>
   );
 };
 

@@ -16,6 +16,8 @@ import { storeToken } from '../../utils';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
+import ShowUnPlanned from '../ShowUnPlanned'
+
 
 const Tab = createMaterialTopTabNavigator();
 const date = new Date().getDate();
@@ -89,7 +91,7 @@ const Splash = ({ navigation }) => {
       </View>
       <Tab.Navigator>
         <Tab.Screen name="Planned Visit" component={PlannedVisits} />
-        <Tab.Screen name="Unplanned Visit" component={UnplannedVisits} />
+        <Tab.Screen name="Unplanned Visit" component={ShowUnPlanned} />
       </Tab.Navigator>
       <Fab onClick={path => navigation.navigate(path)} />
     </SafeAreaView>

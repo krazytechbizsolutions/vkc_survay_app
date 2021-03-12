@@ -265,17 +265,9 @@ const SurveyQue = ({ navigation, route }) => {
           }
         }
 
-        // console.log("UnSynced Images",unSyncedImages[0]);
-
         await AsyncStorage.setItem('unSyncedImages',JSON.stringify(unSyncedImages[0]));
-
-
-
         try {
-          const netInfo = await NetInfo.fetch();
-            // console.log("In else")
             const data = await AsyncStorage.getItem('unSyncedQuestions');
-            
             if (data) {
               let newData = await AsyncStorage.setItem(
                 'unSyncedQuestions',
@@ -286,12 +278,10 @@ const SurveyQue = ({ navigation, route }) => {
                     accountId: accId,
                     surveyId,
                     surveyDate: format(new Date(), 'yyyy-MM-dd'),
-                    Questions: survey,
+                    Questions:JSON.parse(await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`))
                   },
                 ]),
               );
-
-              console.log("After Storing 1",newData);
             } 
             else 
             {
@@ -303,15 +293,11 @@ const SurveyQue = ({ navigation, route }) => {
                     accountId: accId,
                     surveyId,
                     surveyDate: format(new Date(), 'yyyy-MM-dd'),
-                    Questions: survey,
+                    Questions: JSON.parse(await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`)),
                   },
                 ]),
               );
-
-              console.log("After Storing 2",newData);
             }
-
-            
             Alert.alert(
               'Survey Recorded',
               'Your Survey Has Been Recorder',

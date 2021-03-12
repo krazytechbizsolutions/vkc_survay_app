@@ -1,4 +1,4 @@
-export const visits = {
+export const plannedVisists = {
     "visits": [
         {
             "surveys": [
