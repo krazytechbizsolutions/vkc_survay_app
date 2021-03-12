@@ -62,21 +62,28 @@ const SingleSelectRadio = ({
   const setValue = (DisplayData)=> {
     let MainField=[];
     let ChildField = []; 
-      console.log("77",JSON.stringify(DisplayData))
+      // console.log("77",JSON.stringify(question))
 
       DisplayData.forEach((result,index)=>{
           MainField.push({
             seqNo:index + 1,
             selectedSubOrLoopingQtnOptions:[]
           })
-            console.log(result);
 
             let ChildObj = Object.keys(result).map((e,index)=>{
               let objChild = {
                 "Sequence_No__c": index + 1
               }
 
-              typeof result[e] === 'object' ? objChild.Id = result[e].Id : objChild.answer = result[e];
+              if(typeof result[e] === 'object') 
+              {
+                objChild.Id = result[e].Id; 
+              }
+              else
+              {
+                objChild.Id = data[index].optionId;
+                objChild.answer = result[e];
+              } 
 
               return objChild
               

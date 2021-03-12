@@ -136,8 +136,9 @@ class BackgroundSync extends React.Component{
                     })
                 }
             }).catch(e=>{
-                console.log("Inside Catch")
+                console.log("Inside Catch",e)
                 // updateFailedDataBackToUnSyncedStatusInStorage('unSyncedQuestions');
+                this.removeUnSyncedStatusSuccessDataInStorage('unSyncedQuestions');
                 this.setState({status:3},()=>{
                     setTimeout(()=>{
                         this.props.Reset();
