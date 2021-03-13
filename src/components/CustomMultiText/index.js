@@ -2,12 +2,13 @@ import TextEle from '@components/TextEle';
 import VKCButton from '@components/VKCButton';
 import { Field } from 'formik';
 import React, { useState,useEffect } from 'react';
-import { View, TextInput, Pressable,FlatList,TouchableOpacity,Modal,Picker} from 'react-native';
+import { View, TextInput, Pressable,FlatList,TouchableOpacity,Modal,Picker,Alert} from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from '@utils/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UnPlannedVisit from 'src/screens/UnplannedVisits';
+import { format } from 'date-fns';
 
 
 const CustomMultiText = ({
@@ -38,6 +39,7 @@ const CustomMultiText = ({
 
     const onAddSelectedData=(item)=>{
         let tmpSelectedData = SelectedData;
+        item.dateAdded = format(new Date(), 'yyyy-MM-dd');
         tmpSelectedData.push(item)
         setSelectedData([...tmpSelectedData]);
         setIsVisible(false)
@@ -69,12 +71,24 @@ const CustomMultiText = ({
            setShowAccountData([...tempShowAccountData])
       }
 
-     const onAddUnplannedVisits = () => {
-        //   let UnplannedVisits = await AsyncStorage.getItem('UnplannedVisits');
-        //   if(UnPlannedVisit)
-        //   {
-        //     await AsyncStorage.setItem('UnplannedVisits',SelectedData);
-        //   }
+     const onAddUnplannedVisits = async () => {
+
+        let UnplannedVisits = await AsyncStorage.getItem('UnplannedVisits');
+        
+          console.log("74",UnplannedVisits);
+          console.log("75",SelectedData);
+          if(UnplannedVisits)
+          {
+            UnplannedVisits = JSON.parse(UnplannedVisits);
+            UnplannedVisits = [...UnplannedVisits,...SelectedData];
+            await AsyncStorage.setItem('UnplannedVisits',JSON.stringify(UnplannedVisits));
+          }
+          else
+          {
+            await AsyncStorage.setItem('UnplannedVisits',JSON.stringify(SelectedData));
+          }
+
+          console.log("85",await AsyncStorage.getItem('UnplannedVisits'));
       }
 
     return(
