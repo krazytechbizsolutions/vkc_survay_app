@@ -265,7 +265,7 @@ const SurveyQue = ({ navigation, route }) => {
           }
         }
 
-        await AsyncStorage.setItem('unSyncedImages',JSON.stringify(unSyncedImages[0]));
+        await AsyncStorage.setItem('unSyncedImages',JSON.stringify(unSyncedImages.length === 0 ? [] : unSyncedImages[0]));
         try {
             const data = await AsyncStorage.getItem('unSyncedQuestions');
             if (data) {
@@ -579,6 +579,7 @@ const SurveyQue = ({ navigation, route }) => {
                   component={CustomMultiText}
                   name="mainField"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  isUnplanned={false}
                 />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Feedback'}>
