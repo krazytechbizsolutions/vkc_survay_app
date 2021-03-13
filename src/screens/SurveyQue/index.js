@@ -34,7 +34,8 @@ let Images = []
 console.log("survey",survey);
 const SurveyQue = ({ navigation, route }) => {
   // const { colors } = useTheme();
-  const { questions, firstQuestion, accId, accName, surveyId, UserId } = route.params;
+  const { questions, firstQuestion, accId, accName, surveyId, UserId,Unplanned } = route.params;
+  console.log("28",UserId)
   const [question, ...restQuestions] = questions;
   const [SurveySubmit,setSurveySubmit]=useState(false);
   const [ImageSubmit,setImage]=useState(false);
@@ -276,7 +277,9 @@ const SurveyQue = ({ navigation, route }) => {
                   {
                     userId: UserId,
                     accountId: accId,
-                    surveyId,
+                    surveyId:surveyId,
+                    isUnplanned:Unplanned  ? true:false,
+                    temp_acc_Id:null,
                     surveyDate: format(new Date(), 'yyyy-MM-dd'),
                     Questions:JSON.parse(await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`))
                   },
@@ -291,7 +294,9 @@ const SurveyQue = ({ navigation, route }) => {
                   {
                     userId: UserId,
                     accountId: accId,
-                    surveyId,
+                    surveyId:surveyId,
+                    isUnplanned:Unplanned ? true:false,
+                    temp_acc_Id:null,
                     surveyDate: format(new Date(), 'yyyy-MM-dd'),
                     Questions: JSON.parse(await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`)),
                   },
@@ -320,6 +325,7 @@ const SurveyQue = ({ navigation, route }) => {
           accName,
           surveyId,
           UserId,
+          Unplanned
         });
       }  
   };

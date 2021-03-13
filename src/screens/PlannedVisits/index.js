@@ -217,6 +217,7 @@ const PlannedVisits = ({ navigation }) => {
                         accName: item.accName,
                         surveyId: srvDetails.surveyId,
                         UserId: visits.UserId,  //Change this Back
+                        Unplanned : false
                       });
                     }}
                   />
