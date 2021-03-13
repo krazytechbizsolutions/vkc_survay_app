@@ -41,10 +41,13 @@ const Splash = ({ navigation }) => {
       console.log("unSync",unSyncedData)
       if(netInfo.isConnected)
       {
-        if(unSyncedData.length > 0)
+        if(unSyncedData)
         {
-          setSyncData(true);
-          return
+          if(unSyncedData.length > 0)
+          {
+            setSyncData(true);
+            return
+          }
         }
       }
       setSyncData(false);

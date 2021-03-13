@@ -33,8 +33,10 @@ const PlannedVisits = ({ navigation }) => {
 
   const GetAccountData=()=>{
     axios.get(accountData, []).then(response =>{
-    // console.log("23",response.data.length);
+    console.log("Got The Response For Account");
       AsyncStorage.setItem("AccountData",JSON.stringify(response.data));
+    }).catch(e=>{
+      console.log("Account Data Error",e)
     })
   }
 
@@ -44,7 +46,7 @@ const PlannedVisits = ({ navigation }) => {
   }
 
   const getVisitData = async() => {
-    console.log("Getting Visits")
+  
     setIsLoading(true);
     const token = await getToken();
     let userId = '';
@@ -59,22 +61,38 @@ const PlannedVisits = ({ navigation }) => {
         const res = await axios.post(visitsEndpoint, { UserId: userId, DateVal: '' });
         if(res.data.status === 'Success')
         {
-          console.log("57",res.data)
+          console.log("Got the Visits")
           await storeData(visitsEndpoint, res.data);
-          setVisits(res.data)
-          setRefreshing(false)
-          setIsLoading(false);
-          return; 
+          await AsyncStorage.setItem('Visits',JSON.stringify(res.data))
+          setVisits(res.data) 
         }
-        setIsLoading(false);
-        setVisits({});
+        else
+        {
+          setVisits({});
+        }
       }
       catch(e)
       {
         setIsLoading(false);
-        console.log(e)
+        setRefreshing(false);
+        console.log(e);
       }
     }
+    else
+    {
+      let locallyStoredVisits = await AsyncStorage.getItem('Visits');
+      if(locallyStoredVisits)
+      {
+        locallyStoredVisits = JSON.parse(locallyStoredVisits);
+        setVisits(locallyStoredVisits);
+      }
+      else
+      {
+        setVisits({})
+      }
+    }
+    setRefreshing(false)
+    setIsLoading(false)
   };
 
   
@@ -83,16 +101,30 @@ const PlannedVisits = ({ navigation }) => {
     const netInfo = await NetInfo.fetch();
     if (netInfo.isConnected) {
       try{
-        
         const res = await axios.post(surveyEndpoint);
         console.log("Got The Surveys Master");
-        await storeData(surveyEndpoint, res.data);
+        await AsyncStorage.setItem('SurveyMaster',JSON.stringify(res.data));
         setSurvey([...res.data])
       }
       catch(e)
       {
         setSurvey([]);
+        await AsyncStorage.setItem('SurveyMaster',JSON.stringify([]));
         console.log(e)
+      }
+    }
+    else
+    {
+      let locallyStoredSurvey = await AsyncStorage.getItem('SurveyMaster');
+      if(locallyStoredSurvey)
+      {
+        
+        locallyStoredSurvey = JSON.parse(locallyStoredSurvey);
+        setSurvey(locallyStoredSurvey);
+      }
+      else
+      {
+        setSurvey([])
       }
     }
   };
@@ -100,39 +132,26 @@ const PlannedVisits = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       const loadUnSyncSurvey = async () => {
+        GetAccountData();
         getVisitData();
         syncData();
-        getSurveyData() ;
+        getSurveyData();
       };
-      // console.log("Focus")
       loadUnSyncSurvey();
-      
     }, []),
   );
 
-  const syncData = useCallback(async () => {
-    
+  const syncData = async() => { 
     const data = await AsyncStorage.getItem('unSyncedQuestions');
-    // console.log("92",data)
     if (data) {
-      const unSyncedQuestions = [];
-    
-      JSON.parse(data).forEach(res=>{
-        if(res.surveyDate === format(new Date(), 'yyyy-MM-dd'))
-        {
-          unSyncedQuestions.push(res)
-        }
-      })
-      
+      const unSyncedQuestions = JSON.parse(data).filter((res) => res.surveyDate === format(new Date(), 'yyyy-MM-dd'))      
       console.log("108",JSON.stringify(unSyncedQuestions))
-      if (unSyncedQuestions.length > 0) {
-      }
+      setUnSyncSurveys(unSyncedQuestions);
     }
-  }, []);
-
+  }
 
   const { colors } = useTheme();
-  // console.log("Visits",visits)
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
 
