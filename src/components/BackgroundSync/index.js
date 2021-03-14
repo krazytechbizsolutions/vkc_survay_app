@@ -10,6 +10,7 @@ import RNFS from 'react-native-fs';
 
 const captureSurveyApi = '/services/apexrest/SRVY_SvyCapture_API';
 const captureImageApi = '/services/apexrest/SRVY_SvyCaptureImage_API';
+const captureRetailerAPI = '/services/apexrest/SRVY_NewRetailer_API';
 const today = format(new Date(), 'yyyy-MM-dd');
 
 
@@ -119,7 +120,7 @@ class BackgroundSync extends React.Component{
             console.log("Before Capture",JSON.stringify(unSyncedQuestions))
             axios.post(captureSurveyApi,unSyncedQuestions).then(res=>{
                 if(res.data.status === "Success") {
-                    // removeUnSyncedStatusSuccessDataInStorage('unSyncedQuestions');
+
                     this.removeUnSyncedStatusSuccessDataInStorage('unSyncedQuestions');
                     this.setState({status:1},()=>{
                         setTimeout(()=>{
@@ -143,28 +144,59 @@ class BackgroundSync extends React.Component{
                     setTimeout(()=>{
                         this.props.Reset();
                     },3000)
+                }).finally(()=>{
+                    //proceed to upload retialers if any exist
                 })
-
-                // this.getUnsyncedImageFromStorage('unSyncedImages').then(res => {
-                //     console.log("Images",res);
-                //     if(res.length > 0)
-                //     {
-                //         this.uploadUnsyncedImages(res);
-                //     }
-                //     else
-                //     {
-                //         this.setState({status:1},()=>{
-                //             setTimeout(()=>{
-                //                 this.props.Reset();
-                //             },3000)
-                //         })
-                //     } 
-                // })
-
-                 //change this later
-                // TODO: Specific failed unsynced status should be moved to syncStatus = 0 & success ones should be deleted...
             })
         }
+        else
+        {
+            // this.uploadUnsyncedRetailers();
+        }
+    }
+
+    uploadUnsyncedRetailers = async () =>{
+
+        AsyncStorage.getItem('newRetailers').then((newRetailers)=>{
+             if(newRetailers && newRetailers.length > 0)
+             {
+                 newRetailers = JSON.parse(newRetailers);
+                 console.log("184",newRetailers)
+                 axios.post(captureRetailerAPI,newRetailers).then(res=>{
+                        if(res.data.status === "Success")
+                        {   
+                            console.log("In Retailer Success")
+                            
+                            this.setState({status:1},()=>{
+                                setTimeout(()=>{
+                                    this.props.Reset();
+                                },3000)
+                            })
+                        }
+                        else
+                        {
+                            console.log("In Retailers Fail",res.data)
+                            this.setState({status:2},()=>{
+                                setTimeout(()=>{
+                                    this.props.Reset();
+                                },3000)
+                            })
+                        }  
+                    }).catch((e)=>{
+                        console.log("Catch Retailer",e)
+                        this.setState({status:2},()=>{
+                            setTimeout(()=>{
+                                this.props.Reset();
+                            },3000)
+                        })
+                    })
+             }
+             AsyncStorage.setItem('newRetailers',JSON.stringify([]))
+         })
+
+       
+          
+        
     }
 
     uploadUnsyncedImages = async (unSyncedImages) =>{

@@ -5,28 +5,11 @@ import Select from '../../components/select/Select';
 
 export const fields = [
   {
-    label:'Record Type',
-    value:'',
-    name:'Record Type',
-    type:1,
-    editable:false,
-    isVisible:false,
-    errorMessage:null,
-    isImportant:true,
-    validate:function() {
-      if(!this.value.length > 0)
-      {
-        this.errorMessage = 'This Field cannot be empty';
-        return;
-      }
-      this.errorMessage = null;
-    }
-  },
-  {
     label:'Account Name',
     value:'',
-    name:'Account Name',
+    name:'accName',
     type:1,
+    isNum:false,
     editable:true,
     isVisible:true,
     errorMessage:null,
@@ -35,52 +18,38 @@ export const fields = [
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field cannot be empty'
-        return
+        return false ;
       }
       this.errorMessage = null;
-    }
-  },
-  {
-    label:'Sales Officer Name',
-    value:'',
-    name:'Sales_Officer_Name_c',
-    type:1,
-    editable:false,
-    isVisible:false,
-    errorMessage:null,
-    isImportant:true,
-    validate:function() {
-      if(!this.value.length > 0)
-      {
-        this.errorMessage = 'Sales Officer Id Invalid'
-        return
-      }
-      this.errorMessage = null;
+      return true ;
     }
   },
   {
     label:'Date Of Appointment',
     value:'',
-    name:'Date_Of_Appointment_c',
+    name:'dateOfCreation',
     type:2,
+    isNum:false,
     editable:false,
     isVisible:false,
     errorMessage:null,
-    isImportant:true,
+    isImportant:false,
     validate:function() {
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field cannot be empty'
-        return
+        return false
       }
       this.errorMessage = null;
+      return true
     }
   },
   {
     label:'Street',
     value:'',
-    name:'BillingStreet',
+    name:'street',
     type:1,
+    isNum:false,
     editable:true,
     isVisible:true,
     errorMessage:null,
@@ -89,16 +58,18 @@ export const fields = [
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field Cannot Be Empty'
-        return
+        return false;
       }
       this.errorMessage = null;
+      return true;
     }
   },
   {
     label:'City',
     value:'',
-    name:'BillingCity',
+    name:'city',
     type:1,
+    isNum:false,
     editable:true,
     isVisible:true,
     errorMessage:null,
@@ -107,35 +78,19 @@ export const fields = [
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field Cannot Be Empty'
-        return
+        return false;
       }
       this.errorMessage = null;
-    }
-  },
-  {
-    label:'District',
-    value:'',
-    name:'District',
-    type:1,
-    editable:true,
-    isVisible:true,
-    errorMessage:null,
-    isImportant:true,
-    validate:function() {
-      if(!this.value.length > 0)
-      {
-        this.errorMessage = 'This Field Cannot Be Empty'
-        return
-      }
-      this.errorMessage = null;
+      return true;
     }
   },
   {
     label:'State/Province',
-    value:'',
-    name:'State_c',
+    value:'Karnataka',
+    name:'state',
     type:4,
-    options:[],
+    isNum:false,
+    options:['Karnataka','Maharashtra','Jammu','Kerela'],
     editable:true,
     isVisible:true,
     errorMessage:null,
@@ -144,16 +99,18 @@ export const fields = [
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field Cannot Be Empty'
-        return
+        return false;
       }
       this.errorMessage = null;
+      return true;
     }
   },
   {
     label:'Zip/Postal Code',
     value:'',
-    name:'BillingPostalCode',
+    name:'pincode',
     type:1,
+    isNum:true,
     editable:true,
     isVisible:true,
     errorMessage:null,
@@ -162,17 +119,19 @@ export const fields = [
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field Cannot Be Empty'
-        return
+        return false ;
       }
       this.errorMessage = null;
+      return true ;
     }
   },
   {
     label:'Country',
-    value:'',
-    name:'Country_c',
+    value:'India',
+    name:'country',
     type:4,
-    options:[],
+    isNum:false,
+    options:['India'],
     editable:true,
     isVisible:true,
     errorMessage:null,
@@ -181,16 +140,18 @@ export const fields = [
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field Cannot Be Empty'
-        return
+        return false;
       }
       this.errorMessage = null;
+      return true;
     }
   },
   {
-    label:'Name Of Proprietor Partners',
+    label:'Contact Name',
     value:'',
-    name:'Name_Of_ProPrietor_Partners_c',
+    name:'contactName',
     type:1,
+    isNum:false,
     editable:true,
     isVisible:true,
     errorMessage:null,
@@ -199,16 +160,18 @@ export const fields = [
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field Cannot Be Empty'
-        return
+        return false
       }
       this.errorMessage = null;
+      return true;
     }
   },
   {
     label:'Phone',
     value:'',
-    name:'Phone',
-    type:4,
+    name:'contactNumber',
+    type:1,
+    isNum:true,
     options:[],
     editable:true,
     isVisible:true,
@@ -218,16 +181,18 @@ export const fields = [
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field Cannot Be Empty'
-        return
+        return false
       }
       this.errorMessage = null;
+      return true
     }
   },
   {
     label:'WhatsApp Number',
     value:'',
-    name:'Whatsapp Number',
+    name:'whatsAppNo',
     type:1,
+    isNum:true,
     editable:true,
     isVisible:true,
     errorMessage:null,
@@ -236,16 +201,18 @@ export const fields = [
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field Cannot Be Empty'
-        return
+        return false
       }
-      this.errorMessage = null;
+      this.errorMessage = null 
+      return true
     }
   },
     {
     label:'Email',
     value:'',
-    name:'Email',
+    name:'email_id',
     type:1,
+    isNum:false,
     editable:true,
     isVisible:true,
     errorMessage:null,
@@ -254,16 +221,18 @@ export const fields = [
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field Cannot Be Empty'
-        return
+        return false
       }
       this.errorMessage = null;
+      return true
     }
   },
   {
     label:'Shop Space',
     value:'Yes',
-    name:'Shop_Space_c',
+    name:'shopspace',
     type:4,
+    isNum:false,
     options:["Yes","No"],
     editable:true,
     isVisible:true,
@@ -273,16 +242,18 @@ export const fields = [
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field Cannot Be Empty'
-        return
+        return false
       }
       this.errorMessage = null;
+      return true
     }
   },
   {
     label:'Class',
     value:'A',
-    name:'Retail_Class_c',
+    name:'retail_class',
     type:4,
+    isNum:false,
     options:["A","B","C","D"],
     editable:true,
     isVisible:true,
@@ -292,16 +263,18 @@ export const fields = [
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field Cannot Be Empty'
-        return
+        return false
       }
       this.errorMessage = null;
+      return true
     }
   },
   {
     label:'Location Type',
     value:'Urban',
-    name:'Location_Type_c',
+    name:'locationType',
     type:4,
+    isNum:false,
     options:["Urban","Semi-Urban","Rural"],
     editable:true,
     isVisible:true,
@@ -311,16 +284,18 @@ export const fields = [
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field Cannot Be Empty'
-        return
+        return false
       }
       this.errorMessage = null;
+      return true
     }
   },
   {
     label:'Shop Registration No',
     value:'',
-    name:'Shop_Registration_No_c',
+    name:'shopRegNumber',
     type:1,
+    isNum:true,
     editable:true,
     isVisible:true,
     errorMessage:null,
@@ -329,16 +304,18 @@ export const fields = [
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field Cannot Be Empty'
-        return
+        return false
       }
       this.errorMessage = null;
+      return true
     }
   },
   {
-    label:'Geo Tag',
+    label:'Latitude',
     value:'',
-    name:'Geo_Tag_c',
+    name:'latitude',
     type:1,
+    isNum:false,
     editable:false,
     isVisible:false,
     errorMessage:null,
@@ -347,9 +324,30 @@ export const fields = [
       if(!this.value.length > 0)
       {
         this.errorMessage = 'This Field Cannot Be Empty'
-        return
+        return false
       }
       this.errorMessage = null;
+      return true
+    }
+  },
+  {
+    label:'Longitude',
+    value:'',
+    name:'longitude',
+    type:1,
+    isNum:false,
+    editable:false,
+    isVisible:false,
+    errorMessage:null,
+    isImportant:false,
+    validate:function() {
+      if(!this.value.length > 0)
+      {
+        this.errorMessage = 'This Field Cannot Be Empty'
+        return true
+      }
+      this.errorMessage = null;
+      return false 
     }
   }
 ]
@@ -357,279 +355,383 @@ export const fields = [
 
 
 
-
 // export const fields = [
-//   [
-//     {
-//       name: 'Name',
-//       label: 'Name',
-//       placeholder: 'Name',
-//       component: TextInput,
-//       returnKeyType: 'next',
-//       value: '',
-//       editable: false,
-//       isRequired: true,
-//       validate: value => {
-//         let errorMessage;
-//         if (!value) {
-//           errorMessage = 'Required';
-//         }
-//         return errorMessage;
-//       },
-//     },
-//     {
-//       name: 'GSTIN__c',
-//       label: 'GST Number',
-//       placeholder: 'GST Number',
-//       component: TextInput,
-//       returnKeyType: 'next',
-//       value: '',
-//       editable: false,
-//       validate: value => {
-//         let errorMessage;
-//         if (
-//           value &&
-//           !/^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$/i.test(
-//             value,
-//           )
-//         ) {
-//           errorMessage = 'Invalid GST Number';
-//         }
-//         return errorMessage;
-//       },
-//     },
-//     {
-//       name: 'Classification__c',
-//       label: 'Retailer Class',
-//       placeholder: 'Retailer Class',
-//       component: Select,
-//       value: '',
-//       options: [],
-//       isRequired: true,
-//       validate: value => {
-//         let errorMessage;
-//         if (!value) {
-//           errorMessage = 'Required';
-//         }
-//         return errorMessage;
-//       },
-//     },
-//     {
-//       name: 'Region__c',
-//       label: 'Area',
-//       placeholder: 'Area',
-//       component: Select,
-//       value: '',
-//       options: [],
-//       isRequired: true,
-//       validate: value => {
-//         let errorMessage;
-//         if (!value) {
-//           errorMessage = 'Required';
-//         }
-//         return errorMessage;
-//       },
-//     },
-//     {
-//       name: 'Route__c',
-//       label: 'Beat',
-//       placeholder: 'Beat',
-//       component: Select,
-//       value: '',
-//       options: [],
-//       mapField: 'Region__c',
-//       isRequired: true,
-//       validate: value => {
-//         let errorMessage;
-//         if (!value) {
-//           errorMessage = 'Required';
-//         }
-//         return errorMessage;
-//       },
-//     },
-//     {
-//       name: 'BillingState',
-//       label: 'State',
-//       placeholder: 'State',
-//       component: TextInput,
-//       returnKeyType: 'next',
-//       editable: false,
-//       value: '',
-//       isRequired: true,
-//       validate: value => {
-//         let errorMessage;
-//         if (!value) {
-//           errorMessage = 'Required';
-//         }
-//         return errorMessage;
-//       },
-//     },
-//     {
-//       name: 'BillingCity',
-//       label: 'City',
-//       placeholder: 'City',
-//       component: TextInput,
-//       returnKeyType: 'next',
-//       editable: false,
-//       value: '',
-//       isRequired: true,
-//       validate: value => {
-//         let errorMessage;
-//         if (!value) {
-//           errorMessage = 'Required';
-//         }
-//         return errorMessage;
-//       },
-//     },
-//     {
-//       name: 'BillingStreet',
-//       label: 'Address',
-//       placeholder: 'Address',
-//       component: TextInput,
-//       returnKeyType: 'next',
-//       editable: false,
-//       value: '',
-//       isRequired: true,
-//       validate: value => {
-//         let errorMessage;
-//         if (!value) {
-//           errorMessage = 'Required';
-//         }
-//         return errorMessage;
-//       },
-//     },
-//     {
-//       name: 'BillingPostalCode',
-//       label: 'PostalCode',
-//       placeholder: 'PostalCode',
-//       component: TextInput,
-//       returnKeyType: 'next',
-//       editable: false,
-//       value: '',
-//       isRequired: true,
-//       validate: value => {
-//         let errorMessage;
-//         if (!value) {
-//           errorMessage = 'Required';
-//         }
-//         return errorMessage;
-//       },
-//     },
-//   ],
-//   [
-//     {
-//       name: 'FirstName',
-//       label: 'First Name',
-//       placeholder: 'First Name',
-//       component: TextInput,
-//       returnKeyType: 'next',
-//       value: '',
-//       isRequired: true,
-//       validate: value => {
-//         let errorMessage;
-//         if (!value) {
-//           errorMessage = 'Required';
-//         }
-//         return errorMessage;
-//       },
-//     },
-//     {
-//       name: 'LastName',
-//       label: 'Last Name',
-//       placeholder: 'Last Name',
-//       component: TextInput,
-//       returnKeyType: 'next',
-//       value: '',
-//       isRequired: true,
-//       validate: value => {
-//         let errorMessage;
-//         if (!value) {
-//           errorMessage = 'Required';
-//         }
-//         return errorMessage;
-//       },
-//     },
-//     {
-//       name: 'Email',
-//       label: 'Email',
-//       placeholder: 'Email',
-//       component: TextInput,
-//       returnKeyType: 'next',
-//       keyboardType: 'email-address',
-//       value: '',
-//       validate: value => {
-//         let errorMessage;
-//         if (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-//           errorMessage = 'Invalid email address';
-//         }
-//         return errorMessage;
-//       },
-//     },
-//     {
-//       name: 'Mobile',
-//       placeholder: 'Mobile',
-//       label: 'Mobile',
-//       component: TextInput,
-//       returnKeyType: 'next',
-//       keyboardType: 'phone-pad',
-//       value: '',
-//       isRequired: true,
-//       validate: value => {
-//         let errorMessage;
-//         if (!value) {
-//           errorMessage = 'Required';
-//         } else if (!/^\d{10}$/i.test(value)) {
-//           errorMessage = 'Invalid Mobile Number';
-//         }
-//         return errorMessage;
-//       },
-//     },
-//     {
-//       name: 'Phone',
-//       placeholder: 'Whatsapp Number',
-//       label: 'Whatsapp Number',
-//       component: TextInput,
-//       keyboardType: 'phone-pad',
-//       returnKeyType: 'next',
-//       value: '',
-//       validate: value => {
-//         let errorMessage;
-//         if (value && !/^\d{10}$/i.test(value)) {
-//           errorMessage = 'Invalid Phone Number';
-//         }
-//         return errorMessage;
-//       },
-//     },
-//   ],
-// ];
-
-// export const formData = [
-//   // {
-//   //   name: 'GSTIN_Status__c',
-//   //   component: Switch,
-//   //   label: 'Do you have GST Number?',
-//   //   value: true,
-//   // },
 //   {
-//     name: 'GSTIN__c',
-//     label: 'GST Number',
-//     placeholder: 'GST Number',
-//     component: TextInput,
-//     returnKeyType: 'next',
-//     value: '',
-//     isRequired: true,
-//     validate: value => {
-//       let errorMessage;
-//       if (!value) {
-//         errorMessage = 'Required';
-//       } else if (
-//         !/^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$/i.test(
-//           value,
-//         )
-//       ) {
-//         errorMessage = 'Invalid GST Number';
+//     label:'Record Type',
+//     value:'',
+//     name:'Record Type',
+//     type:1,
+//     isNum:false,
+//     editable:false,
+//     isVisible:false,
+//     errorMessage:null,
+//     isImportant:true,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field cannot be empty';
+//         return false;
 //       }
-//       return errorMessage;
-//     },
+//       this.errorMessage = null;
+//       return true;
+//     }
 //   },
-// ];
+//   {
+//     label:'Account Name',
+//     value:'',
+//     name:'Account Name',
+//     type:1,
+//     isNum:false,
+//     editable:true,
+//     isVisible:true,
+//     errorMessage:null,
+//     isImportant:true,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field cannot be empty'
+//         return false ;
+//       }
+//       this.errorMessage = null;
+//       return true ;
+//     }
+//   },
+//   {
+//     label:'Sales Officer Name',
+//     value:'',
+//     name:'Sales_Officer_Name_c',
+//     type:1,
+//     isNum:false,
+//     editable:false,
+//     isVisible:false,
+//     errorMessage:null,
+//     isImportant:true,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'Sales Officer Id Invalid'
+//         return false
+//       }
+//       this.errorMessage = null;
+//       return true;
+//     }
+//   },
+//   {
+//     label:'Date Of Appointment',
+//     value:'',
+//     name:'Date_Of_Appointment_c',
+//     type:2,
+//     editable:false,
+//     isVisible:false,
+//     errorMessage:null,
+//     isImportant:true,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field cannot be empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//   {
+//     label:'Street',
+//     value:'',
+//     name:'BillingStreet',
+//     type:1,
+//     editable:true,
+//     isVisible:true,
+//     errorMessage:null,
+//     isImportant:false,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//   {
+//     label:'City',
+//     value:'',
+//     name:'BillingCity',
+//     type:1,
+//     editable:true,
+//     isVisible:true,
+//     errorMessage:null,
+//     isImportant:false,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//   {
+//     label:'District',
+//     value:'',
+//     name:'District',
+//     type:1,
+//     editable:true,
+//     isVisible:true,
+//     errorMessage:null,
+//     isImportant:true,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//   {
+//     label:'State/Province',
+//     value:'',
+//     name:'State_c',
+//     type:4,
+//     options:['Karnataka','Maharashtra','Jammu','Kerela'],
+//     editable:true,
+//     isVisible:true,
+//     errorMessage:null,
+//     isImportant:true,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//   {
+//     label:'Zip/Postal Code',
+//     value:'',
+//     name:'BillingPostalCode',
+//     type:1,
+//     editable:true,
+//     isVisible:true,
+//     errorMessage:null,
+//     isImportant:true,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//   {
+//     label:'Country',
+//     value:'',
+//     name:'Country_c',
+//     type:4,
+//     options:['India'],
+//     editable:true,
+//     isVisible:true,
+//     errorMessage:null,
+//     isImportant:true,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//   {
+//     label:'Name Of Proprietor Partners',
+//     value:'',
+//     name:'Name_Of_ProPrietor_Partners_c',
+//     type:1,
+//     editable:true,
+//     isVisible:true,
+//     errorMessage:null,
+//     isImportant:true,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//   {
+//     label:'Phone',
+//     value:'',
+//     name:'Phone',
+//     type:1,
+//     options:[],
+//     editable:true,
+//     isVisible:true,
+//     errorMessage:null,
+//     isImportant:true,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//   {
+//     label:'WhatsApp Number',
+//     value:'',
+//     name:'Whatsapp Number',
+//     type:1,
+//     editable:true,
+//     isVisible:true,
+//     errorMessage:null,
+//     isImportant:false,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//     {
+//     label:'Email',
+//     value:'',
+//     name:'Email',
+//     type:1,
+//     editable:true,
+//     isVisible:true,
+//     errorMessage:null,
+//     isImportant:false,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//   {
+//     label:'Shop Space',
+//     value:'Yes',
+//     name:'Shop_Space_c',
+//     type:4,
+//     options:["Yes","No"],
+//     editable:true,
+//     isVisible:true,
+//     errorMessage:null,
+//     isImportant:false,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//   {
+//     label:'Class',
+//     value:'A',
+//     name:'Retail_Class_c',
+//     type:4,
+//     options:["A","B","C","D"],
+//     editable:true,
+//     isVisible:true,
+//     errorMessage:null,
+//     isImportant:false,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//   {
+//     label:'Location Type',
+//     value:'Urban',
+//     name:'Location_Type_c',
+//     type:4,
+//     options:["Urban","Semi-Urban","Rural"],
+//     editable:true,
+//     isVisible:true,
+//     errorMessage:null,
+//     isImportant:false,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//   {
+//     label:'Shop Registration No',
+//     value:'',
+//     name:'Shop_Registration_No_c',
+//     type:1,
+//     editable:true,
+//     isVisible:true,
+//     errorMessage:null,
+//     isImportant:false,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//   {
+//     label:'Latitude',
+//     value:'',
+//     name:'latitude',
+//     type:1,
+//     editable:false,
+//     isVisible:false,
+//     errorMessage:null,
+//     isImportant:false,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   },
+//   {
+//     label:'Longitude',
+//     value:'',
+//     name:'longitude',
+//     type:1,
+//     editable:false,
+//     isVisible:false,
+//     errorMessage:null,
+//     isImportant:false,
+//     validate:function() {
+//       if(!this.value.length > 0)
+//       {
+//         this.errorMessage = 'This Field Cannot Be Empty'
+//         return
+//       }
+//       this.errorMessage = null;
+//     }
+//   }
+// ]
+
+
+
+
+
+

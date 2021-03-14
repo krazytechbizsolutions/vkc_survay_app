@@ -35,10 +35,11 @@ const Splash = ({ navigation }) => {
 
     const syncUpData = async()=>{
       let unSyncedData = await AsyncStorage.getItem('unSyncedQuestions');
+      let newRetailer = await AsyncStorage.getItem('newRetailers');
+      newRetailer = JSON.parse(newRetailer);
       unSyncedData = JSON.parse(unSyncedData);
       const netInfo = await NetInfo.fetch();
-      // setUnSyncSurveys(JSON.parse(data));
-      console.log("unSync",unSyncedData)
+
       if(netInfo.isConnected)
       {
         if(unSyncedData)
@@ -52,7 +53,6 @@ const Splash = ({ navigation }) => {
       }
       setSyncData(false);
     }
-
     syncUpData();
   },[])
 

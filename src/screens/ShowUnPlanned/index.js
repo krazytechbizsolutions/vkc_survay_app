@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import VKCButton from '@components/VKCButton';
 import { format } from 'date-fns';
 import TextEle from '@components/TextEle';
+import {plannedVisists,schema} from '../../components/BackgroundSync/tempdata.js'
 
 const ShowUnplanned =({navigation})=>{
     const [visits,setVisits] = useState({});
@@ -47,6 +48,25 @@ const ShowUnplanned =({navigation})=>{
           setSurvey([])
         }
       }
+
+      const advancedFilter = (filterType,filterValues,item) =>{
+        filterValues = filterValues.replace(";", "");
+        let searchedFilterType,searchedFilterValue; 
+        Object.keys(item).some((e,index) => {
+            if(filterType.toLowerCase() === e.toLocaleLowerCase())
+            {
+                searchedFilterType = e;
+                searchedFilterValue = item[e]
+                return true       
+            }
+        })
+  
+        if(filterValues === searchedFilterValue)
+        {
+           return true 
+        }
+        return false
+      }
         
     return(
         
@@ -61,6 +81,7 @@ const ShowUnplanned =({navigation})=>{
                 }
                 renderItem={({ item }) => (
                 item.dateAdded === format(new Date(), 'yyyy-MM-dd') ? 
+          
                 <View
                     style={{
                     backgroundColor: '#fff',
@@ -83,8 +104,10 @@ const ShowUnplanned =({navigation})=>{
                     {
                         surveys.map((x,i)=>{
                             // console.log("76",x.applicableTo);
+                            advancedFilter(x.filterType,x.filterValues,item)
                             return(
-                                x.applicableTo && x.applicableTo.includes(item.accType) ?
+                                x.applicableTo && x.applicableTo.includes(item.accType) && advancedFilter(x.filterType,x.filterValues,item) ?
+                                
                                     <VKCButton
                                         variant="fill"
                                         style={{ marginVertical: 5 }}
@@ -97,7 +120,8 @@ const ShowUnplanned =({navigation})=>{
                                             accName: item.accName,
                                             surveyId: x.surveyId,
                                             UserId: visits.UserId,  //Change this Back
-                                            Unplanned : true
+                                            Unplanned : true,
+                                            temp_account_id : item.hasOwnProperty('temp_account_id') ? item.temp_account_id : null
                                         });
                                         }}
                                     />
@@ -105,37 +129,6 @@ const ShowUnplanned =({navigation})=>{
                             )
                         })
                     }
-                
-                    {/* {item.surveys.map((x, i) => {
-                    
-                    const srvDetails = (surveys || []).find(y => y.surveyId === x.svyId);
-                    // const srvDetails = schema.find(y => y.surveyId === x.svyId);
-                    if (srvDetails) {
-                        return (
-                        <VKCButton
-                            variant="fill"
-                            style={{ marginVertical: 5 }}
-                            text={srvDetails.surveyName}
-                            disable={unSyncSurveys?.find(
-                            z =>
-                                z.userId === visits.UserId && //Change this Back
-                                z.accountId === item.accId &&
-                                z.surveyId === srvDetails.surveyId,   
-                            )}
-                            onPress={async () => {
-                            navigation.navigate('SurveyQue', {
-                                questions: srvDetails.Questions,
-                                firstQuestion: true,
-                                accId: item.accId,
-                                accName: item.accName,
-                                surveyId: srvDetails.surveyId,
-                                UserId: visits.UserId,  //Change this Back
-                            });
-                            }}
-                        />
-                        );
-                    }
-                    })} */}
                 </View>:null
                 )}
                 keyExtractor={item => `${item.accId}`}

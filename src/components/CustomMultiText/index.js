@@ -49,17 +49,37 @@ const CustomMultiText = ({
             setFieldValue('childField',[]);   
         }
       }
+
+    const checkAccountExist = (UnplannedVisits,accName) => {
+        let isExist = UnplannedVisits.filter(e => {return e.dateAdded === format(new Date(), 'yyyy-MM-dd') && e.accName === accName})
+        if(isExist.length  === 0)
+        {
+            return true
+        }
+        return false
+    }
     
-      const SearchTextInput=(e)=>{
+      const SearchTextInput=async(e)=>{
           setSearchTextInput(e);
-    
+
           let tempShowAccountData = [];
-    
+          let UnplannedVisits = JSON.parse (await AsyncStorage.getItem('UnplannedVisits'));
           AccountData.every((element,index)=>{
               if(tempShowAccountData.length < 5){
                 if(element.accName.includes(e) ||(element.customer_code &&  element.customer_code.includes(e)))
                 {
-                  tempShowAccountData.push(element);
+                    if(isUnplanned)
+                    {
+                        console.log(checkAccountExist(UnplannedVisits,element.accName))
+                          if(checkAccountExist(UnplannedVisits,element.accName))
+                          {
+                            tempShowAccountData.push(element);
+                          }
+                    }
+                    else
+                    {
+                        tempShowAccountData.push(element);
+                    }       
                 }
                 return true;
               }
@@ -74,9 +94,6 @@ const CustomMultiText = ({
      const onAddUnplannedVisits = async () => {
 
         let UnplannedVisits = await AsyncStorage.getItem('UnplannedVisits');
-        
-          console.log("74",UnplannedVisits);
-          console.log("75",SelectedData);
           if(UnplannedVisits)
           {
             UnplannedVisits = JSON.parse(UnplannedVisits);
@@ -108,6 +125,7 @@ const CustomMultiText = ({
                                         <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Type : {item.accType}</TextEle>
                                         <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Area Name : {item.AreaName}</TextEle>
                                         <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>State : {item.state}</TextEle>
+                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Customer Code : {item.customer_code}</TextEle>
                                     </View>
                             )}
                             keyExtractor={(item,index) => `${index}`}
