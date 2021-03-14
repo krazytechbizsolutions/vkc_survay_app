@@ -34,8 +34,7 @@ let Images = []
 console.log("survey",survey);
 const SurveyQue = ({ navigation, route }) => {
   // const { colors } = useTheme();
-  const { questions, firstQuestion, accId, accName, surveyId, UserId,Unplanned } = route.params;
-  console.log("28",UserId)
+  const { questions, firstQuestion, accId, accName, surveyId, UserId,Unplanned,temp_account_id } = route.params;
   const [question, ...restQuestions] = questions;
   const [SurveySubmit,setSurveySubmit]=useState(false);
   const [ImageSubmit,setImage]=useState(false);
@@ -259,7 +258,6 @@ const SurveyQue = ({ navigation, route }) => {
         let unSyncedImages = [];
         for (let i = 0;i < allKeys.length; i++)
         {
-          console.log("244",allKeys[i])
           if(allKeys[i].includes('IMG'))
           {
             unSyncedImages.push(JSON.parse(await AsyncStorage.getItem(allKeys[i])))
@@ -279,7 +277,7 @@ const SurveyQue = ({ navigation, route }) => {
                     accountId: accId,
                     surveyId:surveyId,
                     isUnplanned:Unplanned  ? true:false,
-                    temp_acc_Id:null,
+                    temp_acc_Id:temp_account_id,
                     surveyDate: format(new Date(), 'yyyy-MM-dd'),
                     Questions:JSON.parse(await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`))
                   },
@@ -296,7 +294,7 @@ const SurveyQue = ({ navigation, route }) => {
                     accountId: accId,
                     surveyId:surveyId,
                     isUnplanned:Unplanned ? true:false,
-                    temp_acc_Id:null,
+                    temp_acc_Id:temp_account_id,
                     surveyDate: format(new Date(), 'yyyy-MM-dd'),
                     Questions: JSON.parse(await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`)),
                   },
@@ -325,7 +323,8 @@ const SurveyQue = ({ navigation, route }) => {
           accName,
           surveyId,
           UserId,
-          Unplanned
+          Unplanned,
+          temp_account_id
         });
       }  
   };

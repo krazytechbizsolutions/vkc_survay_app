@@ -108,8 +108,6 @@ const PlannedVisits = ({ navigation }) => {
       }
       catch(e)
       {
-        setSurvey([]);
-        await AsyncStorage.setItem('SurveyMaster',JSON.stringify([]));
         console.log(e)
       }
     }
@@ -217,7 +215,8 @@ const PlannedVisits = ({ navigation }) => {
                         accName: item.accName,
                         surveyId: srvDetails.surveyId,
                         UserId: visits.UserId,  //Change this Back
-                        Unplanned : false
+                        Unplanned : false,
+                        temp_account_id : item.hasOwnProperty('temp_account_id') ? item.temp_account_id : null
                       });
                     }}
                   />
