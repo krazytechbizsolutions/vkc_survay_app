@@ -517,6 +517,7 @@ const SurveyQue = ({ navigation, route }) => {
                 <Field
                   component={SliderQuestion}
                   data={question.sQuestion}
+                  noOfStars={question.sQuestion.Max_Limit__c}
                   name="mainField"
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
