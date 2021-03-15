@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import TextEle from '@components/TextEle';
 import React,{useState,useEffect} from 'react';
-import { View,TextInput,ScrollView,Picker,TouchableOpacity,Platform,ActionSheetIOS,Modal,Text,FlatList,Image, PermissionsAndroid } from 'react-native';
+import { View,TextInput,ScrollView,Picker,TouchableOpacity,Platform,ActionSheetIOS,Modal,Text,FlatList,Image, PermissionsAndroid,Alert } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { launchCamera } from 'react-native-image-picker';
 import { RectButton, BorderlessButton } from 'react-native-gesture-handler';
@@ -13,6 +13,7 @@ import { getLocation } from 'src/utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getToken} from '../../utils/index'
 import { v4 as uuidv4 } from 'uuid';
+
 
 
 const AddRetailer = () => {
@@ -77,40 +78,43 @@ const AddRetailer = () => {
             },
             (error) => {
               // See error code charts below.
-              console.log(error.code, error.message);
+              askLocation();
+              // console.log(error.code, error.message);
             },
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
         );
-    } else {
-        try {
-            const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-                {
-                    'title': 'Walkaroo Connect Needs Access To Your Location',
-                    'message': 'We required Location permission in order to get device location ' +
-                        'Please grant us.'
-                }
-            )
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                  Geolocation.getCurrentPosition(
-                    (position) => {
-                      console.log("60",position);
-                      setLatitude(position.coords.latitude);
-                      setLongitude(position.coords.longitude);
-                    },
-                    (error) => {
-                      // See error code charts below.
-                      console.log(error.code, error.message);
-                    },
-                    { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-                );  
-            } else {
-                alert("You don't have access for the location");
-            }
-        } catch (err) {
-            alert(err)
-        }
-    }
+    } 
 };
+
+const askLocation = async () =>{
+  try {
+        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+                'title': 'Walkaroo Connect Needs Access To Your Location',
+                'message': 'We required Location permission in order to get device location ' +
+                    'Please grant us.'
+            }
+        )
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+              Geolocation.getCurrentPosition(
+                (position) => {
+                  console.log("60",position);
+                  setLatitude(position.coords.latitude);
+                  setLongitude(position.coords.longitude);
+                },
+                (error) => {
+                  // See error code charts below.
+                  console.log(error.code, error.message);
+                },
+                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+            );  
+        } else {
+            alert("You don't have access for the location");
+        }
+    } catch (err) {
+        alert(err)
+    }
+}
 
   const setImage=(res)=>{
     let TempImages = images;
@@ -147,7 +151,7 @@ const AddRetailer = () => {
     if(hasNoErrors)
     { 
       saveNewRetailerToUnplanned();
-      saveNewRetailerToLocal();
+      // saveNewRetailerToLocal();
     }
   }
 
@@ -190,27 +194,57 @@ const AddRetailer = () => {
 
 
   const saveNewRetailerToUnplanned = async() => {
-    let Token = await getToken();
+    try {
 
-    let payload ={
-      "state":adrFields[4].value,
-      "salesRepId":null,
-      "region":null,
-      "customer_code":null,
-      "country":null,
-      "AreaName":adrFields[3].value,
-      "areaId":null,
-      "accType":"Dealer",
-      "accName":adrFields[0].value,
-      "accId":null,
-      "isAddedRetailer":true,
-      "dateAdded":format(new Date(), 'yyyy-MM-dd'),
-      "temp_account_id": `${Token.id.split('/').pop()}_${create_UUID()}`
+        let Token = await getToken();
+
+        let payload ={
+          "state":adrFields[4].value,
+          "salesRepId":null,
+          "region":null,
+          "customer_code":null,
+          "country":null,
+          "AreaName":adrFields[3].value,
+          "areaId":null,
+          "accType":"Dealer",
+          "accName":adrFields[0].value,
+          "accId":null,
+          "isAddedRetailer":true,
+          "dateAdded":format(new Date(), 'yyyy-MM-dd'),
+          "temp_account_id": `${Token.id.split('/').pop()}_${create_UUID()}`
+        }
+          let unplannedVisits = await AsyncStorage.getItem('UnplannedVisits')
+          unplannedVisits = JSON.parse(unplannedVisits);
+
+          if(unplannedVisits)
+          {
+            unplannedVisits.push(payload)
+          }
+          else
+          {
+            unplannedVisits = [ payload ] 
+          }
+          
+          unplannedVisits = unplannedVisits.filter((visits) => visits.dateAdded === format(new Date(), 'yyyy-MM-dd'))
+          console.log("226",unplannedVisits);
+          await AsyncStorage.setItem('UnplannedVisits',JSON.stringify(unplannedVisits))
+          Alert.alert(
+            'Retailer Added',
+            'A New Retailer Has Been Added',
+            [{ text: 'OK', onPress: () => {} }],
+            { cancelable: false },
+          )
     }
-      let unplannedVisits = await AsyncStorage.getItem('UnplannedVisits')
-      unplannedVisits = JSON.parse(unplannedVisits);
-      unplannedVisits.push(payload)
-      await AsyncStorage.setItem('UnplannedVisits',JSON.stringify(unplannedVisits))
+
+    catch(e)
+    {
+      Alert.alert(
+        'New Retailer Not Added',
+        e.message,
+        [{ text: 'OK', onPress: () => {} }],
+        { cancelable: false },
+      )
+    }
   }
 
   let showFields=adrFields.map((result,index)=>{

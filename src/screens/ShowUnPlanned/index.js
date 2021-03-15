@@ -22,7 +22,8 @@ const ShowUnplanned =({navigation})=>{
                 if(getUnplannedVisitsFromStorage && getVisits)
                 {
                     console.log("19",getUnplannedVisitsFromStorage)
-                    setUnplannedVisits(JSON.parse(getUnplannedVisitsFromStorage));
+                    let parsedUnplannedVists = JSON.parse(getUnplannedVisitsFromStorage)
+                    setUnplannedVisits([...parsedUnplannedVists]);
                     setVisits(JSON.parse(getVisits));
                 }
           };
@@ -79,9 +80,11 @@ const ShowUnplanned =({navigation})=>{
                 onRefresh = {()=> onRefreshVisits()}
                 refreshing={refreshing}/>
                 }
-                renderItem={({ item }) => (
+                renderItem={({ item }) => { 
+                  console.log("83",item.accName,item.dateAdded,format(new Date(), 'yyyy-MM-dd'))
+                  return(
                 item.dateAdded === format(new Date(), 'yyyy-MM-dd') ? 
-          
+                  
                 <View
                     style={{
                     backgroundColor: '#fff',
@@ -98,6 +101,7 @@ const ShowUnplanned =({navigation})=>{
 
                     elevation: 4,
                     }}>
+                     
                     <Text style={{ paddingVertical: 4 }}>{`Account Name: ${item.accName}`}</Text>
                     <Text style={{ paddingVertical: 4 }}>{`Area Name: ${item.AreaName}`}</Text>
                     <Text style={{ paddingVertical: 4 }}>{`Account Type: ${item.accType}`}</Text>
@@ -130,8 +134,8 @@ const ShowUnplanned =({navigation})=>{
                         })
                     }
                 </View>:null
-                )}
-                keyExtractor={item => `${item.accId}`}
+                )}}
+                keyExtractor={(item,index) => `${index}`}
             />:
             <View style={{width:'100%',flex:1,justifyContent:'center',alignItems:'center'}}>
                 <TextEle>Visit Data Not Yet Loaded</TextEle>
