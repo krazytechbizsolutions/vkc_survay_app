@@ -26,11 +26,21 @@ const CustomMultiText = ({
     const [searchText,setSearchText]=useState("")
 
     useEffect(() =>{
-        AsyncStorage.getItem('AccountData').then(data=>{
-            let AccountDataJSON = JSON.parse(data);
-            // console.log("23",AccountDataJSON)
-            setAccountData([...AccountDataJSON])
-        })
+        if(isUnplanned)
+        {
+            AsyncStorage.getItem('DealerAndRetailers').then(data => {
+                let dealerAndRetailers = JSON.parse(data);
+                setAccountData([...dealerAndRetailers])
+            })
+        }
+        else
+        {
+            AsyncStorage.getItem('AccountData').then(data=>{
+                let AccountDataJSON = JSON.parse(data);
+                // console.log("23",AccountDataJSON)
+                setAccountData([...AccountDataJSON])
+            })
+        }
     },[])
 
     useEffect(()=>{

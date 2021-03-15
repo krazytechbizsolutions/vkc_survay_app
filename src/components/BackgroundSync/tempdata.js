@@ -1,303 +1,222 @@
 export const plannedVisists = {
-    "visits": [
-        {
-            "surveys": [
-                {
-                    "svyId": "a041s000002pYJiAAM"
-                }
-            ],
-            "state": "Karnataka",
-            "region": "EAST",
-            "country": "India",
-            "AreaName": "Jayanagar",
-            "AreaId": "a071s000001CcTUAA0",
-            "accType": "Dealer",
-            "accName": "Star Footwear",
-            "accId": "0011s00000SvwEKAAZ"
-        },
-        {
-            "surveys": [
-                {
-                    "svyId": "a041s000002pVsvAAE"
-                },
-                {
-                    "svyId": "a041s000002pW4LAAU"
-                },
-                {
-                    "svyId": "a041s000002pYJiAAM"
-                }
-            ],
-            "state": "Karnataka",
-            "region": null,
-            "country": null,
-            "AreaName": "Jayanagar",
-            "AreaId": "a071s000001CcTUAA0",
-            "accType": "Dealer",
-            "accName": "Kiran Stores",
-            "accId": "0011s00000TXuFMAA1"
-        },
-        {
-            "surveys": [
-                {
-                    "svyId": "a041s000002pXtHAAU"
-                },
-                {
-                    "svyId": "a041s000002pVsvAAE"
-                },
-                {
-                    "svyId": "a041s000002pXt2AAE"
-                },
-                {
-                    "svyId": "a041s000002oj1tAAA"
-                },
-                {
-                    "svyId": "a041s000002pXtDAAU"
-                },
-                {
-                    "svyId": "a041s000002pYJiAAM"
-                }
-            ],
-            "state": "Karnataka",
-            "region": null,
-            "country": null,
-            "AreaName": "Jayanagar",
-            "AreaId": "a071s000001CcTUAA0",
-            "accType": "Dealer",
-            "accName": "Lakshmi Stores",
-            "accId": "0011s00000TXuQKAA1"
-        },
-        {
-            "surveys": [
-                {
-                    "svyId": "a041s000002pW4LAAU"
-                },
-                {
-                    "svyId": "a041s000002pYJiAAM"
-                }
-            ],
-            "state": "Karnataka",
-            "region": null,
-            "country": null,
-            "AreaName": "Jayanagar",
-            "AreaId": "a071s000001CcTUAA0",
-            "accType": "Dealer",
-            "accName": "VKC Footware Dealer",
-            "accId": "0011s00000TXuQZAA1"
-        },
-        {
-            "surveys": [
-                {
-                    "svyId": "a041s000002pXtHAAU"
-                },
-                {
-                    "svyId": "a041s000002pVsvAAE"
-                },
-                {
-                    "svyId": "a041s000002pW4LAAU"
-                },
-                {
-                    "svyId": "a041s000002oj1tAAA"
-                },
-                {
-                    "svyId": "a041s000002pXtDAAU"
-                }
-            ],
-            "state": "Karnataka",
-            "region": null,
-            "country": "India",
-            "AreaName": "Jayanagar",
-            "AreaId": "a071s000001CcTUAA0",
-            "accType": "Retailer",
-            "accName": "Mahesh Stores",
-            "accId": "0011s00000TXuQeAAL"
-        },
-        {
-            "surveys": [],
-            "state": "Karnataka",
-            "region": "NORTH",
-            "country": "India",
-            "AreaName": "J P Nagar",
-            "AreaId": "a071s000002Gw3cAAC",
-            "accType": "Dealer",
-            "accName": "Dealer- Sample",
-            "accId": "0011s00000fPJtSAAW"
-        },
-        {
-            "surveys": [
-                {
-                    "svyId": "a041s000002pXt2AAE"
-                },
-                {
-                    "svyId": "a041s000002pXtHAAU"
-                },
-                {
-                    "svyId": "a041s000002pXyPAAU"
-                },
-                {
-                    "svyId": "a041s000002pVsvAAE"
-                },
-                {
-                    "svyId": "a041s000002pW4LAAU"
-                },
-                {
-                    "svyId": "a041s000002oj1tAAA"
-                },
-                {
-                    "svyId": "a041s000002pXvvAAE"
-                },
-                {
-                    "svyId": "a041s000002pXtDAAU"
-                },
-                {
-                    "svyId": "a041s000002pXtbAAE"
-                },
-                {
-                    "svyId": "a041s000002pYJiAAM"
-                }
-            ],
-            "state": "Karnataka",
-            "region": null,
-            "country": "India",
-            "AreaName": "J P Nagar",
-            "AreaId": "a071s000002Gw3cAAC",
-            "accType": "Retailer",
-            "accName": "Kamal Footwear",
-            "accId": "0011s00000TXuQoAAL"
-        },
-        {
-            "surveys": [
-                {
-                    "svyId": "a041s000002pXtHAAU"
-                },
-                {
-                    "svyId": "a041s000002pXyPAAU"
-                },
-                {
-                    "svyId": "a041s000002pVsvAAE"
-                },
-                {
-                    "svyId": "a041s000002pXt2AAE"
-                },
-                {
-                    "svyId": "a041s000002pW4LAAU"
-                },
-                {
-                    "svyId": "a041s000002oj1tAAA"
-                },
-                {
-                    "svyId": "a041s000002pXvvAAE"
-                },
-                {
-                    "svyId": "a041s000002pXtDAAU"
-                },
-                {
-                    "svyId": "a041s000002pXtbAAE"
-                },
-                {
-                    "svyId": "a041s000002pYJiAAM"
-                }
-            ],
-            "state": "Karnataka",
-            "region": "EAST",
-            "country": "India",
-            "AreaName": "J P Nagar",
-            "AreaId": "a071s000002Gw3cAAC",
-            "accType": "Sub Dealer",
-            "accName": "RKS Footwear-Test",
-            "accId": "0011s00000fOyYBAA0"
-        },
-        {
-            "surveys": [
-                {
-                    "svyId": "a041s000002pXt2AAE"
-                },
-                {
-                    "svyId": "a041s000002pXtHAAU"
-                },
-                {
-                    "svyId": "a041s000002pXyPAAU"
-                },
-                {
-                    "svyId": "a041s000002pVsvAAE"
-                },
-                {
-                    "svyId": "a041s000002pW4LAAU"
-                },
-                {
-                    "svyId": "a041s000002oj1tAAA"
-                },
-                {
-                    "svyId": "a041s000002pXvvAAE"
-                },
-                {
-                    "svyId": "a041s000002pXtDAAU"
-                },
-                {
-                    "svyId": "a041s000002pXtbAAE"
-                },
-                {
-                    "svyId": "a041s000002pYJiAAM"
-                }
-            ],
-            "state": "Karnataka",
-            "region": null,
-            "country": "India",
-            "AreaName": "J P Nagar",
-            "AreaId": "a071s000002Gw3cAAC",
-            "accType": "Retailer",
-            "accName": "ASIAN FOOT WEAR",
-            "accId": "0011s00000dnKCnAAM"
-        },
-        {
-            "surveys": [
-                {
-                    "svyId": "a041s000002pXt2AAE"
-                },
-                {
-                    "svyId": "a041s000002pXtHAAU"
-                },
-                {
-                    "svyId": "a041s000002pXyPAAU"
-                },
-                {
-                    "svyId": "a041s000002pVsvAAE"
-                },
-                {
-                    "svyId": "a041s000002pW4LAAU"
-                },
-                {
-                    "svyId": "a041s000002oj1tAAA"
-                },
-                {
-                    "svyId": "a041s000002pXvvAAE"
-                },
-                {
-                    "svyId": "a041s000002pXtDAAU"
-                },
-                {
-                    "svyId": "a041s000002pXtbAAE"
-                },
-                {
-                    "svyId": "a041s000002pYJiAAM"
-                }
-            ],
-            "state": "Karnataka",
-            "region": "NORTH",
-            "country": "India",
-            "AreaName": "J P Nagar",
-            "AreaId": "a071s000002Gw3cAAC",
-            "accType": "Retailer",
-            "accName": "Test Retailer-VKC",
-            "accId": "0011s00000fOxCrAAK"
-        }
-    ],
-    "UserId": "0051s0000017UmxAAE",
-    "status": "Success",
-    "err_Msg": "",
-    "dealerAndRetailers": [],
-    "DateVal": null
+	"visits": [{
+		"surveys": [{
+			"svyId": "a041s000002pbwgAAA"
+		}],
+		"state": "Karnataka",
+		"region": "EAST",
+		"country": "India",
+		"AreaName": "Jayanagar",
+		"AreaId": "a071s000001CcTUAA0",
+		"accType": "Dealer",
+		"accName": "Star Footwear",
+		"accId": "0011s00000SvwEKAAZ"
+	}, {
+		"surveys": [{
+			"svyId": "a041s000002pW4LAAU"
+		}],
+		"state": "Karnataka",
+		"region": null,
+		"country": null,
+		"AreaName": "Jayanagar",
+		"AreaId": "a071s000001CcTUAA0",
+		"accType": "Dealer",
+		"accName": "Kiran Stores",
+		"accId": "0011s00000TXuFMAA1"
+	}, {
+		"surveys": [{
+			"svyId": "a041s000002pndIAAQ"
+		}, {
+			"svyId": "a041s000002pXt2AAE"
+		}, {
+			"svyId": "a041s000002oj1tAAA"
+		}, {
+			"svyId": "a041s000002pXtDAAU"
+		}],
+		"state": "Karnataka",
+		"region": null,
+		"country": null,
+		"AreaName": "Jayanagar",
+		"AreaId": "a071s000001CcTUAA0",
+		"accType": "Dealer",
+		"accName": "Lakshmi Stores",
+		"accId": "0011s00000TXuQKAA1"
+	}, {
+		"surveys": [{
+			"svyId": "a041s000002pndIAAQ"
+		}, {
+			"svyId": "a041s000002pW4LAAU"
+		}, {
+			"svyId": "a041s000002oj1tAAA"
+		}, {
+			"svyId": "a041s000002pXtbAAE"
+		}],
+		"state": "Karnataka",
+		"region": null,
+		"country": null,
+		"AreaName": "Jayanagar",
+		"AreaId": "a071s000001CcTUAA0",
+		"accType": "Dealer",
+		"accName": "VKC Footware Dealer",
+		"accId": "0011s00000TXuQZAA1"
+	}, {
+		"surveys": [{
+			"svyId": "a041s000002pbwgAAA"
+		}, {
+			"svyId": "a041s000002pndIAAQ"
+		}, {
+			"svyId": "a041s000002pXtHAAU"
+		}, {
+			"svyId": "a041s000002pW4LAAU"
+		}, {
+			"svyId": "a041s000002oj1tAAA"
+		}, {
+			"svyId": "a041s000002pXtDAAU"
+		}],
+		"state": "Karnataka",
+		"region": null,
+		"country": "India",
+		"AreaName": "Jayanagar",
+		"AreaId": "a071s000001CcTUAA0",
+		"accType": "Retailer",
+		"accName": "Mahesh Stores",
+		"accId": "0011s00000TXuQeAAL"
+	}, {
+		"surveys": [{
+			"svyId": "a041s000002pbwgAAA"
+		}, {
+			"svyId": "a041s000002pndIAAQ"
+		}, {
+			"svyId": "a041s000002oj1tAAA"
+		}],
+		"state": "Karnataka",
+		"region": "NORTH",
+		"country": "India",
+		"AreaName": "J P Nagar",
+		"AreaId": "a071s000002Gw3cAAC",
+		"accType": "Dealer",
+		"accName": "Dealer- Sample",
+		"accId": "0011s00000fPJtSAAW"
+	}, {
+		"surveys": [{
+			"svyId": "a041s000002pbwgAAA"
+		}, {
+			"svyId": "a041s000002pndIAAQ"
+		}, {
+			"svyId": "a041s000002pXyPAAU"
+		}, {
+			"svyId": "a041s000002pXt2AAE"
+		}, {
+			"svyId": "a041s000002pW4LAAU"
+		}, {
+			"svyId": "a041s000002oj1tAAA"
+		}],
+		"state": "Karnataka",
+		"region": "EAST",
+		"country": "India",
+		"AreaName": "J P Nagar",
+		"AreaId": "a071s000002Gw3cAAC",
+		"accType": "Sub Dealer",
+		"accName": "RKS Footwear-Test",
+		"accId": "0011s00000fOyYBAA0"
+	}, {
+		"surveys": [{
+			"svyId": "a041s000002pbwgAAA"
+		}, {
+			"svyId": "a041s000002pndIAAQ"
+		}, {
+			"svyId": "a041s000002pXt2AAE"
+		}, {
+			"svyId": "a041s000002pXtHAAU"
+		}, {
+			"svyId": "a041s000002pXyPAAU"
+		}, {
+			"svyId": "a041s000002pW4LAAU"
+		}, {
+			"svyId": "a041s000002oj1tAAA"
+		}],
+		"state": "Karnataka",
+		"region": null,
+		"country": "India",
+		"AreaName": "J P Nagar",
+		"AreaId": "a071s000002Gw3cAAC",
+		"accType": "Retailer",
+		"accName": "Kamal Footwear",
+		"accId": "0011s00000TXuQoAAL"
+	}, {
+		"surveys": [{
+			"svyId": "a041s000002pbwgAAA"
+		}, {
+			"svyId": "a041s000002pndIAAQ"
+		}, {
+			"svyId": "a041s000002pXyPAAU"
+		}, {
+			"svyId": "a041s000002pW4LAAU"
+		}, {
+			"svyId": "a041s000002oj1tAAA"
+		}, {
+			"svyId": "a041s000002pYJiAAM"
+		}],
+		"state": "Karnataka",
+		"region": null,
+		"country": "India",
+		"AreaName": "J P Nagar",
+		"AreaId": "a071s000002Gw3cAAC",
+		"accType": "Retailer",
+		"accName": "ASIAN FOOT WEAR",
+		"accId": "0011s00000dnKCnAAM"
+	}, {
+		"surveys": [{
+			"svyId": "a041s000002pbwgAAA"
+		}, {
+			"svyId": "a041s000002pndIAAQ"
+		}, {
+			"svyId": "a041s000002pW4LAAU"
+		}, {
+			"svyId": "a041s000002oj1tAAA"
+		}],
+		"state": "Karnataka",
+		"region": "NORTH",
+		"country": "India",
+		"AreaName": "J P Nagar",
+		"AreaId": "a071s000002Gw3cAAC",
+		"accType": "Retailer",
+		"accName": "Test Retailer-VKC",
+		"accId": "0011s00000fOxCrAAK"
+	}],
+	"UserId": "0051s0000017UmxAAE",
+	"status": "Success",
+	"err_Msg": "",
+	"dealerAndRetailers": [{
+		"state": "Karnataka",
+		"region": "EAST",
+		"country": "India",
+		"AreaName": "Jayanagar",
+		"AreaId": "a071s000001CcTUAA0",
+		"accType": "Dealer",
+		"accName": "Vignesh Footware",
+		"accId": "0011s00000TYMf1AAH"
+	}, {
+		"state": "Karnataka",
+		"region": "EAST",
+		"country": "India",
+		"AreaName": "Jayanagar",
+		"AreaId": "a071s000001CcTUAA0",
+		"accType": "Dealer",
+		"accName": "Team VKC Footware",
+		"accId": "0011s00000TYGjfAAH"
+	}, {
+		"state": "Maharashtra",
+		"region": null,
+		"country": "India",
+		"AreaName": "Jayanagar",
+		"AreaId": "a071s000001CcTUAA0",
+		"accType": "Dealer",
+		"accName": "DILIP FOOTWEAR",
+		"accId": "0011s00000Yfb3qAAB"
+	}],
+	"DateVal": null
 }
-
 
 
 

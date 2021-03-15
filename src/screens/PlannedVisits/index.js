@@ -64,6 +64,8 @@ const PlannedVisits = ({ navigation }) => {
           console.log("Got the Visits")
           await storeData(visitsEndpoint, res.data);
           await AsyncStorage.setItem('Visits',JSON.stringify(res.data))
+          console.log("67",JSON.stringify(res.data.dealerAndRetailers))
+          await AsyncStorage.setItem('DealerAndRetailers',JSON.stringify(res.data.dealerAndRetailers))
           setVisits(res.data) 
         }
         else
