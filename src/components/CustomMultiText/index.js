@@ -93,17 +93,38 @@ const CustomMultiText = ({
 
      const onAddUnplannedVisits = async () => {
 
-        let UnplannedVisits = await AsyncStorage.getItem('UnplannedVisits');
+        try 
+        {
+          let UnplannedVisits = await AsyncStorage.getItem('UnplannedVisits');
           if(UnplannedVisits)
           {
             UnplannedVisits = JSON.parse(UnplannedVisits);
             UnplannedVisits = [...UnplannedVisits,...SelectedData];
+            UnplannedVisits = UnplannedVisits.filter((visits) => visits.dateAdded === format(new Date(), 'yyyy-MM-dd'))
+            console.log('102',UnPlannedVisit);
             await AsyncStorage.setItem('UnplannedVisits',JSON.stringify(UnplannedVisits));
           }
           else
           {
             await AsyncStorage.setItem('UnplannedVisits',JSON.stringify(SelectedData));
           }
+
+          Alert.alert(
+            'New Data Added ',
+            'New Data Has Been Added To Unplanned Visits',
+            [{ text: 'OK', onPress: () => {} }],
+            { cancelable: false },
+          )
+        }
+        catch(e)
+        {
+            Alert.alert(
+                'Data Not Recorded',
+                e.message,
+                [{ text: 'OK', onPress: () => navigation.popToTop() }],
+                { cancelable: false },
+              )
+        }
 
           console.log("85",await AsyncStorage.getItem('UnplannedVisits'));
       }
