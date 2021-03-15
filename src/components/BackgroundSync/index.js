@@ -125,7 +125,7 @@ class BackgroundSync extends React.Component{
 
     updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage = async (key, eName, eValue, isRemove) => {
         let unSyncedData = await this.getUnsyncedDataFromStorage(key);
-        
+        console.log("128",JSON.stringify(unSyncedData))
         if(isRemove){
             // get where array[eName] !== eValue & set it back to storage... this will force remove array[eName] === eValue...
            unSyncedData = unSyncedData.filter(ud=>{
@@ -216,7 +216,7 @@ class BackgroundSync extends React.Component{
         if(unSyncedImages.length > 0) {
             for(let i = 0; i < unSyncedImages.length; i++) {
                 let data = unSyncedImages[i];
-                data.imageBase64 = await RNFS.readFile(data.uri, 'base64')
+                data.imageBase64 = await RNFS.readFile(data.imageURL, 'base64')
                
                 try
                 {
@@ -224,7 +224,7 @@ class BackgroundSync extends React.Component{
                     if(res.data.status === "Success")
                     {
                         imageUploadError=true;
-                       // await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'fileName', data.fileName, true);
+                       await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'fileName', data.imageName, true);
                     }
                     else
                     {

@@ -199,27 +199,33 @@ const SurveyQue = ({ navigation, route }) => {
           if(res !== null)
           {
             let ImgData = JSON.parse(res);
-            console.log("266",`IMG-${surveyId}-${accId}-${UserId}-${sQuestion.Id}`,ImgData)
+            let ImageName ;
+            console.log("266",`IMG-${surveyId}-${accId}-${UserId}-${sQuestion.Id}`,sQuestion)
+            
             ImgData.forEach((Img,index) => {
+              ImageName = accName + "_" + format(new Date(), 'yyyy-MM-dd') + sQuestion.Id + "_" + index;
               let payload ={
                 surveyId,
                 accountId: accId,
                 userId: UserId,
                 qtnId: sQuestion.Id,
-                Sequence_No: sQuestion.Sequence_No__c,
-                imageName: accName + "_" + format(new Date(), 'yyyy-MM-dd') + sQuestion.Sequence_No__c + "_",
+                Sequence_No: index,
+                imageName: ImageName,
                 imageType: Img.type,
                 imageURL: Img.uri
               }
-              Images.unshift(payload);
+              
+              let isExist = Images.some((img) => img.imageName === ImageName )
+              if(!isExist)
+              {
+                Images.push(payload);
+              }
+              // 
             })
+            console.log('223 Images :',Images);
+            AsyncStorage.setItem('unSyncedImages',JSON.stringify(Images))
             //  console.log("210",Images)
           }
-          else{
-            // console.log("In Image Else")
-            Images.unshift({});
-          }
-          // console.log("217",Images)
         })
       }
       else
@@ -253,18 +259,6 @@ const SurveyQue = ({ navigation, route }) => {
 
       if (restQuestions.length === 0) {
 
-        let allKeys = await AsyncStorage.getAllKeys();
-        console.log("241",allKeys);
-        let unSyncedImages = [];
-        for (let i = 0;i < allKeys.length; i++)
-        {
-          if(allKeys[i].includes('IMG'))
-          {
-            unSyncedImages.push(JSON.parse(await AsyncStorage.getItem(allKeys[i])))
-          }
-        }
-
-        await AsyncStorage.setItem('unSyncedImages',JSON.stringify(unSyncedImages.length === 0 ? [] : unSyncedImages[0]));
         try {
             const data = await AsyncStorage.getItem('unSyncedQuestions');
             if (data) {
