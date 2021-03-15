@@ -70,18 +70,48 @@ class BackgroundSync extends React.Component{
     }
 
     performSync = async () =>{
-        // sync the planned visit survey...
-        this.uploadUnsyncedSurveys(await this.getUnsyncedDataOfCurrentDayFromStorage('unSyncedQuestions'));
-
-        // sync the planned visit survey images...
+      if(await this.uploadUnsyncedSurveys(await this.getUnsyncedDataOfCurrentDayFromStorage('unSyncedQuestions')))
+      {
+          let Images = await this.getUnsyncedImageFromStorage('unSyncedImages')
+          if(Images.length > 0)
+          {
+                if(await this.uploadUnsyncedImages(Images))
+                {
+                    console.log("Successfully Uploaded Images");
+                    this.setState({status:1},()=>{
+                        setTimeout(()=>{
+                            this.props.Reset();
+                        },3000)
+                    })
+                }
+                else
+                {
+                    this.setState({status:2},()=>{
+                        setTimeout(()=>{
+                            this.props.Reset();
+                        },3000)
+                    })
+                }
+          }
+          else
+          {
+            this.setState({status:1},()=>{
+                setTimeout(()=>{
+                    this.props.Reset();
+                },3000)
+            })
+          }
         
-
-        // TODO: sync the existing retailer unplanned visit survey...
-        // TODO: sync the existing retailer unplanned visit survey images...
-
-        // TODO: sync the new retailers...
-        // TODO: sync the new retailer unplanned visit survey...
-        // TODO: sync the new retailer unplanned visit survey images...
+      }
+      else
+      {
+        this.setState({status:3},()=>{
+            setTimeout(()=>{
+                this.props.Reset();
+            },3000)
+        })
+      }
+      
         
     }
 
@@ -95,7 +125,7 @@ class BackgroundSync extends React.Component{
 
     updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage = async (key, eName, eValue, isRemove) => {
         let unSyncedData = await this.getUnsyncedDataFromStorage(key);
-
+        
         if(isRemove){
             // get where array[eName] !== eValue & set it back to storage... this will force remove array[eName] === eValue...
            unSyncedData = unSyncedData.filter(ud=>{
@@ -115,44 +145,26 @@ class BackgroundSync extends React.Component{
     }
 
     uploadUnsyncedSurveys=async (unSyncedQuestions)=>{
-        console.log("Upload Function",unSyncedQuestions)
+        
         if(unSyncedQuestions.length > 0){
-            console.log("Before Capture",JSON.stringify(unSyncedQuestions))
-            axios.post(captureSurveyApi,unSyncedQuestions).then(res=>{
-                if(res.data.status === "Success") {
-
-                    this.removeUnSyncedStatusSuccessDataInStorage('unSyncedQuestions');
-                    this.setState({status:1},()=>{
-                        setTimeout(()=>{
-                            this.props.Reset();
-                        },3000)
-                    })
-                } else {
-                    console.log("Not Returned Success",res.data)
-                    this.removeUnSyncedStatusSuccessDataInStorage('unSyncedQuestions');
-                    this.setState({status:3},()=>{
-                        setTimeout(()=>{
-                            this.props.Reset();
-                        },3000)
-                    })
+            // console.log("Before Capture",JSON.stringify(unSyncedQuestions))
+            try {
+                let serveySyncRes = await axios.post(captureSurveyApi,unSyncedQuestions)
+                if(serveySyncRes.data.status === "Success")
+                {
+                    await this.removeUnSyncedStatusSuccessDataInStorage('unSyncedQuestions');
+                    return true
                 }
-            }).catch(e=>{
+                await this.removeUnSyncedStatusSuccessDataInStorage('unSyncedQuestions');
+                return false;
+            }
+            catch (e)
+            {
                 console.log("Inside Catch",e)
-                // updateFailedDataBackToUnSyncedStatusInStorage('unSyncedQuestions');
-                this.removeUnSyncedStatusSuccessDataInStorage('unSyncedQuestions');
-                this.setState({status:3},()=>{
-                    setTimeout(()=>{
-                        this.props.Reset();
-                    },3000)
-                }).finally(()=>{
-                    //proceed to upload retialers if any exist
-                })
-            })
+                return false
+            }
         }
-        else
-        {
-            // this.uploadUnsyncedRetailers();
-        }
+        return true;
     }
 
     uploadUnsyncedRetailers = async () =>{
@@ -201,42 +213,41 @@ class BackgroundSync extends React.Component{
 
     uploadUnsyncedImages = async (unSyncedImages) =>{
         let imageUploadError = false
-        // console.log("Images",unSyncedImages)
         if(unSyncedImages.length > 0) {
             for(let i = 0; i < unSyncedImages.length; i++) {
                 let data = unSyncedImages[i];
-                // console.log("Images",data)
                 data.imageBase64 = await RNFS.readFile(data.uri, 'base64')
-                delete data.uri;
-                
-                axios.post(captureImageApi, data).then(res=>{
-                    imageUploadError=true; //change this
-                    this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'fileName', data.fileName, res.data.status === "Success");
-                }).catch(e=>{
+               
+                try
+                {
+                    let ImageResponse = await axios.post(captureImageApi,data)
+                    if(res.data.status === "Success")
+                    {
+                        imageUploadError=true;
+                       // await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'fileName', data.fileName, true);
+                    }
+                    else
+                    {
+                        imageUploadError=false;
+                      //  await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'fileName', data.fileName, false);
+                    }
+                }
+                catch(e)
+                {
                     imageUploadError=false;
-                    this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'fileName', data.fileName, true); //change true to false
-                })
+                   // await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'fileName', data.fileName, false);
+                }
             }
 
             if(!imageUploadError)
             {
-                this.setState({status:1},()=>{
-                    setTimeout(()=>{
-                        this.props.Reset();
-                    },3000)
-                })
+               return true ;
             }
             else
             {
-                this.setState({status:2},()=>{
-                    setTimeout(()=>{
-                        this.props.Reset();
-                    },3000)
-                })
+              return false ;
             }
         } 
-
-
     }
 
 
