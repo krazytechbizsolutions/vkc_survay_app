@@ -212,7 +212,8 @@ const SurveyQue = ({ navigation, route }) => {
                 Sequence_No: index,
                 imageName: ImageName,
                 imageType: Img.type,
-                imageURL: Img.uri
+                imageURL: Img.uri,
+                relatedTo: 'Survey'
               }
               
               let isExist = Images.some((img) => img.imageName === ImageName )
