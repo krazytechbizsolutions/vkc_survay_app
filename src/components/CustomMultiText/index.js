@@ -15,7 +15,8 @@ const CustomMultiText = ({
     field: { name, value },
     form: { touched, errors, setFieldValue, setFieldTouched, values },
     question,
-    isUnplanned
+    isUnplanned,
+    backToHome
     }) =>{
 
     const [AccountData,setAccountData]=useState([]);
@@ -29,6 +30,7 @@ const CustomMultiText = ({
         if(isUnplanned)
         {
             AsyncStorage.getItem('DealerAndRetailers').then(data => {
+                console.log("33",data)
                 let dealerAndRetailers = JSON.parse(data);
                 setAccountData([...dealerAndRetailers])
             })
@@ -49,9 +51,14 @@ const CustomMultiText = ({
 
     const onAddSelectedData=(item)=>{
         let tmpSelectedData = SelectedData;
-        item.dateAdded = format(new Date(), 'yyyy-MM-dd');
-        tmpSelectedData.push(item)
-        setSelectedData([...tmpSelectedData]);
+        let isExist = tmpSelectedData.some((e) => e.accName === item.accName)
+        if(!isExist)
+        {
+            item.dateAdded = format(new Date(), 'yyyy-MM-dd');
+            tmpSelectedData.push(item)
+            setSelectedData([...tmpSelectedData]);
+            
+        }
         setIsVisible(false)
         if(!isUnplanned)
         {
@@ -61,6 +68,7 @@ const CustomMultiText = ({
       }
 
     const checkAccountExist = (UnplannedVisits,accName) => {
+        console.log("66",UnplannedVisits)
         let isExist = UnplannedVisits.filter(e => {return e.dateAdded === format(new Date(), 'yyyy-MM-dd') && e.accName === accName})
         if(isExist.length  === 0)
         {
@@ -74,26 +82,28 @@ const CustomMultiText = ({
 
           let tempShowAccountData = [];
           let UnplannedVisits = JSON.parse (await AsyncStorage.getItem('UnplannedVisits'));
-          AccountData.every((element,index)=>{
-              if(tempShowAccountData.length < 5){
-                if(element.accName.includes(e) ||(element.customer_code &&  element.customer_code.includes(e)))
-                {
-                    if(isUnplanned)
-                    {
-                        console.log(checkAccountExist(UnplannedVisits,element.accName))
-                          if(checkAccountExist(UnplannedVisits,element.accName))
-                          {
-                            tempShowAccountData.push(element);
-                          }
+         
+                  AccountData.every((element,index)=>{
+                    if(tempShowAccountData.length < 5){
+                        if(element.accName.includes(e) ||(element.customer_code &&  element.customer_code.includes(e)))
+                        {
+                            if(isUnplanned)
+                            {
+                                if(checkAccountExist(UnplannedVisits ? UnplannedVisits : [],element.accName))
+                                {
+                                    tempShowAccountData.push(element);
+                                }
+                            }
+                            else
+                            {
+                                tempShowAccountData.push(element);
+                            }       
+                        }
+                        return true;
                     }
-                    else
-                    {
-                        tempShowAccountData.push(element);
-                    }       
-                }
-                return true;
-              }
-          })
+                })
+          
+        
           /*
             AccountData.filter((element)=>{ return (element.accName.includes(e) ||(element.customer_code &&  element.customer_code.includes(e))); }}).splice(0, 5);
           */
@@ -106,6 +116,7 @@ const CustomMultiText = ({
         try 
         {
           let UnplannedVisits = await AsyncStorage.getItem('UnplannedVisits');
+          
           if(UnplannedVisits)
           {
             UnplannedVisits = JSON.parse(UnplannedVisits);
@@ -122,7 +133,7 @@ const CustomMultiText = ({
           Alert.alert(
             'New Data Added ',
             'New Data Has Been Added To Unplanned Visits',
-            [{ text: 'OK', onPress: () => {} }],
+            [{ text: 'OK', onPress: () => backToHome() }],
             { cancelable: false },
           )
         }
@@ -131,7 +142,7 @@ const CustomMultiText = ({
             Alert.alert(
                 'Data Not Recorded',
                 e.message,
-                [{ text: 'OK', onPress: () => navigation.popToTop() }],
+                [{ text: 'OK', onPress: () =>{} }],
                 { cancelable: false },
               )
         }
@@ -230,16 +241,21 @@ const CustomMultiText = ({
             <View style={{height:'100%',flex:1}}>
                 <FlatList
                 data={ShowAccountData}
-                renderItem={({ item,index }) => (
-                    <TouchableOpacity onPress={()=>onAddSelectedData(item)} style={{width:'100%',alignItems:'center',justifyContent: 'center'}}>
-                        <View style={{width:'90%',padding:10,borderRadius:5,justifyContent:'flex-start',borderWidth:1,marginVertical:10,borderColor:'grey'}}>
-                            <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Name : {item.accName}</TextEle>
-                            <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Type : {item.accType}</TextEle>
-                            <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Area Name : {item.AreaName}</TextEle>
-                            <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>State : {item.state}</TextEle>
-                        </View>
-                    </TouchableOpacity>
-                )}
+                renderItem={({ item,index }) => 
+                {
+                    console.log("241",item)
+                    return(
+                            <TouchableOpacity onPress={()=>onAddSelectedData(item)} style={{width:'100%',alignItems:'center',justifyContent: 'center'}}>
+                                <View style={{width:'90%',padding:10,borderRadius:5,justifyContent:'flex-start',borderWidth:1,marginVertical:10,borderColor:'grey'}}>
+                                    <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Name : {item.accName}</TextEle>
+                                    <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Type : {item.accType}</TextEle>
+                                    <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Area Name : {item.AreaName}</TextEle>
+                                    <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>State : {item.state}</TextEle>
+                                </View>
+                            </TouchableOpacity>
+                    )
+                }
+                }
                 keyExtractor={(item,index) => `${index}`}
             />
             </View>

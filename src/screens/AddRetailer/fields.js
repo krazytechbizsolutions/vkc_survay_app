@@ -116,9 +116,9 @@ export const fields = [
     errorMessage:null,
     isImportant:true,
     validate:function() {
-      if(!this.value.length > 0)
+      if(this.value.length !== 6 )
       {
-        this.errorMessage = 'This Field Cannot Be Empty'
+        this.errorMessage = 'Invalid Pincode'
         return false ;
       }
       this.errorMessage = null;
@@ -178,9 +178,9 @@ export const fields = [
     errorMessage:null,
     isImportant:true,
     validate:function() {
-      if(!this.value.length > 0)
+      if(this.value.length !== 10)
       {
-        this.errorMessage = 'This Field Cannot Be Empty'
+        this.errorMessage = 'Invalid Contact No.'
         return false
       }
       this.errorMessage = null;
@@ -216,15 +216,12 @@ export const fields = [
     editable:true,
     isVisible:true,
     errorMessage:null,
-    isImportant:false,
+    isImportant:true,
     validate:function() {
-      if(!this.value.length > 0)
-      {
-        this.errorMessage = 'This Field Cannot Be Empty'
-        return false
-      }
-      this.errorMessage = null;
-      return true
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      console.log("Email",re.test(String(this.value).toLowerCase()))
+      this.errorMessage = 'Invalid Email'
+      return re.test(String(this.value).toLowerCase());
     }
   },
   {

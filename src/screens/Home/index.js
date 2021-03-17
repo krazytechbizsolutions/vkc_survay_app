@@ -37,6 +37,7 @@ const Splash = ({ navigation }) => {
       let unSyncedData = await AsyncStorage.getItem('unSyncedQuestions');
       let newRetailer = await AsyncStorage.getItem('newRetailers');
       newRetailer = JSON.parse(newRetailer);
+      console.log('40',newRetailer)
       unSyncedData = JSON.parse(unSyncedData);
       const netInfo = await NetInfo.fetch();
 
@@ -44,7 +45,16 @@ const Splash = ({ navigation }) => {
       {
         if(unSyncedData)
         {
-          if(unSyncedData.length > 0)
+          if(unSyncedData.length > 0 || newRetailer.length > 0)
+          {
+            setSyncData(true);
+            return
+          }
+        }
+
+        if(newRetailer)
+        {
+          if(newRetailer.length > 0)
           {
             setSyncData(true);
             return

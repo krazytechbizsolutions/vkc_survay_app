@@ -16,7 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 
-const AddRetailer = () => {
+const AddRetailer = ({navigation}) => {
   
   const [adrFields,setFields]=useState([]);
   const [images,setImages]=useState([]);
@@ -150,17 +150,17 @@ const askLocation = async () =>{
     console.log("132",hasNoErrors)
     if(hasNoErrors)
     { 
-      saveNewRetailerToUnplanned();
-      // saveNewRetailerToLocal();
+      await saveNewRetailerToLocal();
+      // saveNewRetailerToUnplanned(null)
     }
   }
 
   const saveNewRetailerToLocal = async() => {
     let Token = await getToken();
-   
+    let temp_Id = `${Token.id.split('/').pop()}_${create_UUID()}`;
       let payload = {
         "accName": adrFields[4].value,
-        "temp_account_id": `${Token.id.split('/').pop()}_${create_UUID()}`,
+        "temp_account_id":temp_Id,
         "userId":  Token.id.split('/').pop(),
         "dateOfCreation": format(new Date(), 'yyyy-MM-dd'),
         "street": adrFields[2].value,
@@ -189,11 +189,13 @@ const askLocation = async () =>{
       }
       newRetailers.push(payload);
       await AsyncStorage.setItem('newRetailers', JSON.stringify(newRetailers))
+      await saveNewRetailerToUnplanned(temp_Id)
+      await addImagesToLocal(temp_Id)
     }
   
 
 
-  const saveNewRetailerToUnplanned = async() => {
+  const saveNewRetailerToUnplanned = async(temp_Id) => {
     try {
 
         let Token = await getToken();
@@ -211,7 +213,7 @@ const askLocation = async () =>{
           "accId":null,
           "isAddedRetailer":true,
           "dateAdded":format(new Date(), 'yyyy-MM-dd'),
-          "temp_account_id": `${Token.id.split('/').pop()}_${create_UUID()}`
+          "temp_account_id": temp_Id
         }
           let unplannedVisits = await AsyncStorage.getItem('UnplannedVisits')
           unplannedVisits = JSON.parse(unplannedVisits);
@@ -231,7 +233,7 @@ const askLocation = async () =>{
           Alert.alert(
             'Retailer Added',
             'A New Retailer Has Been Added',
-            [{ text: 'OK', onPress: () => {} }],
+            [{ text: 'OK', onPress: () => navigation.navigate('Home') }],
             { cancelable: false },
           )
     }
@@ -241,10 +243,35 @@ const askLocation = async () =>{
       Alert.alert(
         'New Retailer Not Added',
         e.message,
-        [{ text: 'OK', onPress: () => {} }],
+        [{ text: 'OK', onPress: () => navigation.navigate('Home') }],
         { cancelable: false },
       )
     }
+  }
+
+  const addImagesToLocal = async(temp_Id) =>{
+      let getUnsyncedImages = JSON.parse(await AsyncStorage.getItem('unSyncedImages'));
+      let Token = await getToken();
+      if(getUnsyncedImages)
+      {
+        let retailImages = images.map((img,index)=>{
+            return {
+                surveyId:null,
+                accountId: null,
+                userId:  Token.id.split('/').pop(),
+                qtnId: null,
+                Sequence_No: null,
+                imageName: adrFields[0].value + "_" + format(new Date(), 'yyyy-MM-dd') + "_" + index,
+                imageType: img.type,
+                imageURL: img.uri,
+                temp_account_id:temp_Id,
+                relatedTo: 'Retailer'
+            }
+        })
+
+        getUnsyncedImages = [...getUnsyncedImages,...retailImages]
+        await AsyncStorage.setItem('unSyncedImages',JSON.stringify(getUnsyncedImages))
+      }
   }
 
   let showFields=adrFields.map((result,index)=>{
@@ -254,7 +281,7 @@ const askLocation = async () =>{
         <TextEle style={{opacity:0.7,marginBottom:5}}>{result.label} {result.isImportant ? "*":""}</TextEle>
         {
         result.errorMessage ? 
-        <TextEle style={{opacity:0.7,color:'red',fontSize:12}}>Need To Fill Up This Field</TextEle>:null}
+        <TextEle style={{opacity:0.7,color:'red',fontSize:12}}>{result.errorMessage}</TextEle>:null}
         {
         result.type === 1 ? 
           <View style={{width:'100%',height:50,borderWidth:1,marginTop:5,borderRadius:5,borderColor:"#90a4ae",paddingLeft:5}}>
