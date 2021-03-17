@@ -17,168 +17,68 @@ import SubmitModal from '@components/SubmitModal'
 import { format } from 'date-fns';
 import {plannedVisists,schema} from '../../components/BackgroundSync/tempdata.js'
 import TextEle from '@components/TextEle';
-// console.log("20",plannedVisists)
+import { ScreenContext } from 'src/context/screenContext';
 
 const PlannedVisits = ({ navigation }) => {
-  const visitsEndpoint = '/services/apexrest/SRVY_DayPlanDataOffline_API';
-  const surveyEndpoint = '/services/apexrest/SRVY_SurveyDataOffline_API';
-  const accountData = '/services/apexrest/SRVY_AccDataOffline_API';
-
-  const [visits,setVisits] =useState({});
-  const [refreshing,setRefreshing] = useState(false);
-  const [surveys,setSurvey] =useState([]);
+  const [visits, setVisits] =useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [surveys, setSurvey] = useState(null);
   const [unSyncSurveys, setUnSyncSurveys] = useState([]);
-  const [isLoading,setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-
-  const GetAccountData=()=>{
-    axios.get(accountData, []).then(response =>{
-    console.log("Got The Response For Account");
-      AsyncStorage.setItem("AccountData",JSON.stringify(response.data));
-    }).catch(e=>{
-      console.log("Account Data Error",e)
-    })
-  }
-
-  const onRefreshVisits =()=>{
-    setRefreshing(true)
-    getVisitData();
-  }
-
-  const getVisitData = async() => {
-    setIsLoading(true);
-    //First check here if the visits exist for a date
-    let getPlannedVisits = await AsyncStorage.getItem('Visits')
-    
-    if(getPlannedVisits)
-    {
-      getPlannedVisits = JSON.parse(getPlannedVisits)
-      if(getPlannedVisits.addedDate === format(new Date(), 'yyyy-MM-dd'))
-      {
-        await getVisitDataFromLocal(getPlannedVisits)
-      }
-      else
-      {
-        visitApiCall()
-      }
-    }
-    else
-    {
-      visitApiCall()
-    }
-    setRefreshing(false)
-    setIsLoading(false)
-  };
-
-  const getVisitDataFromLocal = async(getPlannedVisits) =>{
-    console.log("Getting Visits Local Data")
-    console.log("75",typeof getPlannedVisits)
-    // let locallyStoredVisits = await AsyncStorage.getItem('Visits');
-      if(getPlannedVisits)
-      {
-        setVisits(getPlannedVisits);
-      }
-      else
-      {
-        setVisits({})
-      }
-  }
-
-  const visitApiCall = async() => {
-    console.log("Making An API Call");
-    const token = await getToken();
-        let userId = '';
-       
-        if (token && token.id) {
-          const idSplit = token.id.split('/');
-          userId = idSplit[idSplit.length - 1];
-        }
-        const netInfo = await NetInfo.fetch();
-        
-        if (netInfo.isConnected) {
-          try 
-          {
-            const res = await axios.post(visitsEndpoint, { UserId: userId, DateVal: '' });
-            if(res.data.status === 'Success')
-            {
-              console.log("Got the Visits")
-              let successResponse = res.data;
-              successResponse.addedDate = format(new Date(), 'yyyy-MM-dd');
-              await AsyncStorage.setItem('Visits',JSON.stringify(successResponse))
-              console.log("67",JSON.stringify(res.data.dealerAndRetailers))
-              await AsyncStorage.setItem('DealerAndRetailers',JSON.stringify(res.data.dealerAndRetailers))
-              setVisits(res.data) 
-            }
-            else
-            {
-              setVisits({});
-            }
-          }
-          catch(e)
-          {
-            await getVisitDataFromLocal(getPlannedVisits)
-            setIsLoading(false);
-            setRefreshing(false);
-            console.log(e);
-          }
-        }
-        else
-        {
-          await getVisitDataFromLocal(getPlannedVisits)
-        }
-  }
-
-  
-  const getSurveyData = async () => {
-    console.log("Getting Surveys")
-    const netInfo = await NetInfo.fetch();
-    if (netInfo.isConnected) {
-      try{
-        const res = await axios.post(surveyEndpoint);
-        console.log("Got The Surveys Master");
-        await AsyncStorage.setItem('SurveyMaster',JSON.stringify(res.data));
-        setSurvey([...res.data])
-      }
-      catch(e)
-      {
-        console.log(e)
-      }
-    }
-    else
-    {
-      let locallyStoredSurvey = await AsyncStorage.getItem('SurveyMaster');
-      if(locallyStoredSurvey)
-      {
-        
-        locallyStoredSurvey = JSON.parse(locallyStoredSurvey);
-        setSurvey(locallyStoredSurvey);
-      }
-      else
-      {
-        setSurvey([])
-      }
-    }
-  };
+  const { setSyncData } = useContext(ScreenContext);
 
   useFocusEffect(
     React.useCallback(() => {
       const loadUnSyncSurvey = async () => {
-        GetAccountData();
         getVisitData();
         syncData();
-        getSurveyData();
       };
       loadUnSyncSurvey();
     }, []),
   );
 
-  const syncData = async() => { 
-    const data = await AsyncStorage.getItem('unSyncedQuestions');
-    if (data) {
-      const unSyncedQuestions = JSON.parse(data).filter((res) => res.surveyDate === format(new Date(), 'yyyy-MM-dd'))      
-      console.log("108",JSON.stringify(unSyncedQuestions))
-      setUnSyncSurveys(unSyncedQuestions);
+
+  const onRefreshVisits =()=>{
+    setRefreshing(true)
+    setSyncData(true);
+    getVisitData();
+  }
+
+  getObjectDataFromStorage = async (key) => {
+    let storageData = await AsyncStorage.getItem(key);
+    try{
+      storageData = storageData ? JSON.parse(storageData) : null
+    } catch(e){
+      storageData = null;
     }
+    return storageData;
+  }
+
+  const getVisitData = async() => {
+    setIsLoading(true);
+    
+    setVisits(await getObjectDataFromStorage('Visits'));
+    setSurvey(await getObjectDataFromStorage('SurveyMaster'));
+    
+    setRefreshing(false)
+    setIsLoading(false)
+  };
+
+  const syncData = async() => { 
+    const data = await getArrayFromStorage('unSyncedQuestions');
+    setUnSyncSurveys(data.filter((res) => res.surveyDate === format(new Date(), 'yyyy-MM-dd')));
+  }
+  
+
+  getArrayFromStorage = async (key) => {
+    let storageData = await AsyncStorage.getItem(key);
+    try{
+      storageData = storageData ? JSON.parse(storageData) : []
+    } catch(e){
+      storageData = [];
+    }
+    return storageData;
   }
 
   const { colors } = useTheme();
@@ -226,7 +126,7 @@ const PlannedVisits = ({ navigation }) => {
            
             {item.surveys.map((x, i) => {
               
-              const srvDetails = (surveys || []).find(y => y.surveyId === x.svyId);
+              const srvDetails = (surveys?.data || []).find(y => y.surveyId === x.svyId);
               // const srvDetails = schema.find(y => y.surveyId === x.svyId);
               if (srvDetails) {
                 return (

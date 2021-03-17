@@ -7,8 +7,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import axios from '@utils/axios';
 import RNFS from 'react-native-fs';
+import { getToken } from '@utils/index';
 
-
+const visitsApi = '/services/apexrest/SRVY_DayPlanDataOffline_API';
+const surveyApi = '/services/apexrest/SRVY_SurveyDataOffline_API';
+const accountDataApi = '/services/apexrest/SRVY_AccDataOffline_API';
 const captureSurveyApi = '/services/apexrest/SRVY_SvyCapture_API';
 const captureImageApi = '/services/apexrest/SRVY_SvyCaptureImage_API';
 const captureRetailerAPI = '/services/apexrest/SRVY_NewRetailer_API';
@@ -16,6 +19,7 @@ const today = format(new Date(), 'yyyy-MM-dd');
 
 
 class BackgroundSync extends React.Component{
+    
     constructor() {
         super();
         this.state={
@@ -23,21 +27,123 @@ class BackgroundSync extends React.Component{
         }
     }
 
-
     componentDidMount() {
         this.performSync();
     }
 
-    getUnsyncedDataFromStorage = async (key) => {
-        let unSyncedData = await AsyncStorage.getItem(key);
-        // console.log("31 34",unSyncedData);
-        if(!unSyncedData) return [];
+    performSync = async () =>{
 
-        return JSON.parse(unSyncedData);
-    } 
+        const netInfo = await NetInfo.fetch();
+        if (!netInfo.isConnected) {
+            // TODO: If no connectivity, then show no connection error...
+            this.setStatusAndReset(1);
+            return;
+        }
+
+
+        // download planned visits for the day...
+        await this.downloadPlannedVisits();
+
+        // download survey masters for the day...
+        await this.downloadSurveyMasters();
+
+        // download multi text account data for the day...
+        await this.downloadMultiTextAccountData();
+
+        // new retailer data push to server...
+        await this.uploadUnsyncedRetailers();
+
+        // sync surveys --> planned or existing retailer unplanned or new retailer unplanned...
+        await this.uploadUnsyncedSurveys();
+
+        // sync survey & retailer images -->  
+        await this.uploadUnsyncedImages();
+
+        this.setStatusAndReset(1);        
+    }
+
+    downloadPlannedVisits = async () => {
+        // return if already synced for today...
+        if(this.isDataDownloadedForToday('Visits')){
+            return;
+        }
+        
+        const token = await getToken();
+        try {
+            const res = await axios.post(visitsApi, { UserId: token.id.split('/').pop(), DateVal: '' });
+            if(res.data.status === 'Success') {
+                let successResponse = res.data;
+                
+                // If visits data is available, then only insert into storage with today date...
+                if(successResponse.visits && successResponse.visits.length > 0){
+                    successResponse.syncedDate = format(new Date(), 'yyyy-MM-dd');
+                    await AsyncStorage.setItem('DealerAndRetailers', JSON.stringify(successResponse.dealerAndRetailers))
+                    delete successResponse.dealerAndRetailers;
+                    await AsyncStorage.setItem('Visits', JSON.stringify(successResponse))
+                }
+            }
+        } catch(e) { }  
+    }
+
+    downloadSurveyMasters = async () => {
+        // return if already synced for today...
+        if(this.isDataDownloadedForToday('SurveyMaster')){
+            return;
+        }
+
+        try{
+            const res = await axios.post(surveyApi);
+            await AsyncStorage.setItem('SurveyMaster', JSON.stringify({
+                syncedDate: format(new Date(), 'yyyy-MM-dd'),
+                data: res.data
+            }));
+        } catch(e) { }
+    }
+
+    downloadMultiTextAccountData = async () => {
+        // return if already synced for today...
+        if(this.isDataDownloadedForToday('AccountData')){
+            return;
+        }
+
+        try{
+            const res = axios.get(accountDataApi, []).then(response =>{
+            await AsyncStorage.setItem('AccountData', JSON.stringify({
+                syncedDate: format(new Date(), 'yyyy-MM-dd'),
+                data: res.data
+            }));
+        } catch(e) { }
+    }
+
+    isDataDownloadedForToday = async (key) => {
+        let downloadData = await getObjectDataFromStorage(key);
+        return (downloadData && downloadData.syncedDate === format(new Date(), 'yyyy-MM-dd'));
+    }
+
+    getObjectDataFromStorage = async (key) => {
+        let storageData = await AsyncStorage.getItem(key);
+        try{
+          storageData = storageData ? JSON.parse(storageData) : null
+        } catch(e){
+          storageData = null;
+        }
+        return storageData;
+    }
+
+    uploadUnsyncedSurveys = async () => {
+        let unSyncedQuestions = await this.getUnsyncedDataOfCurrentDayFromStorage('unSyncedQuestions');
+        if(unSyncedQuestions.length > 0){
+            try {
+                let serveySyncRes = await axios.post(captureSurveyApi,unSyncedQuestions)
+                await this.removeUnSyncedStatusSuccessDataInStorage('unSyncedQuestions', serveySyncRes.data.status === "Success");
+            } catch (e) {
+                await this.removeUnSyncedStatusSuccessDataInStorage('unSyncedQuestions', false);
+            }
+        }
+    }
 
     getUnsyncedDataOfCurrentDayFromStorage = async (key) => {
-        let unSyncedData = await this.getUnsyncedDataFromStorage(key);
+        let unSyncedData = await this.getArrayFromStorage(key);
         
         // clean up of past data...
         unSyncedData = unSyncedData.filter(ud => 
@@ -58,45 +164,6 @@ class BackgroundSync extends React.Component{
         return unSyncedData;
     }
 
-    getUnsyncedImageFromStorage = async (key) => {
-        let unSyncedData = await this.getUnsyncedDataFromStorage(key);
-        if(unSyncedData.length > 0){
-            unSyncedData = unSyncedData.map((ud)=>{
-                if(ud.accountId) {
-                    ud.syncStatus = 1;
-                }
-                return ud;
-            })
-            await AsyncStorage.setItem(key, JSON.stringify(unSyncedData));
-        }
-        return unSyncedData;
-    }
-
-    performSync = async () =>{
-
-        // TODO: add the once in a day api calls here...
-
-        // new retailer data push to server...
-        await this.uploadUnsyncedRetailers();
-
-        // sync surveys --> planned or existing retailer unplanned or new retailer unplanned...
-        await this.uploadUnsyncedSurveys(await this.getUnsyncedDataOfCurrentDayFromStorage('unSyncedQuestions'))
-
-        // sync survey & retailer images -->  
-        await this.uploadUnsyncedImages(await this.getUnsyncedImageFromStorage('unSyncedImages'))
-
-        this.setStatusAndReset(1);        
-    }
-
-    const setStatusAndReset = (status) => {
-        this.setState({status},()=>{
-            setTimeout(()=>{
-                this.props.Reset();
-            },3000)
-        })
-    }
-
-
     removeUnSyncedStatusSuccessDataInStorage = async (key, isRemove) => {
         let unSyncedData = await this.getArrayFromStorage(key);
         if(isRemove){
@@ -108,35 +175,6 @@ class BackgroundSync extends React.Component{
                 return ud;
             })
             await AsyncStorage.setItem(key, JSON.stringify(unSyncedData));
-        }
-    }
-
-    updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage = async (key, eName, eValue, isRemove) => {
-        let unSyncedData = await this.getUnsyncedDataFromStorage(key);
-        if(isRemove){
-            // get where array[eName] !== eValue & set it back to storage... this will force remove array[eName] === eValue...
-            unSyncedData = unSyncedData.filter(ud=>{
-                return ud[eName] !== eValue
-            })
-            await AsyncStorage.setItem(key, JSON.stringify(unSyncedData));
-        } else {
-            unSyncedData = unSyncedData.forEach(ud => {
-                if(ud[eName] === eValue) {
-                    ud.syncStatus = 0;
-                }
-            })
-            await AsyncStorage.setItem(key, JSON.stringify(unSyncedData));
-        }
-    }
-
-    uploadUnsyncedSurveys=async (unSyncedQuestions)=>{
-        if(unSyncedQuestions.length > 0){
-            try {
-                let serveySyncRes = await axios.post(captureSurveyApi,unSyncedQuestions)
-                await this.removeUnSyncedStatusSuccessDataInStorage('unSyncedQuestions', serveySyncRes.data.status === "Success");
-            } catch (e) {
-
-            }
         }
     }
 
@@ -167,7 +205,8 @@ class BackgroundSync extends React.Component{
     }
 
 
-    uploadUnsyncedImages = async (unSyncedImages) =>{
+    uploadUnsyncedImages = async () =>{
+        let unSyncedImages = await this.getUnsyncedImageFromStorage('unSyncedImages')
         if(unSyncedImages.length > 0) {
             for(let i = 0; i < unSyncedImages.length; i++) {
                 let data = unSyncedImages[i];
@@ -183,9 +222,41 @@ class BackgroundSync extends React.Component{
             }
         } 
     }
+
+    getUnsyncedImageFromStorage = async (key) => {
+        let unSyncedData = await this.getArrayFromStorage(key);
+        if(unSyncedData.length > 0){
+            unSyncedData = unSyncedData.map((ud)=>{
+                if(ud.accountId) {
+                    ud.syncStatus = 1;
+                }
+                return ud;
+            })
+            await AsyncStorage.setItem(key, JSON.stringify(unSyncedData));
+        }
+        return unSyncedData;
+    }
+
+    updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage = async (key, eName, eValue, isRemove) => {
+        let unSyncedData = await this.getArrayFromStorage(key);
+        if(isRemove){
+            // get where array[eName] !== eValue & set it back to storage... this will force remove array[eName] === eValue...
+            unSyncedData = unSyncedData.filter(ud=>{
+                return ud[eName] !== eValue
+            })
+            await AsyncStorage.setItem(key, JSON.stringify(unSyncedData));
+        } else {
+            unSyncedData = unSyncedData.forEach(ud => {
+                if(ud[eName] === eValue) {
+                    ud.syncStatus = 0;
+                }
+            })
+            await AsyncStorage.setItem(key, JSON.stringify(unSyncedData));
+        }
+    }
   
 
-    const getArrayFromStorage = async (key) => {
+    getArrayFromStorage = async (key) => {
         let storageData = await AsyncStorage.getItem(key);
         try{
           storageData = storageData ? JSON.parse(storageData) : []
@@ -193,6 +264,14 @@ class BackgroundSync extends React.Component{
           storageData = [];
         }
         return storageData;
+    }
+
+    setStatusAndReset = (status) => {
+        this.setState({status},()=>{
+            setTimeout(()=>{
+                this.props.Reset();
+            },3000)
+        })
     }
 
 
