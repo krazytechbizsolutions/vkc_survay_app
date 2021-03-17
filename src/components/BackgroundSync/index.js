@@ -8,6 +8,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import axios from '@utils/axios';
 import RNFS from 'react-native-fs';
 
+
 const captureSurveyApi = '/services/apexrest/SRVY_SvyCapture_API';
 const captureImageApi = '/services/apexrest/SRVY_SvyCaptureImage_API';
 const captureRetailerAPI = '/services/apexrest/SRVY_NewRetailer_API';
@@ -70,50 +71,68 @@ class BackgroundSync extends React.Component{
     }
 
     performSync = async () =>{
-      if(await this.uploadUnsyncedSurveys(await this.getUnsyncedDataOfCurrentDayFromStorage('unSyncedQuestions')))
-      {
-          let Images = await this.getUnsyncedImageFromStorage('unSyncedImages')
-          if(Images.length > 0)
-          {
-                if(await this.uploadUnsyncedImages(Images))
+
+        if(await this.uploadUnsyncedRetailers())
+        {
+
+            console.log("Successfully Uploaded Retailers")
+            if(await this.uploadUnsyncedSurveys(await this.getUnsyncedDataOfCurrentDayFromStorage('unSyncedQuestions')))
+            {
+                console.log("Successfully Uploaded Surveys")
+                let Images = await this.getUnsyncedImageFromStorage('unSyncedImages')
+                if(Images.length > 0)
                 {
-                    console.log("Successfully Uploaded Images");
+                    console.log("In Image Upload")
+                        if(await this.uploadUnsyncedImages(Images))
+                        {
+                            console.log("Successfull Image Uploads")
+                            console.log("Successfully Uploaded Images");
+                            this.setState({status:1},()=>{
+                                setTimeout(()=>{
+                                    this.props.Reset();
+                                },3000)
+                            })
+                        }
+                        else
+                        {
+                            console.log("Images Not Uploaded")
+                            this.setState({status:2},()=>{
+                                setTimeout(()=>{
+                                    this.props.Reset();
+                                },3000)
+                            })
+                        }
+                }
+                else
+                {
+                    console.log("No Images To Upload")
                     this.setState({status:1},()=>{
                         setTimeout(()=>{
                             this.props.Reset();
                         },3000)
                     })
                 }
-                else
-                {
-                    this.setState({status:2},()=>{
-                        setTimeout(()=>{
-                            this.props.Reset();
-                        },3000)
-                    })
-                }
-          }
-          else
-          {
-            this.setState({status:1},()=>{
+                
+            }
+            else
+            {
+                this.setState({status:3},()=>{
+                    setTimeout(()=>{
+                        this.props.Reset();
+                    },3000)
+                })
+            }
+        }
+        else
+        {
+            this.setState({status:3},()=>{
                 setTimeout(()=>{
                     this.props.Reset();
                 },3000)
             })
-          }
-        
-      }
-      else
-      {
-        this.setState({status:3},()=>{
-            setTimeout(()=>{
-                this.props.Reset();
-            },3000)
-        })
-      }
-      
-        
+        }  
     }
+
 
     removeUnSyncedStatusSuccessDataInStorage = async (key) => {
         let unSyncedData =await this.getUnsyncedDataFromStorage(key);
@@ -169,50 +188,91 @@ class BackgroundSync extends React.Component{
 
     uploadUnsyncedRetailers = async () =>{
 
-        AsyncStorage.getItem('newRetailers').then((newRetailers)=>{
-             if(newRetailers && newRetailers.length > 0)
-             {
-                 newRetailers = JSON.parse(newRetailers);
-                 console.log("184",newRetailers)
-                 axios.post(captureRetailerAPI,newRetailers).then(res=>{
-                        if(res.data.status === "Success")
-                        {   
-                            console.log("In Retailer Success")
-                            
-                            this.setState({status:1},()=>{
-                                setTimeout(()=>{
-                                    this.props.Reset();
-                                },3000)
-                            })
-                        }
-                        else
-                        {
-                            console.log("In Retailers Fail",res.data)
-                            this.setState({status:2},()=>{
-                                setTimeout(()=>{
-                                    this.props.Reset();
-                                },3000)
-                            })
-                        }  
-                    }).catch((e)=>{
-                        console.log("Catch Retailer",e)
-                        this.setState({status:2},()=>{
-                            setTimeout(()=>{
-                                this.props.Reset();
-                            },3000)
-                        })
-                    })
-             }
-             AsyncStorage.setItem('newRetailers',JSON.stringify([]))
-         })
+        let newRetailers = await AsyncStorage.getItem('newRetailers');
+        if(newRetailers && newRetailers.length > 0)
+        {
+            newRetailers = JSON.parse(newRetailers);
+            console.log("195",newRetailers)
+            try
+            {
+                let submitRetailersResponse = await axios.post(captureRetailerAPI,newRetailers)
+                if(submitRetailersResponse.data.status === 'Success')
+                {
+                    console.log("In Retailer Success")
+                    await this.removeFromAddRetailer(submitRetailersResponse.data)
+                    await this.editUnsyncedImages(submitRetailersResponse.data)
+                    return true;
+                }
+                else
+                {
+                    console.log("In Retailer Fail",submitRetailersResponse.data)
+                    return false;
+                }
+            }
+            catch(e)
+            {
+                console.log("In Retailer Catch",e)
+                return false
+            }
+        }
+        else
+        {
+            return true;
+        }
+        //  AsyncStorage.setItem('newRetailers',JSON.stringify([]))       
+    }
 
-       
-          
-        
+
+    removeFromAddRetailer = async (responseData) => {
+        let addedRetailers = responseData.successIds;
+        console.log("222",addedRetailers)
+        await AsyncStorage.setItem('newRetailers',JSON.stringify([]));
+        for(let i = 0 ; i < addedRetailers.length ; i++ )
+        {
+            let unplannedVisits = await AsyncStorage.getItem('UnplannedVisits');
+            unplannedVisits = JSON.parse(unplannedVisits)
+            unplannedVisits = unplannedVisits.map((visits)=>{
+                console.log("229",visits.temp_account_id,addedRetailers[i].temp_account_id)
+                if(visits.temp_account_id === addedRetailers[i].temp_account_id)
+                {
+                    visits.accId = addedRetailers[i].Acc_SF_Id
+                    return visits;
+                }
+                else
+                {
+                    return visits;
+                }
+            })
+            
+            await AsyncStorage.setItem('UnplannedVisits',JSON.stringify(unplannedVisits))
+        }
+    } 
+
+    editUnsyncedImages = async(responseData) => {
+        let addedRetailers = responseData.successIds;
+        for(let i = 0 ; i < addedRetailers.length ; i++ )
+        {
+            let unSyncedImages = await AsyncStorage.getItem('unSyncedImages');
+            unSyncedImages = JSON.parse(unSyncedImages)
+            unSyncedImages = unSyncedImages.map((visits)=>{
+                console.log("229",visits.temp_account_id,addedRetailers[i].temp_account_id)
+                if(visits.temp_account_id === addedRetailers[i].temp_account_id)
+                {
+                    visits.accId = addedRetailers[i].Acc_SF_Id
+                    return visits;
+                }
+                else
+                {
+                    return visits;
+                }
+            })
+            
+            await AsyncStorage.setItem('unSyncedImages',JSON.stringify(unSyncedImages))
+        }
     }
 
     uploadUnsyncedImages = async (unSyncedImages) =>{
-        let imageUploadError = false
+        let imageUploadError = true
         if(unSyncedImages.length > 0) {
             for(let i = 0; i < unSyncedImages.length; i++) {
                 let data = unSyncedImages[i];
@@ -221,20 +281,23 @@ class BackgroundSync extends React.Component{
                 try
                 {
                     let ImageResponse = await axios.post(captureImageApi,data)
-                    if(res.data.status === "Success")
+                    if(ImageResponse.data.status === "Success")
                     {
-                        imageUploadError=true;
-                       await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'fileName', data.imageName, true);
+                        console.log("In Success")
+                        imageUploadError=false;
+                    //    await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'fileName', data.imageName, true);
                     }
                     else
                     {
-                        imageUploadError=false;
+                        console.log("In Error")
+                        imageUploadError=true;
                       //  await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'fileName', data.fileName, false);
                     }
                 }
                 catch(e)
                 {
-                    imageUploadError=false;
+                    console.log("In Catch",e)
+                    imageUploadError=true;
                    // await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'fileName', data.fileName, false);
                 }
             }

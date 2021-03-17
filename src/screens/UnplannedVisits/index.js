@@ -8,9 +8,13 @@ import Form from '../../components/form/Form';
 import fields from './fields';
 import CustomMultiText from '../../components/CustomMultiText/index';
 
-const UnPlannedVisit = () => {
+const UnPlannedVisit = ({navigation}) => {
   const createUnplannedVisit = values => {
   };
+
+  const MoveToHome = () =>{
+    navigation.navigate('Home')
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, margin: 10 }}>
@@ -24,6 +28,7 @@ const UnPlannedVisit = () => {
                   name="mainField"
                   question={""}
                   isUnplanned={true}
+                  backToHome = {MoveToHome}
             />
       </Formik>
       </ScrollView>

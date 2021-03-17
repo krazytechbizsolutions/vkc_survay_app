@@ -22,6 +22,7 @@ const MainStackScreen = () => {
   
 
   const ResetSyncData = () =>{
+    console.log("Calling Reset");
     setSyncData(false);
   } 
 

@@ -75,11 +75,6 @@ const ShowUnplanned =({navigation})=>{
             {Object.keys(visits).length !== 0 ? 
               <FlatList
                 data={unplannedVisits}
-                refreshControl={
-                <RefreshControl 
-                onRefresh = {()=> onRefreshVisits()}
-                refreshing={refreshing}/>
-                }
                 renderItem={({ item }) => { 
                   console.log("83",item.accName,item.dateAdded,format(new Date(), 'yyyy-MM-dd'))
                   return(
