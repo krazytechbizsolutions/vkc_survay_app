@@ -73,7 +73,8 @@ const SurveyQue = ({ navigation, route }) => {
         sQuestion.Option_Type__c === 'Display' ||
         sQuestion.Option_Type__c === 'Stock' ||
         sQuestion.Option_Type__c === 'Performance In the Area' ||
-        sQuestion.Option_Type__c === 'Salesman Commit' 
+        sQuestion.Option_Type__c === 'Salesman Commit' ||
+        sQuestion.Option_Type__c === 'Question with Image as options'
       ) {
         let selectedSubOrLoopingQtnOptions = {};
         if (selectedOptions.childField && selectedOptions.mainField.isLoopingQtn) {
@@ -298,7 +299,7 @@ const SurveyQue = ({ navigation, route }) => {
             }
             Alert.alert(
               'Survey Recorded',
-              'Your Survey Has Been Recorder',
+              'Your Survey Has Been Recorded',
               [{ text: 'OK', onPress: () => navigation.popToTop() }],
               { cancelable: false },
             );

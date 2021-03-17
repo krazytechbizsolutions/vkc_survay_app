@@ -108,7 +108,7 @@ const Splash = ({ navigation }) => {
         <Tab.Screen name="Planned Visit" component={PlannedVisits} />
         <Tab.Screen name="Unplanned Visit" component={ShowUnPlanned} />
       </Tab.Navigator>
-      <Fab onClick={path => navigation.navigate(path)} />
+      <Fab onClick={path => navigation.push(path)} />
     </SafeAreaView>
   );
 };
