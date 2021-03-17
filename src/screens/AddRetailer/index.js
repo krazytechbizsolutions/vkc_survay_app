@@ -190,12 +190,12 @@ const askLocation = async () =>{
       newRetailers.push(payload);
       await AsyncStorage.setItem('newRetailers', JSON.stringify(newRetailers))
       await saveNewRetailerToUnplanned(temp_Id)
-      await addImagesToLocal(temp_Id)
+      // await addImagesToLocal(temp_Id)
     }
   
 
 
-  const saveNewRetailerToUnplanned = async(temp_Id) => {
+  const saveNewRetailerToUnplanned = async (temp_Id) => {
     try {
 
         let Token = await getToken();

@@ -136,9 +136,13 @@ class BackgroundSync extends React.Component{
 
     removeUnSyncedStatusSuccessDataInStorage = async (key) => {
         let unSyncedData =await this.getUnsyncedDataFromStorage(key);
-        if(unSyncedData && unSyncedData.length > 0){
+        if(unSyncedData)
+        {
+            if(unSyncedData.length > 0)
+            {
+                await AsyncStorage.setItem(key, JSON.stringify(unSyncedData.filter(ud => (ud.surveyDate === today && ud.syncStatus !== 1))));
+            }
             // get current day syncStatus = 0 & set it back to storage... this will force remove syncStatus = 1...
-            await AsyncStorage.setItem(key, JSON.stringify(unSyncedData.filter(ud => (ud.surveyDate === today && ud.syncStatus !== 1))));
         }
     }
 
@@ -189,31 +193,37 @@ class BackgroundSync extends React.Component{
     uploadUnsyncedRetailers = async () =>{
 
         let newRetailers = await AsyncStorage.getItem('newRetailers');
-        if(newRetailers && newRetailers.length > 0)
+        console.log("192",newRetailers)
+        newRetailers = JSON.parse(newRetailers);
+        if(newRetailers)
         {
-            newRetailers = JSON.parse(newRetailers);
-            console.log("195",newRetailers)
-            try
+            console.log('199',newRetailers.length) 
+            if(newRetailers.length > 0)
             {
-                let submitRetailersResponse = await axios.post(captureRetailerAPI,newRetailers)
-                if(submitRetailersResponse.data.status === 'Success')
+                // console.log("195",newRetailers)
+                try
                 {
-                    console.log("In Retailer Success")
-                    await this.removeFromAddRetailer(submitRetailersResponse.data)
-                    await this.editUnsyncedImages(submitRetailersResponse.data)
-                    return true;
+                    let submitRetailersResponse = await axios.post(captureRetailerAPI,newRetailers)
+                    if(submitRetailersResponse.data.status === 'Success')
+                    {
+                        console.log("In Retailer Success")
+                        await this.removeFromAddRetailer(submitRetailersResponse.data)
+                        // await this.editUnsyncedImages(submitRetailersResponse.data)
+                        return true;
+                    }
+                    else
+                    {
+                        console.log("In Retailer Fail",submitRetailersResponse.data)
+                        return false;
+                    }
                 }
-                else
+                catch(e)
                 {
-                    console.log("In Retailer Fail",submitRetailersResponse.data)
-                    return false;
+                    console.log("In Retailer Catch",e)
+                    return false
                 }
             }
-            catch(e)
-            {
-                console.log("In Retailer Catch",e)
-                return false
-            }
+            return true;
         }
         else
         {
