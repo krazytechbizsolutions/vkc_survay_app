@@ -206,7 +206,7 @@ class BackgroundSync extends React.Component{
                     let submitRetailersResponse = await axios.post(captureRetailerAPI,newRetailers)
                     if(submitRetailersResponse.data.status === 'Success')
                     {
-                        console.log("In Retailer Success")
+                        console.log("In Retailer Success",submitRetailersResponse)
                         await this.removeFromAddRetailer(submitRetailersResponse.data)
                         await this.editUnsyncedImages(submitRetailersResponse.data)
                         return true;
@@ -295,13 +295,13 @@ class BackgroundSync extends React.Component{
                     {
                         console.log("In Success")
                         imageUploadError=false;
-                       await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.imageName, true);
+                        await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.imageName, true);
                     }
                     else
                     {
                         console.log("In Error")
                         imageUploadError=true;
-                       await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.fileName, false);
+                        await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.fileName, false);
                     }
                 }
                 catch(e)

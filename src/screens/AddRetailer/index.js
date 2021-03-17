@@ -19,7 +19,8 @@ import { v4 as uuidv4 } from 'uuid';
 const AddRetailer = ({navigation}) => {
   
   const [adrFields,setFields]=useState([]);
-  const [images,setImages]=useState([]);
+  const [storeFrontImage,setStoreFrontImage]=useState(null);
+  const [storeFrontImageRequiredError,setStoreFrontImageRequiredError]=useState(null);
   const [isVisible,setIsVisible]=useState(false);
   const [latitude,setLatitude] = useState("");
   const [longitude,setLongitude] = useState("")
@@ -64,7 +65,6 @@ const AddRetailer = ({navigation}) => {
     setFields([...fields])
     getLocation();
   },[])
-
 
 
   const getLocation =  async() => {
@@ -116,18 +116,6 @@ const askLocation = async () =>{
     }
 }
 
-  const setImage=(res)=>{
-    let TempImages = images;
-    images.push(res);
-    console.log(TempImages)
-    setImages([...TempImages]);
-  }
-
-  const removeImage = (fileName) => {
-    let TempImages = images.filter((Img) => Img.fileName !== fileName)
-    setImages([...TempImages]);
-  }
-
 
   const setFieldValue = (e,index) =>{
     fields[index].value = e;
@@ -135,142 +123,75 @@ const askLocation = async () =>{
   } 
 
   const submitValues= async() =>{
-    let hasNoErrors = true;
-    let TempAdrField=adrFields  
-    TempAdrField.forEach((res)=>{
-      if(res.isImportant)
-      {
-        if(!res.validate())
-        {
-          hasNoErrors = false ;
-        }
-      }
-    })
-    setFields([...TempAdrField])
-    console.log("132",hasNoErrors)
-    if(hasNoErrors)
-    { 
-      await saveNewRetailerToLocal();
-      // saveNewRetailerToUnplanned(null)
+    let tempAdrFields = adrFields.map(fld => {
+      fld.isImportant && fld.validate();
+      return fld;
+    });
+
+    console.log(JSON.stringify(tempAdrFields));
+    
+    setFields(tempAdrFields);
+    setStoreFrontImageRequiredError(storeFrontImage ? null : 'Image is required');
+    
+    if(tempAdrFields.filter(fld => !!fld.errorMessage).length > 0 || !storeFrontImage){
+      return;
     }
+    
+    await saveNewRetailerToLocal();
   }
 
   const saveNewRetailerToLocal = async() => {
     let Token = await getToken();
     let temp_Id = `${Token.id.split('/').pop()}_${create_UUID()}`;
-      let payload = {
-        "accName": adrFields[4].value,
-        "temp_account_id":temp_Id,
-        "userId":  Token.id.split('/').pop(),
-        "dateOfCreation": format(new Date(), 'yyyy-MM-dd'),
-        "street": adrFields[2].value,
-        "city": adrFields[3].value,
-        "state": adrFields[4].value,
-        "country": "India",
-        "pincode": adrFields[5].value,
-        "contactName": adrFields[7].value,
-        "contactNumber": adrFields[8].value,
-        "whatsAppNo": adrFields[9].value,
-        "email_id": adrFields[10].value,
-        "shopspace": adrFields[11].value,
-        "retail_class": adrFields[12].value,
-        "locationType": adrFields[13].value,
-        "shopRegNumber": adrFields[13].value,
-        "latitude": latitude,
-        "longitude": longitude,
-      }
+    let payload = Object.assign({
+      "temp_account_id":temp_Id,
+      "userId":  Token.id.split('/').pop(),
+      "dateOfCreation": format(new Date(), 'yyyy-MM-dd'),
+      "latitude": latitude,
+      "longitude": longitude,
+      "isAddedRetailer":true,
+      "dateAdded":format(new Date(), 'yyyy-MM-dd'),
+    }, Object.fromEntries(adrFields.map((f) => [f.name, f.value])));
+
+    // console.log("156",JSON.stringify(payload))
+  
+    await saveObjectIntoArrayOfStorage('newRetailers', payload)
     
-      let newRetailers = await AsyncStorage.getItem('newRetailers');
-      if(newRetailers)
-      {
-        newRetailers = JSON.parse(newRetailers)
-      } else {
-        newRetailers = [];
-      }
-      newRetailers.push(payload);
-      await AsyncStorage.setItem('newRetailers', JSON.stringify(newRetailers))
-      await saveNewRetailerToUnplanned(temp_Id)
-      await addImagesToLocal(temp_Id)
-    }
+    await saveObjectIntoArrayOfStorage('UnplannedVisits', payload)          
+    // unplannedVisits = unplannedVisits.filter((visits) => visits.dateAdded === format(new Date(), 'yyyy-MM-dd'))
+    
+
+    let retailerImagePayload = Object.assign(payload, {
+      surveyId:null,
+      accountId: null,
+      qtnId: null,
+      Sequence_No: null,
+      imageName: payload.accName + "_" + format(new Date(), 'yyyy-MM-dd') + "_",
+      imageType: storeFrontImage.type,
+      imageURL: storeFrontImage.uri,
+      relatedTo: 'Retailer'
+    })
+    await saveObjectIntoArrayOfStorage('unSyncedImages', retailerImagePayload);
+    
+    Alert.alert(
+      'Retailer Saved.',
+      '',
+      [{ text: 'OK', onPress: () => navigation.popToTop() }],
+      { cancelable: false },
+    )
+    
+  }
   
 
-
-  const saveNewRetailerToUnplanned = async (temp_Id) => {
-    try {
-
-        let Token = await getToken();
-
-        let payload ={
-          "state":adrFields[4].value,
-          "salesRepId":null,
-          "region":null,
-          "customer_code":null,
-          "country":null,
-          "AreaName":adrFields[3].value,
-          "areaId":null,
-          "accType":"Dealer",
-          "accName":adrFields[0].value,
-          "accId":null,
-          "isAddedRetailer":true,
-          "dateAdded":format(new Date(), 'yyyy-MM-dd'),
-          "temp_account_id": temp_Id
-        }
-          let unplannedVisits = await AsyncStorage.getItem('UnplannedVisits')
-          unplannedVisits = JSON.parse(unplannedVisits);
-
-          if(unplannedVisits)
-          {
-            unplannedVisits.push(payload)
-          }
-          else
-          {
-            unplannedVisits = [ payload ] 
-          }
-          
-          unplannedVisits = unplannedVisits.filter((visits) => visits.dateAdded === format(new Date(), 'yyyy-MM-dd'))
-          console.log("226",unplannedVisits);
-          await AsyncStorage.setItem('UnplannedVisits',JSON.stringify(unplannedVisits))
-          Alert.alert(
-            'Retailer Added',
-            'A New Retailer Has Been Added',
-            [{ text: 'OK', onPress: () => navigation.navigate('Home') }],
-            { cancelable: false },
-          )
+  const saveObjectIntoArrayOfStorage = async (key, obj) => {
+    let storageData = await AsyncStorage.getItem(key);
+    try{
+      storageData = storageData ? JSON.parse(storageData) : []
+    } catch(e){
+      storageData = [];
     }
-
-    catch(e)
-    {
-      Alert.alert(
-        'New Retailer Not Added',
-        e.message,
-        [{ text: 'OK', onPress: () => navigation.navigate('Home') }],
-        { cancelable: false },
-      )
-    }
-  }
-
-  const addImagesToLocal = async(temp_Id) =>{
-      let getUnsyncedImages = JSON.parse(await AsyncStorage.getItem('unSyncedImages'));
-      getUnsyncedImages = getUnsyncedImages ? getUnsyncedImages : []
-      let Token = await getToken();
-      let retailImages = images.map((img,index)=>{
-            return {
-                surveyId:null,
-                accountId: null,
-                userId:  Token.id.split('/').pop(),
-                qtnId: null,
-                Sequence_No: null,
-                imageName: adrFields[0].value + "_" + format(new Date(), 'yyyy-MM-dd') + "_" + index,
-                imageType: img.type,
-                imageURL: img.uri,
-                temp_account_id:temp_Id,
-                relatedTo: 'Retailer'
-            }
-        })
-
-        getUnsyncedImages = [...getUnsyncedImages,...retailImages]
-        await AsyncStorage.setItem('unSyncedImages',JSON.stringify(getUnsyncedImages))
-      
+    storageData.push(obj);
+    await AsyncStorage.setItem(key, JSON.stringify(storageData))
   }
 
   let showFields=adrFields.map((result,index)=>{
@@ -312,21 +233,11 @@ const askLocation = async () =>{
       <View style={{padding:10}}>
         {showFields}
         <View style={{width:'100%',marginVertical:7}}>
-            <TextEle style={{opacity:0.7,marginBottom:5}}>Select Images</TextEle>
-            <TouchableOpacity style={{padding:15}} onPress={()=>setIsVisible(true)}>
-                <View style={{width:150,height:50,borderRadius:5,backgroundColor:"#ef4b4b",justifyContent: 'center',alignItems: 'center'}}>
-                    <TextEle style={{color:'#fff'}}>
-                        Select Image
-                    </TextEle>
-                </View>
-          </TouchableOpacity>
-
-          <View style={{width:'100%',flexDirection:'row',justifyContent:'space-between'}}>
-              <FlatList 
-                data = {images}
-                renderItem = {(img)=>(
-                  <View style={{width:'30%',alignItems:'flex-end'}}>
-                    <TouchableOpacity style={{zIndex:2}} onPress={()=>removeImage(img.item.fileName)}>
+            <TextEle style={{opacity:0.7,marginBottom:5}}>Store Shop Front Image</TextEle>
+          { storeFrontImage ? 
+            <View style={{width:'100%',flexDirection:'row',justifyContent:'space-between'}}>
+                <View style={{width:'30%',alignItems:'flex-end'}}>
+                    <TouchableOpacity style={{zIndex:2}} onPress={()=>setStoreFrontImage(null)}>
                       <View style={{width:30,height:30,borderRadius:100,backgroundColor:'red',elevation:1,alignItems:'center',justifyContent:'center'}}>
                           <Icon
                                 name="md-close"
@@ -336,13 +247,20 @@ const askLocation = async () =>{
                               />
                       </View>
                     </TouchableOpacity>
-                    <Image style={{width:'100%',height:100,marginTop:-15}} source={{uri:img.item.uri}} />
+                    <Image style={{width:'100%',height:100,marginTop:-15}} source={{uri:storeFrontImage.uri}} />
                   </View>
-                )}
-                keyExtractor={(item,index)=> index}
-                numColumns="3"
-              />
-          </View>
+            </View>
+          : 
+          <TouchableOpacity style={{padding:15}} onPress={()=>setIsVisible(true)}>
+                <View style={{width:150,height:50,borderRadius:5,backgroundColor:"#ef4b4b",justifyContent: 'center',alignItems: 'center'}}>
+                    <TextEle style={{color:'#fff'}}>
+                        Capture Image
+                    </TextEle>
+                </View>
+          </TouchableOpacity>
+          
+          }
+          <TextEle style={{opacity:0.7,marginBottom:5,color:'red',fontSize:12}}>{storeFrontImageRequiredError}</TextEle>
         </View>
 
         <TouchableOpacity style={{width:'100%',padding:15}} onPress={()=>submitValues()}>
@@ -365,8 +283,7 @@ const askLocation = async () =>{
                     maxHeight:500
                   },
                   res => {
-                    // console.log("78",res);
-                    setImage(res);
+                    setStoreFrontImage(res)
                   },
                 );
                 setIsVisible(false);
