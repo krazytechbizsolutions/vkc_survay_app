@@ -46,56 +46,87 @@ const PlannedVisits = ({ navigation }) => {
   }
 
   const getVisitData = async() => {
-  
     setIsLoading(true);
-    const token = await getToken();
-    let userId = '';
-    if (token && token.id) {
-      const idSplit = token.id.split('/');
-      userId = idSplit[idSplit.length - 1];
-    }
-    const netInfo = await NetInfo.fetch();
-    if (netInfo.isConnected) {
-      try 
+    //First check here if the visits exist for a date
+    let getPlannedVisits = await AsyncStorage.getItem('Visits')
+    
+    if(getPlannedVisits)
+    {
+      getPlannedVisits = JSON.parse(getPlannedVisits)
+      if(getPlannedVisits.addedDate === format(new Date(), 'yyyy-MM-dd'))
       {
-        const res = await axios.post(visitsEndpoint, { UserId: userId, DateVal: '' });
-        if(res.data.status === 'Success')
-        {
-          console.log("Got the Visits")
-          await storeData(visitsEndpoint, res.data);
-          await AsyncStorage.setItem('Visits',JSON.stringify(res.data))
-          console.log("67",JSON.stringify(res.data.dealerAndRetailers))
-          await AsyncStorage.setItem('DealerAndRetailers',JSON.stringify(res.data.dealerAndRetailers))
-          setVisits(res.data) 
-        }
-        else
-        {
-          setVisits({});
-        }
+        await getVisitDataFromLocal(getPlannedVisits)
       }
-      catch(e)
+      else
       {
-        setIsLoading(false);
-        setRefreshing(false);
-        console.log(e);
+        visitApiCall()
       }
     }
     else
     {
-      let locallyStoredVisits = await AsyncStorage.getItem('Visits');
-      if(locallyStoredVisits)
+      visitApiCall()
+    }
+    setRefreshing(false)
+    setIsLoading(false)
+  };
+
+  const getVisitDataFromLocal = async(getPlannedVisits) =>{
+    console.log("Getting Visits Local Data")
+    console.log("75",typeof getPlannedVisits)
+    // let locallyStoredVisits = await AsyncStorage.getItem('Visits');
+      if(getPlannedVisits)
       {
-        locallyStoredVisits = JSON.parse(locallyStoredVisits);
-        setVisits(locallyStoredVisits);
+        setVisits(getPlannedVisits);
       }
       else
       {
         setVisits({})
       }
-    }
-    setRefreshing(false)
-    setIsLoading(false)
-  };
+  }
+
+  const visitApiCall = async() => {
+    console.log("Making An API Call");
+    const token = await getToken();
+        let userId = '';
+       
+        if (token && token.id) {
+          const idSplit = token.id.split('/');
+          userId = idSplit[idSplit.length - 1];
+        }
+        const netInfo = await NetInfo.fetch();
+        
+        if (netInfo.isConnected) {
+          try 
+          {
+            const res = await axios.post(visitsEndpoint, { UserId: userId, DateVal: '' });
+            if(res.data.status === 'Success')
+            {
+              console.log("Got the Visits")
+              let successResponse = res.data;
+              successResponse.addedDate = format(new Date(), 'yyyy-MM-dd');
+              await AsyncStorage.setItem('Visits',JSON.stringify(successResponse))
+              console.log("67",JSON.stringify(res.data.dealerAndRetailers))
+              await AsyncStorage.setItem('DealerAndRetailers',JSON.stringify(res.data.dealerAndRetailers))
+              setVisits(res.data) 
+            }
+            else
+            {
+              setVisits({});
+            }
+          }
+          catch(e)
+          {
+            await getVisitDataFromLocal(getPlannedVisits)
+            setIsLoading(false);
+            setRefreshing(false);
+            console.log(e);
+          }
+        }
+        else
+        {
+          await getVisitDataFromLocal(getPlannedVisits)
+        }
+  }
 
   
   const getSurveyData = async () => {
