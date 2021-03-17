@@ -6,7 +6,6 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { AuthContext } from 'src/context/authContext';
-import { ScreenContext } from 'src/context/screenContext';
 import Fab from '../../components/Fab';
 import SearchItem from '../../components/searchItem/SearchItem';
 import PlannedVisits from '../PlannedVisits';
@@ -16,7 +15,6 @@ import { storeToken } from '../../utils';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
-import ShowUnPlanned from '../ShowUnPlanned'
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -24,49 +22,8 @@ const date = new Date().getDate();
 const month = new Date().getMonth() + 1;
 const year = new Date().getFullYear();
 
-
-
-
 const Splash = ({ navigation }) => {
   const { setToken } = useContext(AuthContext);
-  const { setSyncData } = useContext(ScreenContext);
-
-  useFocusEffect(()=>{
-
-    const syncUpData = async()=>{
-      let unSyncedData = await AsyncStorage.getItem('unSyncedQuestions');
-      let newRetailer = await AsyncStorage.getItem('newRetailers');
-      let unSyncedImages = await AsyncStorage.getItem('unSyncedImages');
-      console.log("UnSyncImages",unSyncedImages)
-      newRetailer = JSON.parse(newRetailer);
-      console.log('40',newRetailer)
-      unSyncedData = JSON.parse(unSyncedData);
-      const netInfo = await NetInfo.fetch();
-
-      if(netInfo.isConnected)
-      {
-        if(unSyncedData)
-        {
-          if(unSyncedData.length > 0)
-          {
-            setSyncData(true);
-            return
-          }
-        }
-
-        if(newRetailer)
-        {
-          if(newRetailer.length > 0)
-          {
-            setSyncData(true);
-            return
-          }
-        }
-      }
-      setSyncData(false);
-    }
-    syncUpData();
-  },[])
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -106,7 +63,7 @@ const Splash = ({ navigation }) => {
       </View>
       <Tab.Navigator>
         <Tab.Screen name="Planned Visit" component={PlannedVisits} />
-        <Tab.Screen name="Unplanned Visit" component={ShowUnPlanned} />
+        <Tab.Screen name="Unplanned Visit" component={UnplannedVisits} />
       </Tab.Navigator>
       <Fab onClick={path => navigation.push(path)} />
     </SafeAreaView>

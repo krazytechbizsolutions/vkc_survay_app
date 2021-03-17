@@ -12,7 +12,7 @@ const actionItem = [
     type: 'Create',
   },
   {
-    path: 'UnplannedVisit',
+    path: 'AddUnplannedVisits',
     title: 'Unplanned Visit',
     icon: <GroupAdd width={30} height={30} fill="black" />,
     type: 'Create',

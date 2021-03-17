@@ -7,7 +7,7 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from '@utils/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import UnPlannedVisit from 'src/screens/UnplannedVisits';
+import AddUnplannedVisits from 'src/screens/AddUnplannedVisits';
 import { format } from 'date-fns';
 
 
