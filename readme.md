@@ -1,3 +1,41 @@
+15/03/21,
+
+1. Star Rating not displaying more than 5 stars.
+2. Survey Image Capture API is not triggered
+3. If retailer is not added then new unplanned visit retailer list is not displayed
+4. Retailer after submit not redirecting on alert click.
+5. Retailer image pop-up comes at top of the screen
+6. Sync to be enabled for unplanned visit tab
+7. Retailer validation
+8. Retailer data clear after submit
+
+
+
+
+1. Call these APIs only once is a day --> "Day Plan", "Survey Question" & "Account Data (Multi Text) (Dealers & Sub-Dealers)"
+2. Once a survey is completed, remove it from planned or unplanned visit. 
+3. Sequence of Sync
+	- Day plan -- Once in a day
+	- Survey Question -- Once in a day
+	- Account Data (Multi Text) -- Once in a day
+	- New Retailers Data
+	- New Retailer - UnPlanned Survey Image Data
+	- Planned Survey Data
+	- Existing Retailer - UnPlanned Survey Data
+	- New Retailer - UnPlanned Survey Data
+	- Planned Survey Image Data
+	- Existing Retailer - UnPlanned Survey Image Data
+
+
+Client confirmation,
+Either master data can be loaded only once then app will be non-ui blocking.
+If master data has to be synced regularly then app will be ui blocking & the sync only happens on home page (planned visit screen). 
+
+
+============================================================================================
+
+
+
 1. [DONE] Testing of online submit
 2. Offline, push of unsynced data to server
 3. Multi text suggestions and api integration and response type
