@@ -190,7 +190,7 @@ const askLocation = async () =>{
       newRetailers.push(payload);
       await AsyncStorage.setItem('newRetailers', JSON.stringify(newRetailers))
       await saveNewRetailerToUnplanned(temp_Id)
-      // await addImagesToLocal(temp_Id)
+      await addImagesToLocal(temp_Id)
     }
   
 
@@ -251,10 +251,9 @@ const askLocation = async () =>{
 
   const addImagesToLocal = async(temp_Id) =>{
       let getUnsyncedImages = JSON.parse(await AsyncStorage.getItem('unSyncedImages'));
+      getUnsyncedImages = getUnsyncedImages ? getUnsyncedImages : []
       let Token = await getToken();
-      if(getUnsyncedImages)
-      {
-        let retailImages = images.map((img,index)=>{
+      let retailImages = images.map((img,index)=>{
             return {
                 surveyId:null,
                 accountId: null,
@@ -271,7 +270,7 @@ const askLocation = async () =>{
 
         getUnsyncedImages = [...getUnsyncedImages,...retailImages]
         await AsyncStorage.setItem('unSyncedImages',JSON.stringify(getUnsyncedImages))
-      }
+      
   }
 
   let showFields=adrFields.map((result,index)=>{

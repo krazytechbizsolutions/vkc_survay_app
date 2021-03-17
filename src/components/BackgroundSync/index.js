@@ -208,7 +208,7 @@ class BackgroundSync extends React.Component{
                     {
                         console.log("In Retailer Success")
                         await this.removeFromAddRetailer(submitRetailersResponse.data)
-                        // await this.editUnsyncedImages(submitRetailersResponse.data)
+                        await this.editUnsyncedImages(submitRetailersResponse.data)
                         return true;
                     }
                     else
@@ -295,20 +295,20 @@ class BackgroundSync extends React.Component{
                     {
                         console.log("In Success")
                         imageUploadError=false;
-                    //    await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'fileName', data.imageName, true);
+                       await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.imageName, true);
                     }
                     else
                     {
                         console.log("In Error")
                         imageUploadError=true;
-                      //  await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'fileName', data.fileName, false);
+                       await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.fileName, false);
                     }
                 }
                 catch(e)
                 {
                     console.log("In Catch",e)
                     imageUploadError=true;
-                   // await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'fileName', data.fileName, false);
+                   await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.fileName, false);
                 }
             }
 
