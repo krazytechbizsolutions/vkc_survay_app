@@ -264,9 +264,7 @@ const SingleSelectRadio = ({
 
               <TouchableOpacity style={{width:'100%',padding:15,marginTop:50}} onPress={()=>SaveData()}>
                 <View style={{width:'100%',height:50,borderRadius:15,backgroundColor:"#ef4b4b",justifyContent: 'center',alignItems: 'center'}}>
-                    <TextEle style={{color:'#fff'}}>
-                        {EditIndex !== null  ? "Edit":"Add"}
-                    </TextEle>
+                    <TextEle style={{color:'#fff'}}>Save</TextEle>
                 </View>
             </TouchableOpacity> 
               <Modal

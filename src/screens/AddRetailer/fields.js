@@ -7,6 +7,7 @@ export const fields = [
   {
     label:'Account Name',
     value:'',
+    defaultValue:'',
     name:'accName',
     type:1,
     isNum:false,
@@ -21,6 +22,7 @@ export const fields = [
   {
     label:'Street',
     value:'',
+    defaultValue:'',
     name:'street',
     type:1,
     isNum:false,
@@ -35,6 +37,7 @@ export const fields = [
   {
     label:'City',
     value:'',
+    defaultValue:'',
     name:'city',
     type:1,
     isNum:false,
@@ -49,6 +52,7 @@ export const fields = [
   {
     label:'District',
     value:'',
+    defaultValue:'',
     name:'District',
     type:1,
     editable:true,
@@ -61,7 +65,8 @@ export const fields = [
   },
   {
     label:'State/Province',
-    value:'Karnataka',
+    value:'',
+    defaultValue:'Karnataka',
     name:'state',
     type:4,
     isNum:false,
@@ -77,6 +82,7 @@ export const fields = [
   {
     label:'Zip/Postal Code',
     value:'',
+    defaultValue:'',
     name:'pincode',
     type:1,
     isNum:true,
@@ -90,7 +96,8 @@ export const fields = [
   },
   {
     label:'Country',
-    value:'India',
+    value:'',
+    defaultValue:'India',
     name:'country',
     type:4,
     isNum:false,
@@ -106,6 +113,7 @@ export const fields = [
   {
     label:'Contact Name',
     value:'',
+    defaultValue:'',
     name:'contactName',
     type:1,
     isNum:false,
@@ -120,6 +128,7 @@ export const fields = [
   {
     label:'Phone',
     value:'',
+    defaultValue:'',
     name:'contactNumber',
     type:1,
     isNum:true,
@@ -135,6 +144,7 @@ export const fields = [
   {
     label:'WhatsApp Number',
     value:'',
+    defaultValue:'',
     name:'whatsAppNo',
     type:1,
     isNum:true,
@@ -149,6 +159,7 @@ export const fields = [
     {
     label:'Email',
     value:'',
+    defaultValue:'',
     name:'email_id',
     type:1,
     isNum:false,
@@ -163,7 +174,8 @@ export const fields = [
   },
   {
     label:'Shop Space',
-    value:'Yes',
+    value:'',
+    defaultValue:'Yes',
     name:'shopspace',
     type:4,
     isNum:false,
@@ -178,7 +190,8 @@ export const fields = [
   },
   {
     label:'Class',
-    value:'A',
+    value:'',
+    defaultValue:'A',
     name:'retail_class',
     type:4,
     isNum:false,
@@ -193,7 +206,8 @@ export const fields = [
   },
   {
     label:'Location Type',
-    value:'Urban',
+    value:'',
+    defaultValue:'Urban',
     name:'locationType',
     type:4,
     isNum:false,
@@ -209,6 +223,7 @@ export const fields = [
   {
     label:'Shop Registration No',
     value:'',
+    defaultValue:'',
     name:'shopRegNumber',
     type:1,
     isNum:true,
