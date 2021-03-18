@@ -65,7 +65,7 @@ class BackgroundSync extends React.Component{
 
     downloadPlannedVisits = async () => {
         // return if already synced for today...
-        if(this.isDataDownloadedForToday('Visits')){
+        if(await this.isDataDownloadedForToday('Visits')){
             return;
         }
         
@@ -88,7 +88,7 @@ class BackgroundSync extends React.Component{
 
     downloadSurveyMasters = async () => {
         // return if already synced for today...
-        if(this.isDataDownloadedForToday('SurveyMaster')){
+        if(await this.isDataDownloadedForToday('SurveyMaster')){
             return;
         }
 
@@ -103,7 +103,7 @@ class BackgroundSync extends React.Component{
 
     downloadMultiTextAccountData = async () => {
         // return if already synced for today...
-        if(this.isDataDownloadedForToday('AccountData')){
+        if(await this.isDataDownloadedForToday('AccountData')){
             return;
         }
 

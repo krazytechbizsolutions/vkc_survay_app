@@ -35,7 +35,7 @@ const PlannedVisits = ({ navigation }) => {
         getUnsyncSurveys();
       };
       loadUnSyncSurvey();
-    }, []),
+    }, [syncData]),
   );
 
 

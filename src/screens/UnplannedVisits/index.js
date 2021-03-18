@@ -23,7 +23,7 @@ const UnplannedVisits =({navigation})=>{
           getUnplannedData();
         };
         loadUnSyncSurvey();
-      }, []),
+      }, [syncData]),
     );
 
     const getUnplannedData = async () => {
@@ -119,7 +119,6 @@ const UnplannedVisits =({navigation})=>{
                 ListFooterComponent={listFooter}
                 renderItem={({ item }) => { 
                   let areaName = item.AreaName ? `Area Name: ${item.AreaName}` : '';
-                  let accType = item.accType ? `Account Type: ${item.accType}` : `Account Type: Retailer`;
                   return(                 
                     <View
                         style={{
@@ -140,7 +139,7 @@ const UnplannedVisits =({navigation})=>{
                          
                         <Text style={{ paddingVertical: 4 }}>{`Account Name: ${item.accName}`}</Text>
                         { areaName ? <Text style={{ paddingVertical: 4 }}>{areaName}</Text> : null }
-                        <Text style={{ paddingVertical: 4 }}>{accType}</Text>
+                        <Text style={{ paddingVertical: 4 }}>{`Account Type: ${item.accType}`}</Text>
                         {
                             surveys?.data.map((x,i)=>{
                                 // console.log("76",x.applicableTo);
