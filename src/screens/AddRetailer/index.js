@@ -61,18 +61,15 @@ const AddRetailer = ({navigation}) => {
   };
 
   useEffect(()=>{
-    console.log("Effect")
-    setFields([...fields])
+    setFields(JSON.parse(JSON.stringify(fields)))
     getLocation();
   },[])
-
 
   const getLocation =  async() => {
     const chckLocationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
     if (chckLocationPermission) {
           Geolocation.getCurrentPosition(
             (position) => {
-              console.log("60",position);
               setLatitude(position.coords.latitude);
               setLongitude(position.coords.longitude);
             },
@@ -98,7 +95,6 @@ const askLocation = async () =>{
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
               Geolocation.getCurrentPosition(
                 (position) => {
-                  console.log("60",position);
                   setLatitude(position.coords.latitude);
                   setLongitude(position.coords.longitude);
                 },
@@ -118,8 +114,8 @@ const askLocation = async () =>{
 
 
   const setFieldValue = (e,index) =>{
-    fields[index].value = e;
-    setFields([...fields])
+    adrFields[index].value = e;
+    setFields([...adrFields])
   } 
 
   const submitValues= async() =>{
@@ -127,8 +123,6 @@ const askLocation = async () =>{
       fld.isImportant && fld.validate();
       return fld;
     });
-
-    console.log(JSON.stringify(tempAdrFields));
     
     setFields(tempAdrFields);
     setStoreFrontImageRequiredError(storeFrontImage ? null : 'Image is required');
@@ -153,8 +147,6 @@ const askLocation = async () =>{
       "dateAdded":format(new Date(), 'yyyy-MM-dd'),
     }, Object.fromEntries(adrFields.map((f) => [f.name, f.value])));
 
-    // console.log("156",JSON.stringify(payload))
-  
     await saveObjectIntoArrayOfStorage('newRetailers', payload)
     
     await saveObjectIntoArrayOfStorage('UnplannedVisits', payload)          
@@ -174,8 +166,8 @@ const askLocation = async () =>{
     await saveObjectIntoArrayOfStorage('unSyncedImages', retailerImagePayload);
     
     Alert.alert(
-      'Retailer Saved.',
-      '',
+      'Add Retailer',
+      'Retailer saved.',
       [{ text: 'OK', onPress: () => navigation.popToTop() }],
       { cancelable: false },
     )
