@@ -18,6 +18,7 @@ const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue }, dat
       item.IsSelected = true;
       arr = [...temp, item];
     } else {
+      delete item.IsSelected;
       arr = [...temp.slice(0, index), ...temp.slice(index + 1)];
     }
 

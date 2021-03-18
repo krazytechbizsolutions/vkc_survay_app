@@ -1,7 +1,7 @@
 import TextEle from '@components/TextEle';
 import VKCButton from '@components/VKCButton';
 import { Field } from 'formik';
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, useRef } from 'react';
 import { View, TextInput, Pressable,FlatList,TouchableOpacity,Modal,Picker,Alert} from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -19,6 +19,7 @@ const CustomMultiText = ({
     backToHome
     }) =>{
 
+    const flastListRef = useRef();
     const [AccountData,setAccountData]=useState([]);
     const [ShowAccountData,setShowAccountData]=useState([]);
     const [SelectedData,setSelectedData]=useState([]);
@@ -39,8 +40,9 @@ const CustomMultiText = ({
         {
             AsyncStorage.getItem('AccountData').then(data=>{
                 let AccountDataJSON = JSON.parse(data);
-                // console.log("23",AccountDataJSON)
-                setAccountData([...AccountDataJSON])
+                if(AccountDataJSON){
+                    setAccountData([...AccountDataJSON.data])
+                }
             })
         }
     },[])
@@ -48,6 +50,12 @@ const CustomMultiText = ({
     useEffect(()=>{
         SearchTextInput("")
     },[AccountData])
+
+  useEffect(() => {
+    if (!!(touched[name] && errors[name]) && flastListRef.current) {
+      flastListRef.current.scrollToOffset({ offset: 0, animated: true });
+    }
+  }, [touched, errors, name]);
 
     const onAddSelectedData=(item)=>{
         let tmpSelectedData = SelectedData;
@@ -160,6 +168,7 @@ const CustomMultiText = ({
                     SelectedData.length > 0 ? 
                     <View style={{width:'100%',justifyContent: 'center'}}>
                         <FlatList
+                            ref={flastListRef}
                             data={SelectedData}
                             renderItem={({ item,index }) => (
                                     <View style={{width:'100%',padding:10,borderRadius:10,justifyContent:'flex-start',borderWidth:1,borderColor:'grey',marginVertical:10}}>

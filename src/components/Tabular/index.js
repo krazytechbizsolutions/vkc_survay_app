@@ -121,27 +121,10 @@ const SingleSelectRadio = ({
 
   const SaveData=async ()=>{
     try {
-      console.log('114',`Tab-${userId}-${questionId}-${surveyId}`)
-      await AsyncStorage.setItem(`Tab-${userId}-${questionId}-${surveyId}-${accountId}`,JSON.stringify(DispData));
-      Alert.alert(
-        "Data Saved",
-        "Your Data Has Been Locally Saved Successfully",
-        [
-          { text: "OK", onPress: () => {} }
-        ],
-        { cancelable: true }
-      );
-    } catch (error) {
-      // Error saving data
-      Alert.alert(
-        "Data Not Saved",
-        "Fail To Store Data",
-        [
-          { text: "OK", onPress: () => {} }
-        ],
-        { cancelable: true }
-      );
-    }
+      await AsyncStorage.setItem(`Tab-${userId}-${questionId}-${surveyId}-${accountId}`, JSON.stringify(DispData));
+    } catch (error) {}
+
+    setAddData(true)
   }
 
   const AddNewData=()=>{
@@ -234,16 +217,8 @@ const SingleSelectRadio = ({
               />
           </View>
                   
-          <View style={{width:'100%',flexDirection:'row',justifyContent: 'space-between'}}>
-            <TouchableOpacity style={{width:'50%',padding:15}} onPress={()=>SaveData()}>
-                  <View style={{width:'100%',height:50,borderRadius:15,backgroundColor:"#ef4b4b",justifyContent: 'center',alignItems: 'center'}}>
-                      <TextEle style={{color:'#fff'}}>
-                          Save
-                      </TextEle>
-                  </View>
-            </TouchableOpacity>
-            
-            <TouchableOpacity style={{width:'50%',padding:15}} onPress={()=>AddNewData()}>
+          <View style={{width:'100%',flexDirection:'row',justifyContent: 'space-between'}}>            
+            <TouchableOpacity style={{width:'100%',padding:15}} onPress={()=>AddNewData()}>
                 <View style={{width:'100%',height:50,borderRadius:15,backgroundColor:"#ef4b4b",justifyContent: 'center',alignItems: 'center'}}>
                     <TextEle style={{color:'#fff'}}>
                         Add
@@ -287,7 +262,7 @@ const SingleSelectRadio = ({
                 </>
             ))}
 
-              <TouchableOpacity style={{width:'100%',padding:15,marginTop:50}} onPress={()=>setAddData(true)}>
+              <TouchableOpacity style={{width:'100%',padding:15,marginTop:50}} onPress={()=>SaveData()}>
                 <View style={{width:'100%',height:50,borderRadius:15,backgroundColor:"#ef4b4b",justifyContent: 'center',alignItems: 'center'}}>
                     <TextEle style={{color:'#fff'}}>
                         {EditIndex !== null  ? "Edit":"Add"}
