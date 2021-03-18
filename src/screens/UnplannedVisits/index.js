@@ -13,6 +13,7 @@ const UnplannedVisits =({navigation})=>{
     const [unplannedVisits, setUnplannedVisits] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [surveys, setSurvey] =useState(null);
+    const [unSyncSurveys, setUnSyncSurveys] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const { syncData, setSyncData } = useContext(ScreenContext);
@@ -35,9 +36,16 @@ const UnplannedVisits =({navigation})=>{
       setVisits(await getObjectDataFromStorage('Visits'));
       setSurvey(await getObjectDataFromStorage('SurveyMaster'));
 
+      getUnsyncSurveys();
+
       setRefreshing(false);
       setIsLoading(false);
     };
+
+    const getUnsyncSurveys = async() => { 
+      const data = await getArrayFromStorage('unSyncedQuestions');
+      setUnSyncSurveys(data.filter((res) => res.surveyDate === format(new Date(), 'yyyy-MM-dd')));
+    }
 
 
     getObjectDataFromStorage = async (key) => {
@@ -151,6 +159,13 @@ const UnplannedVisits =({navigation})=>{
                                             variant="fill"
                                             style={{ marginVertical: 5 }}
                                             text={x.surveyName}
+                                            disable={unSyncSurveys?.find(
+                                              z =>
+                                                z.userId === visits.UserId && //Change this Back
+                                                z.accountId === item.accId &&
+                                                z.surveyId === x.surveyId && 
+                                                (!item.temp_account_id || (item.temp_account_id && z.temp_account_id === item.temp_account_id)) 
+                                            )}
                                             onPress={async () => {
                                             navigation.navigate('SurveyQue', {
                                                 questions: x.Questions,
