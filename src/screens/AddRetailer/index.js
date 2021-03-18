@@ -13,6 +13,7 @@ import { getLocation } from 'src/utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getToken} from '../../utils/index'
 import { v4 as uuidv4 } from 'uuid';
+import { ScreenContext } from '../../context/screenContext';
 
 
 
@@ -24,7 +25,9 @@ const AddRetailer = ({navigation}) => {
   const [isVisible,setIsVisible]=useState(false);
   const [latitude,setLatitude] = useState("");
   const [longitude,setLongitude] = useState("")
+  const { syncData, setSyncData } = useContext(ScreenContext);
   
+
   const create_UUID =() => {
     var dt = new Date().getTime();
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -175,10 +178,12 @@ const askLocation = async () => {
     Alert.alert(
       'Add Retailer',
       'Retailer saved.',
-      [{ text: 'OK', onPress: () => navigation.popToTop() }],
+      [{ text: 'OK', onPress: () => {
+        setSyncData(true)
+        navigation.popToTop()
+      } }],
       { cancelable: false },
     )
-    
   }
   
 

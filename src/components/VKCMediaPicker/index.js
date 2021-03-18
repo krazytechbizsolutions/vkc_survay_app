@@ -73,6 +73,7 @@ const VKCMediaPicker = ({
         let Images = JSON.parse(res);
         console.log("70",Images);
         setImageData([...Images])
+        setFieldValue('mainField',"")
       }
     })
   },[])
@@ -91,6 +92,7 @@ const VKCMediaPicker = ({
     TempImageData.splice(index, 1);
     StoreImageLocal(TempImageData);
     setImageData([...TempImageData]);
+    setFieldValue('mainField',TempImageData.length !== 0 ? TempImageData : "");  
   }
 
   return (
@@ -104,7 +106,7 @@ const VKCMediaPicker = ({
         {question}
       </TextEle>
       <VKCButton
-        disable={(value || []).length >= 10}
+        disable={ImageData.length >= 10}
         variant="fill"
         text="Select Image"
         onPress={selectImage}

@@ -27,6 +27,7 @@ import CustomMultiText from '@components/CustomMultiText';
 import SubmitModal from '@components/SubmitModal';
 import RNFS from 'react-native-fs';
 import SpecialEfforts from '@components/CustomSpecialEfforts'
+import { ScreenContext } from '../../context/screenContext';
 
 console.disableYellowBox = true;
 let survey = []
@@ -39,7 +40,7 @@ const SurveyQue = ({ navigation, route }) => {
   const [SurveySubmit,setSurveySubmit]=useState(false);
   const [ImageSubmit,setImage]=useState(false);
   const [ShowSubmitModal,setSubmitModal]=useState(false);
- 
+  const { syncData, setSyncData } = useContext(ScreenContext);
   const formRef = useRef();
   const onSubmit = async selectedOptions => {
     
@@ -306,7 +307,10 @@ const SurveyQue = ({ navigation, route }) => {
             Alert.alert(
               'Survey Recorded',
               'Your Survey Has Been Recorded',
-              [{ text: 'OK', onPress: () => navigation.popToTop() }],
+              [{ text: 'OK', onPress: () => {
+                setSyncData(true)
+                navigation.popToTop()
+              } }],
               { cancelable: false },
             );
         } catch (error) {
@@ -579,7 +583,13 @@ const SurveyQue = ({ navigation, route }) => {
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   questionId={question.sQuestion.Id}
                   seqNo={question.sQuestion.Sequence_No__c}
-
+                  validate={value => {
+                    console.log("587",value)
+                    if (!value) {
+                      return 'Please Select Atleast One Image';
+                    }
+                    return '';
+                  }}
                 />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Multi Text'}>
@@ -590,7 +600,7 @@ const SurveyQue = ({ navigation, route }) => {
                   isUnplanned={false}
                   validate={value => {
                     if (!value) {
-                      return 'Please Enter Field Value';
+                      return 'Please Add Atleast One Account';
                     }
                     return '';
                   }}
