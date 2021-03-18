@@ -164,7 +164,7 @@ const askLocation = async () => {
       surveyId:null,
       accountId: null,
       qtnId: null,
-      Sequence_No: null,
+      Sequence_No: 1,
       imageName: payload.accName + "_" + format(new Date(), 'yyyy-MM-dd') + "_",
       imageType: storeFrontImage.type,
       imageURL: storeFrontImage.uri,
