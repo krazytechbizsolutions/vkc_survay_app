@@ -144,6 +144,7 @@ const askLocation = async () =>{
       "latitude": latitude,
       "longitude": longitude,
       "isAddedRetailer":true,
+      "accType": "Retailer",
       "dateAdded":format(new Date(), 'yyyy-MM-dd'),
     }, Object.fromEntries(adrFields.map((f) => [f.name, f.value])));
 
