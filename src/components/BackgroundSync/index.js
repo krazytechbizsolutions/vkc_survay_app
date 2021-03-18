@@ -149,7 +149,7 @@ class BackgroundSync extends React.Component{
         // clean up of past data...
         unSyncedData = unSyncedData.filter(ud => 
             {
-                return ud.surveyDate === today
+                return ud.surveyDate === today && (!ud.syncStatus || ud.syncStatus == 1) 
             }
         )
         // console.log("31 24",unSyncedData);
@@ -169,7 +169,15 @@ class BackgroundSync extends React.Component{
         let unSyncedData = await this.getArrayFromStorage(key);
         if(isRemove){
             // get current day syncStatus = 0 & set it back to storage... this will force remove syncStatus = 1...
-            await AsyncStorage.setItem(key, JSON.stringify(unSyncedData.filter(ud => (ud.surveyDate === today && ud.syncStatus === 0))));
+            // await AsyncStorage.setItem(key, JSON.stringify(unSyncedData.filter(ud => (ud.surveyDate === today && ud.syncStatus === 0))));
+
+            // COMMENTED ABOVE & ADDED BELOW TO AVOID THE RE-ENABLING THE SURVEY BUTTON AFTER SYNC AS PULL IS ONLY ONCE A DAY...
+            unSyncedData = unSyncedData.map(ud => {
+                ud.syncStatus = 2;
+                delete ud.Questions; // TODO: [LATER] RETAIN THIS TO SHOW SAVED DATA IN OFFLINE
+                return ud;
+            })
+            await AsyncStorage.setItem(key, JSON.stringify(unSyncedData));
         } else {
             unSyncedData = unSyncedData.map(ud => {
                 ud.syncStatus = 0;
@@ -185,25 +193,30 @@ class BackgroundSync extends React.Component{
             try {
                 let submitRetailersResponse = await axios.post(captureRetailerAPI, newRetailers)
                 if(submitRetailersResponse.data.status === 'Success') {
-                    await updateAccountSFIDforTempAccountIdInStorage('UnplannedVisits', responseData.successIds);
-                    await updateAccountSFIDforTempAccountIdInStorage('unSyncedImages', responseData.successIds);
+                    let addedRetailers = submitRetailersResponse.data.successIds
+                    addedRetailers = Object.fromEntries(addedRetailers.map((f) => [f.temp_account_id, f.Acc_SF_Id]))
+                    // remove the ones which is saved...
+                    await AsyncStorage.setItem('newRetailers', JSON.stringify(newRetailers.filter(nr => {
+                        return !addedRetailers[nr.temp_account_id]
+                    })))
+                    await updateAccountSFIDforTempAccountIdInStorage('UnplannedVisits', addedRetailers);
+                    await updateAccountSFIDforTempAccountIdInStorage('unSyncedImages', addedRetailers);
                 }
             } catch(e) { }
         }
     }
 
     updateAccountSFIDforTempAccountIdInStorage = async(key, addedRetailers) => {
-        for(let i = 0 ; i < addedRetailers.length ; i++ ) {
-            let storageData = await getArrayFromStorage(key);
-            storageData = storageData.map((visits)=>{
-                if(visits.temp_account_id === addedRetailers[i].temp_account_id) {
-                    visits.accountId = addedRetailers[i].Acc_SF_Id;
-                    delete visits.temp_account_id;
-                }
-                return visits;
-            })
-            await AsyncStorage.setItem(key, JSON.stringify(storageData))
-        }
+        let storageData = await getArrayFromStorage(key);
+
+        storageData = storageData.map((visits)=>{
+            if(addedRetailers[visits.temp_account_id]) {
+                visits.accountId = addedRetailers[visits.temp_account_id];
+                delete visits.temp_account_id;
+            }
+            return visits;
+        })
+        await AsyncStorage.setItem(key, JSON.stringify(storageData))
     }
 
 
@@ -212,14 +225,16 @@ class BackgroundSync extends React.Component{
         if(unSyncedImages.length > 0) {
             for(let i = 0; i < unSyncedImages.length; i++) {
                 let data = unSyncedImages[i];
-                data.imageBase64 = await RNFS.readFile(data.imageURL, 'base64')
-                
-                try
-                {
-                    let imageResponse = await axios.post(captureImageApi,data)
-                    await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.imageName, imageResponse.data.status === "Success");
-                } catch(e) {
-                    await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.imageName, false);
+                if(data.dateAdded === today && data.accountId && (!data.syncStatus || data.syncStatus == 1)){
+                    data.imageBase64 = await RNFS.readFile(data.imageURL, 'base64')
+                    
+                    try
+                    {
+                        let imageResponse = await axios.post(captureImageApi,data)
+                        await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.imageName, imageResponse.data.status === "Success");
+                    } catch(e) {
+                        await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.imageName, false);
+                    }
                 }
             }
         } 

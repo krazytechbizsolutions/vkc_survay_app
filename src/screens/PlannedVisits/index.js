@@ -143,17 +143,17 @@ const PlannedVisits = ({ navigation }) => {
                   const srvDetails = (surveys?.data || []).find(y => y.surveyId === x.svyId);
                   // const srvDetails = schema.find(y => y.surveyId === x.svyId);
                   if (srvDetails) {
+                    let offlineSrvDetails = unSyncSurveys?.find((z) => {
+                      return z.userId === visits.UserId && z.accountId === item.accId && z.surveyId === srvDetails.surveyId
+                    })
                     return (
+                      // offlineSrvDetails?.syncStatus == 2 ? null : 
+                      offlineSrvDetails ? null :
                       <VKCButton
                         variant="fill"
                         style={{ marginVertical: 5 }}
                         text={srvDetails.surveyName}
-                        disable={unSyncSurveys?.find(
-                          z =>
-                            z.userId === visits.UserId && //Change this Back
-                            z.accountId === item.accId &&
-                            z.surveyId === srvDetails.surveyId,   
-                        )}
+                        disable={offlineSrvDetails}
                         onPress={async () => {
                           navigation.navigate('SurveyQue', {
                             questions: srvDetails.Questions,
