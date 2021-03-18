@@ -61,7 +61,11 @@ const AddRetailer = ({navigation}) => {
   };
 
   useEffect(()=>{
-    setFields([...fields])
+    setFields(fields.map((fld) => {
+      fld.value = fld.defaultValue;
+      fld.errorMessage = null;
+      return fld;
+    }))
     getLocation();
   },[])
 
@@ -246,11 +250,9 @@ const askLocation = async () => {
                   </View>
             </View>
           : 
-          <TouchableOpacity style={{padding:15}} onPress={()=>setIsVisible(true)}>
+          <TouchableOpacity style={{ padding: 15, paddingLeft: 0 }} onPress={()=>setIsVisible(true)}>
                 <View style={{width:150,height:50,borderRadius:5,backgroundColor:"#ef4b4b",justifyContent: 'center',alignItems: 'center'}}>
-                    <TextEle style={{color:'#fff'}}>
-                        Capture Image
-                    </TextEle>
+                    <TextEle style={{color:'#fff'}}> Capture Image </TextEle>
                 </View>
           </TouchableOpacity>
           
