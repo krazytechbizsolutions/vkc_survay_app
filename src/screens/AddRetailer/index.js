@@ -159,20 +159,21 @@ const askLocation = async () => {
 
     await saveObjectIntoArrayOfStorage('newRetailers', payload)
     
-    await saveObjectIntoArrayOfStorage('UnplannedVisits', payload)          
-    // unplannedVisits = unplannedVisits.filter((visits) => visits.dateAdded === format(new Date(), 'yyyy-MM-dd'))
+    await saveObjectIntoArrayOfStorage('UnplannedVisits', payload)
     
 
-    let retailerImagePayload = Object.assign(payload, {
+    let retailerImagePayload = {
       surveyId:null,
       accountId: null,
+      temp_account_id: payload.temp_account_id,
+      userId: payload.userId,
       qtnId: null,
       Sequence_No: 1,
       imageName: payload.accName + "_" + format(new Date(), 'yyyy-MM-dd') + "_",
       imageType: storeFrontImage.type,
       imageURL: storeFrontImage.uri,
       relatedTo: 'Retailer'
-    })
+    }
     await saveObjectIntoArrayOfStorage('unSyncedImages', retailerImagePayload);
     
     Alert.alert(
@@ -204,9 +205,6 @@ const askLocation = async () => {
       <View style={{width:'100%',marginVertical:7}}>
         <TextEle style={{opacity:0.7,marginBottom:5}}>{result.label} {result.isImportant ? "*":""}</TextEle>
         {
-        result.errorMessage ? 
-        <TextEle style={{opacity:0.7,color:'red',fontSize:12}}>{result.errorMessage}</TextEle>:null}
-        {
         result.type === 1 ? 
           <View style={{width:'100%',height:50,borderWidth:1,marginTop:5,borderRadius:5,borderColor:"#90a4ae",paddingLeft:5}}>
               <TextInput value={result.value} keyboardType = {result.isNum ? "numeric":""} onChangeText={(e)=>setFieldValue(e,index)} placeholder="Please Input A Value"/>
@@ -228,6 +226,7 @@ const askLocation = async () => {
         </View>
         :null
         }   
+        { result.errorMessage ? <TextEle style={{opacity:0.7,color:'red',fontSize:12}}>{result.errorMessage}</TextEle>:null}
       </View>:null
     )
   })
