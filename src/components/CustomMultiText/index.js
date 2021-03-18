@@ -110,44 +110,44 @@ const CustomMultiText = ({
           tempShowAccountData.sort((a,b) => a.accName.localeCompare(b.accName));
            setShowAccountData([...tempShowAccountData])
       }
+  
+
+  getArrayFromStorage = async (key) => {
+    let storageData = await AsyncStorage.getItem(key);
+    try{
+      storageData = storageData ? JSON.parse(storageData) : []
+    } catch(e){
+      storageData = [];
+    }
+    return storageData;
+  }
 
      const onAddUnplannedVisits = async () => {
 
+        if(SelectedData.length == 0){
+            Alert.alert(
+                'Add unplanned visits',
+                'No retailers selected',
+                [{ text: 'OK', onPress: () =>{} }],
+                { cancelable: false },
+            )
+            return;
+        }
         try 
         {
-          let UnplannedVisits = await AsyncStorage.getItem('UnplannedVisits');
+          let UnplannedVisits = await getArrayFromStorage('UnplannedVisits');
           
-          if(UnplannedVisits)
-          {
-            UnplannedVisits = JSON.parse(UnplannedVisits);
-            UnplannedVisits = [...UnplannedVisits,...SelectedData];
-            UnplannedVisits = UnplannedVisits.filter((visits) => visits.dateAdded === format(new Date(), 'yyyy-MM-dd'))
-            console.log('102',UnPlannedVisit);
-            await AsyncStorage.setItem('UnplannedVisits',JSON.stringify(UnplannedVisits));
-          }
-          else
-          {
-            await AsyncStorage.setItem('UnplannedVisits',JSON.stringify(SelectedData));
-          }
+          UnplannedVisits = [...UnplannedVisits,...SelectedData];
+          UnplannedVisits = UnplannedVisits.filter((visits) => visits.dateAdded === format(new Date(), 'yyyy-MM-dd'))
 
+          await AsyncStorage.setItem('UnplannedVisits',JSON.stringify(UnplannedVisits));
           Alert.alert(
-            'New Data Added ',
-            'New Data Has Been Added To Unplanned Visits',
+            'Add unplanned visits',
+            'Selected retailers are saved for unplanned visits',
             [{ text: 'OK', onPress: () => backToHome() }],
             { cancelable: false },
           )
-        }
-        catch(e)
-        {
-            Alert.alert(
-                'Data Not Recorded',
-                e.message,
-                [{ text: 'OK', onPress: () =>{} }],
-                { cancelable: false },
-              )
-        }
-
-          console.log("85",await AsyncStorage.getItem('UnplannedVisits'));
+        } catch(e) {}
       }
 
     return(
