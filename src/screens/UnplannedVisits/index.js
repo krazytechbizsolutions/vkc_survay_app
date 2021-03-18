@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/core';
-import React,{useState,useCallback} from 'react'
+import React,{ useState, useCallback, useContext } from 'react'
 import {View,Text,TouchableOpacity,FlatList,RefreshControl} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import VKCButton from '@components/VKCButton';
@@ -72,7 +72,7 @@ const UnplannedVisits =({navigation})=>{
     return(
         
         <View style={{ flex: 1 }}>
-            {Object.keys(visits).length !== 0 ? 
+            {Object.keys(visits?.visits || []).length !== 0 ? 
               <FlatList
                 data={unplannedVisits}
                 renderItem={({ item }) => { 

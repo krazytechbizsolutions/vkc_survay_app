@@ -107,7 +107,7 @@ class BackgroundSync extends React.Component{
         }
 
         try{
-            const res = axios.get(accountDataApi, []).then(response =>{
+            const res = await axios.get(accountDataApi, []);
             await AsyncStorage.setItem('AccountData', JSON.stringify({
                 syncedDate: format(new Date(), 'yyyy-MM-dd'),
                 data: res.data
