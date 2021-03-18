@@ -273,7 +273,7 @@ const SurveyQue = ({ navigation, route }) => {
                     accountId: accId,
                     surveyId:surveyId,
                     isUnplanned:Unplanned  ? true:false,
-                    temp_acc_Id:temp_account_id,
+                    temp_account_id:temp_account_id,
                     surveyDate: format(new Date(), 'yyyy-MM-dd'),
                     Questions:JSON.parse(await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`))
                   },
@@ -290,7 +290,7 @@ const SurveyQue = ({ navigation, route }) => {
                     accountId: accId,
                     surveyId:surveyId,
                     isUnplanned:Unplanned ? true:false,
-                    temp_acc_Id:temp_account_id,
+                    temp_account_id:temp_account_id,
                     surveyDate: format(new Date(), 'yyyy-MM-dd'),
                     Questions: JSON.parse(await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`)),
                   },
