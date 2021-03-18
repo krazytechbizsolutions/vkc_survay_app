@@ -197,7 +197,8 @@ class BackgroundSync extends React.Component{
             let storageData = await getArrayFromStorage(key);
             storageData = storageData.map((visits)=>{
                 if(visits.temp_account_id === addedRetailers[i].temp_account_id) {
-                    visits.accId = addedRetailers[i].Acc_SF_Id
+                    visits.accountId = addedRetailers[i].Acc_SF_Id;
+                    delete visits.temp_account_id;
                 }
                 return visits;
             })
