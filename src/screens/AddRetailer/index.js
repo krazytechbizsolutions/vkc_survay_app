@@ -61,7 +61,7 @@ const AddRetailer = ({navigation}) => {
   };
 
   useEffect(()=>{
-    setFields(JSON.parse(JSON.stringify(fields)))
+    setFields([...fields])
     getLocation();
   },[])
 
@@ -83,7 +83,7 @@ const AddRetailer = ({navigation}) => {
     } 
 };
 
-const askLocation = async () =>{
+const askLocation = async () => {
   try {
         const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
             {
@@ -119,7 +119,9 @@ const askLocation = async () =>{
   } 
 
   const submitValues= async() =>{
+    console.log("123",adrFields)
     let tempAdrFields = adrFields.map(fld => {
+      console.log("123",fld)
       fld.isImportant && fld.validate();
       return fld;
     });
