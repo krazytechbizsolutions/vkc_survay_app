@@ -272,7 +272,7 @@ const askLocation = async () =>{
         </TouchableOpacity>
       </View>
         <Modal visible={isVisible} onRequestClose={() => setIsVisible(false)} transparent={true}>
-          <View style={{ backgroundColor: '#fff' }}>
+          <View style={{ backgroundColor: '#fff', position: 'absolute', bottom: 0, left: 0, right: 0 }}>
             <Text style={{ padding: 20 }}>Select Image</Text>
             <TouchableOpacity
               onPress={() => {
