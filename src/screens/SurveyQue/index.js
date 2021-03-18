@@ -34,7 +34,7 @@ let Images = []
 console.log("survey",survey);
 const SurveyQue = ({ navigation, route }) => {
   // const { colors } = useTheme();
-  const { questions, firstQuestion, accId, accName, surveyId, UserId,Unplanned,temp_account_id } = route.params;
+  const { questions, firstQuestion, accId, accName, surveyId, UserId, Unplanned, temp_account_id } = route.params;
   const [question, ...restQuestions] = questions;
   const [SurveySubmit,setSurveySubmit]=useState(false);
   const [ImageSubmit,setImage]=useState(false);
@@ -61,9 +61,15 @@ const SurveyQue = ({ navigation, route }) => {
         sQuestion.Option_Type__c === 'Coupon'
       ) 
       {
-        answer = {
-          answer: selectedOptions.mainField,
-        };
+        if(sQuestion.Option_Type__c === 'Slider'){
+          answer = {
+            answer: Math.floor(selectedOptions.mainField),
+          };
+        } else {
+          answer = {
+            answer: selectedOptions.mainField,
+          };
+        }
       }
 
       let selOptions = {};
@@ -172,7 +178,7 @@ const SurveyQue = ({ navigation, route }) => {
       }
       else if (sQuestion.Option_Type__c === 'Multi Text') {
         selOptions = {
-          selectedOptions: selectedOptions.mainField?.map((x, i) => ({
+          selectedOptions: selectedOptions.mainField && selectedOptions.mainField?.map((x, i) => ({
             seqNo: i + 1,
             answer: x.accId,
           })),
@@ -204,15 +210,15 @@ const SurveyQue = ({ navigation, route }) => {
             console.log("266",`IMG-${surveyId}-${accId}-${UserId}-${sQuestion.Id}`,sQuestion)
             
             ImgData.forEach((Img,index) => {
-              ImageName = accName + "_" + format(new Date(), 'yyyy-MM-dd') + sQuestion.Id + "_" + index;
+              ImageName = accName + "_" + format(new Date(), 'yyyy-MM-dd') + sQuestion.Id + "_" + (index + 1);
               let payload ={
                 surveyId,
                 accountId: accId,
                 userId: UserId,
                 qtnId: sQuestion.Id,
-                Sequence_No: index,
+                Sequence_No: index + 1,
                 imageName: ImageName,
-                imageType: Img.type,
+                imageType: 'JPG',
                 imageURL: Img.uri,
                 relatedTo: 'Survey'
               }
@@ -582,6 +588,12 @@ const SurveyQue = ({ navigation, route }) => {
                   name="mainField"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   isUnplanned={false}
+                  validate={value => {
+                    if (!value) {
+                      return 'Please Enter Field Value';
+                    }
+                    return '';
+                  }}
                 />
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Feedback'}>
