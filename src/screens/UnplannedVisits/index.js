@@ -30,7 +30,7 @@ const UnplannedVisits =({navigation})=>{
       setIsLoading(true);
 
       let unplannedVisitsData = await getArrayFromStorage('UnplannedVisits');
-      unplannedVisitsData = unplannedVisitsData.filter((item) => item.syncedDate === format(new Date(), 'yyyy-MM-dd'));
+      unplannedVisitsData = unplannedVisitsData.filter((item) => item.dateAdded === format(new Date(), 'yyyy-MM-dd'));
       setUnplannedVisits(unplannedVisitsData);
       setVisits(await getObjectDataFromStorage('Visits'));
       setSurvey(await getObjectDataFromStorage('SurveyMaster'));
@@ -84,7 +84,7 @@ const UnplannedVisits =({navigation})=>{
     }
 
     const listFooter = () => {
-      if(Object.keys(visits?.visits || []).length !== 0) return null;
+      if(Object.keys(unplannedVisits || []).length !== 0) return null;
 
       return (
         <View style={{width:'100%',flex:1,justifyContent:'center',alignItems:'center'}}>
@@ -118,6 +118,8 @@ const UnplannedVisits =({navigation})=>{
                 }
                 ListFooterComponent={listFooter}
                 renderItem={({ item }) => { 
+                  let areaName = item.AreaName ? `Area Name: ${item.AreaName}` : '';
+                  let accType = item.accType ? `Account Type: ${item.accType}` : `Account Type: Retailer`;
                   return(                 
                     <View
                         style={{
@@ -137,8 +139,8 @@ const UnplannedVisits =({navigation})=>{
                         }}>
                          
                         <Text style={{ paddingVertical: 4 }}>{`Account Name: ${item.accName}`}</Text>
-                        <Text style={{ paddingVertical: 4 }}>{`Area Name: ${item.AreaName}`}</Text>
-                        <Text style={{ paddingVertical: 4 }}>{`Account Type: ${item.accType}`}</Text>
+                        { areaName ? <Text style={{ paddingVertical: 4 }}>{areaName}</Text> : null }
+                        <Text style={{ paddingVertical: 4 }}>{accType}</Text>
                         {
                             surveys?.data.map((x,i)=>{
                                 // console.log("76",x.applicableTo);
