@@ -6,6 +6,7 @@ import { useTheme,useRoute,useFocusEffect } from '@react-navigation/native';
 import Home from '@screens/Home';
 import SurveyQue from '@screens/SurveyQue';
 import AddRetailer from '@screens/AddRetailer';
+import AddUnplannedVisits from '@screens/AddUnplannedVisits';
 import UnplannedVisits from '@screens/UnplannedVisits';
 import Login from '@screens/Login';
 import { AuthContext } from 'src/context/authContext';
@@ -22,7 +23,6 @@ const MainStackScreen = () => {
   
 
   const ResetSyncData = () =>{
-    console.log("Calling Reset");
     setSyncData(false);
   } 
 
@@ -52,6 +52,11 @@ const MainStackScreen = () => {
                 name="AddRetailer"
                 component={AddRetailer}
                 options={{ headerShown: true, title: 'Add Retailer', headerTitleAlign: 'center' }}
+              />
+              <MainStack.Screen
+                name="AddUnplannedVisits"
+                component={AddUnplannedVisits}
+                options={{ headerShown: true, title: 'Add Unplanned Visit', headerTitleAlign: 'center' }}
               />
               <MainStack.Screen
                 name="UnplannedVisits"

@@ -8,6 +8,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import axios from '@utils/axios';
 import RNFS from 'react-native-fs';
 import { getToken } from '@utils/index';
+import NetInfo from '@react-native-community/netinfo';
 
 const visitsApi = '/services/apexrest/SRVY_DayPlanDataOffline_API';
 const surveyApi = '/services/apexrest/SRVY_SurveyDataOffline_API';

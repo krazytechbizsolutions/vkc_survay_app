@@ -5,7 +5,7 @@
 import React, { useCallback, useEffect, useState, useContext } from 'react';
 import useSWR from 'swr';
 import PropTypes from 'prop-types';
-import { View, Text, FlatList,Modal, RefreshControl,ActivityIndicator } from 'react-native';
+import { View, Text, FlatList,Modal, RefreshControl, ActivityIndicator } from 'react-native';
 import { useFocusEffect, useTheme } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
@@ -26,13 +26,13 @@ const PlannedVisits = ({ navigation }) => {
   const [unSyncSurveys, setUnSyncSurveys] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { setSyncData } = useContext(ScreenContext);
+  const { syncData, setSyncData } = useContext(ScreenContext);
 
   useFocusEffect(
     React.useCallback(() => {
       const loadUnSyncSurvey = async () => {
         getVisitData();
-        syncData();
+        getUnsyncSurveys();
       };
       loadUnSyncSurvey();
     }, []),
@@ -40,9 +40,11 @@ const PlannedVisits = ({ navigation }) => {
 
 
   const onRefreshVisits =()=>{
-    setRefreshing(true)
-    setSyncData(true);
-    getVisitData();
+    if(!syncData) {
+      setRefreshing(true)
+      setSyncData(true);
+      getVisitData();
+    }
   }
 
   getObjectDataFromStorage = async (key) => {
@@ -65,7 +67,7 @@ const PlannedVisits = ({ navigation }) => {
     setIsLoading(false)
   };
 
-  const syncData = async() => { 
+  const getUnsyncSurveys = async() => { 
     const data = await getArrayFromStorage('unSyncedQuestions');
     setUnSyncSurveys(data.filter((res) => res.surveyDate === format(new Date(), 'yyyy-MM-dd')));
   }
@@ -81,6 +83,17 @@ const PlannedVisits = ({ navigation }) => {
     return storageData;
   }
 
+  const listFooter = () => {
+    if(Object.keys(visits?.visits || []).length !== 0) return null;
+
+    return (
+      <View style={{width:'100%',flex:1,justifyContent:'center',alignItems:'center'}}>
+        <TextEle style={{opacity:0.7,fontSize:20,marginTop:50}}>No planned visits</TextEle>
+      </View>
+    )
+  };
+
+
   const { colors } = useTheme();
 
   return (
@@ -89,79 +102,80 @@ const PlannedVisits = ({ navigation }) => {
       {
         isLoading ? 
         
-        <View style={{width:'100%',flex:1,justifyContent:'center',alignItems:'center'}}>
-          <ActivityIndicator size="large" color="#EF4B4A"/>
-          <TextEle style={{opacity:0.7,fontSize:20,marginTop:10}}>Fetching Planned Visits ...</TextEle>
-        </View>
+          <View style={{width:'100%',flex:1,justifyContent:'center',alignItems:'center'}}>
+            <ActivityIndicator size="large" color="#EF4B4A"/>
+            <TextEle style={{opacity:0.7,fontSize:20,marginTop:50}}>Fetching Planned Visits ...</TextEle>
+          </View>
         
         :
 
-      <FlatList
-        data={visits?.visits || []}
-        refreshControl={
-          <RefreshControl 
-          onRefresh = {()=> onRefreshVisits()}
-          refreshing={refreshing}/>
-        }
-        renderItem={({ item }) => (
-          <View
-            style={{
-              backgroundColor: '#fff',
-              margin: 10,
-              padding: 10,
-              shadowColor: '#000',
-              borderRadius: 10,
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.23,
-              shadowRadius: 2.62,
+          <FlatList
+            data={visits?.visits || []}
+            refreshControl={
+              <RefreshControl 
+              onRefresh = {()=> onRefreshVisits()}
+              refreshing={refreshing}/>
+            }
+            ListFooterComponent={listFooter}
+            renderItem={({ item }) => (
+              <View
+                style={{
+                  backgroundColor: '#fff',
+                  margin: 10,
+                  padding: 10,
+                  shadowColor: '#000',
+                  borderRadius: 10,
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.23,
+                  shadowRadius: 2.62,
 
-              elevation: 4,
-            }}>
-            <Text style={{ paddingVertical: 4 }}>{`Account Name: ${item.accName}`}</Text>
-            <Text style={{ paddingVertical: 4 }}>{`Area Name: ${item.AreaName}`}</Text>
-            <Text style={{ paddingVertical: 4 }}>{`Account Type: ${item.accType}`}</Text>
-           
-            {item.surveys.map((x, i) => {
-              
-              const srvDetails = (surveys?.data || []).find(y => y.surveyId === x.svyId);
-              // const srvDetails = schema.find(y => y.surveyId === x.svyId);
-              if (srvDetails) {
-                return (
-                  <VKCButton
-                    variant="fill"
-                    style={{ marginVertical: 5 }}
-                    text={srvDetails.surveyName}
-                    disable={unSyncSurveys?.find(
-                      z =>
-                        z.userId === visits.UserId && //Change this Back
-                        z.accountId === item.accId &&
-                        z.surveyId === srvDetails.surveyId,   
-                    )}
-                    onPress={async () => {
-                      navigation.navigate('SurveyQue', {
-                        questions: srvDetails.Questions,
-                        firstQuestion: true,
-                        accId: item.accId,
-                        accName: item.accName,
-                        surveyId: srvDetails.surveyId,
-                        UserId: visits.UserId,  //Change this Back
-                        Unplanned : false,
-                        temp_account_id : item.hasOwnProperty('temp_account_id') ? item.temp_account_id : null
-                      });
-                    }}
-                  />
-                );
-              }
-            })}
-          </View>
-        )}
-        keyExtractor={item => `${item.accId}`}
-      />
-    }
-  </View>
+                  elevation: 4,
+                }}>
+                <Text style={{ paddingVertical: 4 }}>{`Account Name: ${item.accName}`}</Text>
+                <Text style={{ paddingVertical: 4 }}>{`Area Name: ${item.AreaName}`}</Text>
+                <Text style={{ paddingVertical: 4 }}>{`Account Type: ${item.accType}`}</Text>
+               
+                {item.surveys.map((x, i) => {
+                  
+                  const srvDetails = (surveys?.data || []).find(y => y.surveyId === x.svyId);
+                  // const srvDetails = schema.find(y => y.surveyId === x.svyId);
+                  if (srvDetails) {
+                    return (
+                      <VKCButton
+                        variant="fill"
+                        style={{ marginVertical: 5 }}
+                        text={srvDetails.surveyName}
+                        disable={unSyncSurveys?.find(
+                          z =>
+                            z.userId === visits.UserId && //Change this Back
+                            z.accountId === item.accId &&
+                            z.surveyId === srvDetails.surveyId,   
+                        )}
+                        onPress={async () => {
+                          navigation.navigate('SurveyQue', {
+                            questions: srvDetails.Questions,
+                            firstQuestion: true,
+                            accId: item.accId,
+                            accName: item.accName,
+                            surveyId: srvDetails.surveyId,
+                            UserId: visits.UserId,  //Change this Back
+                            Unplanned : false,
+                            temp_account_id : item.hasOwnProperty('temp_account_id') ? item.temp_account_id : null
+                          });
+                        }}
+                      />
+                    );
+                  }
+                })}
+              </View>
+            )}
+            keyExtractor={item => `${item.accId}`}
+          />
+      }
+    </View>
   );
 };
 
