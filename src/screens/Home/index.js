@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import React, { useContext } from 'react';
+import React, { useEffect,useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Image, SafeAreaView, Text, View, Alert } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -15,7 +15,8 @@ import { storeToken } from '../../utils';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
-
+import {isDataDownloadedForToday} from '../../utils/index'
+import { ScreenContext } from 'src/context/screenContext';
 
 const Tab = createMaterialTopTabNavigator();
 const date = new Date().getDate();
@@ -24,6 +25,11 @@ const year = new Date().getFullYear();
 
 const Splash = ({ navigation }) => {
   const { setToken } = useContext(AuthContext);
+  const { syncData, setSyncData } = useContext(ScreenContext);
+
+  useEffect(()=>{
+      setSyncData(true);    
+  },[])
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

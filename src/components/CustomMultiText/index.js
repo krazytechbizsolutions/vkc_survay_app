@@ -26,6 +26,8 @@ const CustomMultiText = ({
     const [isVisible,setIsVisible]=useState(false);
     const [searchTextInput,setSearchTextInput]=useState("")
     const [searchText,setSearchText]=useState("")
+    const errorMsg = touched[name] && errors[name];
+
 
     useEffect(() =>{
         if(isUnplanned)
@@ -58,6 +60,7 @@ const CustomMultiText = ({
   }, [touched, errors, name]);
 
     const onAddSelectedData=(item)=>{
+        SearchTextInput("")
         let tmpSelectedData = SelectedData;
         let isExist = tmpSelectedData.some((e) => e.accName === item.accName)
         if(!isExist)
@@ -84,6 +87,37 @@ const CustomMultiText = ({
         }
         return false
     }
+
+    const removeSelectedData = (accName) =>{
+        let filteredSelectedData = SelectedData.filter((acc)=>{
+          return acc.accName !== accName
+        })
+        setSelectedData([...filteredSelectedData])
+        if(!isUnplanned)
+        {
+            setFieldValue('mainField',filteredSelectedData.length === 0 ? "":filteredSelectedData);
+            setFieldValue('childField',[]);   
+        }
+        SearchTextInput("")
+      }
+    
+      const askIfremove = (accName) => {
+        Alert.alert(
+          'Data Removal',
+          'Do You Want To Remove This Account',
+          [{ text: 'Cancel', onPress: () => {}
+            },
+            { text: 'OK', onPress: () => removeSelectedData(accName)}],
+          { cancelable: false },
+        );
+      }
+
+    const checkAccountSelected = (accName) =>{
+        return SelectedData.some((acc)=>{
+            console.log(accName,acc.accName)
+            return acc.accName === accName
+        })
+    }
     
       const SearchTextInput=async(e)=>{
           setSearchTextInput(e);
@@ -99,12 +133,15 @@ const CustomMultiText = ({
                             {
                                 if(checkAccountExist(UnplannedVisits ? UnplannedVisits : [],element.accName))
                                 {
-                                    tempShowAccountData.push(element);
+                                        tempShowAccountData.push(element);
                                 }
                             }
                             else
                             {
-                                tempShowAccountData.push(element);
+                               if(!checkAccountSelected(element.accName)) 
+                                {
+                                    tempShowAccountData.push(element);
+                                }
                             }       
                         }
                         return true;
@@ -170,7 +207,9 @@ const CustomMultiText = ({
                         <FlatList
                             ref={flastListRef}
                             data={SelectedData}
-                            renderItem={({ item,index }) => (
+                            renderItem={({ item,index }) => 
+                            {
+                                return(
                                     <View style={{width:'100%',padding:10,borderRadius:10,justifyContent:'flex-start',borderWidth:1,borderColor:'grey',marginVertical:10}}>
                                         <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Name : {item.accName}</TextEle>
                                         <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Type : {item.accType}</TextEle>
@@ -178,7 +217,8 @@ const CustomMultiText = ({
                                         <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>State : {item.state}</TextEle>
                                         <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Customer Code : {item.customer_code}</TextEle>
                                     </View>
-                            )}
+                            )
+                        }}
                             keyExtractor={(item,index) => `${index}`}
                         />
                     </View>
@@ -206,19 +246,26 @@ const CustomMultiText = ({
         </View>
         :
         <View style={{width: '100%'}}>
+            <TextEle style={{color: 'red',fontSize:12}}>{errorMsg}</TextEle>
             <TextEle>{question}</TextEle>
             <View style={{flex: 1,alignItems: 'center',justifyContent: 'flex-start',padding:10}}>
                 <View style={{width:'100%',justifyContent: 'center',marginTop:20}}>
                         <FlatList
                             data={SelectedData}
-                            renderItem={({ item,index }) => (
-                                    <View style={{width:'100%',padding:10,borderRadius:10,justifyContent:'flex-start',borderWidth:1,borderColor:'grey',marginVertical:10}}>
-                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Name : {item.accName}</TextEle>
-                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Type : {item.accType}</TextEle>
-                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Area Name : {item.AreaName}</TextEle>
-                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>State : {item.state}</TextEle>
-                                    </View>
-                            )}
+                            renderItem={({ item,index }) => 
+                            {
+                              return (
+                                        <TouchableOpacity style={{width:'100%'}} onPress={()=>askIfremove(item.accName)}>
+                                            <View style={{width:'100%',padding:10,borderRadius:10,justifyContent:'flex-start',borderWidth:1,borderColor:'grey',marginVertical:10}}>
+                                                <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Name : {item.accName}</TextEle>
+                                                <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Type : {item.accType}</TextEle>
+                                                <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Area Name : {item.AreaName}</TextEle>
+                                                <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>State : {item.state}</TextEle>
+                                            </View>
+                                        </TouchableOpacity>
+                                    )
+                            }
+                        }
                             keyExtractor={(item,index) => `${index}`}
                         />
                 </View>
@@ -252,7 +299,6 @@ const CustomMultiText = ({
                 data={ShowAccountData}
                 renderItem={({ item,index }) => 
                 {
-                    console.log("241",item)
                     return(
                             <TouchableOpacity onPress={()=>onAddSelectedData(item)} style={{width:'100%',alignItems:'center',justifyContent: 'center'}}>
                                 <View style={{width:'90%',padding:10,borderRadius:5,justifyContent:'flex-start',borderWidth:1,marginVertical:10,borderColor:'grey'}}>
