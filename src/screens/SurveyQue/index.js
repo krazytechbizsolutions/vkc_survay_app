@@ -201,7 +201,7 @@ const SurveyQue = ({ navigation, route }) => {
 
       if(sQuestion.Option_Type__c === 'Upload Image for choosing an Option')
       {
-        AsyncStorage.getItem(`IMG-${surveyId}-${accId}-${UserId}-${sQuestion.Id}`).then(res => {
+        AsyncStorage.getItem(`IMG-${surveyId}-${accId}-${UserId}-${sQuestion.Id}`).then(async (res) => {
               
           if(res !== null)
           {
@@ -231,7 +231,13 @@ const SurveyQue = ({ navigation, route }) => {
               // 
             })
             console.log('223 Images :',Images);
-            AsyncStorage.setItem('unSyncedImages',JSON.stringify(Images))
+
+            let unSyncedImages = await AsyncStorage.getItem('unSyncedImages')
+            if(unSyncedImages){
+              unSyncedImages = JSON.parse(unSyncedImages);
+            }
+            unSyncedImages = [...unSyncedImages, ...Images];
+            await AsyncStorage.setItem('unSyncedImages', JSON.stringify(unSyncedImages))
             //  console.log("210",Images)
           }
         })

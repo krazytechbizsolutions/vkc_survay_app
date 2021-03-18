@@ -150,22 +150,20 @@ const UnplannedVisits =({navigation})=>{
                         <Text style={{ paddingVertical: 4 }}>{`Account Type: ${item.accType}`}</Text>
                         {
                             surveys?.data.map((x,i)=>{
-                                // console.log("76",x.applicableTo);
-                                advancedFilter(x.filterType,x.filterValues,item)
+                                let offlineSrvDetails = unSyncSurveys?.find((z) => {
+                                  return z.userId === visits.UserId && z.accountId === item.accId && z.surveyId === x.surveyId && 
+                                    (!item.temp_account_id || (item.temp_account_id && z.temp_account_id === item.temp_account_id)) 
+                                })
+
                                 return(
                                     x.applicableTo && x.applicableTo.includes(item.accType) && advancedFilter(x.filterType,x.filterValues,item) ?
-                                    
+                                      // offlineSrvDetails?.syncStatus == 2 ? null : 
+                                      offlineSrvDetails ? null :
                                         <VKCButton
                                             variant="fill"
                                             style={{ marginVertical: 5 }}
                                             text={x.surveyName}
-                                            disable={unSyncSurveys?.find(
-                                              z =>
-                                                z.userId === visits.UserId && //Change this Back
-                                                z.accountId === item.accId &&
-                                                z.surveyId === x.surveyId && 
-                                                (!item.temp_account_id || (item.temp_account_id && z.temp_account_id === item.temp_account_id)) 
-                                            )}
+                                            disable={offlineSrvDetails}
                                             onPress={async () => {
                                             navigation.navigate('SurveyQue', {
                                                 questions: x.Questions,
