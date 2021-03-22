@@ -11,6 +11,7 @@ const MultiSelection = ({
   question,
   textField,
   valueField,
+  isSubLoop
 }) => (
   <View>
     {touched[name] && errors[name] && (
