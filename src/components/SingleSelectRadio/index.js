@@ -2,12 +2,17 @@ import { RadioCore } from '@components/radio/Radio';
 import TextEle from '@components/TextEle';
 import { Field } from 'formik';
 import React, { useState } from 'react';
-import { FlatList, View } from 'react-native';
-import { RectButton, TextInput } from 'react-native-gesture-handler';
+import { FlatList, View,ScrollView } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import SafeAreaView from 'react-native-safe-area-view';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MultiSelection from '@components/MultiSelection';
+import VKCDraggableLoop from '@components/VKCDraggableList';
+import TextInput from '../../components/TextInput/TextInput';
+import SliderQuestion from '@components/SliderQuestion';
 import styles from './styles';
+
 
 const SingleSelectRadio = ({
   field: { name, value },
@@ -31,7 +36,7 @@ const SingleSelectRadio = ({
   const errorStyle = touched[name] && errors[name] ? { borderColor: 'red' } : {};
 
   return (
-    <>
+    <ScrollView style={{width:'100%'}}>
       <TextEle variant="title" style={{ marginBottom: 10 }}>
         {question}
       </TextEle>
@@ -61,7 +66,82 @@ const SingleSelectRadio = ({
         onRequestClose={() => setIsVisible(false)}>
        
       </Modal>
-      {value?.subOrLoopingQtnOptions?.length > 1 && !!values[name] && (
+
+      {value?.Is_Looping_Question__c ?
+              <View style={{width:'100%',marginTop:25}}>
+                    {
+                      extraData.map((res)=>{ 
+                          if(res.loopingQtnType === 'Multi Select'){
+                            return(
+                              <Field
+                                  data={res.subOrLoopingQtnOptions}
+                                  valueField="Id"
+                                  textField="Detailed_Survey_Option_Name__c"
+                                  component={MultiSelection}
+                                  name="subLoopMultiSelect"
+                                  value={values.subLoopMultiSelect}
+                                  question={res.loopingQtnName}
+                                  isSubLoop={true}
+                                  validate={value => {
+                                    if (!value || value.length === 0) {
+                                      return 'Please Enter Field Value';
+                                    }
+                                    return '';
+                                  }}
+                              />
+                            )
+                          } 
+                          else if(res.loopingQtnType === 'Feedback' || 
+                                  res.loopingQtnType === 'Integer Enter Question' ||
+                                  res.loopingQtnType === 'Text' )
+                          {
+                            return(
+                            <Field
+                              component={TextInput}
+                              data={res.subOrLoopingQtnOptions}
+                              keyboardType={res.loopingQtnType === 'Integer Enter Question' ? "number-pad":""}
+                              multiline={res.loopingQtnType === 'Feedback' ?  true : false}
+                              inputStyle={{ minHeight: 200 }}
+                              name={res.loopingQtnType === 'Feedback' ? "subLoopFeedbackText" :res.loopingQtnType === 'Integer Enter Question' ? "subLoopIntegerText" : res.loopingQtnType === 'Text' ? "subLoopText":null  }
+                              value={res.loopingQtnType === 'Feedback' ? values.subLoopFeedbackText :res.loopingQtnType === 'Integer Enter Question' ? values.subLoopIntegerText : res.loopingQtnType === 'Text' ? values.subLoopText :null}
+                              question={res.loopingQtnName}
+                              isSubLoop={true}
+                              validate={value => {
+                                if (!value) {
+                                  return 'Please Enter Field Value';
+                                }
+                                return '';
+                              }}
+                            />
+                            )
+                          }
+                          else if(res.loopingQtnType === 'Slider'){
+                            return(
+                              <Field
+                                  component={SliderQuestion}
+                                  data={res}
+                                  name="subLoopSlider"
+                                  value={values.subLoopSlider}
+                                  question={res.loopingQtnName}
+                                  isSubLoop={true}
+                                  validate={value => {
+                                    if (!value) {
+                                      return 'Please Enter Field Value';
+                                    }
+                                    return '';
+                                  }}
+                                />
+                              )
+                          }
+                        })
+                      }
+              </View>
+              :null
+                
+              }
+
+
+      {/* {value?.subOrLoopingQtnOptions?.length > 1 && !!values[name] && (
         <Field
           name="childField"
           component={SingleSelectRadio}
@@ -94,8 +174,8 @@ const SingleSelectRadio = ({
             return '';
           }}
         />
-      )}
-    </>
+      )} */}
+    </ScrollView>
   );
 };
 
