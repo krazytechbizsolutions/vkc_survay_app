@@ -1,11 +1,18 @@
 /* eslint-disable react/prop-types */
 import TextEle from '@components/TextEle';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import { FlatList, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
+import SingleSelectRadio from '@components/SingleSelectRadio';
+import MultiSelection from '@components/MultiSelection';
+import VKCDraggableLoop from '@components/VKCDraggableList';
+import TextInput from '../../components/TextInput/TextInput';
+import SliderQuestion from '@components/SliderQuestion';
+import { Formik, Field, FieldArray } from 'formik';
 
-const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue }, data, question }) => {
+const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values }, data, question }) => {
   const [temp, setTemp] = useState([]);
+  const formRef = useRef();
 
   useEffect(() => {
     setFieldValue(name, data);
@@ -71,7 +78,42 @@ const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue }, dat
           )}
           keyExtractor={item => `draggable-item-${item.optionId}`}
         />
-      )}
+      )   
+      }
+
+      {temp.some((x) => x.isLoopingQtn) ?
+      <View style={{width:'100%',marginTop:25}}>
+              {
+                temp.map((loopingQuestion) => { 
+                  if(loopingQuestion.loopingQtnType === 'Slider') { 
+                    console.log("89",loopingQuestion)
+                    return(
+                      <Field
+                          component={SliderQuestion}
+                          data={loopingQuestion}
+                          name="subLoopSlider"
+                          value={values.subLoopSlider}
+                          question={loopingQuestion.loopingQtnName}
+                          isSubLoop={true}
+                          validate={value => {
+                            if (!value) {
+                              return 'Please Enter Field Value';
+                            }
+                            return '';
+                          }}
+                        />
+                      )
+                    }
+                    else
+                    {
+                      return null 
+                    }
+                })  
+              }              
+      </View>
+      :null
+        
+      }
     </>
   );
 };

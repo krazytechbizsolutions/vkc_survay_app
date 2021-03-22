@@ -26,6 +26,7 @@ const Select = ({
   mapField,
   disable,
   isRequired,
+  isSubLoop,
   ...props
 }) => {
   const [open, setOpen] = useState(false);
