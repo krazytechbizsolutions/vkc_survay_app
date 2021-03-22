@@ -162,7 +162,7 @@ class BackgroundSync extends React.Component{
             })
             await AsyncStorage.setItem(key, JSON.stringify(unSyncedData));
         }
-        return unSyncedData;
+        return unSyncedData.filter(ud => ud.isCompleted);
     }
 
     removeUnSyncedStatusSuccessDataInStorage = async (key, isRemove) => {
@@ -173,14 +173,16 @@ class BackgroundSync extends React.Component{
 
             // COMMENTED ABOVE & ADDED BELOW TO AVOID THE RE-ENABLING THE SURVEY BUTTON AFTER SYNC AS PULL IS ONLY ONCE A DAY...
             unSyncedData = unSyncedData.map(ud => {
-                ud.syncStatus = 2;
-                delete ud.Questions; // TODO: [LATER] RETAIN THIS TO SHOW SAVED DATA IN OFFLINE
+                if(ud.isCompleted){
+                    ud.syncStatus = 2;
+                    delete ud.Questions; // TODO: [LATER] RETAIN THIS TO SHOW SAVED DATA IN OFFLINE
+                }
                 return ud;
             })
             await AsyncStorage.setItem(key, JSON.stringify(unSyncedData));
         } else {
             unSyncedData = unSyncedData.map(ud => {
-                ud.syncStatus = 0;
+                if(ud.isCompleted) ud.syncStatus = 0;
                 return ud;
             })
             await AsyncStorage.setItem(key, JSON.stringify(unSyncedData));

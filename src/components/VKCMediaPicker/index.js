@@ -21,12 +21,60 @@ const VKCMediaPicker = ({
   question,
   surveyId,
   accountId,
+  temp_account_id,
+  accName,
   userId,
   questionId,
+  surveyDate,
   seqNo
 }) => {
+
+  let today = format(new Date(), 'yyyy-MM-dd');
+
   const [isVisible, setVisible] = useState(false);
-  const [ImageData,setImageData] = useState([]);
+  const [imageData, setImageData] = useState([]);
+
+  useEffect(()=>{
+    const loadSavedImages = async () => {
+      let images = await getSurveyQuestionImagesFromStorage();
+      setImageData(images)
+      setFieldValue('mainField', images.length > 0 ? images : "")
+    }
+    loadSavedImages();
+  },[])
+
+  const setImage = async (imageObj) => {
+      let imageName = accName + "_" + today + questionId + "_" + (imageData.length + 1);
+      let imgData = {
+        surveyId,
+        surveyDate: today,
+        temp_account_id,
+        accountId: accId,
+        userId: UserId,
+        qtnId: questionId,
+        Sequence_No: imageData.length + 1,
+        imageName: imageName,
+        imageType: 'JPG',
+        imageURL: imageObj.uri,
+        relatedTo: 'Survey'
+      }
+
+      imageData.push(imgData);
+
+      setImageData(imageData);
+      setFieldValue('mainField', imageData);
+      // setFieldValue(name, [...(value || []), res]);
+      await upsertSurveyQuestionImagesFromStorage(imageData);
+  }
+
+  const onDeleteData = async (index) => {
+    imageData.splice(index, 1);
+
+    setImageData(imageData);
+    await upsertSurveyQuestionImagesFromStorage(imageData);
+    setFieldValue('mainField', imageData);
+    // setFieldValue(name, [...(value || []), res]);
+  }
 
   const selectImage = () => {
     if (Platform.OS === 'ios') {
@@ -55,44 +103,41 @@ const VKCMediaPicker = ({
     }
   };
 
- const StoreImageLocal = (ImgData) =>{
-      AsyncStorage.setItem(`IMG-${surveyId}-${accountId}-${userId}-${questionId}`,JSON.stringify(ImgData)).then(res =>{
-        AsyncStorage.getItem(`IMG-${surveyId}-${accountId}-${userId}-${questionId}`).then(res => {
-          console.log("59",res)
-        })
-        console.log("Images Stored Successfully");
-        }).catch(err => {
-          console.log("Error Storing Values",err)
-        })
- }
 
-  useEffect(()=>{
-    AsyncStorage.getItem(`IMG-${surveyId}-${accountId}-${userId}-${questionId}`).then(res => {
-      if(res !== null)
-      {
-        let Images = JSON.parse(res);
-        console.log("70",Images);
-        setImageData([...Images])
-        setFieldValue('mainField',"")
-      }
-    })
-  },[])
-
-  const SetImage = (ImageObj) => {
-      ImageObj.QId = questionId;
-      ImageObj.SqNo = seqNo;
-      let TempImageData = ImageData;
-      TempImageData.push(ImageObj);
-      StoreImageLocal(TempImageData);
-      setImageData([...TempImageData])
+  const saveObjectInArrayOfStorage = async (key, obj) => {
+    let storageData = await getArrayFromStorage(key);
+    storageData.push(obj);
+    await AsyncStorage.setItem(key, JSON.stringify(storageData))
+  }
+  
+  const getArrayFromStorage = async (key) => {
+    let storageData = await AsyncStorage.getItem(key);
+    try{
+      storageData = storageData ? JSON.parse(storageData) : []
+    } catch(e){
+      storageData = [];
+    }
+    return storageData;
   }
 
-  const onDeleteData=(index)=>{
-    let TempImageData = ImageData;
-    TempImageData.splice(index, 1);
-    StoreImageLocal(TempImageData);
-    setImageData([...TempImageData]);
-    setFieldValue('mainField',TempImageData.length !== 0 ? TempImageData : "");  
+  const getSurveyQuestionImagesFromStorage = async () => {
+    let savedUnSyncedQuestions = await getArrayFromStorage('unSyncedQuestions');
+    return savedUnSyncedQuestions.filter(function(c) { 
+      return (c.surveyId === surveyId && c.accountId === accountId 
+        && c.temp_account_id === temp_account_id && c.UserId === userId 
+        && c.qtnId === questionId && c.surveyDate === today);
+    });
+  }
+
+  const upsertSurveyQuestionImagesFromStorage = async (imgData) => {
+    let savedUnSyncedQuestions = await getArrayFromStorage('unSyncedQuestions');
+    savedUnSyncedQuestions = savedUnSyncedQuestions.filter(function(c) { 
+      return !(c.surveyId === surveyId && c.accountId === accountId 
+        && c.temp_account_id === temp_account_id && c.UserId === userId 
+        && c.qtnId === questionId && c.surveyDate === today);
+    });
+    savedUnSyncedQuestions.push(...imgData);
+    saveObjectInArrayOfStorage('unSyncedQuestions', imgData);
   }
 
   return (
@@ -106,7 +151,7 @@ const VKCMediaPicker = ({
         {question}
       </TextEle>
       <VKCButton
-        disable={ImageData.length >= 10}
+        disable={imageData.length >= 10}
         variant="fill"
         text="Select Image"
         onPress={selectImage}
@@ -124,9 +169,7 @@ const VKCMediaPicker = ({
                     maxHeight:500
                   },
                   res => {
-                    // console.log("78",res);
-                    SetImage(res);
-                    setFieldValue(name, [...(value || []), res]);
+                    setImage(res);
                   },
                 );
                 setVisible(false);
@@ -145,7 +188,7 @@ const VKCMediaPicker = ({
           </View>
         </Modal>
       )}
-      {(ImageData || [])?.map((x,index) => (
+      {(imageData || [])?.map((x,index) => (
         <View style={{ margin: 40, alignItems: 'center' }}>
           {x?.uri && (
             <View>
