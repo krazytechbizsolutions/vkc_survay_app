@@ -118,10 +118,18 @@ const SurveyQue = ({ navigation, route }) => {
       }
       else if(sQuestion.Option_Type__c === 'Ordering Question')
       {
+        let selectedSubOrLoopingQtnOptions = {};
        let selQues = selectedOptions.mainField.filter((res) => {
           return res.IsSelected === true
         })
+
+        if(selectedOptions.mainField.some((x) => x.isLoopingQtn))
+        {
+          // console.log('Inside True',JSON.stringify(selectedOptions))
+          let loopFields = ['subLoopFeedbackText','subLoopIntegerText','subLoopText','subLoopMultiSelect','subLoopSlider','subLoopSelect']
+        }
         
+     
 
         selOptions = {
           selectedOptions: selQues.map(x => ({
@@ -284,6 +292,12 @@ const SurveyQue = ({ navigation, route }) => {
               )) || {
               mainField: '',
               childField: '',
+              subLoopFeedbackText:'',
+              subLoopIntegerText:'',
+              subLoopText:'',
+              subLoopMultiSelect:'',
+              subLoopSlider:'',
+              subLoopSelect:''
             }
           }
           enableReinitialize
@@ -420,6 +434,7 @@ const SurveyQue = ({ navigation, route }) => {
                 <Field
                   component={StarRating}
                   data={question.sQuestion}
+                  extraData = {question.Options}
                   name="mainField"
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
