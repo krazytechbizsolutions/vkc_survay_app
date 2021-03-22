@@ -1,16 +1,16 @@
 18/03/21,
 	Issues list,
-		1. Saved answer not retaining on going back & re-visiting.
+		1. [Pending] Saved answer not retaining on going back & re-visiting.
 		2. [Done] Multi text - Do not show already added accounts
 		3. [Done] Multi text - provide remove button for selected cards
 		4. [Done] Multi text - empty data validation
-		5. Tabular - empty data validation
+		5. [Pending] Tabular - empty data validation
 		6. [Done] Tabular - confusing button & alerts are removed
 		7. [Done] Image Capture - empty data validation
 		8. [Done] Star Rating - star not visible
 		9. [Done] Image Capture - After reaching max & disabling the button. If any image is removed then button is not enabled for re-capture.
 		10. [Done] Background sync should trigger on app login + planned survey capture + soon any submit actions
-		11. Once a survey is synced to surver, the local survey data is deleted & hence causes the day plan survey button to be visible. Instead of removing update the synced status
+		11. [Done] Once a survey is synced to surver, the local survey data is deleted & hence causes the day plan survey button to be visible. Instead of removing update the synced status
 		12. [Done] Retailer flow broken!!!
 
 ===================================================================================================================
