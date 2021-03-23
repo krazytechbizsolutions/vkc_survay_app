@@ -9,6 +9,8 @@ import {plannedVisists,schema} from '../../components/BackgroundSync/tempdata.js
 import { ScreenContext } from 'src/context/screenContext';
 
 const UnplannedVisits =({navigation})=>{
+    let today = format(new Date(), 'yyyy-MM-dd');
+
     const [visits, setVisits] = useState(null);
     const [unplannedVisits, setUnplannedVisits] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
@@ -150,20 +152,21 @@ const UnplannedVisits =({navigation})=>{
                         <Text style={{ paddingVertical: 4 }}>{`Account Type: ${item.accType}`}</Text>
                         {
                             surveys?.data.map((x,i)=>{
+                                let temp_account_id = item.temp_account_id ? item.temp_account_id : null;
                                 let offlineSrvDetails = unSyncSurveys?.find((z) => {
-                                  return z.userId === visits.UserId && z.accountId === item.accId && z.surveyId === x.surveyId && 
-                                    (!item.temp_account_id || (item.temp_account_id && z.temp_account_id === item.temp_account_id)) 
+                                  return z.userId === visits.UserId && z.accountId === item.accId && z.temp_account_id === temp_account_id 
+                                    && z.surveyId === x.surveyId && z.surveyDate === today && z.isUnplanned === true
                                 })
 
                                 return(
                                     x.applicableTo && x.applicableTo.includes(item.accType) && advancedFilter(x.filterType,x.filterValues,item) ?
                                       // offlineSrvDetails?.syncStatus == 2 ? null : 
-                                      offlineSrvDetails ? null :
+                                      offlineSrvDetails?.isCompleted ? null :
                                         <VKCButton
                                             variant="fill"
                                             style={{ marginVertical: 5 }}
                                             text={x.surveyName}
-                                            disable={offlineSrvDetails}
+                                            disable={offlineSrvDetails?.isCompleted}
                                             onPress={async () => {
                                             navigation.navigate('SurveyQue', {
                                                 questions: x.Questions,
@@ -173,7 +176,8 @@ const UnplannedVisits =({navigation})=>{
                                                 surveyId: x.surveyId,
                                                 UserId: visits?.UserId,  //Change this Back
                                                 Unplanned : true,
-                                                temp_account_id : item.hasOwnProperty('temp_account_id') ? item.temp_account_id : null
+                                                temp_account_id : item.hasOwnProperty('temp_account_id') ? item.temp_account_id : null,
+                                                survey: offlineSrvDetails
                                             });
                                             }}
                                         />

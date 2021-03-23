@@ -41,8 +41,6 @@ const SurveyQue = ({ navigation, route }) => {
   
   let today = format(new Date(), 'yyyy-MM-dd');
   const onSubmit = async selectedOptions => {
-
-      await saveArrayInStorage('unSyncedQuestions', []);
     
       const { sQuestion } = question;
       const Sequence_No = sQuestion.Sequence_No__c
@@ -215,7 +213,6 @@ const SurveyQue = ({ navigation, route }) => {
           surveyId: surveyId,
           surveyDate: today,
           isUnplanned: Unplanned,
-          isCompleted: (restQuestions.length === 0),
           Questions: []
         }
       }
@@ -234,6 +231,9 @@ const SurveyQue = ({ navigation, route }) => {
 
       unSyncedQuestions = unSyncedQuestions.filter( x => !(x.userId === UserId && x.accountId === accId && x.temp_account_id === temp_account_id && x.surveyId === surveyId 
               && x.surveyDate === today && x.isUnplanned === Unplanned))
+
+      savedSurveyData.isCompleted = (restQuestions.length === 0);
+
       unSyncedQuestions.push(savedSurveyData);
       await saveArrayInStorage('unSyncedQuestions', unSyncedQuestions);
 
@@ -314,7 +314,7 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -331,7 +331,7 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -378,7 +378,7 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -393,7 +393,7 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -407,7 +407,7 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -423,7 +423,7 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -439,7 +439,7 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -458,7 +458,7 @@ const SurveyQue = ({ navigation, route }) => {
                   imageField="imageUrl"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -483,7 +483,7 @@ const SurveyQue = ({ navigation, route }) => {
                   questionId={question.sQuestion.Id}
                   seqNo={question.sQuestion.Sequence_No__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Select Atleast One Image';
                     }
                     return '';
@@ -497,7 +497,7 @@ const SurveyQue = ({ navigation, route }) => {
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   isUnplanned={false}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Add Atleast One Account';
                     }
                     return '';
@@ -513,7 +513,7 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -535,7 +535,7 @@ const SurveyQue = ({ navigation, route }) => {
                   accountId = {accId}
                   validate={value => {
                     
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -550,7 +550,7 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     if (value > question.sQuestion.Max_Limit__c) {
@@ -570,7 +570,7 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -587,7 +587,7 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -604,7 +604,7 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -621,7 +621,7 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
