@@ -73,8 +73,7 @@ const SurveyQue = ({ navigation, route }) => {
         sQuestion.Option_Type__c === 'Stock' ||
         sQuestion.Option_Type__c === 'Performance In the Area' ||
         sQuestion.Option_Type__c === 'Salesman Commit' ||
-        sQuestion.Option_Type__c === 'Question with Image as options' ||
-        sQuestion.Option_Type__c === 'Upload Image for choosing an Option'
+        sQuestion.Option_Type__c === 'Question with Image as options'
       ) {
         let selectedSubOrLoopingQtnOptions = {};
         if (selectedOptions.childField && selectedOptions.mainField.isLoopingQtn) {
