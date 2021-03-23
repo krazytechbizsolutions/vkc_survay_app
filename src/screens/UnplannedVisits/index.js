@@ -157,6 +157,7 @@ const UnplannedVisits =({navigation})=>{
                                   return z.userId === visits.UserId && z.accountId === item.accId && z.temp_account_id === temp_account_id 
                                     && z.surveyId === x.surveyId && z.surveyDate === today && z.isUnplanned === true
                                 })
+                                let accountId = item.isAddedRetailer ? item.accountId : item.accId;
 
                                 return(
                                     x.applicableTo && x.applicableTo.includes(item.accType) && advancedFilter(x.filterType,x.filterValues,item) ?
@@ -171,7 +172,7 @@ const UnplannedVisits =({navigation})=>{
                                             navigation.navigate('SurveyQue', {
                                                 questions: x.Questions,
                                                 firstQuestion: true,
-                                                accId: item.accId,
+                                                accId: accountId,
                                                 accName: item.accName,
                                                 surveyId: x.surveyId,
                                                 UserId: visits?.UserId,  //Change this Back
