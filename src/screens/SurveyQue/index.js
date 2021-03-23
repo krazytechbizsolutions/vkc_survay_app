@@ -63,16 +63,13 @@ const SurveyQue = ({ navigation, route }) => {
         sQuestion.Option_Type__c === 'Coupon'
       ) 
       {
-        
-        console.log("64",sQuestion,JSON.stringify(selectedOptions))
-        console.log("64",JSON.stringify(selectedOptions))
+        answer = {
+          answer: selectedOptions.mainField,
+        };
 
+        // TODO: Remove not symbol from below once backend gives Is_Looping_Question__c as true for looping...
         if(!sQuestion.Is_Looping_Question__c)
         {
-          answer = {
-            answer: selectedOptions.mainField,
-          };
-
           selOptions = {
             selectedOptions: selectedOptions.starRatingMainField.map(x => ({
               seqNo: x.seqNo,
@@ -83,18 +80,6 @@ const SurveyQue = ({ navigation, route }) => {
               selectedSubOrLoopingQtnOptions:AddSubLoopingOptions(selectedOptions,x.loopingQtnType,x.optionId)
             })),
           };
-        }
-        else
-        {
-          if(sQuestion.Option_Type__c === 'Slider'){
-            answer = {
-              answer: Math.floor(selectedOptions.mainField),
-            };
-          } else {
-            answer = {
-              answer: selectedOptions.mainField,
-            };
-          }
         }
        
       }
@@ -108,7 +93,6 @@ const SurveyQue = ({ navigation, route }) => {
         sQuestion.Option_Type__c === 'Question with Image as options'
       ) {
         let selectedSubOrLoopingQtnOptions = {};
-        console.log("87",JSON.stringify(selectedOptions))
 
         if(selectedOptions.mainField.isLoopingQtn)
         {
@@ -372,7 +356,7 @@ const SurveyQue = ({ navigation, route }) => {
               answer:questionType === 'Feedback' ? selQues.subLoopFeedbackText : 
                      questionType === 'Integer Enter Question' ? selQues.subLoopIntegerText : 
                      questionType === 'Text' ? selQues.subLoopText :
-                     questionType === 'Slider' ? selQues.subLoopSlider : null
+                     questionType === 'Slider' ? Math.floor(selQues.subLoopSlider) : null
             }
           ]
         )
