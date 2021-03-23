@@ -152,12 +152,12 @@ const PlannedVisits = ({ navigation }) => {
                     })
                     return (
                       // offlineSrvDetails?.syncStatus == 2 ? null : 
-                      offlineSrvDetails?.isCompleted1 ? null :
+                      offlineSrvDetails?.isCompleted ? null :
                       <VKCButton
                         variant="fill"
                         style={{ marginVertical: 5 }}
                         text={srvDetails.surveyName}
-                        disable={offlineSrvDetails?.isCompleted1}
+                        disable={offlineSrvDetails?.isCompleted}
                         onPress={async () => {
                           navigation.navigate('SurveyQue', {
                             questions: srvDetails.Questions,
