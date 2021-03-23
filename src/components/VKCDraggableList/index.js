@@ -86,7 +86,6 @@ const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values
               {
                 temp.map((loopingQuestion) => { 
                   if(loopingQuestion.loopingQtnType === 'Slider') { 
-                    console.log("89",loopingQuestion)
                     return(
                       <Field
                           component={SliderQuestion}
@@ -104,9 +103,129 @@ const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values
                         />
                       )
                     }
-                    else
+                    else if(loopingQuestion.loopingQtnType === 'Single Select'){
+                          return(
+                            <Field
+                                name="subLoopSingleSelect"
+                                component={SingleSelectRadio}
+                                data={loopingQuestion.subOrLoopingQtnOptions}
+                                value={values.subLoopSingleSelect}
+                                valueField="Id"
+                                textField="Detailed_Survey_Option_Name__c"
+                                question={loopingQuestion.loopingQtnName}
+                                validate={val => {
+                                  if (!val) {
+                                    return 'Please Enter Field Value';
+                                  }
+                                  return '';
+                                }}
+                              />
+                          )
+                    }
+                    else if(loopingQuestion.loopingQtnType === 'Single Select List')
                     {
-                      return null 
+                      return(
+                        <Field
+                            name="subLoopSingleSelectList"
+                            component={SingleSelectRadio}
+                            data={loopingQuestion.subOrLoopingQtnOptions}
+                            value={values.subLoopSingleSelectList}
+                            valueField="Id"
+                            textField="Detailed_Survey_Option_Name__c"
+                            question={loopingQuestion.loopingQtnName}
+                            validate={val => {
+                              if (!val) {
+                                return 'Please Enter Field Value';
+                              }
+                              return '';
+                            }}
+                          />
+                      )
+                    }
+                    else if(loopingQuestion.loopingQtnType === 'Multi Select')
+                    {
+                      return(
+                        <Field
+                            data={loopingQuestion.subOrLoopingQtnOptions}
+                            valueField="Id"
+                            textField="Detailed_Survey_Option_Name__c"
+                            component={MultiSelection}
+                            name="subLoopMultiSelect"
+                            value={values.subLoopMultiSelect}
+                            question={loopingQuestion.loopingQtnName}
+                            isSubLoop={true}
+                            validate={value => {
+                              if (!value || value.length === 0) {
+                                return 'Please Enter Field Value';
+                              }
+                              return '';
+                            }}
+                        />
+                      )
+                    }
+                    else if(loopingQuestion.loopingQtnType === 'Feedback')
+                    {
+                      return(
+                      <Field
+                        component={TextInput}
+                        data={loopingQuestion.subOrLoopingQtnOptions}
+                        multiline={true}
+                        inputStyle={{ minHeight: 200 }}
+                        name="subLoopFeedbackText"
+                        value={values.subLoopFeedbackText}
+                        question={loopingQuestion.loopingQtnName}
+                        isSubLoop={true}
+                        validate={value => {
+                          if (!value) {
+                            return 'Please Enter Field Value';
+                          }
+                          return '';
+                        }}
+                      />
+                      )
+                    }
+                    else if(loopingQuestion.loopingQtnType === 'Integer Enter Question')
+                    {
+                      return(
+                        <Field
+                          component={TextInput}
+                          data={loopingQuestion.subOrLoopingQtnOptions}
+                          keyboardType="number-pad"
+                          multiline={false}
+                          inputStyle={{ minHeight: 200 }}
+                          name='subLoopIntegerText'
+                          value={values.subLoopIntegerText}
+                          question={loopingQuestion.loopingQtnName}
+                          isSubLoop={true}
+                          validate={value => {
+                            if (!value) {
+                              return 'Please Enter Field Value';
+                            }
+                            return '';
+                          }}
+                        />
+                      )
+                    }
+                    else if(loopingQuestion.loopingQtnType === 'Text')
+                    {
+                      return (
+                        <Field
+                          component={TextInput}
+                          data={loopingQuestion.subOrLoopingQtnOptions}
+                          inputStyle={{ minHeight: 200 }}
+                          name= 'subLoopText'
+                          multiline={false}
+                          value={values.subLoopText}
+                          question={loopingQuestion.loopingQtnName}
+                          isSubLoop={true}
+                          validate={value => {
+                            if (!value) {
+                              return 'Please Enter Field Value';
+                            }
+                            return '';
+                          }}
+                        />
+                      )
                     }
                 })  
               }              

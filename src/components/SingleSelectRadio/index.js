@@ -22,12 +22,14 @@ const SingleSelectRadio = ({
   textField,
   placeholder = 'Please select value',
   question,
+  extraData
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const onSelectValue = item => {
     setIsVisible(false);
     setFieldValue(name, item);
+    console.log("32",name,item)
     if (name !== 'childField') {
       setFieldValue('childField', '');
     }
@@ -67,11 +69,11 @@ const SingleSelectRadio = ({
        
       </Modal>
 
-      {value?.Is_Looping_Question__c ?
+      {value?.isLoopingQtn ?
               <View style={{width:'100%',marginTop:25}}>
                     {
                       extraData.map((res)=>{ 
-                          if(res.loopingQtnType === 'Multi Select'){
+                          if(res.loopingQtnType === 'Multi Select' && value.loopingQtnType === 'Multi Select'){
                             return(
                               <Field
                                   data={res.subOrLoopingQtnOptions}
@@ -91,19 +93,16 @@ const SingleSelectRadio = ({
                               />
                             )
                           } 
-                          else if(res.loopingQtnType === 'Feedback' || 
-                                  res.loopingQtnType === 'Integer Enter Question' ||
-                                  res.loopingQtnType === 'Text' )
+                          else if(res.loopingQtnType === 'Feedback' && value.loopingQtnType === 'Feedback')
                           {
                             return(
                             <Field
                               component={TextInput}
                               data={res.subOrLoopingQtnOptions}
-                              keyboardType={res.loopingQtnType === 'Integer Enter Question' ? "number-pad":""}
                               multiline={res.loopingQtnType === 'Feedback' ?  true : false}
                               inputStyle={{ minHeight: 200 }}
-                              name={res.loopingQtnType === 'Feedback' ? "subLoopFeedbackText" :res.loopingQtnType === 'Integer Enter Question' ? "subLoopIntegerText" : res.loopingQtnType === 'Text' ? "subLoopText":null  }
-                              value={res.loopingQtnType === 'Feedback' ? values.subLoopFeedbackText :res.loopingQtnType === 'Integer Enter Question' ? values.subLoopIntegerText : res.loopingQtnType === 'Text' ? values.subLoopText :null}
+                              name="subLoopFeedbackText"
+                              value={values.subLoopFeedbackText}
                               question={res.loopingQtnName}
                               isSubLoop={true}
                               validate={value => {
@@ -115,7 +114,48 @@ const SingleSelectRadio = ({
                             />
                             )
                           }
-                          else if(res.loopingQtnType === 'Slider'){
+                          else if(res.loopingQtnType === 'Integer Enter Question' && value.loopingQtnType === 'Integer Enter Question')
+                          {
+                            return(
+                              <Field
+                                component={TextInput}
+                                data={res.subOrLoopingQtnOptions}
+                                keyboardType="number-pad"
+                                inputStyle={{ minHeight: 200 }}
+                                name='subLoopIntegerText'
+                                value={values.subLoopIntegerText}
+                                question={res.loopingQtnName}
+                                isSubLoop={true}
+                                validate={value => {
+                                  if (!value) {
+                                    return 'Please Enter Field Value';
+                                  }
+                                  return '';
+                                }}
+                              />
+                            )
+                          }
+                          else if(res.loopingQtnType === 'Text' && value.loopingQtnType === 'Text')
+                          {
+                            return (
+                              <Field
+                                component={TextInput}
+                                data={res.subOrLoopingQtnOptions}
+                                inputStyle={{ minHeight: 200 }}
+                                name= 'subLoopText'
+                                value={values.subLoopText}
+                                question={res.loopingQtnName}
+                                isSubLoop={true}
+                                validate={value => {
+                                  if (!value) {
+                                    return 'Please Enter Field Value';
+                                  }
+                                  return '';
+                                }}
+                              />
+                            )
+                          }
+                          else if(res.loopingQtnType === 'Slider' && value.loopingQtnType === 'Slider'){
                             return(
                               <Field
                                   component={SliderQuestion}
@@ -133,6 +173,27 @@ const SingleSelectRadio = ({
                                 />
                               )
                           }
+                          else if((res.loopingQtnType === 'Single Select List' && value.loopingQtnType === 'Single Select List') || (res.loopingQtnType === 'Single Select' && value.loopingQtnType === 'Single Select') )
+                          {
+                            if(value?.subOrLoopingQtnOptions?.length > 1 && !!values[name])  
+                            return(
+                              <Field
+                                name="childField"
+                                component={SingleSelectRadio}
+                                data={value.subOrLoopingQtnOptions}
+                                value={values.childField}
+                                valueField="Id"
+                                textField="Detailed_Survey_Option_Name__c"
+                                question={value.loopingQtnName}
+                                validate={val => {
+                                  if (!val) {
+                                    return 'Please Enter Field Value';
+                                  }
+                                  return '';
+                                }}
+                              />
+                            )
+                          }
                         })
                       }
               </View>
@@ -141,40 +202,7 @@ const SingleSelectRadio = ({
               }
 
 
-      {/* {value?.subOrLoopingQtnOptions?.length > 1 && !!values[name] && (
-        <Field
-          name="childField"
-          component={SingleSelectRadio}
-          data={value.subOrLoopingQtnOptions}
-          value={values.childField}
-          valueField="Id"
-          textField="Detailed_Survey_Option_Name__c"
-          question={value.loopingQtnName}
-          validate={val => {
-            if (!val) {
-              return 'Please Enter Field Value';
-            }
-            return '';
-          }}
-        />
-      )}
-      {value?.subOptions?.length > 1 && !!values[name] && (
-        <Field
-          name="childField"
-          component={SingleSelectRadio}
-          data={value.subOptions}
-          value={values.childField}
-          valueField="Id"
-          textField="Detailed_Survey_Option_Name__c"
-          question={value.loopingQtnName}
-          validate={val => {
-            if (!val) {
-              return 'Please Enter Field Value';
-            }
-            return '';
-          }}
-        />
-      )} */}
+     
     </ScrollView>
   );
 };

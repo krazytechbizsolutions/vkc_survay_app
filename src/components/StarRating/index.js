@@ -21,16 +21,31 @@ const StarRating = ({
 }) => 
  
   {
+    const [rate,setRating]=useState(0)
 
     useEffect(() => {
-      console.log("22 Star rating",values);
+      console.log("22 Star rating",JSON.stringify(extraData));
     },[])
+
+    const setting=(r)=>{
+      let rate = (Math.round(r * 2) / 2).toFixed(1)
+      if(rate % 1 === 0)
+      {
+        rate = parseInt(rate)
+      }
+      setRating(rate)
+      setFieldValue('starRatingMainField',extraData.filter(x => x.optionName === rate.toString()))
+      setFieldValue(name, r)
+    }
 
     return(
       <ScrollView style={{width:'100%'}}>
         <View style={{ flex: 1 }}>
           <TextEle variant="title" style={{ marginBottom: 10 }}>
             {question}
+          </TextEle>
+          <TextEle variant="title" style={{ marginBottom: 10 }}>
+            {rate}
           </TextEle>
           <View style={{ marginTop: 30, margin: 10, flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
@@ -39,7 +54,7 @@ const StarRating = ({
                 ratingImage={require('../../assets/Logo/star.png')}
                 ratingColor="red"
                 ratingBackgroundColor="#fff"
-                onFinishRating={rating => setFieldValue(name, rating)}
+                onFinishRating={setting}
                 showRating={true}
                 fractions={1}
                 startingValue={value || 0}
@@ -62,8 +77,146 @@ const StarRating = ({
               <View style={{width:'100%',marginTop:25}}>
                     {
                       extraData.map((res)=>{ 
-                          if(res.loopingQtnType === 'Multi Select'){
+                          if(res.optionName === rate.toString()){
+                            if(res.loopingQtnType === 'Multi Select')
+                            {
+                              return( 
+                                <Field
+                                  data={res.subOrLoopingQtnOptions}
+                                  valueField="Id"
+                                  textField="Detailed_Survey_Option_Name__c"
+                                  component={MultiSelection}
+                                  name="subLoopMultiSelect"
+                                  value={values.subLoopMultiSelect}
+                                  question={res.loopingQtnName}
+                                  isSubLoop={true}
+                                  validate={value => {
+                                    if (!value || value.length === 0) {
+                                      return 'Please Enter Field Value';
+                                    }
+                                    return '';
+                                  }}
+                              />
+                              )
+                            }
+                            else if(res.loopingQtnType === 'Single Select'){
+                              return(
+                                <Field
+                                    name="subLoopSingleSelect"
+                                    component={SingleSelectRadio}
+                                    data={res.subOrLoopingQtnOptions}
+                                    value={values.subLoopSingleSelect}
+                                    valueField="Id"
+                                    textField="Detailed_Survey_Option_Name__c"
+                                    question={res.loopingQtnName}
+                                    validate={val => {
+                                      if (!val) {
+                                        return 'Please Enter Field Value';
+                                      }
+                                      return '';
+                                    }}
+                                  />
+                              )
+                        }
+                        else if(res.loopingQtnType === 'Single Select List')
+                        {
+                          return(
+                            <Field
+                                name="subLoopSingleSelectList"
+                                component={SingleSelectRadio}
+                                data={res.subOrLoopingQtnOptions}
+                                value={values.subLoopSingleSelectList}
+                                valueField="Id"
+                                textField="Detailed_Survey_Option_Name__c"
+                                question={res.loopingQtnName}
+                                validate={val => {
+                                  if (!val) {
+                                    return 'Please Enter Field Value';
+                                  }
+                                  return '';
+                                }}
+                              />
+                          )
+                        }
+                        else if(res.typeloopingQtnType === 'Feedback')
+                          {
                             return(
+                            <Field
+                              component={TextInput}
+                              data={res.subOrLoopingQtnOptions}
+                              multiline={true}
+                              inputStyle={{ minHeight: 200 }}
+                              name="subLoopFeedbackText"
+                              value={values.subLoopFeedbackText}
+                              question={res.loopingQtnName}
+                              isSubLoop={true}
+                              validate={value => {
+                                if (!value) {
+                                  return 'Please Enter Field Value';
+                                }
+                                return '';
+                              }}
+                            />
+                            )
+                          }
+                          else if(res.loopingQtnType === 'Integer Enter Question')
+                          {
+                            return(
+                              <Field
+                                component={TextInput}
+                                data={res.subOrLoopingQtnOptions}
+                                keyboardType="number-pad"
+                                multiline={false}
+                                inputStyle={{ minHeight: 200 }}
+                                name='subLoopIntegerText'
+                                value={values.subLoopIntegerText}
+                                question={res.loopingQtnName}
+                                isSubLoop={true}
+                                validate={value => {
+                                  if (!value) {
+                                    return 'Please Enter Field Value';
+                                  }
+                                  return '';
+                                }}
+                              />
+                            )
+                          }
+                          else if(res.loopingQtnType === 'Text')
+                          {
+                            return (
+                              <Field
+                                component={TextInput}
+                                data={res.subOrLoopingQtnOptions}
+                                inputStyle={{ minHeight: 200 }}
+                                name= 'subLoopText'
+                                multiline={false}
+                                value={values.subLoopText}
+                                question={res.loopingQtnName}
+                                isSubLoop={true}
+                                validate={value => {
+                                  if (!value) {
+                                    return 'Please Enter Field Value';
+                                  }
+                                  return '';
+                                }}
+                              />
+                            )
+                          }
+                      }
+                    })
+                  }
+              </View>
+              :null
+                
+              }
+        </View>
+      </ScrollView>
+      );
+  } 
+
+export default StarRating;
+{/* 
+return(
                               <Field
                                   data={res.subOrLoopingQtnOptions}
                                   valueField="Id"
@@ -123,16 +276,4 @@ const StarRating = ({
                                   }}
                                 />
                               )
-                          }
-                        })
-                      }
-              </View>
-              :null
-                
-              }
-        </View>
-      </ScrollView>
-      );
-  } 
-
-export default StarRating;
+                          } */}
