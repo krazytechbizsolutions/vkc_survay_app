@@ -1,3 +1,24 @@
+23/03/21,
+	Issues List,
+		1. Ordering questions empty validation
+		2. Slider not showing the selected value 
+		3. Multi Select not unselecting on checkbox click
+		4. Image upload question - all sub looping question needs to be enabled
+		5. Order question not available as sub looping question
+		6. "Is_Looping_Question__c" field comes as false in case of looping questions -- Backend Dependency
+		7. Delete button to be incorporated(same as Multi Text Que type)
+		8. Restricting to add Duplicate account, same dealer/Sub dealer can be selected twice and the duplicates are added to Unplanned Visits
+		9. A Link to be available in Salesforce for conneting directly to the Survey of the related Retailer/Dealer/Sub Dealer from the Day Plan Activities Page
+
+		Others,
+			1. Need difference in the visual appearance of "NEXT" button and "SUBMIT" button -- Make the survey submit button as green
+			2. Find all the non-retaining questions
+
+		Clarifications,
+			1. Filtering criteria should be only Area and not Account owner. All the accounts related to the day plan area should be displayed as suggestion for Unplanned visit of Exisiting Dealer/Sub dealer/Retailer.
+			
+===================================================================================================================
+
 18/03/21,
 	Issues list,
 		1. [Pending] Saved answer not retaining on going back & re-visiting.
