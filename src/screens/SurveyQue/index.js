@@ -42,8 +42,7 @@ const SurveyQue = ({ navigation, route }) => {
   const [ShowSubmitModal,setSubmitModal]=useState(false);
   const { syncData, setSyncData } = useContext(ScreenContext);
   const formRef = useRef();
-  const onSubmit = async selectedOptions => {
-    
+  const onSubmit = async (selectedOptions,{resetForm} ) => {
       const { sQuestion } = question;
       console.log("48",sQuestion)
       const Sequence_No = sQuestion.Sequence_No__c
@@ -53,6 +52,7 @@ const SurveyQue = ({ navigation, route }) => {
         : {};
 
       let answer = {};
+      let selOptions = {}
       if (
         sQuestion.Option_Type__c === 'Integer Enter Question' ||
         sQuestion.Option_Type__c === 'Text' ||
@@ -62,18 +62,41 @@ const SurveyQue = ({ navigation, route }) => {
         sQuestion.Option_Type__c === 'Coupon'
       ) 
       {
-        if(sQuestion.Option_Type__c === 'Slider'){
-          answer = {
-            answer: Math.floor(selectedOptions.mainField),
-          };
-        } else {
+        
+        console.log("64",sQuestion,JSON.stringify(selectedOptions))
+        console.log("64",JSON.stringify(selectedOptions))
+
+        if(!sQuestion.Is_Looping_Question__c)
+        {
           answer = {
             answer: selectedOptions.mainField,
           };
-        }
-      }
 
-      let selOptions = {};
+          selOptions = {
+            selectedOptions: selectedOptions.starRatingMainField.map(x => ({
+              seqNo: x.seqNo,
+              optionId: x.optionId,
+              isLoopingQtn: x.isLoopingQtn,
+              loopingQtnId: x.loopingQtnId,
+              loopingQtnType: x.loopingQtnType,
+              selectedSubOrLoopingQtnOptions:AddSubLoopingOptions(selectedOptions,x.loopingQtnType,x.optionId)
+            })),
+          };
+        }
+        else
+        {
+          if(sQuestion.Option_Type__c === 'Slider'){
+            answer = {
+              answer: Math.floor(selectedOptions.mainField),
+            };
+          } else {
+            answer = {
+              answer: selectedOptions.mainField,
+            };
+          }
+        }
+       
+      }
       if (
         sQuestion.Option_Type__c === 'Single Select' ||
         sQuestion.Option_Type__c === 'Single Select List' ||
@@ -84,16 +107,34 @@ const SurveyQue = ({ navigation, route }) => {
         sQuestion.Option_Type__c === 'Question with Image as options'
       ) {
         let selectedSubOrLoopingQtnOptions = {};
-        if (selectedOptions.childField && selectedOptions.mainField.isLoopingQtn) {
-         
-          selectedSubOrLoopingQtnOptions = {
-            selectedSubOrLoopingQtnOptions: [
-              {
-                Id: selectedOptions.childField.Id,
-                Sequence_No__c: selectedOptions.childField.Sequence_No__c,
-              },
-            ],
-          };
+        console.log("87",JSON.stringify(selectedOptions))
+
+        if(selectedOptions.mainField.isLoopingQtn)
+        {
+          if(selectedOptions.mainField.loopingQtnType === "Single Select" || selectedOptions.mainField.loopingQtnType === "Single Select List")
+          {
+            selectedSubOrLoopingQtnOptions = {
+              selectedSubOrLoopingQtnOptions: [
+                {
+                  Id: selectedOptions.childField.Id,
+                  Sequence_No__c: selectedOptions.childField.Sequence_No__c,
+                },
+              ],
+            };
+          }
+          else if(selectedOptions.mainField.loopingQtnType === "Multi Select")
+          {
+            selectedSubOrLoopingQtnOptions = {
+              selectedSubOrLoopingQtnOptions: AddSubLoopingOptions(selectedOptions,selectedOptions.mainField.loopingQtnType).filter((x) => x)[0],
+            };
+          }
+          else
+          {
+            console.log("111")
+            selectedSubOrLoopingQtnOptions = {
+              selectedSubOrLoopingQtnOptions: AddSubLoopingOptions(selectedOptions,selectedOptions.mainField.loopingQtnType).filter((x) => x),
+            };
+          }
         }
         
         selOptions = {
@@ -122,30 +163,39 @@ const SurveyQue = ({ navigation, route }) => {
           })),
         };
       }
-      else if(sQuestion.Option_Type__c === 'Ordering Question')
-      {
+      else if(sQuestion.Option_Type__c === 'Ordering Question'){
+
         let selectedSubOrLoopingQtnOptions = {};
        let selQues = selectedOptions.mainField.filter((res) => {
           return res.IsSelected === true
         })
 
-        if(selectedOptions.mainField.some((x) => x.isLoopingQtn))
+        if(selectedOptions.mainField.some((x) => x.isLoopingQtn)) //temp Soln
         {
           // console.log('Inside True',JSON.stringify(selectedOptions))
-          let loopFields = ['subLoopFeedbackText','subLoopIntegerText','subLoopText','subLoopMultiSelect','subLoopSlider','subLoopSelect']
+          selOptions = {
+            selectedOptions: selQues.map(x => ({
+              seqNo: x.seqNo,
+              optionId: x.optionId,
+              isLoopingQtn: x.isLoopingQtn,
+              loopingQtnId: x.loopingQtnId,
+              loopingQtnType: x.loopingQtnType,
+              selectedSubOrLoopingQtnOptions:AddSubLoopingOptions(selectedOptions,x.loopingQtnType,x.optionId)
+            })),
+          };
         }
-        
-     
-
-        selOptions = {
-          selectedOptions: selQues.map(x => ({
-            seqNo: x.seqNo,
-            optionId: x.optionId,
-            isLoopingQtn: x.isLoopingQtn,
-            loopingQtnId: x.loopingQtnId,
-            loopingQtnType: x.loopingQtnType,
-          })),
-        };
+        else
+        {
+          selOptions = {
+            selectedOptions: selQues.map(x => ({
+              seqNo: x.seqNo,
+              optionId: x.optionId,
+              isLoopingQtn: x.isLoopingQtn,
+              loopingQtnId: x.loopingQtnId,
+              loopingQtnType: x.loopingQtnType
+            })),
+          };
+        }
       }
       else if (sQuestion.Option_Type__c === 'Single Select Group')
       {
@@ -245,6 +295,7 @@ const SurveyQue = ({ navigation, route }) => {
             if(unSyncedImages){
               unSyncedImages = JSON.parse(unSyncedImages);
             }
+            console.log("275",JSON.stringify(Images));
             unSyncedImages = [...unSyncedImages, ...Images];
             await AsyncStorage.setItem('unSyncedImages', JSON.stringify(unSyncedImages))
             //  console.log("210",Images)
@@ -349,6 +400,68 @@ const SurveyQue = ({ navigation, route }) => {
       }  
   };
 
+
+const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{  
+  switch(questionType)
+  {
+    case 'Multi Select':
+ 
+      return selQues.subLoopMultiSelect.map((val)=>{
+        return(
+                  {
+                    Id: val.Id,
+                    Sequence_No__c: val.Sequence_No__c,
+                  } 
+              )
+          })
+        break;
+
+    case 'Single Select':
+      return(
+        [
+          {
+            Id: selQues.subLoopSingleSelect.Id,
+            Sequence_No__c: selQues.subLoopSingleSelect.Sequence_No__c,
+          }
+        ]
+      )
+      break;
+
+    case 'Single Select List':
+      return(
+        [
+          {
+            Id: selQues.subLoopSingleSelectList.Id,
+            Sequence_No__c: selQues.subLoopSingleSelectList.Sequence_No__c,
+          }
+        ]
+      )
+      break;
+
+    case 'Feedback':
+    case 'Integer Enter Question':
+    case 'Text':
+    case 'Slider':
+      return(
+        [
+          {
+            Id: optionId ? optionId:selQues.mainField.optionId,
+            answer:questionType === 'Feedback' ? selQues.subLoopFeedbackText : 
+                   questionType === 'Integer Enter Question' ? selQues.subLoopIntegerText : 
+                   questionType === 'Text' ? selQues.subLoopText :
+                   questionType === 'Slider' ? selQues.subLoopSlider : null
+          }
+        ]
+      )
+      break;
+
+    default:
+      return null
+      break;
+  }
+}
+
+
   const setIntoLocalStorage = async(
     UserId,
     accId,
@@ -421,7 +534,10 @@ const SurveyQue = ({ navigation, route }) => {
               subLoopText:'',
               subLoopMultiSelect:'',
               subLoopSlider:'',
-              subLoopSelect:''
+              subLoopSelect:'',
+              subLoopSingleSelect:'',
+              subLoopSingleSelectList:'',
+              starRatingMainField:''
             }
           }
           enableReinitialize
@@ -434,6 +550,7 @@ const SurveyQue = ({ navigation, route }) => {
                   component={SingleSelectRadio}
                   data={question.Options}
                   value={values.mainField}
+                  extraData = {question.Options}
                   valueField="optionId"
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
@@ -451,6 +568,7 @@ const SurveyQue = ({ navigation, route }) => {
                   component={SingleSelectRadio}
                   data={question.Options}
                   value={values.mainField}
+                  extraData = {question.Options}
                   valueField="optionId"
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}

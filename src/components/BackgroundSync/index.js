@@ -230,6 +230,7 @@ class BackgroundSync extends React.Component{
                     
                     try
                     {
+                        console.log("233",data)
                         let imageResponse = await axios.post(captureImageApi,data)
                         await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.imageName, imageResponse.data.status === "Success");
                     } catch(e) {
