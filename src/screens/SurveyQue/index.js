@@ -30,21 +30,19 @@ import SpecialEfforts from '@components/CustomSpecialEfforts'
 import { ScreenContext } from '../../context/screenContext';
 
 console.disableYellowBox = true;
-let survey = []
-let Images = []
-console.log("survey",survey);
+
 const SurveyQue = ({ navigation, route }) => {
   // const { colors } = useTheme();
-  const { questions, firstQuestion, accId, accName, surveyId, UserId, Unplanned, temp_account_id } = route.params;
-  const [question, ...restQuestions] = questions;
-  const [SurveySubmit,setSurveySubmit]=useState(false);
-  const [ImageSubmit,setImage]=useState(false);
-  const [ShowSubmitModal,setSubmitModal]=useState(false);
+  const { questions, firstQuestion, accId, accName, surveyId, UserId, Unplanned, temp_account_id, survey } = route.params;
+  const [ question, ...restQuestions ] = questions;
+  const [ ShowSubmitModal, setSubmitModal]=useState(false);
   const { syncData, setSyncData } = useContext(ScreenContext);
   const formRef = useRef();
-  const onSubmit = async (selectedOptions,{resetForm} ) => {
+  
+  let today = format(new Date(), 'yyyy-MM-dd');
+  const onSubmit = async selectedOptions => {
+    
       const { sQuestion } = question;
-      console.log("48",sQuestion)
       const Sequence_No = sQuestion.Sequence_No__c
         ? {
             Sequence_No: sQuestion.Sequence_No__c,
@@ -52,11 +50,14 @@ const SurveyQue = ({ navigation, route }) => {
         : {};
 
       let answer = {};
-      let selOptions = {}
-      if (
+      let selOptions = {};
+      if(sQuestion.Option_Type__c === 'Slider'){
+        answer = {
+          answer: Math.floor(selectedOptions.mainField),
+        };
+      } else if (
         sQuestion.Option_Type__c === 'Integer Enter Question' ||
         sQuestion.Option_Type__c === 'Text' ||
-        sQuestion.Option_Type__c === 'Slider' ||
         sQuestion.Option_Type__c === 'Star Rating' ||
         sQuestion.Option_Type__c === 'Feedback' ||
         sQuestion.Option_Type__c === 'Coupon'
@@ -255,138 +256,60 @@ const SurveyQue = ({ navigation, route }) => {
             })
         })
         selOptions.selectedOptions = Options;
-        
+      } 
+
+      // save the selectedOptions to local & continue...
+      let unSyncedQuestions = await getArrayFromStorage('unSyncedQuestions');
+      // check if survey data already exists...
+      let savedSurveyData = unSyncedQuestions.find( x => x.userId === UserId && x.accountId === accId && x.temp_account_id === temp_account_id && x.surveyId === surveyId 
+        && x.surveyDate === today && x.isUnplanned === Unplanned)
+
+      if(!savedSurveyData){
+        savedSurveyData = {
+          userId: UserId,
+          accountId: accId,
+          temp_account_id: temp_account_id,
+          surveyId: surveyId,
+          surveyDate: today,
+          isUnplanned: Unplanned,
+          Questions: []
+        }
       }
 
-      if(sQuestion.Option_Type__c === 'Upload Image for choosing an Option')
-      {
-        AsyncStorage.getItem(`IMG-${surveyId}-${accId}-${UserId}-${sQuestion.Id}`).then(async (res) => {
-              
-          if(res !== null)
-          {
-            let ImgData = JSON.parse(res);
-            let ImageName ;
-            console.log("266",`IMG-${surveyId}-${accId}-${UserId}-${sQuestion.Id}`,sQuestion)
-            
-            ImgData.forEach((Img,index) => {
-              ImageName = accName + "_" + format(new Date(), 'yyyy-MM-dd') + sQuestion.Id + "_" + (index + 1);
-              let payload ={
-                surveyId,
-                accountId: accId,
-                userId: UserId,
-                qtnId: sQuestion.Id,
-                Sequence_No: index + 1,
-                imageName: ImageName,
-                imageType: 'JPG',
-                imageURL: Img.uri,
-                relatedTo: 'Survey'
-              }
-              
-              let isExist = Images.some((img) => img.imageName === ImageName )
-              if(!isExist)
-              {
-                Images.push(payload);
-              }
-              // 
-            })
-            console.log('223 Images :',Images);
-
-            let unSyncedImages = await AsyncStorage.getItem('unSyncedImages')
-            if(unSyncedImages){
-              unSyncedImages = JSON.parse(unSyncedImages);
-            }
-            console.log("275",JSON.stringify(Images));
-            unSyncedImages = [...unSyncedImages, ...Images];
-            await AsyncStorage.setItem('unSyncedImages', JSON.stringify(unSyncedImages))
-            //  console.log("210",Images)
-          }
-        })
-      }
-      else
-      {
-        const data = {
+      savedSurveyData.Questions = savedSurveyData.Questions.filter(q => q.sQuestion.qtnId !== sQuestion.Id)
+      savedSurveyData.Questions.push({
+        sQuestion: {
           qtnId: sQuestion.Id,
           qtnType: sQuestion.Option_Type__c,
           ...Sequence_No,
           ...answer,
-        };
-  
-        console.log("188",
-          JSON.stringify({
-            sQuestion: data,
-            ...selOptions,
-          }),
-        );
-        
-        survey.unshift({
-          sQuestion: data,
-          ...selOptions,
-        })
+        },
+        ...selOptions,
+        ...selectedOptions
+      });
 
-        let LocalStorageSurveyData = {
-          sQuestion: data,
-          ...selOptions,
-        }
+      unSyncedQuestions = unSyncedQuestions.filter( x => !(x.userId === UserId && x.accountId === accId && x.temp_account_id === temp_account_id && x.surveyId === surveyId 
+              && x.surveyDate === today && x.isUnplanned === Unplanned))
 
-        setIntoLocalStorage(UserId,accId,surveyId,sQuestion.Id,LocalStorageSurveyData)
-      }
+      savedSurveyData.isCompleted = (restQuestions.length === 0);
 
-      if (restQuestions.length === 0) {
-
-        try {
-            const data = await AsyncStorage.getItem('unSyncedQuestions');
-            if (data) {
-              let newData = await AsyncStorage.setItem(
-                'unSyncedQuestions',
-                JSON.stringify([
-                  ...JSON.parse(data),
-                  {
-                    userId: UserId,
-                    accountId: accId,
-                    surveyId:surveyId,
-                    isUnplanned:Unplanned  ? true:false,
-                    temp_account_id:temp_account_id,
-                    surveyDate: format(new Date(), 'yyyy-MM-dd'),
-                    Questions:JSON.parse(await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`))
-                  },
-                ]),
-              );
-            } 
-            else 
-            {
-             let newData = await AsyncStorage.setItem(
-                'unSyncedQuestions',
-                JSON.stringify([
-                  {
-                    userId: UserId,
-                    accountId: accId,
-                    surveyId:surveyId,
-                    isUnplanned:Unplanned ? true:false,
-                    temp_account_id:temp_account_id,
-                    surveyDate: format(new Date(), 'yyyy-MM-dd'),
-                    Questions: JSON.parse(await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`)),
-                  },
-                ]),
-              );
-            }
-            Alert.alert(
-              'Survey Recorded',
-              'Your Survey Has Been Recorded',
-              [{ text: 'OK', onPress: () => {
-                setSyncData(true)
-                navigation.popToTop()
-              } }],
-              { cancelable: false },
-            );
-        } catch (error) {
-          Alert.alert('Fail', error.message, [{ text: 'OK', onPress: () => {} }], {
-            cancelable: true,
-          });
-        }
-      } 
+      unSyncedQuestions.push(savedSurveyData);
       
-      if(restQuestions.length !== 0)
-      {
+      await saveArrayInStorage('unSyncedQuestions', unSyncedQuestions);
+      console.log("297 Async",await AsyncStorage.getItem('unSyncedQuestions'));
+      if (restQuestions.length === 0) {
+        Alert.alert(
+          'Survey Recorded',
+          'Your Survey Has Been Recorded',
+          [{ text: 'OK', onPress: () => {
+            if(!syncData) {
+              setSyncData(true);
+            }
+            navigation.popToTop()
+          } }],
+          { cancelable: false },
+        );
+      } else {
         navigation.push('SurveyQue', {
           questions: restQuestions,
           firstQuestion: false,
@@ -395,115 +318,84 @@ const SurveyQue = ({ navigation, route }) => {
           surveyId,
           UserId,
           Unplanned,
-          temp_account_id
+          temp_account_id,
+          survey
         });
       }  
   };
 
-
-const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{  
-  switch(questionType)
-  {
-    case 'Multi Select':
- 
-      return selQues.subLoopMultiSelect.map((val)=>{
-        return(
-                  {
-                    Id: val.Id,
-                    Sequence_No__c: val.Sequence_No__c,
-                  } 
-              )
-          })
-        break;
-
-    case 'Single Select':
-      return(
-        [
-          {
-            Id: selQues.subLoopSingleSelect.Id,
-            Sequence_No__c: selQues.subLoopSingleSelect.Sequence_No__c,
-          }
-        ]
-      )
-      break;
-
-    case 'Single Select List':
-      return(
-        [
-          {
-            Id: selQues.subLoopSingleSelectList.Id,
-            Sequence_No__c: selQues.subLoopSingleSelectList.Sequence_No__c,
-          }
-        ]
-      )
-      break;
-
-    case 'Feedback':
-    case 'Integer Enter Question':
-    case 'Text':
-    case 'Slider':
-      return(
-        [
-          {
-            Id: optionId ? optionId:selQues.mainField.optionId,
-            answer:questionType === 'Feedback' ? selQues.subLoopFeedbackText : 
-                   questionType === 'Integer Enter Question' ? selQues.subLoopIntegerText : 
-                   questionType === 'Text' ? selQues.subLoopText :
-                   questionType === 'Slider' ? selQues.subLoopSlider : null
-          }
-        ]
-      )
-      break;
-
-    default:
-      return null
-      break;
-  }
-}
-
-
-  const setIntoLocalStorage = async(
-    UserId,
-    accId,
-    surveyId,
-    questionId,
-    survData
-    ) => {
-    let data = await AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`);
-   
-    if(data === null){
-      let TempData = [];
-      TempData.push(survData)
-      AsyncStorage.setItem(`UnSync-${UserId}-${accId}-${surveyId}`,JSON.stringify(TempData)).then(()=>{
-        AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`).then((res)=>{
-          console.log("Async data",res)
-        })
-      }) 
-    }
-    else
+  const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{  
+    switch(questionType)
     {
-      let TempData = JSON.parse(data);
-      // console.log("436",TempData)
-       let Search = TempData.findIndex((res)=>{
-              console.log(res.sQuestion.qtnId,questionId)
-              return res.sQuestion.qtnId === questionId
-       })
-       
-       if (Search >= 0)
-       {
-        TempData[Search] = survData;
-       }
-       else
-       {
-        TempData.push(survData)
-       }
-       
-       AsyncStorage.setItem(`UnSync-${UserId}-${accId}-${surveyId}`,JSON.stringify(TempData)).then(()=>{
-        AsyncStorage.getItem(`UnSync-${UserId}-${accId}-${surveyId}`).then((res)=>{
-          console.log("Async data",res)
-        })
-      }) 
+      case 'Multi Select':
+   
+        return selQues.subLoopMultiSelect.map((val)=>{
+          return(
+                    {
+                      Id: val.Id,
+                      Sequence_No__c: val.Sequence_No__c,
+                    } 
+                )
+            })
+          break;
+  
+      case 'Single Select':
+        return(
+          [
+            {
+              Id: selQues.subLoopSingleSelect.Id,
+              Sequence_No__c: selQues.subLoopSingleSelect.Sequence_No__c,
+            }
+          ]
+        )
+        break;
+  
+      case 'Single Select List':
+        return(
+          [
+            {
+              Id: selQues.subLoopSingleSelectList.Id,
+              Sequence_No__c: selQues.subLoopSingleSelectList.Sequence_No__c,
+            }
+          ]
+        )
+        break;
+  
+      case 'Feedback':
+      case 'Integer Enter Question':
+      case 'Text':
+      case 'Slider':
+        return(
+          [
+            {
+              Id: optionId ? optionId:selQues.mainField.optionId,
+              answer:questionType === 'Feedback' ? selQues.subLoopFeedbackText : 
+                     questionType === 'Integer Enter Question' ? selQues.subLoopIntegerText : 
+                     questionType === 'Text' ? selQues.subLoopText :
+                     questionType === 'Slider' ? selQues.subLoopSlider : null
+            }
+          ]
+        )
+        break;
+  
+      default:
+        return null
+        break;
     }
+  }
+
+  const saveArrayInStorage = async (key, arr) => {
+    await AsyncStorage.setItem(key, JSON.stringify(arr))
+  }
+  
+  const getArrayFromStorage = async (key) => {
+    let storageData = await AsyncStorage.getItem(key);
+    try{
+      storageData = storageData ? JSON.parse(storageData) : []
+    } catch(e){
+      storageData = [];
+    }
+    return storageData;
   }
 
   const NavigateToHome=()=>{
@@ -516,17 +408,10 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
         <Formik
           innerRef={formRef}
           initialValues={
-            (survey &&
-              survey.find(
+            (survey?.Questions?.find(
                 x =>
-                  x.sQuestion.Id === question.sQuestion.Id &&
-                  x.accId === accId &&
-                  x.surveyId === surveyId &&
-                  x.UserId === UserId,
+                  x.sQuestion.qtnId === question.sQuestion.Id
               )) || {
-              accId,
-              surveyId,
-              UserId,
               mainField: '',
               childField: '',
               subLoopFeedbackText:'',
@@ -555,7 +440,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -573,7 +458,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -588,7 +473,6 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    console.log("484",question.Options)
                     if (question.Options.filter((x)=> x.level === 'Option 1').length !== value.length) {
                       return 'Please Select All Options';
                     }
@@ -621,7 +505,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -636,7 +520,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -650,7 +534,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -666,7 +550,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -682,7 +566,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -701,7 +585,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   imageField="imageUrl"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -718,13 +602,15 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   value={values.mainField}
                   surveyId={surveyId}
                   accountId={accId}
+                  temp_account_id={temp_account_id}
+                  accName={accName}
                   userId={UserId}
+                  surveyDate={today}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   questionId={question.sQuestion.Id}
                   seqNo={question.sQuestion.Sequence_No__c}
                   validate={value => {
-                    console.log("587",value)
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Select Atleast One Image';
                     }
                     return '';
@@ -738,7 +624,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   isUnplanned={false}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Add Atleast One Account';
                     }
                     return '';
@@ -754,7 +640,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -776,7 +662,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   accountId = {accId}
                   validate={value => {
                     
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -791,7 +677,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     if (value > question.sQuestion.Max_Limit__c) {
@@ -811,7 +697,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -828,7 +714,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -845,7 +731,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -862,7 +748,7 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value) {
+                    if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -877,7 +763,6 @@ const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    console.log("484",question.Options)
                     if (question.Options.filter((x)=> x.level === 'Option 1').length !== value.length) {
                       return 'Please Select All Options';
                     }

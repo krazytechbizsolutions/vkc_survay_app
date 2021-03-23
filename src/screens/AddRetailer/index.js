@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import TextEle from '@components/TextEle';
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import { View,TextInput,ScrollView,Picker,TouchableOpacity,Platform,ActionSheetIOS,Modal,Text,FlatList,Image, PermissionsAndroid,Alert } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { launchCamera } from 'react-native-image-picker';
@@ -18,7 +18,8 @@ import { ScreenContext } from '../../context/screenContext';
 
 
 const AddRetailer = ({navigation}) => {
-  
+  let today = format(new Date(), 'yyyy-MM-dd');
+
   const [adrFields,setFields]=useState([]);
   const [storeFrontImage,setStoreFrontImage]=useState(null);
   const [storeFrontImageRequiredError,setStoreFrontImageRequiredError]=useState(null);
@@ -126,9 +127,7 @@ const askLocation = async () => {
   } 
 
   const submitValues= async() =>{
-    console.log("123",adrFields)
     let tempAdrFields = adrFields.map(fld => {
-      console.log("123",fld)
       fld.isImportant && fld.validate();
       return fld;
     });
@@ -149,12 +148,12 @@ const askLocation = async () => {
     let payload = Object.assign({
       "temp_account_id":temp_Id,
       "userId":  Token.id.split('/').pop(),
-      "dateOfCreation": format(new Date(), 'yyyy-MM-dd'),
+      "dateOfCreation": today,
       "latitude": latitude,
       "longitude": longitude,
       "isAddedRetailer":true,
       "accType": "Retailer",
-      "dateAdded":format(new Date(), 'yyyy-MM-dd'),
+      "dateAdded": today,
     }, Object.fromEntries(adrFields.map((f) => [f.name, f.value])));
 
     await saveObjectIntoArrayOfStorage('newRetailers', payload)
@@ -169,8 +168,9 @@ const askLocation = async () => {
       userId: payload.userId,
       qtnId: null,
       Sequence_No: 1,
-      imageName: payload.accName + "_" + format(new Date(), 'yyyy-MM-dd') + "_",
-      imageType: storeFrontImage.type,
+      dateAdded: today,
+      imageName: payload.accName + "_" + today + "_1",
+      imageType: "JPG",
       imageURL: storeFrontImage.uri,
       relatedTo: 'Retailer'
     }
@@ -180,7 +180,9 @@ const askLocation = async () => {
       'Add Retailer',
       'Retailer saved.',
       [{ text: 'OK', onPress: () => {
-        setSyncData(true)
+        if(!syncData){
+          setSyncData(true)
+        }
         navigation.popToTop()
       } }],
       { cancelable: false },

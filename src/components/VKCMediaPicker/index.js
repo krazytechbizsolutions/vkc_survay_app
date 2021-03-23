@@ -14,6 +14,7 @@ import { RectButton, BorderlessButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import TextEle from '@components/TextEle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { format } from 'date-fns';
 
 const VKCMediaPicker = ({
   field: { name, value },
@@ -21,78 +22,39 @@ const VKCMediaPicker = ({
   question,
   surveyId,
   accountId,
+  temp_account_id,
+  accName,
   userId,
   questionId,
+  surveyDate,
   seqNo
 }) => {
+
+  let today = format(new Date(), 'yyyy-MM-dd');
+
   const [isVisible, setVisible] = useState(false);
-  const [ImageData,setImageData] = useState([]);
-
-  const selectImage = () => {
-    if (Platform.OS === 'ios') {
-      ActionSheetIOS.showActionSheetWithOptions(
-        {
-          options: ['Cancel', 'Take Photo...'],
-          cancelButtonIndex: 0,
-        },
-        buttonIndex => {
-          if (buttonIndex === 0) {
-            //
-          } else if (buttonIndex === 1) {
-            launchCamera(
-              {
-                mediaType: 'photo',
-              },
-              res => {
-                setFieldValue(name, [...(value || []), res]);
-              },
-            );
-          }
-        },
-      );
-    } else {
-      setVisible(true);
-    }
-  };
-
- const StoreImageLocal = (ImgData) =>{
-      AsyncStorage.setItem(`IMG-${surveyId}-${accountId}-${userId}-${questionId}`,JSON.stringify(ImgData)).then(res =>{
-        AsyncStorage.getItem(`IMG-${surveyId}-${accountId}-${userId}-${questionId}`).then(res => {
-          console.log("59",res)
-        })
-        console.log("Images Stored Successfully");
-        }).catch(err => {
-          console.log("Error Storing Values",err)
-        })
- }
-
-  useEffect(()=>{
-    AsyncStorage.getItem(`IMG-${surveyId}-${accountId}-${userId}-${questionId}`).then(res => {
-      if(res !== null)
-      {
-        let Images = JSON.parse(res);
-        console.log("70",Images);
-        setImageData([...Images])
-        setFieldValue('mainField',"")
+    
+  const setImage = async (imageObj) => {
+      let imgData = {
+        surveyId,
+        surveyDate: today,
+        temp_account_id,
+        accountId: accountId,
+        userId: userId,
+        qtnId: questionId,
+        Sequence_No: (value || []).length + 1,
+        imageName: accName + "_" + today + questionId + "_" + ((value || []).length + 1),
+        imageType: 'JPG',
+        imageURL: imageObj.uri,
+        relatedTo: 'Survey'
       }
-    })
-  },[])
 
-  const SetImage = (ImageObj) => {
-      ImageObj.QId = questionId;
-      ImageObj.SqNo = seqNo;
-      let TempImageData = ImageData;
-      TempImageData.push(ImageObj);
-      StoreImageLocal(TempImageData);
-      setImageData([...TempImageData])
+      setFieldValue(name, [...value, imgData]);
   }
 
-  const onDeleteData=(index)=>{
-    let TempImageData = ImageData;
-    TempImageData.splice(index, 1);
-    StoreImageLocal(TempImageData);
-    setImageData([...TempImageData]);
-    setFieldValue('mainField',TempImageData.length !== 0 ? TempImageData : "");  
+  const onDeleteData = async (index) => {
+    value.splice(index, 1);
+    setFieldValue('mainField', [...value]);
   }
 
   return (
@@ -106,10 +68,10 @@ const VKCMediaPicker = ({
         {question}
       </TextEle>
       <VKCButton
-        disable={ImageData.length >= 10}
+        disable={value.length >= 10}
         variant="fill"
         text="Select Image"
-        onPress={selectImage}
+        onPress={() => setVisible(true)}
       />
       {Platform.OS === 'android' && (
         <Modal isVisible={isVisible} onRequestClose={() => setVisible(false)}>
@@ -124,9 +86,7 @@ const VKCMediaPicker = ({
                     maxHeight:500
                   },
                   res => {
-                    // console.log("78",res);
-                    SetImage(res);
-                    setFieldValue(name, [...(value || []), res]);
+                    setImage(res);
                   },
                 );
                 setVisible(false);
@@ -145,9 +105,9 @@ const VKCMediaPicker = ({
           </View>
         </Modal>
       )}
-      {(ImageData || [])?.map((x,index) => (
+      {(value || [])?.map((x,index) => (
         <View style={{ margin: 40, alignItems: 'center' }}>
-          {x?.uri && (
+          {x?.imageURL && (
             <View>
               <BorderlessButton
                 onPress={() =>{
@@ -164,7 +124,7 @@ const VKCMediaPicker = ({
                 }}>
                 <Icon name="close" size={24} color="red" />
               </BorderlessButton>
-              <Image source={{ uri: x.uri }} style={{ height: 200, width: 200 }} />
+              <Image source={{ uri: x.imageURL }} style={{ height: 200, width: 200 }} />
             </View>
           )}
         </View>

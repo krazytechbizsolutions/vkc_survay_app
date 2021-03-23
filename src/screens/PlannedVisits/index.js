@@ -20,6 +20,8 @@ import TextEle from '@components/TextEle';
 import { ScreenContext } from 'src/context/screenContext';
 
 const PlannedVisits = ({ navigation }) => {
+  let today = format(new Date(), 'yyyy-MM-dd');
+
   const [visits, setVisits] =useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [surveys, setSurvey] = useState(null);
@@ -143,17 +145,19 @@ const PlannedVisits = ({ navigation }) => {
                   const srvDetails = (surveys?.data || []).find(y => y.surveyId === x.svyId);
                   // const srvDetails = schema.find(y => y.surveyId === x.svyId);
                   if (srvDetails) {
+                    let temp_account_id = item.temp_account_id ? item.temp_account_id : null;
                     let offlineSrvDetails = unSyncSurveys?.find((z) => {
-                      return z.userId === visits.UserId && z.accountId === item.accId && z.surveyId === srvDetails.surveyId
+                      return z.userId === visits.UserId && z.accountId === item.accId && z.temp_account_id === temp_account_id 
+                        && z.surveyId === srvDetails.surveyId && z.surveyDate === today && z.isUnplanned === false
                     })
                     return (
                       // offlineSrvDetails?.syncStatus == 2 ? null : 
-                      offlineSrvDetails ? null :
+                      offlineSrvDetails?.isCompleted ? null :
                       <VKCButton
                         variant="fill"
                         style={{ marginVertical: 5 }}
                         text={srvDetails.surveyName}
-                        disable={offlineSrvDetails}
+                        disable={offlineSrvDetails?.isCompleted}
                         onPress={async () => {
                           navigation.navigate('SurveyQue', {
                             questions: srvDetails.Questions,
@@ -163,7 +167,8 @@ const PlannedVisits = ({ navigation }) => {
                             surveyId: srvDetails.surveyId,
                             UserId: visits.UserId,  //Change this Back
                             Unplanned : false,
-                            temp_account_id : item.hasOwnProperty('temp_account_id') ? item.temp_account_id : null
+                            temp_account_id : item.hasOwnProperty('temp_account_id') ? item.temp_account_id : null,
+                            survey: offlineSrvDetails
                           });
                         }}
                       />
