@@ -152,14 +152,23 @@ class BackgroundSync extends React.Component{
                 return ud.surveyDate === today;// && (!ud.syncStatus || ud.syncStatus == 1) 
             }
         )
-        // console.log("31 24",unSyncedData);
+        
         if(unSyncedData.length > 0){
+            let unSyncedImages = await this.getArrayFromStorage('unSyncedImages');
+
             unSyncedData = unSyncedData.map((ud)=>{
                 if(ud.accountId && ud.isCompleted && ud.syncStatus != 2){
                     ud.syncStatus = 1
+                    // move the images from surveys to seperate unSyncedImages array...
+                    ud.Questions.filter(usq => usq.qtnType === "Upload Image for choosing an Option").map(usq => {
+                        unSyncedImages.push(...usq.selectedOptions);
+                    })
+                    ud.Questions = ud.Questions.filter(usq => usq.qtnType !== "Upload Image for choosing an Option");
                 }
                 return ud;
             })
+
+            await AsyncStorage.setItem('unSyncedImages', JSON.stringify(unSyncedImages));
             await AsyncStorage.setItem(key, JSON.stringify(unSyncedData));
         }
         return unSyncedData.filter(ud => ud.isCompleted && ud.syncStatus == 1);
@@ -227,7 +236,7 @@ class BackgroundSync extends React.Component{
         if(unSyncedImages.length > 0) {
             for(let i = 0; i < unSyncedImages.length; i++) {
                 let data = unSyncedImages[i];
-                if(data.dateAdded === today && data.accountId && (!data.syncStatus || data.syncStatus == 1)){
+                if(data.surveyDate === today && data.accountId && data.syncStatus == 1){
                     data.imageBase64 = await RNFS.readFile(data.imageURL, 'base64')
                     
                     try
