@@ -37,7 +37,7 @@ class BackgroundSync extends React.Component{
         const netInfo = await NetInfo.fetch();
         if (!netInfo.isConnected) {
             // TODO: If no connectivity, then show no connection error...
-            this.setStatusAndReset(1);
+            this.setStatusAndReset(4);
             return;
         }
 
@@ -149,20 +149,20 @@ class BackgroundSync extends React.Component{
         // clean up of past data...
         unSyncedData = unSyncedData.filter(ud => 
             {
-                return ud.surveyDate === today && (!ud.syncStatus || ud.syncStatus == 1) 
+                return ud.surveyDate === today;// && (!ud.syncStatus || ud.syncStatus == 1) 
             }
         )
         // console.log("31 24",unSyncedData);
         if(unSyncedData.length > 0){
             unSyncedData = unSyncedData.map((ud)=>{
-                if(ud.accountId){
+                if(ud.accountId && ud.isCompleted && ud.syncStatus != 2){
                     ud.syncStatus = 1
                 }
                 return ud;
             })
             await AsyncStorage.setItem(key, JSON.stringify(unSyncedData));
         }
-        return unSyncedData.filter(ud => ud.isCompleted);
+        return unSyncedData.filter(ud => ud.isCompleted && ud.syncStatus == 1);
     }
 
     removeUnSyncedStatusSuccessDataInStorage = async (key, isRemove) => {
@@ -173,7 +173,7 @@ class BackgroundSync extends React.Component{
 
             // COMMENTED ABOVE & ADDED BELOW TO AVOID THE RE-ENABLING THE SURVEY BUTTON AFTER SYNC AS PULL IS ONLY ONCE A DAY...
             unSyncedData = unSyncedData.map(ud => {
-                if(ud.isCompleted){
+                if(ud.isCompleted && ud.syncStatus == 1){
                     ud.syncStatus = 2;
                     delete ud.Questions; // TODO: [LATER] RETAIN THIS TO SHOW SAVED DATA IN OFFLINE
                 }
@@ -182,7 +182,7 @@ class BackgroundSync extends React.Component{
             await AsyncStorage.setItem(key, JSON.stringify(unSyncedData));
         } else {
             unSyncedData = unSyncedData.map(ud => {
-                if(ud.isCompleted) ud.syncStatus = 0;
+                if(ud.isCompleted && ud.syncStatus == 1) ud.syncStatus = 0;
                 return ud;
             })
             await AsyncStorage.setItem(key, JSON.stringify(unSyncedData));
