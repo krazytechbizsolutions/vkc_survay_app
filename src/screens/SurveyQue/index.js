@@ -91,7 +91,7 @@ const SurveyQue = ({ navigation, route }) => {
         sQuestion.Option_Type__c === 'Question with Image as options'
       ) {
         let selectedSubOrLoopingQtnOptions = {};
-
+        console.log("94",JSON.stringify(selectedOptions.mainField))
         if(selectedOptions.mainField.isLoopingQtn)
         {
           if(selectedOptions.mainField.loopingQtnType === "Single Select" || selectedOptions.mainField.loopingQtnType === "Single Select List")
@@ -111,9 +111,14 @@ const SurveyQue = ({ navigation, route }) => {
               selectedSubOrLoopingQtnOptions: AddSubLoopingOptions(selectedOptions,selectedOptions.mainField.loopingQtnType).filter((x) => x)[0],
             };
           }
+          else if(selectedOptions.mainField.loopingQtnType === "Ordering Question")
+          {
+            selectedSubOrLoopingQtnOptions = {
+              selectedSubOrLoopingQtnOptions: AddSubLoopingOptions(selectedOptions,selectedOptions.mainField.loopingQtnType).filter((x) => x),
+            };
+          }
           else
           {
-            console.log("111")
             selectedSubOrLoopingQtnOptions = {
               selectedSubOrLoopingQtnOptions: AddSubLoopingOptions(selectedOptions,selectedOptions.mainField.loopingQtnType).filter((x) => x),
             };
@@ -342,6 +347,22 @@ const SurveyQue = ({ navigation, route }) => {
           ]
         )
         break;
+
+        case 'Ordering Question':
+          return selQues.subLoopOrder.map((res)=>{
+            console.log("353",res)
+            console.log("354",selQues.subLoopOrder)
+              if(res.IsSelected)
+              {
+                return(
+                  {
+                    Id: res.Id,
+                    Sequence_No__c: res.Sequence_No__c,
+                  }
+                )
+              }
+          })
+        break;
   
       case 'Feedback':
       case 'Integer Enter Question':
@@ -404,6 +425,7 @@ const SurveyQue = ({ navigation, route }) => {
               subLoopSelect:'',
               subLoopSingleSelect:'',
               subLoopSingleSelectList:'',
+              subLoopOrder:'',
               starRatingMainField:''
             }
           }

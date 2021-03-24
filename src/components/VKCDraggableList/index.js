@@ -10,16 +10,26 @@ import TextInput from '../../components/TextInput/TextInput';
 import SliderQuestion from '@components/SliderQuestion';
 import { Formik, Field, FieldArray } from 'formik';
 
-const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values }, data, question }) => {
+const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values }, data, question,isSubLoop }) => {
   const [temp, setTemp] = useState([]);
   const formRef = useRef();
 
   useEffect(() => {
     setFieldValue(name, data);
+    console.log(isSubLoop)
   }, []);
 
   const onSelect = item => {
-    const index = temp.findIndex(x => x.optionId === item.optionId);
+    let index;
+    console.log("23",isSubLoop)
+    if(isSubLoop){
+      index = temp.findIndex(x => x.Id === item.Id);
+    }
+    else{
+      index = temp.findIndex(x => x.optionId === item.optionId);
+    }
+    
+    console.log("24",index,temp);
     let arr = [];
     if (index === -1) {
       item.IsSelected = true;
@@ -28,9 +38,15 @@ const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values
       delete item.IsSelected;
       arr = [...temp.slice(0, index), ...temp.slice(index + 1)];
     }
-
-    console.log("24",arr);
-    const filteredStateData = value.filter(x => !arr.some(y => y.optionId === x.optionId));
+    let filteredStateData;
+    // console.log("24",arr);
+    if(isSubLoop){
+      filteredStateData = value.filter(x => !arr.some(y => y.Id === x.Id));
+    }
+    else{
+      filteredStateData = value.filter(x => !arr.some(y => y.optionId === x.optionId));
+    }
+    
     setFieldValue(
       name,
       [...arr, ...filteredStateData].map((x, i) => ({ ...x, seqNo: i + 1 })),
@@ -50,7 +66,7 @@ const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values
             <RectButton
               onPress={() => onSelect(item)}
               style={{
-                backgroundColor: temp.some(x => x.optionId === item.optionId) ? 'red' : '#fff',
+                backgroundColor: isSubLoop ? temp.some(x => x.Id === item.Id) ? 'red' : '#fff':temp.some(x => x.optionId === item.optionId) ? 'red' : '#fff',
 
                 margin: 5,
                 padding: 10,
@@ -66,17 +82,19 @@ const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values
               }}>
               <TextEle
                 variant="body1"
-                style={{ color: temp.some(x => x.optionId === item.optionId) ? 'white' : 'black' }}>
+                style={{ color: isSubLoop ? temp.some(x => x.Id === item.Id) ? 'white' : 'black' : temp.some(x => x.optionId === item.optionId) ? 'white' : 'black' }}>
                 {index + 1}
               </TextEle>
               <TextEle
                 variant="body1"
-                style={{ color: temp.some(x => x.optionId === item.optionId) ? 'white' : 'black' }}>
-                {item.optionName}
+                style={{ color: isSubLoop ? temp.some(x => x.Id === item.Id) ? 'white' : 'black' : temp.some(x => x.optionId === item.optionId) ? 'white' : 'black' }}>
+                {isSubLoop ? item.Detailed_Survey_Option_Name__c : item.optionName }
               </TextEle>
             </RectButton>
           )}
-          keyExtractor={item => `draggable-item-${item.optionId}`}
+          keyExtractor={(item,index) => {
+            return item.Id
+          }}
         />
       )   
       }
