@@ -23,14 +23,10 @@ const StarRating = ({
     const [rate,setRating]=useState(0)
 
     const setting=(r)=>{
-      let rate = (Math.round(r * 2) / 2).toFixed(1)
-      if(rate % 1 === 0)
-      {
-        rate = parseInt(rate)
-      }
+      let rate = parseFloat((Math.round(r * 2) / 2).toFixed(1))
       setRating(rate)
-      setFieldValue('childField', options.filter(x => x.optionName === rate.toString()))
-      setFieldValue(name, r)
+      setFieldValue('starRatingMainField', options.filter(x => parseFloat(x.optionName) === rate))
+      setFieldValue(name, rate)
     }
 
     return(
@@ -38,9 +34,6 @@ const StarRating = ({
         <View style={{ flex: 1 }}>
           <TextEle variant="title" style={{ marginBottom: 10 }}>
             {question}
-          </TextEle>
-          <TextEle variant="title" style={{ marginBottom: 10 }}>
-            {rate}
           </TextEle>
           <View style={{ marginTop: 30, margin: 10, flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
@@ -72,7 +65,7 @@ const StarRating = ({
               <View style={{width:'100%',marginTop:25}}>
                     {
                       options.map((res)=>{ 
-                          if(res.optionName === rate.toString()){
+                          if(parseFloat(res.optionName) === rate){
                             if(res.loopingQtnType === 'Multi Select')
                             {
                               return( 

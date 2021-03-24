@@ -67,9 +67,9 @@ const SurveyQue = ({ navigation, route }) => {
           answer: selectedOptions.mainField,
         };
 
-        if(selectedOptions.childField) {
+        if(selectedOptions.starRatingMainField){
           selOptions = {
-            selectedOptions: selectedOptions.childField.map(x => ({
+            selectedOptions: selectedOptions.starRatingMainField.map(x => ({
               seqNo: x.seqNo,
               optionId: x.optionId,
               isLoopingQtn: x.isLoopingQtn,
