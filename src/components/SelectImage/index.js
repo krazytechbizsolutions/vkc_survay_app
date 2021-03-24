@@ -19,8 +19,7 @@ const SelectImage = ({
   valueField,
   imageField,
   textField,
-  question,
-  extraData
+  question
 }) => {
   const flastListRef = useRef();
   const onSelectValue = item => {
@@ -81,7 +80,7 @@ const SelectImage = ({
             {value?.isLoopingQtn ?
               <View style={{width:'100%',marginTop:25}}>
                     {
-                      extraData.map((res)=>{ 
+                      data.map((res)=>{ 
                           if(res.loopingQtnType === 'Multi Select' && value.loopingQtnType === 'Multi Select'){
                             return(
                               <Field

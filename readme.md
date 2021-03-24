@@ -18,23 +18,73 @@ Looping Questions
 
 23/03/21,
 	Issues List,
-		1. Ordering questions empty validation
-		2. Slider not showing the selected value 
-		3. Multi Select not unselecting on checkbox click
-		4. Image upload question - all sub looping question needs to be enabled
-		5. Order question not available as sub looping question
-		6. "Is_Looping_Question__c" field comes as false in case of looping questions -- Backend Dependency
-		7. Delete button to be incorporated(same as Multi Text Que type)
-		8. Restricting to add Duplicate account, same dealer/Sub dealer can be selected twice and the duplicates are added to Unplanned Visits
-		9. A Link to be available in Salesforce for conneting directly to the Survey of the related Retailer/Dealer/Sub Dealer from the Day Plan Activities Page
+		1. [3] Ordering questions empty validation
+		2. [3] Tabular question, empty validation is missing in pop-up
+		3. [3] Slider not showing the selected value 
+		4. [3] Multi Select not unselecting on checkbox click
+		5. [2] Questions with image as options - all sub looping question enabled but value not sent properly to server.
+		6. [2] Ordering question not available as sub looping question
+		7. [2] "Is_Looping_Question__c" field comes as false in case of looping questions -- Backend Dependency (What is the use isLoopingQtn)
+		8. [3] Delete button to be incorporated(same as Multi Text Que type)
+		9. [3] Restricting to add Duplicate account, same dealer/Sub dealer can be selected twice and the duplicates are added to Unplanned Visits
+		10. [4] A Link to be available in Salesforce for connecting directly to the Survey of the related Retailer/Dealer/Sub Dealer from the Day Plan Activities Page
+		11. [1] On net connectivity, trigger the background sync.
+		12. [1] Retailer surveys are not synced to server
+		13. [3] Multi-text add button to be at top.
 
 		Others,
-			1. Need difference in the visual appearance of "NEXT" button and "SUBMIT" button -- Make the survey submit button as green
-			2. Find all the non-retaining questions
+			1. [1] Need difference in the visual appearance of "NEXT" button and "SUBMIT" button -- Make the survey submit button as blue
+			2. [3] All questions to be retained -- Find all the non-retaining questions
 
 		Clarifications,
-			1. Filtering criteria should be only Area and not Account owner. All the accounts related to the day plan area should be displayed as suggestion for Unplanned visit of Exisiting Dealer/Sub dealer/Retailer.
-			
+			1. Filtering criteria should be only Area and not Account owner. All the accounts related to the day plan area should be displayed as suggestion for Unplanned visit of Exisiting Dealer/Sub dealer/Retailer. --- Backend
+
+================================================================================
+
+APK Release plan,
+	1. All survey + retailer in both online & offline should be captured & synced without any issues.
+		- Offline
+			Create retailer
+			UnPlanned new retailer complete survey
+			Planned complete survey
+			Create unplanned survey for existing retailers (No sync to server as there is no api)
+			UnPlanned  complete survey
+		- Online
+			Create retailer
+			UnPlanned new retailer complete survey
+			Planned complete survey
+			Create unplanned survey for existing retailers (No sync to server as there is no api)
+			UnPlanned  complete survey
+
+	2. Looping question to be addressed (captured & synced) 
+		- Offline
+			Create retailer
+			UnPlanned new retailer complete survey
+			UnPlanned new retailer looping survey
+			Planned complete survey
+			Planned looping survey
+			Create unplanned survey for existing retailers (No sync to server as there is no api)
+			UnPlanned  complete survey
+			UnPlanned  looping survey
+		- Online
+			Create retailer
+			UnPlanned new retailer complete survey
+			UnPlanned new retailer looping survey
+			Planned complete survey
+			Planned looping survey
+			Create unplanned survey for existing retailers (No sync to server as there is no api)
+			UnPlanned  complete survey
+			UnPlanned  looping survey
+
+	3. Minor ui issues
+	4. Direct survey open link
+
+
+
+
+
+
+	
 ===================================================================================================================
 
 18/03/21,

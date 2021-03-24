@@ -21,8 +21,7 @@ const SingleSelectRadio = ({
   valueField,
   textField,
   placeholder = 'Please select value',
-  question,
-  extraData
+  question
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -72,7 +71,7 @@ const SingleSelectRadio = ({
       {value?.isLoopingQtn ?
               <View style={{width:'100%',marginTop:25}}>
                     {
-                      extraData.map((res)=>{ 
+                      data.map((res)=>{ 
                           if(res.loopingQtnType === 'Multi Select' && value.loopingQtnType === 'Multi Select'){
                             return(
                               <Field
