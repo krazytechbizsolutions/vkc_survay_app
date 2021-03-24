@@ -15,17 +15,12 @@ const StarRating = ({
   field: { name, value },
   form: { touched, errors, setFieldValue,values },
   data,
-  noOfStars,
-  extraData,
+  options,
   question,
 }) => 
  
   {
     const [rate,setRating]=useState(0)
-
-    useEffect(() => {
-      console.log("22 Star rating",JSON.stringify(extraData));
-    },[])
 
     const setting=(r)=>{
       let rate = (Math.round(r * 2) / 2).toFixed(1)
@@ -34,7 +29,7 @@ const StarRating = ({
         rate = parseInt(rate)
       }
       setRating(rate)
-      setFieldValue('starRatingMainField',extraData.filter(x => x.optionName === rate.toString()))
+      setFieldValue('childField', options.filter(x => x.optionName === rate.toString()))
       setFieldValue(name, r)
     }
 
@@ -73,10 +68,10 @@ const StarRating = ({
           </View>
 
 
-          {!data.Is_Looping_Question__c ?
+          {options ?
               <View style={{width:'100%',marginTop:25}}>
                     {
-                      extraData.map((res)=>{ 
+                      options.map((res)=>{ 
                           if(res.optionName === rate.toString()){
                             if(res.loopingQtnType === 'Multi Select')
                             {
@@ -215,65 +210,3 @@ const StarRating = ({
   } 
 
 export default StarRating;
-{/* 
-return(
-                              <Field
-                                  data={res.subOrLoopingQtnOptions}
-                                  valueField="Id"
-                                  textField="Detailed_Survey_Option_Name__c"
-                                  component={MultiSelection}
-                                  name="subLoopMultiSelect"
-                                  value={values.subLoopMultiSelect}
-                                  question={res.loopingQtnName}
-                                  isSubLoop={true}
-                                  validate={value => {
-                                    if (!value || value.length === 0) {
-                                      return 'Please Enter Field Value';
-                                    }
-                                    return '';
-                                  }}
-                              />
-                            )
-                          } 
-                          else if(res.loopingQtnType === 'Feedback' || 
-                                  res.loopingQtnType === 'Integer Enter Question' ||
-                                  res.loopingQtnType === 'Text' )
-                          {
-                            return(
-                            <Field
-                              component={TextInput}
-                              data={res.subOrLoopingQtnOptions}
-                              keyboardType={res.loopingQtnType === 'Integer Enter Question' ? "number-pad":""}
-                              multiline={res.loopingQtnType === 'Feedback' ?  true : false}
-                              inputStyle={{ minHeight: 200 }}
-                              name={res.loopingQtnType === 'Feedback' ? "subLoopFeedbackText" :res.loopingQtnType === 'Integer Enter Question' ? "subLoopIntegerText" : res.loopingQtnType === 'Text' ? "subLoopText":null  }
-                              value={res.loopingQtnType === 'Feedback' ? values.subLoopFeedbackText :res.loopingQtnType === 'Integer Enter Question' ? values.subLoopIntegerText : res.loopingQtnType === 'Text' ? values.subLoopText :null}
-                              question={res.loopingQtnName}
-                              isSubLoop={true}
-                              validate={value => {
-                                if (!value) {
-                                  return 'Please Enter Field Value';
-                                }
-                                return '';
-                              }}
-                            />
-                            )
-                          }
-                          else if(res.loopingQtnType === 'Slider'){
-                            return(
-                              <Field
-                                  component={SliderQuestion}
-                                  data={res}
-                                  name="subLoopSlider"
-                                  value={values.subLoopSlider}
-                                  question={res.loopingQtnName}
-                                  isSubLoop={true}
-                                  validate={value => {
-                                    if (!value) {
-                                      return 'Please Enter Field Value';
-                                    }
-                                    return '';
-                                  }}
-                                />
-                              )
-                          } */}

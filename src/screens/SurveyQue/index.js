@@ -67,11 +67,9 @@ const SurveyQue = ({ navigation, route }) => {
           answer: selectedOptions.mainField,
         };
 
-        // TODO: Remove not symbol from below once backend gives Is_Looping_Question__c as true for looping...
-        if(!sQuestion.Is_Looping_Question__c)
-        {
+        if(selectedOptions.childField) {
           selOptions = {
-            selectedOptions: selectedOptions.starRatingMainField.map(x => ({
+            selectedOptions: selectedOptions.childField.map(x => ({
               seqNo: x.seqNo,
               optionId: x.optionId,
               isLoopingQtn: x.isLoopingQtn,
@@ -419,7 +417,6 @@ const SurveyQue = ({ navigation, route }) => {
                   component={SingleSelectRadio}
                   data={question.Options}
                   value={values.mainField}
-                  extraData = {question.Options}
                   valueField="optionId"
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
@@ -437,7 +434,6 @@ const SurveyQue = ({ navigation, route }) => {
                   component={SingleSelectRadio}
                   data={question.Options}
                   value={values.mainField}
-                  extraData = {question.Options}
                   valueField="optionId"
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
@@ -529,7 +525,6 @@ const SurveyQue = ({ navigation, route }) => {
                 <Field
                   component={SliderQuestion}
                   data={question.sQuestion}
-                  noOfStars={question.sQuestion.Max_Limit__c}
                   name="mainField"
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
@@ -545,7 +540,7 @@ const SurveyQue = ({ navigation, route }) => {
                 <Field
                   component={StarRating}
                   data={question.sQuestion}
-                  extraData = {question.Options}
+                  options = {question.Options}
                   name="mainField"
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
@@ -568,7 +563,6 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   imageField="imageUrl"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
-                  extraData = {question.Options}
                   validate={value => {
                     if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
