@@ -1,3 +1,21 @@
+Looping Questions
+	Parent list,
+		Single Select [Pending --- Ordering Question]
+		Single Select List [Pending --- Ordering Question]
+		Ordering Question  [Pending --- Ordering Question]
+		Star Rating [Pending --- Ordering Question]
+		Image upload question (Image would be options to select from)
+
+	Child list,
+		Single Select
+		Single Select List
+		Multi Select
+		Ordering Question
+		Integer Enter Question
+		Text
+		Slider
+		Feedback
+
 23/03/21,
 	Issues List,
 		1. Ordering questions empty validation
