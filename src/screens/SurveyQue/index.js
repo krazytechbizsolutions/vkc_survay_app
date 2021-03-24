@@ -68,19 +68,19 @@ const SurveyQue = ({ navigation, route }) => {
         };
 
         // TODO: Remove not symbol from below once backend gives Is_Looping_Question__c as true for looping...
-        if(!sQuestion.Is_Looping_Question__c)
-        {
-          selOptions = {
-            selectedOptions: selectedOptions.starRatingMainField.map(x => ({
-              seqNo: x.seqNo,
-              optionId: x.optionId,
-              isLoopingQtn: x.isLoopingQtn,
-              loopingQtnId: x.loopingQtnId,
-              loopingQtnType: x.loopingQtnType,
-              selectedSubOrLoopingQtnOptions:AddSubLoopingOptions(selectedOptions,x.loopingQtnType,x.optionId)
-            })),
-          };
-        }
+        // if(!sQuestion.Is_Looping_Question__c)
+        // {
+        //   selOptions = {
+        //     selectedOptions: selectedOptions.starRatingMainField.map(x => ({
+        //       seqNo: x.seqNo,
+        //       optionId: x.optionId,
+        //       isLoopingQtn: x.isLoopingQtn,
+        //       loopingQtnId: x.loopingQtnId,
+        //       loopingQtnType: x.loopingQtnType,
+        //       selectedSubOrLoopingQtnOptions:AddSubLoopingOptions(selectedOptions,x.loopingQtnType,x.optionId)
+        //     })),
+        //   };
+        // }
        
       }
       if (
