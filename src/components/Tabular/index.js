@@ -170,6 +170,17 @@ const SingleSelectRadio = ({
         {question}
       </TextEle>
         <View style={{width:'100%',alignItems: 'center',justifyContent: 'center'}}>
+                  
+          <View style={{width:'100%',flexDirection:'row',justifyContent: 'space-between'}}>            
+            <TouchableOpacity style={{width:'100%',padding:15}} onPress={()=>AddNewData()}>
+                <View style={{width:'100%',height:50,borderRadius:15,backgroundColor:"#ef4b4b",justifyContent: 'center',alignItems: 'center'}}>
+                    <TextEle style={{color:'#fff'}}>
+                        Add
+                    </TextEle>
+                </View>
+            </TouchableOpacity>
+          </View>
+
           <View style={{width:'100%'}}>
               <FlatList
                 data={DispData}
@@ -215,16 +226,6 @@ const SingleSelectRadio = ({
                 )}
                 keyExtractor={(item,index) => `${index}`}
               />
-          </View>
-                  
-          <View style={{width:'100%',flexDirection:'row',justifyContent: 'space-between'}}>            
-            <TouchableOpacity style={{width:'100%',padding:15}} onPress={()=>AddNewData()}>
-                <View style={{width:'100%',height:50,borderRadius:15,backgroundColor:"#ef4b4b",justifyContent: 'center',alignItems: 'center'}}>
-                    <TextEle style={{color:'#fff'}}>
-                        Add
-                    </TextEle>
-                </View>
-            </TouchableOpacity>
           </View>
          
         </View>
