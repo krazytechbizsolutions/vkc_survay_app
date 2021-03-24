@@ -43,7 +43,7 @@ const VKCMediaPicker = ({
         userId: userId,
         qtnId: questionId,
         Sequence_No: (value || []).length + 1,
-        imageName: accName + "_" + today + questionId + "_" + ((value || []).length + 1),
+        imageName: accName + "_" + today + "_" + ((value || []).length + 1),
         imageType: 'JPG',
         imageURL: imageObj.uri,
         relatedTo: 'Survey'

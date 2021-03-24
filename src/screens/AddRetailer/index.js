@@ -238,7 +238,7 @@ const askLocation = async () => {
       <View style={{padding:10}}>
         {showFields}
         <View style={{width:'100%',marginVertical:7}}>
-            <TextEle style={{opacity:0.7,marginBottom:5}}>Store Shop Front Image</TextEle>
+            <TextEle style={{opacity:0.7,marginBottom:5}}>Store Shop Front Image *</TextEle>
           { storeFrontImage ? 
             <View style={{width:'100%',flexDirection:'row',justifyContent:'space-between'}}>
                 <View style={{width:'30%',alignItems:'flex-end'}}>

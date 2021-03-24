@@ -160,7 +160,6 @@ const SurveyQue = ({ navigation, route }) => {
 
         if(selectedOptions.mainField.some((x) => x.isLoopingQtn)) //temp Soln
         {
-          // console.log('Inside True',JSON.stringify(selectedOptions))
           selOptions = {
             selectedOptions: selQues.map(x => ({
               seqNo: x.seqNo,
@@ -283,7 +282,6 @@ const SurveyQue = ({ navigation, route }) => {
       unSyncedQuestions.push(savedSurveyData);
       
       await saveArrayInStorage('unSyncedQuestions', unSyncedQuestions);
-      console.log("297 Async",await AsyncStorage.getItem('unSyncedQuestions'));
       if (restQuestions.length === 0) {
         Alert.alert(
           'Survey Recorded',

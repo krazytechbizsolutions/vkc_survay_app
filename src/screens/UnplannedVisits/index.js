@@ -153,11 +153,13 @@ const UnplannedVisits =({navigation})=>{
                         {
                             surveys?.data.map((x,i)=>{
                                 let temp_account_id = item.temp_account_id ? item.temp_account_id : null;
+                                let accountId = item.isAddedRetailer ? item.accountId : item.accId;
                                 let offlineSrvDetails = unSyncSurveys?.find((z) => {
-                                  return z.userId === visits.UserId && z.accountId === item.accId && z.temp_account_id === temp_account_id 
+                                  return z.userId === visits.UserId 
+                                    && (!z.accountId || (z.accountId && z.accountId === accountId)) 
+                                    && (!z.temp_account_id || (z.temp_account_id && z.temp_account_id === temp_account_id)) 
                                     && z.surveyId === x.surveyId && z.surveyDate === today && z.isUnplanned === true
                                 })
-                                let accountId = item.isAddedRetailer ? item.accountId : item.accId;
 
                                 return(
                                     x.applicableTo && x.applicableTo.includes(item.accType) && advancedFilter(x.filterType,x.filterValues,item) ?
@@ -177,7 +179,7 @@ const UnplannedVisits =({navigation})=>{
                                                 surveyId: x.surveyId,
                                                 UserId: visits?.UserId,  //Change this Back
                                                 Unplanned : true,
-                                                temp_account_id : item.hasOwnProperty('temp_account_id') ? item.temp_account_id : null,
+                                                temp_account_id : temp_account_id,
                                                 survey: offlineSrvDetails
                                             });
                                             }}

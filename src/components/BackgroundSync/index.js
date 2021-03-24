@@ -161,7 +161,11 @@ class BackgroundSync extends React.Component{
                     ud.syncStatus = 1
                     // move the images from surveys to seperate unSyncedImages array...
                     ud.Questions.filter(usq => usq.sQuestion.qtnType === "Upload Image for choosing an Option").map(usq => {
-                        unSyncedImages.push(...usq.mainField);
+                        usq.mainField.map(usqmf => {
+                            usqmf.accountId = ud.accountId;
+                            delete usqmf.temp_account_id;
+                            unSyncedImages.push(usqmf);
+                        })
                     })
                     ud.Questions = ud.Questions.filter(usq => usq.sQuestion.qtnType !== "Upload Image for choosing an Option");
                 }
@@ -221,6 +225,7 @@ class BackgroundSync extends React.Component{
                     }
 
                     await updateasfidFortaiInStorage('UnplannedVisits', addedRetailers);
+                    await updateasfidFortaiInStorage('unSyncedQuestions', addedRetailers);
                     await updateasfidFortaiInStorage('unSyncedImages', addedRetailers);
                     
                     // remove the ones which is saved...
