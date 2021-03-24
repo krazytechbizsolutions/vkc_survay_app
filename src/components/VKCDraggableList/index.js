@@ -245,6 +245,26 @@ const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values
                         />
                       )
                     }
+                    else if(loopingQuestion.loopingQtnType === 'Ordering Question'){
+                      // console.log("198",JSON.stringify(value))
+                      // console.log("199",JSON.stringify(res))  
+                      return (  
+                          <Field
+                            data={loopingQuestion.subOrLoopingQtnOptions}
+                            component={VKCDraggableList}
+                            name="subLoopOrder"
+                            value={values.subLoopOrder}
+                            question={loopingQuestion.loopingQtnName}
+                            isSubLoop={true}
+                            validate={value => {
+                              if (!value || value.length === 0) {
+                                return 'Please Enter Field Value';
+                              }
+                              return '';
+                            }}
+                          />
+                        )
+                    }
                 })  
               }              
       </View>

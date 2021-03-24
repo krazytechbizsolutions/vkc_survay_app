@@ -10,6 +10,7 @@ import VKCDraggableLoop from '@components/VKCDraggableList';
 import TextInput from '../../components/TextInput/TextInput';
 import SliderQuestion from '@components/SliderQuestion';
 import SingleSelectRadio from '@components/SingleSelectRadio';
+import VKCDraggableList from '@components/VKCDraggableList'
 import { Field } from 'formik';
 
 const SelectImage = ({
@@ -201,6 +202,25 @@ const SelectImage = ({
                                 }}
                               />
                             )
+                          }
+                          else if(res.loopingQtnType === 'Ordering Question' && value.loopingQtnType === 'Ordering Question'){
+                          
+                            return (  
+                                <Field
+                                  data={res.subOrLoopingQtnOptions}
+                                  component={VKCDraggableList}
+                                  name="subLoopOrder"
+                                  value={values.subLoopOrder}
+                                  question={res.loopingQtnName}
+                                  isSubLoop={true}
+                                  validate={value => {
+                                    if (!value || value.length === 0) {
+                                      return 'Please Enter Field Value';
+                                    }
+                                    return '';
+                                  }}
+                                />
+                              )
                           }
                         })
                       }

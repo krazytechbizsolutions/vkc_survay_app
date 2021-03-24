@@ -75,7 +75,7 @@ const SurveyQue = ({ navigation, route }) => {
               isLoopingQtn: x.isLoopingQtn,
               loopingQtnId: x.loopingQtnId,
               loopingQtnType: x.loopingQtnType,
-              selectedSubOrLoopingQtnOptions:AddSubLoopingOptions(selectedOptions,x.loopingQtnType,x.optionId)
+              selectedSubOrLoopingQtnOptions:AddSubLoopingOptions(selectedOptions,x.loopingQtnType,x.optionId).filter((x) => x)
             })),
           };
         }
@@ -167,7 +167,7 @@ const SurveyQue = ({ navigation, route }) => {
               isLoopingQtn: x.isLoopingQtn,
               loopingQtnId: x.loopingQtnId,
               loopingQtnType: x.loopingQtnType,
-              selectedSubOrLoopingQtnOptions:AddSubLoopingOptions(selectedOptions,x.loopingQtnType,x.optionId)
+              selectedSubOrLoopingQtnOptions:AddSubLoopingOptions(selectedOptions,x.loopingQtnType,x.optionId).filter((x) => x)
             })),
           };
         }
@@ -281,6 +281,7 @@ const SurveyQue = ({ navigation, route }) => {
 
       unSyncedQuestions.push(savedSurveyData);
       
+      console.log("284 Async",JSON.stringify(unSyncedQuestions))
       await saveArrayInStorage('unSyncedQuestions', unSyncedQuestions);
       if (restQuestions.length === 0) {
         Alert.alert(

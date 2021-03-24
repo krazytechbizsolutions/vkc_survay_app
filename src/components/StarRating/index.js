@@ -5,7 +5,7 @@ import { View,ScrollView } from 'react-native';
 import { Rating } from 'react-native-ratings';
 import SingleSelectRadio from '@components/SingleSelectRadio';
 import MultiSelection from '@components/MultiSelection';
-import VKCDraggableLoop from '@components/VKCDraggableList';
+import VKCDraggableList from '@components/VKCDraggableList';
 import TextInput from '../../components/TextInput/TextInput';
 import SliderQuestion from '@components/SliderQuestion';
 import { Formik, Field, FieldArray } from 'formik';
@@ -189,6 +189,25 @@ const StarRating = ({
                                 }}
                               />
                             )
+                          }
+                          else if(res.loopingQtnType === 'Ordering Question'){
+                           
+                            return (  
+                                <Field
+                                  data={res.subOrLoopingQtnOptions}
+                                  component={VKCDraggableList}
+                                  name="subLoopOrder"
+                                  value={values.subLoopOrder}
+                                  question={res.loopingQtnName}
+                                  isSubLoop={true}
+                                  validate={value => {
+                                    if (!value || value.length === 0) {
+                                      return 'Please Enter Field Value';
+                                    }
+                                    return '';
+                                  }}
+                                />
+                              )
                           }
                       }
                     })

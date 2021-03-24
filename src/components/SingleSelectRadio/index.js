@@ -8,7 +8,6 @@ import Modal from 'react-native-modal';
 import SafeAreaView from 'react-native-safe-area-view';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MultiSelection from '@components/MultiSelection';
-import VKCDraggableLoop from '@components/VKCDraggableList';
 import TextInput from '../../components/TextInput/TextInput';
 import SliderQuestion from '@components/SliderQuestion';
 import VKCDraggableList from '@components/VKCDraggableList'
