@@ -568,6 +568,7 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   imageField="imageUrl"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  extraData = {question.Options}
                   validate={value => {
                     if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
