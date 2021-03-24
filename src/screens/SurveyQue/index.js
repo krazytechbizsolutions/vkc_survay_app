@@ -504,7 +504,7 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value || value.length === 0) {
+                    if (!value) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -518,7 +518,7 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value || value.length === 0) {
+                    if (!value) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -534,7 +534,7 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value || value.length === 0) {
+                    if (!(value > -1)) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -550,7 +550,7 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value || value.length === 0) {
+                    if (!(value > -1)) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -625,7 +625,7 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value || value.length === 0) {
+                    if (!value) {
                       return 'Please Enter Field Value';
                     }
                     return '';
@@ -646,7 +646,6 @@ const SurveyQue = ({ navigation, route }) => {
                   questionId = {question.sQuestion.Id}
                   accountId = {accId}
                   validate={value => {
-                    
                     if (!value || value.length === 0) {
                       return 'Please Enter Field Value';
                     }
@@ -662,7 +661,7 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value || value.length === 0) {
+                    if (!(value > -1)) {
                       return 'Please Enter Field Value';
                     }
                     if (value > question.sQuestion.Max_Limit__c) {
