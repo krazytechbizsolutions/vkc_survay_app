@@ -200,32 +200,6 @@ const CustomMultiText = ({
         {isUnplanned ? 
         <View style={{flex:1,width:'100%',padding:10}}>
             <TextEle style={{opacity:0.7,fontSize:20}}>Retailers</TextEle>
-            <View style={{width:'100%',borderRadius:5,marginTop:25,alignItems:'center'}}>
-                {
-                    SelectedData.length > 0 ? 
-                    <View style={{width:'100%',justifyContent: 'center'}}>
-                        <FlatList
-                            ref={flastListRef}
-                            data={SelectedData}
-                            renderItem={({ item,index }) => 
-                            {
-                                return(
-                                    <View style={{width:'100%',padding:10,borderRadius:10,justifyContent:'flex-start',borderWidth:1,borderColor:'grey',marginVertical:10}}>
-                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Name : {item.accName}</TextEle>
-                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Type : {item.accType}</TextEle>
-                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Area Name : {item.AreaName}</TextEle>
-                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>State : {item.state}</TextEle>
-                                        <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Customer Code : {item.customer_code}</TextEle>
-                                    </View>
-                            )
-                        }}
-                            keyExtractor={(item,index) => `${index}`}
-                        />
-                    </View>
-                    :
-                    <TextEle style={{opacity:0.7,fontSize:16}}>No Retailers Selected</TextEle>
-                }
-            </View>
             <View style={{width:'100%',flexDirection:'row',justifyContent:'space-between'}}>
                 <TouchableOpacity style={{width:'50%',padding:15}} onPress={()=>setIsVisible(true)}>
                     <View style={{width:'100%',height:50,borderRadius:10,backgroundColor:"#ef4b4b",justifyContent:'center',alignItems:'center'}}>
@@ -242,6 +216,46 @@ const CustomMultiText = ({
                     </View>
                 </TouchableOpacity>
             </View>
+            <View style={{width:'100%',borderRadius:5,marginTop:25,alignItems:'center'}}>
+                {
+                    SelectedData.length > 0 ? 
+                    <View style={{width:'100%',justifyContent: 'center'}}>
+                        <FlatList
+                            ref={flastListRef}
+                            data={SelectedData}
+                            renderItem={({ item,index }) => 
+                            {
+                                return(
+                                    
+                                        <View style={{width:'100%',padding:10,borderRadius:10,justifyContent:'flex-start',borderWidth:1,borderColor:'grey',marginVertical:10}}>
+                                            <View style={{width:'100%',flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center'}}>
+                                                <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Name : {item.accName}</TextEle>
+                                                <TouchableOpacity onPress={()=>askIfremove(item.accName)}>
+                                                    <Icon
+                                                        name="close"
+                                                        style={{ right: 0, top: 3 }}
+                                                        size={20}
+                                                        color="grey"
+                                                    />
+                                                </TouchableOpacity>
+                                            </View>
+                                            
+                                            <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Type : {item.accType}</TextEle>
+                                            <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Area Name : {item.AreaName}</TextEle>
+                                            <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>State : {item.state}</TextEle>
+                                            <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Customer Code : {item.customer_code}</TextEle>
+                                        </View>
+                                    
+                            )
+                        }}
+                            keyExtractor={(item,index) => `${index}`}
+                        />
+                    </View>
+                    :
+                    <TextEle style={{opacity:0.7,fontSize:16}}>No Retailers Selected</TextEle>
+                }
+            </View>
+           
             
         </View>
         :
@@ -249,6 +263,13 @@ const CustomMultiText = ({
             <TextEle style={{color: 'red',fontSize:12}}>{errorMsg}</TextEle>
             <TextEle>{question}</TextEle>
             <View style={{flex: 1,alignItems: 'center',justifyContent: 'flex-start',padding:10}}>
+                
+                <TouchableOpacity onPress={()=>setIsVisible(true)} style={{width:'100%'}}>
+                    <View style={{width:'100%',height:50,borderRadius:10,backgroundColor:"red",alignItems:'center',justifyContent:'center'}}>
+                        <TextEle style={{color:'white',fontSize:20}}>Add</TextEle>
+                    </View>
+                </TouchableOpacity>
+                
                 <View style={{width:'100%',justifyContent: 'center',marginTop:20}}>
                         <FlatList
                             data={SelectedData}
@@ -257,7 +278,17 @@ const CustomMultiText = ({
                               return (
                                         <TouchableOpacity style={{width:'100%'}} onPress={()=>askIfremove(item.accName)}>
                                             <View style={{width:'100%',padding:10,borderRadius:10,justifyContent:'flex-start',borderWidth:1,borderColor:'grey',marginVertical:10}}>
-                                                <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Name : {item.accName}</TextEle>
+                                                <View style={{width:'100%',flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center'}}>
+                                                    <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Name : {item.accName}</TextEle>
+                                                    <TouchableOpacity onPress={()=>askIfremove(item.accName)}>
+                                                        <Icon
+                                                            name="close"
+                                                            style={{ right: 0, top: 3 }}
+                                                            size={20}
+                                                            color="grey"
+                                                        />
+                                                    </TouchableOpacity>
+                                                </View>
                                                 <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Account Type : {item.accType}</TextEle>
                                                 <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>Area Name : {item.AreaName}</TextEle>
                                                 <TextEle style={{color:'grey',marginVertical:3,fontSize:14}}>State : {item.state}</TextEle>
@@ -269,12 +300,6 @@ const CustomMultiText = ({
                             keyExtractor={(item,index) => `${index}`}
                         />
                 </View>
-
-                <TouchableOpacity onPress={()=>setIsVisible(true)} style={{width:'100%'}}>
-                    <View style={{width:'100%',height:50,borderRadius:10,backgroundColor:"red",alignItems:'center',justifyContent:'center'}}>
-                        <TextEle style={{color:'white',fontSize:20}}>Add</TextEle>
-                    </View>
-                </TouchableOpacity>
             </View>
         </View>}
 

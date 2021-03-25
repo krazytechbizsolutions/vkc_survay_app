@@ -18,19 +18,19 @@ Looping Questions
 
 23/03/21,
 	Issues List,
-		1. [3] Ordering questions empty validation
+		[Done] 1. [3] Ordering questions empty validation
 		2. [3] Tabular question, empty validation is missing in pop-up
-		3. [3] Slider not showing the selected value 
-		4. [3] Multi Select not unselecting on checkbox click
-		5. [2] Questions with image as options - all sub looping question enabled but value not sent properly to server.
-		6. [2] Ordering question not available as sub looping question
-		7. [2] "Is_Looping_Question__c" field comes as false in case of looping questions -- Backend Dependency (What is the use isLoopingQtn)
-		8. [3] Delete button to be incorporated(same as Multi Text Que type)
+		[Done] 3. [3] Slider not showing the selected value 
+		[Done] 4. [3] Multi Select not unselecting on checkbox click
+		[Done] 5. [2] Questions with image as options - all sub looping question enabled but value not sent properly to server.
+		[Done] 6. [2] Ordering question not available as sub looping question 
+		[N.A]  7. [2] "Is_Looping_Question__c" field comes as false in case of looping questions -- Backend Dependency (What is the use isLoopingQtn)
+		[Done] 8. [3] Delete button to be incorporated(same as Multi Text Que type)
 		9. [3] Restricting to add Duplicate account, same dealer/Sub dealer can be selected twice and the duplicates are added to Unplanned Visits
 		10. [4] A Link to be available in Salesforce for connecting directly to the Survey of the related Retailer/Dealer/Sub Dealer from the Day Plan Activities Page
 		11. [1] On net connectivity, trigger the background sync.
 		12. [1] Retailer surveys are not synced to server
-		13. [3] Multi-text add button to be at top.
+		[Done] 13. [3] Multi-text add button to be at top.   
 
 		Others,
 			1. [1] Need difference in the visual appearance of "NEXT" button and "SUBMIT" button -- Make the survey submit button as blue

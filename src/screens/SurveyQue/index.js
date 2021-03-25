@@ -30,7 +30,7 @@ import SpecialEfforts from '@components/CustomSpecialEfforts'
 import { ScreenContext } from '../../context/screenContext';
 
 console.disableYellowBox = true;
-
+const captureSurveyApi = '/services/apexrest/SRVY_SvyCapture_API';
 const SurveyQue = ({ navigation, route }) => {
   // const { colors } = useTheme();
   const { questions, firstQuestion, accId, accName, surveyId, UserId, Unplanned, temp_account_id, survey } = route.params;
@@ -506,8 +506,9 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value || value.length === 0) {
-                      return 'Please Enter Field Value';
+                    console.log("509",value.some(x => x.IsSelected));
+                    if (! value.some(x => x.IsSelected)) {
+                      return 'Need To Prioritize atleast one value';
                     }
                     return '';
                   }}

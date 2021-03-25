@@ -10,8 +10,9 @@ import TextInput from '../../components/TextInput/TextInput';
 import SliderQuestion from '@components/SliderQuestion';
 import { Formik, Field, FieldArray } from 'formik';
 
-const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values }, data, question,isSubLoop }) => {
+const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values,touched,errors,setFieldTouched  }, data, question,isSubLoop}) => {
   const [temp, setTemp] = useState([]);
+  const errorMsg = touched[name] && errors[name];
   const formRef = useRef();
 
   useEffect(() => {
@@ -58,6 +59,7 @@ const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values
     <>
       <View>
         <TextEle>{question}</TextEle>
+        <TextEle style={{color: 'red',fontSize:12}}>{errorMsg}</TextEle>
       </View>
       {!!value && value.length > 0 && (
         <FlatList

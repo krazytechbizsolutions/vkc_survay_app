@@ -34,8 +34,12 @@ const MultiSelection = ({
           value={value && value.map(x => x[valueField])}
           onPress={() => {
             if (value && value.some(x => x[valueField] === item[valueField])) {
-              setFieldValue(name, [item]);
+              
+              value = value.filter(x => x[valueField]  !== item[valueField])
+              console.log("37",value)
+              setFieldValue(name,value);
             } else {
+              console.log("40",[...(value || []), item])
               setFieldValue(name, [...(value || []), item]);
             }
           }}

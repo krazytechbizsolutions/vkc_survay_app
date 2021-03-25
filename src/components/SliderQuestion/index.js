@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React,{useState} from 'react';
 import { Slider, View, Dimensions} from 'react-native';
 import TextEle from '@components/TextEle';
 
@@ -13,40 +13,56 @@ const SliderQuestion = ({
   isSubLoop
 }) => {
   const left = (value * (screenWidth - 60)) / 100 - 8;
-
+  const [sliderVal,setSliderVal] =useState(0)
 
   return (
     <View style={{ flex: 1, marginHorizontal: 10 }}>
       <TextEle variant="title" style={{ marginBottom: 10 }}>
         {question}
       </TextEle>
-     
-      
+    
       {isSubLoop ? 
-        <Slider
-          style={{ marginTop: 20 }}
-          minimumValue={0}
-          maximumValue={100}
-          thumbTintColor="red"
-          minimumTrackTintColor="red"
-          maximumTrackTintColor="#000000"
-          value={value || 0}
-          onValueChange={val => {
-            setFieldValue(name, val);
-          }}
-        />:
-        <Slider
-          style={{ marginTop: 20 }}
-          minimumValue={data.Min_Limit__c}
-          maximumValue={data.Max_Limit__c}
-          thumbTintColor="red"
-          minimumTrackTintColor="red"
-          maximumTrackTintColor="#000000"
-          value={value || data.Min_Limit__c}
-          onValueChange={val => {
-            setFieldValue(name, val);
-          }}
-        />
+        <>
+          <Slider
+            style={{ marginTop: 20 }}
+            minimumValue={0}
+            maximumValue={100}
+            thumbTintColor="red"
+            minimumTrackTintColor="red"
+            maximumTrackTintColor="#000000"
+            value={value || 0}
+            onValueChange={val => {
+              setSliderVal(Math.floor(val));
+              setFieldValue(name, val);
+            }}
+          />
+          <View style={{width:'100%',justifyContent:'center',alignItems: 'center'}}>
+              <TextEle style={{color:'grey',marginBottom:-30}}>
+                {sliderVal}
+              </TextEle>
+          </View>
+        </>
+        :
+        <>
+          <Slider
+            style={{ marginTop: 20 }}
+            minimumValue={data.Min_Limit__c}
+            maximumValue={data.Max_Limit__c}
+            thumbTintColor="red"
+            minimumTrackTintColor="red"
+            maximumTrackTintColor="#000000"
+            value={value || data.Min_Limit__c}
+            onValueChange={val => {
+              setSliderVal(Math.floor(val));
+              setFieldValue(name, val);
+            }}
+          />
+           <View style={{width:'100%',justifyContent:'center',alignItems: 'center'}}>
+              <TextEle style={{color:'grey',marginBottom:-30}}>
+                {sliderVal}
+              </TextEle>
+          </View>
+        </>
       } 
       
       

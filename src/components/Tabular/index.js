@@ -133,11 +133,10 @@ const SingleSelectRadio = ({
   }
 
   const GetData=(val,optionName)=>{
-      console.log("123",val,optionName);
       let tempSingleData=SingleDispData
       tempSingleData[optionName] = val;
       setSingleDispData(tempSingleData);
-      console.log("120",Object.keys(SingleDispData).length)
+      console.log("120",Object.keys(SingleDispData).length,data.length)
       if(Object.keys(SingleDispData).length === data.length)
       {
         setAddData(false)

@@ -13,7 +13,8 @@ const PickList = ({seqNo,getSeq,subOpt,DataAdd,getData,optionName,value})=>{
         const [IsModalVisible,setIsModalVisible]=useState(false);
         
         useEffect(() => {
-            if(DataAdd)
+            console.log("16",DataAdd)
+            if(DataAdd && typeof Data !== 'string')
             {
                 getData(Data,optionName);
             }
