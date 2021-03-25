@@ -93,12 +93,12 @@ const CustomMultiText = ({
           return acc.accName !== accName
         })
         setSelectedData([...filteredSelectedData])
+        SearchTextInput("")
         if(!isUnplanned)
         {
             setFieldValue('mainField',filteredSelectedData.length === 0 ? "":filteredSelectedData);
             setFieldValue('childField',[]);   
         }
-        SearchTextInput("")
       }
     
       const askIfremove = (accName) => {
@@ -131,7 +131,7 @@ const CustomMultiText = ({
                         {
                             if(isUnplanned)
                             {
-                                if(checkAccountExist(UnplannedVisits ? UnplannedVisits : [],element.accName))
+                                if(checkAccountExist(UnplannedVisits ? UnplannedVisits : [],element.accName) && !checkAccountSelected(element.accName))
                                 {
                                         tempShowAccountData.push(element);
                                 }

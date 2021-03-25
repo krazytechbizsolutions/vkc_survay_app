@@ -28,7 +28,15 @@ const Splash = ({ navigation }) => {
   const { syncData, setSyncData } = useContext(ScreenContext);
 
   useEffect(()=>{
-      setSyncData(true);    
+     NetInfo.addEventListener(status =>{
+       console.log("32",status)
+      if(status.isInternetReachable)
+      {
+        console.log("Syncing")
+        setSyncData(true);
+      }
+    })
+          
   },[])
 
   return (

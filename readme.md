@@ -26,15 +26,15 @@ Looping Questions
 		[Done] 6. [2] Ordering question not available as sub looping question 
 		[N.A]  7. [2] "Is_Looping_Question__c" field comes as false in case of looping questions -- Backend Dependency (What is the use isLoopingQtn)
 		[Done] 8. [3] Delete button to be incorporated(same as Multi Text Que type)
-		9. [3] Restricting to add Duplicate account, same dealer/Sub dealer can be selected twice and the duplicates are added to Unplanned Visits
+		[Done] 9. [3] Restricting to add Duplicate account, same dealer/Sub dealer can be selected twice and the duplicates are added to Unplanned Visits
 		10. [4] A Link to be available in Salesforce for connecting directly to the Survey of the related Retailer/Dealer/Sub Dealer from the Day Plan Activities Page
 		11. [1] On net connectivity, trigger the background sync.
 		12. [1] Retailer surveys are not synced to server
 		[Done] 13. [3] Multi-text add button to be at top.   
 
 		Others,
-			1. [1] Need difference in the visual appearance of "NEXT" button and "SUBMIT" button -- Make the survey submit button as blue
-			2. [3] All questions to be retained -- Find all the non-retaining questions
+			[Done] 1. [1] Need difference in the visual appearance of "NEXT" button and "SUBMIT" button -- Make the survey submit button as blue
+			       2. [3] All questions to be retained -- Find all the non-retaining questions
 
 		Clarifications,
 			1. Filtering criteria should be only Area and not Account owner. All the accounts related to the day plan area should be displayed as suggestion for Unplanned visit of Exisiting Dealer/Sub dealer/Retailer. --- Backend

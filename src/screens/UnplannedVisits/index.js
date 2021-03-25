@@ -53,9 +53,9 @@ const UnplannedVisits =({navigation})=>{
     getObjectDataFromStorage = async (key) => {
       let storageData = await AsyncStorage.getItem(key);
       try{
-        storageData = storageData ? JSON.parse(storageData) : null
+        storageData = storageData ? JSON.parse(storageData) : []
       } catch(e){
-        storageData = null;
+        storageData = [];
       }
       return storageData;
     }

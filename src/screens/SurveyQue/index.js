@@ -137,6 +137,7 @@ const SurveyQue = ({ navigation, route }) => {
             },
           ],
         };
+        console.log("140",selOptions)
   
       } else if (
         sQuestion.Option_Type__c === 'Multi Select'
@@ -270,9 +271,11 @@ const SurveyQue = ({ navigation, route }) => {
           ...Sequence_No,
           ...answer,
         },
-        ...selOptions,
-        ...selectedOptions
+        ...selectedOptions,
+        ...selOptions
       });
+
+      console.log("277",JSON.stringify(savedSurveyData.Questions))
 
       unSyncedQuestions = unSyncedQuestions.filter( x => !(x.userId === UserId && x.accountId === accId && x.temp_account_id === temp_account_id && x.surveyId === surveyId 
               && x.surveyDate === today && x.isUnplanned === Unplanned))
@@ -281,7 +284,7 @@ const SurveyQue = ({ navigation, route }) => {
 
       unSyncedQuestions.push(savedSurveyData);
       
-      console.log("284 Async",JSON.stringify(unSyncedQuestions))
+      // console.log("284 Async",JSON.stringify(unSyncedQuestions))
       await saveArrayInStorage('unSyncedQuestions', unSyncedQuestions);
       if (restQuestions.length === 0) {
         Alert.alert(
@@ -796,7 +799,7 @@ const SurveyQue = ({ navigation, route }) => {
             />
             <VKCButton
               variant="fill"
-              style={{ margin: 5, flex: 1 }}
+              style={{ margin: 5, flex: 1,backgroundColor:restQuestions.length === 0 ? '#1890ff' : '#ed4356' }}
               text={restQuestions.length === 0 ? 'Submit' : 'Next'}
               onPress={() => formRef.current.handleSubmit()}
             />

@@ -16,16 +16,16 @@ const getStyle = (colors, size, variant, disable, loading) => {
   if (variant === 'outline') {
     viewStyle = {
       borderWidth: 2,
-      borderColor: disable || loading ? colors.border : colors.primary,
+      borderColor: disable || loading ? colors.border : '#ed4356',
     };
   }
 
   return StyleSheet.create({
     btn: {
-      borderRadius: 32,
+      borderRadius: 15,
     },
     fill: {
-      backgroundColor: disable || loading ? colors.border : colors.primary,
+      backgroundColor: disable || loading ? colors.border : '#ed4356',
     },
     btnContainer: {
       ...viewStyle,
@@ -37,7 +37,7 @@ const getStyle = (colors, size, variant, disable, loading) => {
     },
     text: {
       marginHorizontal: 10,
-      color: variant === 'fill' ? '#fff' : colors.primary,
+      color: variant === 'fill' ? '#fff' : '#ed4356',
     },
   });
 };
