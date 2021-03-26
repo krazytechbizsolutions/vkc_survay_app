@@ -280,7 +280,19 @@ const SurveyQue = ({ navigation, route }) => {
       unSyncedQuestions = unSyncedQuestions.filter( x => !(x.userId === UserId && x.accountId === accId && x.temp_account_id === temp_account_id && x.surveyId === surveyId 
               && x.surveyDate === today && x.isUnplanned === Unplanned))
 
-      savedSurveyData.isCompleted = (restQuestions.length === 0);
+
+
+      if (restQuestions.length === 0) {
+        savedSurveyData.Questions = savedSurveyData.Questions.map(sq => {
+          return {
+            sQuestion: sq.sQuestion,
+            selectedOptions: sq.selectedOptions
+          };
+        });
+
+        savedSurveyData.isCompleted = true;
+      }
+
 
       unSyncedQuestions.push(savedSurveyData);
       

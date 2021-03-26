@@ -1,3 +1,19 @@
+1.Upload image as options que type if you click on the x mark while taking picture then it is considered as one captured image and doesn't allow to capture more 
+2.Data synching keeps rotating for a longer time anyhow we are able to capture the data in Salesforce
+3. For tabular question validation is working fine but error message is not displayed.
+4. with respect to retaining the selected options are getting retained for survey for two different accounts. Ideal  scenario is for getting retained for same surveys of the particular account.
+5. Another observation is that we are able to submit the looping question survey but the captured survey is not reflecting in Salesforce
+6. Also tried adding few more accounts to today's day plan but the accounts added are not reflecting in the mobile app
+7. 
+
+
+
+
+
+
+
+
+
 Looping Questions
 	Parent list,
 		Single Select [Pending --- Ordering Question]
