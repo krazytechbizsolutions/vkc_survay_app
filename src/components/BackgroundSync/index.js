@@ -35,12 +35,11 @@ class BackgroundSync extends React.Component{
     performSync = async () =>{
 
         const netInfo = await NetInfo.fetch();
-        if (!netInfo.isConnected) {
+        if (!netInfo.isInternetReachable) {
             // TODO: If no connectivity, then show no connection error...
             this.setStatusAndReset(4);
             return;
         }
-
 
         // download planned visits for the day...
         await this.downloadPlannedVisits();
@@ -117,16 +116,16 @@ class BackgroundSync extends React.Component{
     }
 
     isDataDownloadedForToday = async (key) => {
-        let downloadData = await getObjectDataFromStorage(key);
+        let downloadData = await this.getObjectDataFromStorage(key);
         return (downloadData && downloadData.syncedDate === format(new Date(), 'yyyy-MM-dd'));
     }
 
     getObjectDataFromStorage = async (key) => {
         let storageData = await AsyncStorage.getItem(key);
         try{
-          storageData = storageData ? JSON.parse(storageData) : []
+          storageData = storageData ? JSON.parse(storageData) : null
         } catch(e){
-          storageData = [];
+          storageData = null;
         }
         return storageData;
     }

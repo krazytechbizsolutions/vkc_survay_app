@@ -57,11 +57,6 @@ export const action = (type, payload, meta) => ({
   meta,
 });
 
-export const isDataDownloadedForToday = async (key) => {
-  let downloadData = await getObjectDataFromStorage(key);
-  return (downloadData && downloadData.syncedDate === format(new Date(), 'yyyy-MM-dd'));
-}
-
 export const groupBy = function (xs, key) {
   return xs.reduce((rv, x) => {
     (rv[x[key]] = rv[x[key]] || []).push(x);

@@ -51,6 +51,11 @@ const CustomMultiText = ({
 
     useEffect(()=>{
         SearchTextInput("")
+    },[SelectedData])
+
+    useEffect(()=>{
+        console.log("In Here")
+        SearchTextInput("")
     },[AccountData])
 
   useEffect(() => {
@@ -89,11 +94,12 @@ const CustomMultiText = ({
     }
 
     const removeSelectedData = (accName) =>{
+        // SearchTextInput("")
         let filteredSelectedData = SelectedData.filter((acc)=>{
           return acc.accName !== accName
         })
         setSelectedData([...filteredSelectedData])
-        SearchTextInput("")
+        
         if(!isUnplanned)
         {
             setFieldValue('mainField',filteredSelectedData.length === 0 ? "":filteredSelectedData);

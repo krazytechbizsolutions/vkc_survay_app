@@ -15,7 +15,6 @@ import { storeToken } from '../../utils';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
-import {isDataDownloadedForToday} from '../../utils/index'
 import { ScreenContext } from 'src/context/screenContext';
 
 const Tab = createMaterialTopTabNavigator();

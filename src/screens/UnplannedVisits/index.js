@@ -35,8 +35,8 @@ const UnplannedVisits =({navigation})=>{
       let unplannedVisitsData = await getArrayFromStorage('UnplannedVisits');
       unplannedVisitsData = unplannedVisitsData.filter((item) => item.dateAdded === format(new Date(), 'yyyy-MM-dd'));
       setUnplannedVisits(unplannedVisitsData);
-      setVisits(await getObjectDataFromStorage('Visits'));
-      setSurvey(await getObjectDataFromStorage('SurveyMaster'));
+      setVisits(await getArrayDataFromStorage('Visits'));
+      setSurvey(await getArrayDataFromStorage('SurveyMaster'));
 
       getUnsyncSurveys();
 
@@ -50,7 +50,7 @@ const UnplannedVisits =({navigation})=>{
     }
 
 
-    getObjectDataFromStorage = async (key) => {
+    getArrayDataFromStorage = async (key) => {
       let storageData = await AsyncStorage.getItem(key);
       try{
         storageData = storageData ? JSON.parse(storageData) : []

@@ -52,6 +52,25 @@ const VKCMediaPicker = ({
       setFieldValue(name, [...value, imgData]);
   }
 
+  const openCamera = () => {
+    launchCamera(
+      {
+        mediaType: 'photo',
+        maxWidth:500,
+        maxHeight:500
+      },
+      res => {
+        if(res.hasOwnProperty('uri'))
+        { 
+          console.log("Here In")
+          setImage(res);
+        }
+        
+      },
+    );
+    setVisible(false);
+  }
+
   const onDeleteData = async (index) => {
     value.splice(index, 1);
     setFieldValue('mainField', [...value]);
@@ -71,40 +90,8 @@ const VKCMediaPicker = ({
         disable={value.length >= 10}
         variant="fill"
         text="Select Image"
-        onPress={() => setVisible(true)}
+        onPress={() => openCamera()}
       />
-      {Platform.OS === 'android' && (
-        <Modal isVisible={isVisible} onRequestClose={() => setVisible(false)}>
-          <View style={{ backgroundColor: '#fff' }}>
-            <Text style={{ padding: 20 }}>Select Image</Text>
-            <TouchableWithoutFeedback
-              onPress={() => {
-                launchCamera(
-                  {
-                    mediaType: 'photo',
-                    maxWidth:500,
-                    maxHeight:500
-                  },
-                  res => {
-                    setImage(res);
-                  },
-                );
-                setVisible(false);
-              }}>
-              <RectButton style={{ padding: 20 }}>
-                <Text>Take Photo...</Text>
-              </RectButton>
-            </TouchableWithoutFeedback>
-            <View style={{ alignItems: 'flex-end', margin: 10 }}>
-              <TouchableWithoutFeedback onPress={() => setVisible(false)}>
-                <RectButton style={{ padding: 10 }}>
-                  <Text style={{ color: 'red' }}>Cancel</Text>
-                </RectButton>
-              </TouchableWithoutFeedback>
-            </View>
-          </View>
-        </Modal>
-      )}
       {(value || [])?.map((x,index) => (
         <View style={{ margin: 40, alignItems: 'center' }}>
           {x?.imageURL && (

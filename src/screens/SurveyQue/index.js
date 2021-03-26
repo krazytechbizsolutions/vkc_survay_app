@@ -653,11 +653,11 @@ const SurveyQue = ({ navigation, route }) => {
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Tabular Question'}>
                 <Field
-                  name="mainField"
+                  name="childField"
                   component={Tabular}
                   data={question.Options}
                   userId={UserId}
-                  value={values.mainField}
+                  value={values.childField}
                   valueField="optionId"
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
@@ -666,7 +666,7 @@ const SurveyQue = ({ navigation, route }) => {
                   accountId = {accId}
                   validate={value => {
                     if (!value || value.length === 0) {
-                      return 'Please Enter Field Value';
+                      return 'Need to add atleast one value';
                     }
                     return '';
                   }}

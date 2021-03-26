@@ -49,7 +49,7 @@ const PlannedVisits = ({ navigation }) => {
     }
   }
 
-  getObjectDataFromStorage = async (key) => {
+  getArrayDataFromStorage = async (key) => {
     let storageData = await AsyncStorage.getItem(key);
     try{
       storageData = storageData ? JSON.parse(storageData) : []
@@ -62,8 +62,8 @@ const PlannedVisits = ({ navigation }) => {
   const getVisitData = async() => {
     setIsLoading(true);
     
-    setVisits(await getObjectDataFromStorage('Visits'));
-    setSurvey(await getObjectDataFromStorage('SurveyMaster'));
+    setVisits(await getArrayDataFromStorage('Visits'));
+    setSurvey(await getArrayDataFromStorage('SurveyMaster'));
     
     setRefreshing(false)
     setIsLoading(false)

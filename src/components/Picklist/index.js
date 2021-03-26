@@ -8,15 +8,25 @@ import Modal from 'react-native-modal';
 import SafeAreaView from 'react-native-safe-area-view';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const PickList = ({seqNo,getSeq,subOpt,DataAdd,getData,optionName,value})=>{
+const PickList = ({seqNo,getSeq,subOpt,DataAdd,SetAddData,getData,optionName,value})=>{
         const [Data,setData]=useState("")
         const [IsModalVisible,setIsModalVisible]=useState(false);
-        
+        const [errorMsg,setErrorMsg] = useState("");
+
         useEffect(() => {
             console.log("16",DataAdd)
+
             if(DataAdd && typeof Data !== 'string')
             {
                 getData(Data,optionName);
+                setErrorMsg("")
+            }
+            else
+            {
+                if(DataAdd)
+                {
+                    setErrorMsg("This Field Can't Be Left Blank")
+                }
             }
             if(value !== "")
             {    
@@ -33,6 +43,14 @@ const PickList = ({seqNo,getSeq,subOpt,DataAdd,getData,optionName,value})=>{
 
         return(
             <>
+            {errorMsg.length > 0 ? 
+                        <TextEle style={{color:'red',fontSize:12}}>
+                        {errorMsg}
+                    </TextEle>
+                    :
+                    null
+            } 
+
             <TouchableOpacity onPress={()=>{
                 setIsModalVisible(true)
                 }}>

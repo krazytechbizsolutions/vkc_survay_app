@@ -34,7 +34,7 @@ const SingleSelectRadio = ({
   const [SingleDispData,setSingleDispData] = useState({})
   const [DispData,setDispData]=useState([]);
   const [AddData,setAddData]=useState(false);
-  
+  const [isEmpty,setIsEmpty] = useState(false);
 
   const OpenOptionModal=(val)=>{
     console.log("39",val)
@@ -42,22 +42,24 @@ const SingleSelectRadio = ({
     setIsSubVisible(true);
   }
 
-
   useEffect(() => {
-    GetLocalData();
-  },[])
+    if(isEmpty)
+    {
+      console.log()
+    }
+  },[isEmpty])
 
-  const GetLocalData=()=>{
-    // console.log('114',`Tab-${userId}-${questionId}-${surveyId}`)
-     AsyncStorage.getItem(`Tab-${userId}-${questionId}-${surveyId}-${accountId}`).then(data=>{
-       if(data !== null)
-       {
-        let LocalDispData = JSON.parse(data);
-        setDispData(LocalDispData);
-        setValue(LocalDispData) 
-       }
-     })
-  }
+  // const GetLocalData=()=>{
+  //   // console.log('114',`Tab-${userId}-${questionId}-${surveyId}`)
+  //    AsyncStorage.getItem(`Tab-${userId}-${questionId}-${surveyId}-${accountId}`).then(data=>{
+  //      if(data !== null)
+  //      {
+  //       let LocalDispData = JSON.parse(data);
+  //       setDispData(LocalDispData);
+  //       setValue(LocalDispData) 
+  //      }
+  //    })
+  // }
 
   const setValue = (DisplayData)=> {
     let MainField=[];
@@ -133,10 +135,14 @@ const SingleSelectRadio = ({
   }
 
   const GetData=(val,optionName)=>{
+      if(Object.keys(val).length === 0){
+        setAddData(false)
+        setSingleDispData({});
+        return
+      }  
       let tempSingleData=SingleDispData
       tempSingleData[optionName] = val;
       setSingleDispData(tempSingleData);
-      console.log("120",Object.keys(SingleDispData).length,data.length)
       if(Object.keys(SingleDispData).length === data.length)
       {
         setAddData(false)
@@ -153,6 +159,7 @@ const SingleSelectRadio = ({
         TempDispData.splice(val, 1);
       }
       setDispData([...TempDispData])
+      setValue(TempDispData)
   }
 
   const onEditPressed=(data,index)=>{
@@ -168,6 +175,11 @@ const SingleSelectRadio = ({
       <TextEle variant="title" style={{ marginBottom: 10 }}>
         {question}
       </TextEle>
+      {touched[name] && errors[name] && (
+          <TextEle variant="caption" style={{ color: 'red', marginLeft: 5, marginVertical: 3 }}>
+            {errors[name]}
+          </TextEle>
+        )}
         <View style={{width:'100%',alignItems: 'center',justifyContent: 'center'}}>
                   
           <View style={{width:'100%',flexDirection:'row',justifyContent: 'space-between'}}>            
@@ -248,6 +260,7 @@ const SingleSelectRadio = ({
                           DataAdd={AddData} 
                           getData={GetData} 
                           optionName={result.optionName} 
+                          SetAddData={setAddData}
                           value={EditIndex === null ? "" : JSON.stringify(DispData[EditIndex])
                         }/>
                   :
