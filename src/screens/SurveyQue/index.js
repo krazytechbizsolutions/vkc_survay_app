@@ -155,9 +155,7 @@ const SurveyQue = ({ navigation, route }) => {
       else if(sQuestion.Option_Type__c === 'Ordering Question'){
 
         let selectedSubOrLoopingQtnOptions = {};
-       let selQues = selectedOptions.mainField.filter((res) => {
-          return res.IsSelected === true
-        })
+       let selQues = selectedOptions.mainField
 
         if(selectedOptions.mainField.some((x) => x.isLoopingQtn)) //temp Soln
         {
@@ -364,17 +362,12 @@ const SurveyQue = ({ navigation, route }) => {
 
         case 'Ordering Question':
           return selQues.subLoopOrder.map((res)=>{
-            console.log("353",res)
-            console.log("354",selQues.subLoopOrder)
-              if(res.IsSelected)
-              {
-                return(
-                  {
-                    Id: res.Id,
-                    Sequence_No__c: res.Sequence_No__c,
-                  }
-                )
-              }
+              return(
+                {
+                  Id: res.Id,
+                  Sequence_No__c: res.Sequence_No__c,
+                }
+              )
           })
         break;
   
@@ -515,14 +508,15 @@ const SurveyQue = ({ navigation, route }) => {
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Ordering Question'}>
                 <Field
-                  data={question.Options}
                   component={VKCDraggableList}
                   name="mainField"
+                  data={question.Options}
                   value={values.mainField}
+                  valueField="optionId"
+                  textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    console.log("509",value.some(x => x.IsSelected));
-                    if (! value.some(x => x.IsSelected)) {
+                    if (!value || value.length === 0) {
                       return 'Need To Prioritize atleast one value';
                     }
                     return '';
