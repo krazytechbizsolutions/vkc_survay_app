@@ -108,7 +108,7 @@ const SurveyQue = ({ navigation, route }) => {
           else if(selectedOptions.mainField.loopingQtnType === "Multi Select")
           {
             selectedSubOrLoopingQtnOptions = {
-              selectedSubOrLoopingQtnOptions: AddSubLoopingOptions(selectedOptions,selectedOptions.mainField.loopingQtnType).filter((x) => x)[0],
+              selectedSubOrLoopingQtnOptions: AddSubLoopingOptions(selectedOptions,selectedOptions.mainField.loopingQtnType).filter((x) => x),
             };
           }
           else if(selectedOptions.mainField.loopingQtnType === "Ordering Question")
@@ -384,7 +384,7 @@ const SurveyQue = ({ navigation, route }) => {
         break;
   
       default:
-        return null
+        return []
         break;
     }
   }
