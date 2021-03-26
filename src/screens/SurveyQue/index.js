@@ -51,16 +51,13 @@ const SurveyQue = ({ navigation, route }) => {
 
       let answer = {};
       let selOptions = {};
-      if(sQuestion.Option_Type__c === 'Slider'){
-        answer = {
-          answer: Math.floor(selectedOptions.mainField),
-        };
-      } else if (
+      if (
         sQuestion.Option_Type__c === 'Integer Enter Question' ||
         sQuestion.Option_Type__c === 'Text' ||
         sQuestion.Option_Type__c === 'Star Rating' ||
         sQuestion.Option_Type__c === 'Feedback' ||
-        sQuestion.Option_Type__c === 'Coupon'
+        sQuestion.Option_Type__c === 'Coupon' ||
+        sQuestion.Option_Type__c === 'Slider'
       ) 
       {
         answer = {
@@ -91,7 +88,7 @@ const SurveyQue = ({ navigation, route }) => {
         sQuestion.Option_Type__c === 'Question with Image as options'
       ) {
         let selectedSubOrLoopingQtnOptions = {};
-        console.log("94",JSON.stringify(selectedOptions.mainField))
+        
         if(selectedOptions.mainField.isLoopingQtn)
         {
           if(selectedOptions.mainField.loopingQtnType === "Single Select" || selectedOptions.mainField.loopingQtnType === "Single Select List")
@@ -137,7 +134,7 @@ const SurveyQue = ({ navigation, route }) => {
             },
           ],
         };
-        console.log("140",selOptions)
+        
   
       } else if (
         sQuestion.Option_Type__c === 'Multi Select'
@@ -153,9 +150,10 @@ const SurveyQue = ({ navigation, route }) => {
         };
       }
       else if(sQuestion.Option_Type__c === 'Ordering Question'){
-
         let selectedSubOrLoopingQtnOptions = {};
-       let selQues = selectedOptions.mainField
+        let selQues = selectedOptions.mainField.filter((res) => {
+          return res.isSelected === true
+        })
 
         if(selectedOptions.mainField.some((x) => x.isLoopingQtn)) //temp Soln
         {
@@ -273,7 +271,7 @@ const SurveyQue = ({ navigation, route }) => {
         ...selOptions
       });
 
-      console.log("277",JSON.stringify(savedSurveyData.Questions))
+      
 
       unSyncedQuestions = unSyncedQuestions.filter( x => !(x.userId === UserId && x.accountId === accId && x.temp_account_id === temp_account_id && x.surveyId === surveyId 
               && x.surveyDate === today && x.isUnplanned === Unplanned))
@@ -288,13 +286,12 @@ const SurveyQue = ({ navigation, route }) => {
           };
         });
 
-        savedSurveyData.isCompleted = true;
+        // savedSurveyData.isCompleted = true; // TODO: COMMENTED FOR TESTING PURPOSE... ENABLED LATER...
       }
 
 
       unSyncedQuestions.push(savedSurveyData);
       
-      // console.log("284 Async",JSON.stringify(unSyncedQuestions))
       await saveArrayInStorage('unSyncedQuestions', unSyncedQuestions);
       if (restQuestions.length === 0) {
         Alert.alert(
@@ -318,7 +315,7 @@ const SurveyQue = ({ navigation, route }) => {
           UserId,
           Unplanned,
           temp_account_id,
-          survey
+          survey: savedSurveyData
         });
       }  
   };
@@ -362,12 +359,15 @@ const SurveyQue = ({ navigation, route }) => {
 
         case 'Ordering Question':
           return selQues.subLoopOrder.map((res)=>{
-              return(
-                {
-                  Id: res.Id,
-                  Sequence_No__c: res.Sequence_No__c,
-                }
-              )
+              if(res.isSelected)
+              {
+                return(
+                  {
+                    Id: res.Id,
+                    Sequence_No__c: res.Sequence_No__c,
+                  }
+                )
+              }
           })
         break;
   
@@ -382,7 +382,7 @@ const SurveyQue = ({ navigation, route }) => {
               answer:questionType === 'Feedback' ? selQues.subLoopFeedbackText : 
                      questionType === 'Integer Enter Question' ? selQues.subLoopIntegerText : 
                      questionType === 'Text' ? selQues.subLoopText :
-                     questionType === 'Slider' ? Math.floor(selQues.subLoopSlider) : null
+                     questionType === 'Slider' ? selQues.subLoopSlider : null
             }
           ]
         )

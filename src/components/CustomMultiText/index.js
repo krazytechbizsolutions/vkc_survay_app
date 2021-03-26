@@ -46,6 +46,8 @@ const CustomMultiText = ({
                     setAccountData([...AccountDataJSON.data])
                 }
             })
+
+            setSelectedData(value);
         }
     },[])
 

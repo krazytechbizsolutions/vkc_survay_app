@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import { Slider, View, Dimensions} from 'react-native';
 import TextEle from '@components/TextEle';
 
@@ -14,6 +14,10 @@ const SliderQuestion = ({
 }) => {
   const left = (value * (screenWidth - 60)) / 100 - 8;
   const [sliderVal,setSliderVal] =useState(0)
+
+  useEffect(() =>{
+    setSliderVal(value);
+  },[])
 
   return (
     <View style={{ flex: 1, marginHorizontal: 10 }}>

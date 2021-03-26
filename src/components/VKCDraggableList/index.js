@@ -12,7 +12,7 @@ import { Formik, Field, FieldArray } from 'formik';
 
 const VKCDraggableList = ({ 
   field: { name, value }, 
-  form: { touched,  errors, setFieldValue, setFieldTouched, values }, 
+  form: { touched, errors, setFieldValue, setFieldTouched, values }, 
   data, 
   valueField,
   textField,
@@ -22,16 +22,16 @@ const VKCDraggableList = ({
   const errorMsg = touched[name] && errors[name];
   const formRef = useRef();
 
-  const onSelect = item => {
-    let index = value.findIndex(x => x[valueField] === item[valueField]);
-    
-    if (index === -1) {
-      value.unshift(item);
-    } else {
-      value = value.filter(x => x[valueField] !== item[valueField])
-    }
-    
-    setFieldValue(name, [...value].map((x, i) => ({ ...x, seqNo: i + 1 })));
+  const onSelect = (item) => {    
+    let index = value.findIndex(x => x.optionId === item.optionId);
+    value[index].isSelected = !item.isSelected;
+        
+    let selectedData = value.filter(x => x.isSelected);
+    let nonSelectedData = data.filter(x => !value.some(y => y[valueField] === x[valueField] && y.isSelected));
+    setFieldValue(
+      name, 
+      [...selectedData, ...nonSelectedData].map((x, i) => ({ ...x, seqNo: i + 1 })),
+    );
   };
 
   return (
@@ -40,14 +40,14 @@ const VKCDraggableList = ({
         <TextEle>{question}</TextEle>
         <TextEle style={{color: 'red',fontSize:12}}>{errorMsg}</TextEle>
       </View>
-      {!!data && data.length > 0 && (
+      {!!value && value.length > 0 && (
         <FlatList
-          data={data}
+          data={value}
           renderItem={({ item, index }) => (
             <RectButton
               onPress={() => onSelect(item)}
               style={{
-                backgroundColor: value.filter(x => x[valueField] === item[valueField]).length > 0 ? 'red' : 'white',
+                backgroundColor: item.isSelected ? 'red' : 'white',
                 margin: 5,
                 padding: 10,
                 shadowColor: '#000',
@@ -62,12 +62,12 @@ const VKCDraggableList = ({
               }}>
               <TextEle
                 variant="body1"
-                style={{ color: value.filter(x => x[valueField] === item[valueField]).length > 0 ? 'white' : 'black' }}>
+                style={{ color: item.isSelected ? 'white' : 'black' }}>
                 {index + 1}
               </TextEle>
               <TextEle
                 variant="body1"
-                style={{ color: value.filter(x => x[valueField] === item[valueField]).length > 0 ? 'white' : 'black' }}>
+                style={{ color: item.isSelected ? 'white' : 'black' }}>
                 { item[textField] }
               </TextEle>
             </RectButton>
@@ -79,10 +79,10 @@ const VKCDraggableList = ({
       )   
       }
 
-      {value.some((x) => x.isLoopingQtn) ?
+      {value.some((x) => x.isSelected && x.isLoopingQtn) ?
       <View style={{width:'100%',marginTop:25}}>
               {
-                value.map((loopingQuestion) => { 
+                value.filter((x) => x.isSelected).map((loopingQuestion) => { 
                   if(loopingQuestion.loopingQtnType === 'Slider') { 
                     return(
                       <Field
