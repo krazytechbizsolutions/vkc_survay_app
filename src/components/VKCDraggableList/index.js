@@ -22,12 +22,18 @@ const VKCDraggableList = ({
   const errorMsg = touched[name] && errors[name];
   const formRef = useRef();
 
+  useEffect(() => {
+    if(!value){
+      setFieldValue(name, data);
+    }
+  }, [])
+
   const onSelect = (item) => {    
     let index = value.findIndex(x => x.optionId === item.optionId);
     value[index].isSelected = !item.isSelected;
         
     let selectedData = value.filter(x => x.isSelected);
-    let nonSelectedData = data.filter(x => !value.some(y => y[valueField] === x[valueField] && y.isSelected));
+    let nonSelectedData = data.filter(x => !(value || []).some(y => y[valueField] === x[valueField] && y.isSelected));
     setFieldValue(
       name, 
       [...selectedData, ...nonSelectedData].map((x, i) => ({ ...x, seqNo: i + 1 })),
@@ -79,7 +85,7 @@ const VKCDraggableList = ({
       )   
       }
 
-      {value.some((x) => x.isSelected && x.isLoopingQtn) ?
+      {(value || []).some((x) => x.isSelected && x.isLoopingQtn) ?
       <View style={{width:'100%',marginTop:25}}>
               {
                 value.filter((x) => x.isSelected).map((loopingQuestion) => { 
