@@ -231,11 +231,33 @@ const SurveyQue = ({ navigation, route }) => {
       {
         selOptions = {}
         let Options=[]
+
+        let MainField=[];
+        let ChildField = []; 
+        selectedOptions.mainField.forEach((result,index)=>{
+          MainField.push({
+            seqNo:index + 1,
+            selectedSubOrLoopingQtnOptions:[]
+          })
+          let ChildObj = Object.keys(result).map((e,index)=>{
+            let objChild = {
+              "Sequence_No__c": index + 1
+            }
+            if(typeof result[e] === 'object') {
+              objChild.Id = result[e].Id; 
+            } else {
+              objChild.Id = question.Options[index].optionId;
+              objChild.answer = result[e];
+            } 
+            return objChild
+          }) 
+          ChildField.push(ChildObj);
+        })
       
-        selectedOptions.mainField.forEach((result,index) =>{
+        MainField.forEach((result,index) =>{
           Options.push({ 
               seqNo:result.seqNo,
-              selectedSubOrLoopingQtnOptions:selectedOptions.childField[index]
+              selectedSubOrLoopingQtnOptions:ChildField[index]
             })
         })
         selOptions.selectedOptions = Options;
@@ -276,8 +298,8 @@ const SurveyQue = ({ navigation, route }) => {
       unSyncedQuestions = unSyncedQuestions.filter( x => !(x.userId === UserId && x.accountId === accId && x.temp_account_id === temp_account_id && x.surveyId === surveyId 
               && x.surveyDate === today && x.isUnplanned === Unplanned))
 
-
-
+      /*
+      // TODO: COMMENTED FOR TESTING PURPOSE... ENABLED LATER...
       if (restQuestions.length === 0) {
         savedSurveyData.Questions = savedSurveyData.Questions.map(sq => {
           return {
@@ -286,8 +308,9 @@ const SurveyQue = ({ navigation, route }) => {
           };
         });
 
-        // savedSurveyData.isCompleted = true; // TODO: COMMENTED FOR TESTING PURPOSE... ENABLED LATER...
+        savedSurveyData.isCompleted = true;
       }
+      */
 
 
       unSyncedQuestions.push(savedSurveyData);
@@ -659,11 +682,11 @@ const SurveyQue = ({ navigation, route }) => {
               </When>
               <When condition={question.sQuestion.Option_Type__c === 'Tabular Question'}>
                 <Field
-                  name="childField"
+                  name="mainField"
                   component={Tabular}
                   data={question.Options}
                   userId={UserId}
-                  value={values.childField}
+                  value={values.mainField}
                   valueField="optionId"
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}

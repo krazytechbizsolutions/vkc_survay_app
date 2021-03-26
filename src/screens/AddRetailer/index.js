@@ -23,7 +23,6 @@ const AddRetailer = ({navigation}) => {
   const [adrFields,setFields]=useState([]);
   const [storeFrontImage,setStoreFrontImage]=useState(null);
   const [storeFrontImageRequiredError,setStoreFrontImageRequiredError]=useState(null);
-  const [isVisible,setIsVisible]=useState(false);
   const [latitude,setLatitude] = useState("");
   const [longitude,setLongitude] = useState("")
   const { syncData, setSyncData } = useContext(ScreenContext);
@@ -38,31 +37,6 @@ const AddRetailer = ({navigation}) => {
     });
     return uuid;
   }
-
-  const selectImage = () => {
-    if (Platform.OS === 'ios') {
-      ActionSheetIOS.showActionSheetWithOptions(
-        {
-          options: ['Cancel', 'Take Photo...'],
-          cancelButtonIndex: 0,
-        },
-        buttonIndex => {
-          if (buttonIndex === 0) {
-            //
-          } else if (buttonIndex === 1) {
-            launchCamera(
-              {
-                mediaType: 'photo',
-              },
-              res => {},
-            );
-          }
-        },
-      );
-    } else {
-      setIsVisible(true);
-    }
-  };
 
   useEffect(()=>{
     setFields(fields.map((fld) => {
@@ -203,7 +177,6 @@ const askLocation = async () => {
 
   let showFields=adrFields.map((result,index)=>{
     return (
-      result.isVisible ?
       <View style={{width:'100%',marginVertical:7}}>
         <TextEle style={{opacity:0.7,marginBottom:5}}>{result.label} {result.isImportant ? "*":""}</TextEle>
         {
@@ -229,7 +202,7 @@ const askLocation = async () => {
         :null
         }   
         { result.errorMessage ? <TextEle style={{opacity:0.7,color:'red',fontSize:12}}>{result.errorMessage}</TextEle>:null}
-      </View>:null
+      </View>
     )
   })
 
@@ -256,7 +229,18 @@ const askLocation = async () => {
                   </View>
             </View>
           : 
-          <TouchableOpacity style={{ padding: 15, paddingLeft: 0 }} onPress={()=>setIsVisible(true)}>
+          <TouchableOpacity style={{ padding: 15, paddingLeft: 0 }} onPress={()=>{
+            launchCamera(
+              {
+                mediaType: 'photo',
+                maxWidth:500,
+                maxHeight:500
+              },
+              res => {
+                setStoreFrontImage(res)
+              },
+            );
+          }}>
                 <View style={{width:150,height:50,borderRadius:5,backgroundColor:"#ef4b4b",justifyContent: 'center',alignItems: 'center'}}>
                     <TextEle style={{color:'#fff'}}> Capture Image </TextEle>
                 </View>
@@ -274,36 +258,6 @@ const askLocation = async () => {
               </View>
         </TouchableOpacity>
       </View>
-        <Modal visible={isVisible} onRequestClose={() => setIsVisible(false)} transparent={true}>
-          <View style={{ backgroundColor: '#fff', position: 'absolute', bottom: 0, left: 0, right: 0 }}>
-            <Text style={{ padding: 20 }}>Select Image</Text>
-            <TouchableOpacity
-              onPress={() => {
-                launchCamera(
-                  {
-                    mediaType: 'photo',
-                    maxWidth:500,
-                    maxHeight:500
-                  },
-                  res => {
-                    setStoreFrontImage(res)
-                  },
-                );
-                setIsVisible(false);
-              }}>
-              <RectButton style={{ padding: 20 }}>
-                <Text>Take Photo...</Text>
-              </RectButton>
-            </TouchableOpacity>
-            <View style={{ alignItems: 'flex-end', margin: 10 }}>
-              <TouchableOpacity onPress={() => setIsVisible(false)}>
-                <RectButton style={{ padding: 10 }}>
-                  <Text style={{ color: 'red' }}>Cancel</Text>
-                </RectButton>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
     </ScrollView>
     
   );

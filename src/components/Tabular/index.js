@@ -10,7 +10,6 @@ import SafeAreaView from 'react-native-safe-area-view';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PickList from '@components/Picklist';
 import CustomTextInput from '@components/TextInput2'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SingleSelectRadio = ({
   field: { name, value },
@@ -34,7 +33,6 @@ const SingleSelectRadio = ({
   const [SingleDispData,setSingleDispData] = useState({})
   const [DispData,setDispData]=useState([]);
   const [AddData,setAddData]=useState(false);
-  const [isEmpty,setIsEmpty] = useState(false);
 
   const OpenOptionModal=(val)=>{
     console.log("39",val)
@@ -43,28 +41,12 @@ const SingleSelectRadio = ({
   }
 
   useEffect(() => {
-    if(isEmpty)
-    {
-      console.log()
-    }
-  },[isEmpty])
+    setDispData(value || [])
+  },[])
 
-  // const GetLocalData=()=>{
-  //   // console.log('114',`Tab-${userId}-${questionId}-${surveyId}`)
-  //    AsyncStorage.getItem(`Tab-${userId}-${questionId}-${surveyId}-${accountId}`).then(data=>{
-  //      if(data !== null)
-  //      {
-  //       let LocalDispData = JSON.parse(data);
-  //       setDispData(LocalDispData);
-  //       setValue(LocalDispData) 
-  //      }
-  //    })
-  // }
-
-  const setValue = (DisplayData)=> {
-    let MainField=[];
+  const setMainFieldValue = (DisplayData)=> {
+    /*let MainField=[];
     let ChildField = []; 
-      // console.log("77",JSON.stringify(question))
 
       DisplayData.forEach((result,index)=>{
           MainField.push({
@@ -90,8 +72,6 @@ const SingleSelectRadio = ({
               return objChild
               
             }) 
-
-            // console.log("ChildObj",ChildObj);
           ChildField.push(ChildObj);
         })
        
@@ -99,33 +79,32 @@ const SingleSelectRadio = ({
        console.log("76","MainField" + JSON.stringify(MainField),"ChildField" +JSON.stringify(ChildField));
 
     setFieldValue('mainField',MainField);
-    setFieldValue('childField',ChildField);
+    setFieldValue('childField',ChildField);*/
+
+    console.log(DisplayData);
+    setFieldValue('mainField', DisplayData);
 
   }
 
-  const AddEditData=(value)=>{
+  const AddEditData=(item)=>{
 
     let TempDispData=DispData;
     if(EditIndex === null)
     {    
-        TempDispData.push(value)
+        TempDispData.push(item)
     }
     else
     {
-      TempDispData[EditIndex] = value;
+      TempDispData[EditIndex] = item;
     }
     console.log("61",TempDispData);
     setDispData([...TempDispData])
     setEditIndex(null)
     setIsVisible(false);
-    setValue(TempDispData);
+    setMainFieldValue(TempDispData);
   }
 
   const SaveData=async ()=>{
-    try {
-      await AsyncStorage.setItem(`Tab-${userId}-${questionId}-${surveyId}-${accountId}`, JSON.stringify(DispData));
-    } catch (error) {}
-
     setAddData(true)
   }
 
@@ -159,7 +138,7 @@ const SingleSelectRadio = ({
         TempDispData.splice(val, 1);
       }
       setDispData([...TempDispData])
-      setValue(TempDispData)
+      setMainFieldValue(TempDispData)
   }
 
   const onEditPressed=(data,index)=>{

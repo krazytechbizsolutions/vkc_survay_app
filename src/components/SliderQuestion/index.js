@@ -37,7 +37,7 @@ const SliderQuestion = ({
             value={value || 0}
             onValueChange={val => {
               setSliderVal(Math.floor(val));
-              setFieldValue(name, val);
+              setFieldValue(name, Math.floor(val));
             }}
           />
           <View style={{width:'100%',justifyContent:'center',alignItems: 'center'}}>
@@ -58,7 +58,7 @@ const SliderQuestion = ({
             value={value || data.Min_Limit__c}
             onValueChange={val => {
               setSliderVal(Math.floor(val));
-              setFieldValue(name, val);
+              setFieldValue(name, Math.floor(val));
             }}
           />
            <View style={{width:'100%',justifyContent:'center',alignItems: 'center'}}>
