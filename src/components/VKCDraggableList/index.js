@@ -10,49 +10,28 @@ import TextInput from '../../components/TextInput/TextInput';
 import SliderQuestion from '@components/SliderQuestion';
 import { Formik, Field, FieldArray } from 'formik';
 
-const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values,touched,errors,setFieldTouched  }, data, question,isSubLoop}) => {
-  const [temp, setTemp] = useState([]);
+const VKCDraggableList = ({ 
+  field: { name, value }, 
+  form: { touched,  errors, setFieldValue, setFieldTouched, values }, 
+  data, 
+  valueField,
+  textField,
+  question,
+  isSubLoop
+}) => {
   const errorMsg = touched[name] && errors[name];
   const formRef = useRef();
 
-  useEffect(() => {
-    setFieldValue(name, data);
-    console.log(isSubLoop)
-  }, []);
-
   const onSelect = item => {
-    let index;
-    console.log("23",isSubLoop)
-    if(isSubLoop){
-      index = temp.findIndex(x => x.Id === item.Id);
-    }
-    else{
-      index = temp.findIndex(x => x.optionId === item.optionId);
-    }
+    let index = value.findIndex(x => x[valueField] === item[valueField]);
     
-    console.log("24",index,temp);
-    let arr = [];
     if (index === -1) {
-      item.IsSelected = true;
-      arr = [...temp, item];
+      value.unshift(item);
     } else {
-      delete item.IsSelected;
-      arr = [...temp.slice(0, index), ...temp.slice(index + 1)];
-    }
-    let filteredStateData;
-    // console.log("24",arr);
-    if(isSubLoop){
-      filteredStateData = value.filter(x => !arr.some(y => y.Id === x.Id));
-    }
-    else{
-      filteredStateData = value.filter(x => !arr.some(y => y.optionId === x.optionId));
+      value = value.filter(x => x[valueField] !== item[valueField])
     }
     
-    setFieldValue(
-      name,
-      [...arr, ...filteredStateData].map((x, i) => ({ ...x, seqNo: i + 1 })),
-    );
-    setTemp(arr);
+    setFieldValue(name, [...value].map((x, i) => ({ ...x, seqNo: i + 1 })));
   };
 
   return (
@@ -61,15 +40,14 @@ const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values
         <TextEle>{question}</TextEle>
         <TextEle style={{color: 'red',fontSize:12}}>{errorMsg}</TextEle>
       </View>
-      {!!value && value.length > 0 && (
+      {!!data && data.length > 0 && (
         <FlatList
-          data={value}
+          data={data}
           renderItem={({ item, index }) => (
             <RectButton
               onPress={() => onSelect(item)}
               style={{
-                backgroundColor: isSubLoop ? temp.some(x => x.Id === item.Id) ? 'red' : '#fff':temp.some(x => x.optionId === item.optionId) ? 'red' : '#fff',
-
+                backgroundColor: value.filter(x => x[valueField] === item[valueField]).length > 0 ? 'red' : 'white',
                 margin: 5,
                 padding: 10,
                 shadowColor: '#000',
@@ -84,13 +62,13 @@ const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values
               }}>
               <TextEle
                 variant="body1"
-                style={{ color: isSubLoop ? temp.some(x => x.Id === item.Id) ? 'white' : 'black' : temp.some(x => x.optionId === item.optionId) ? 'white' : 'black' }}>
+                style={{ color: value.filter(x => x[valueField] === item[valueField]).length > 0 ? 'white' : 'black' }}>
                 {index + 1}
               </TextEle>
               <TextEle
                 variant="body1"
-                style={{ color: isSubLoop ? temp.some(x => x.Id === item.Id) ? 'white' : 'black' : temp.some(x => x.optionId === item.optionId) ? 'white' : 'black' }}>
-                {isSubLoop ? item.Detailed_Survey_Option_Name__c : item.optionName }
+                style={{ color: value.filter(x => x[valueField] === item[valueField]).length > 0 ? 'white' : 'black' }}>
+                { item[textField] }
               </TextEle>
             </RectButton>
           )}
@@ -101,10 +79,10 @@ const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values
       )   
       }
 
-      {temp.some((x) => x.isLoopingQtn) ?
+      {value.some((x) => x.isLoopingQtn) ?
       <View style={{width:'100%',marginTop:25}}>
               {
-                temp.map((loopingQuestion) => { 
+                value.map((loopingQuestion) => { 
                   if(loopingQuestion.loopingQtnType === 'Slider') { 
                     return(
                       <Field
@@ -252,10 +230,12 @@ const VKCDraggableList = ({ field: { name, value }, form: { setFieldValue,values
                       // console.log("199",JSON.stringify(res))  
                       return (  
                           <Field
-                            data={loopingQuestion.subOrLoopingQtnOptions}
                             component={VKCDraggableList}
                             name="subLoopOrder"
+                            data={loopingQuestion.subOrLoopingQtnOptions}
                             value={values.subLoopOrder}
+                            valueField="Id"
+                            textField="Detailed_Survey_Option_Name__c"
                             question={loopingQuestion.loopingQtnName}
                             isSubLoop={true}
                             validate={value => {
