@@ -1,14 +1,3 @@
-Retaining issues,
-	- Multi Text
-	- Ordering Question
-	- Tabular Question
-
-
-
-
-
-
-
 1.Upload image as options que type if you click on the x mark while taking picture then it is considered as one captured image and doesn't allow to capture more 
 2.Data synching keeps rotating for a longer time anyhow we are able to capture the data in Salesforce
 3. For tabular question validation is working fine but error message is not displayed.
