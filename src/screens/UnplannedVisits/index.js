@@ -177,7 +177,8 @@ const UnplannedVisits =({navigation})=>{
                                                 accId: accountId,
                                                 accName: item.accName,
                                                 surveyId: x.surveyId,
-                                                UserId: visits?.UserId,  //Change this Back
+                                                UserId: visits?.UserId,
+                                                surveyObj:visits?.UserId,  //Change this Back
                                                 Unplanned : true,
                                                 temp_account_id : temp_account_id,
                                                 survey: offlineSrvDetails

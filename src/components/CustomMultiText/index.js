@@ -15,6 +15,9 @@ const CustomMultiText = ({
     field: { name, value },
     form: { touched, errors, setFieldValue, setFieldTouched, values },
     question,
+    object_c,
+    filter_type_c,
+    surveyObj,
     isUnplanned,
     backToHome
     }) =>{
@@ -30,6 +33,7 @@ const CustomMultiText = ({
 
 
     useEffect(() =>{
+        
         if(isUnplanned)
         {
             AsyncStorage.getItem('DealerAndRetailers').then(data => {
@@ -41,13 +45,17 @@ const CustomMultiText = ({
         else
         {
             AsyncStorage.getItem('AccountData').then(data=>{
+                object_c = object_c.replace(/\s/g, "").toLowerCase();
                 let AccountDataJSON = JSON.parse(data);
                 if(AccountDataJSON){
-                    setAccountData([...AccountDataJSON.data])
+                    console.log("51",surveyObj[filter_type_c.toLowerCase()],filter_type_c,AccountDataJSON.data.length)
+                    AccountDataJSON = AccountDataJSON.data.filter(x => object_c.includes(x.accType.toLowerCase()) && x[filter_type_c.toLowerCase()] === surveyObj[filter_type_c.toLowerCase()] )
+                    console.log("53",filter_type_c,AccountDataJSON.length)
+                    setAccountData([...AccountDataJSON])
                 }
             })
 
-            setSelectedData(value);
+            // setSelectedData(value);
         }
     },[])
 
@@ -121,6 +129,7 @@ const CustomMultiText = ({
       }
 
     const checkAccountSelected = (accName) =>{
+        // console.log("124",SelectedData);
         return SelectedData.some((acc)=>{
             console.log(accName,acc.accName)
             return acc.accName === accName
@@ -135,6 +144,7 @@ const CustomMultiText = ({
          
                   AccountData.every((element,index)=>{
                     if(tempShowAccountData.length < 5){
+                        // console.log("138",element)
                         if(element.accName.includes(e) ||(element.customer_code &&  element.customer_code.includes(e)))
                         {
                             if(isUnplanned)
@@ -155,12 +165,11 @@ const CustomMultiText = ({
                         return true;
                     }
                 })
-          
-        
           /*
             AccountData.filter((element)=>{ return (element.accName.includes(e) ||(element.customer_code &&  element.customer_code.includes(e))); }}).splice(0, 5);
           */
           tempShowAccountData.sort((a,b) => a.accName.localeCompare(b.accName));
+        //   console.log("162",tempShowAccountData)
            setShowAccountData([...tempShowAccountData])
       }
   

@@ -33,12 +33,12 @@ console.disableYellowBox = true;
 const captureSurveyApi = '/services/apexrest/SRVY_SvyCapture_API';
 const SurveyQue = ({ navigation, route }) => {
   // const { colors } = useTheme();
-  const { questions, firstQuestion, accId, accName, surveyId, UserId, Unplanned, temp_account_id, survey } = route.params;
+  const { questions, firstQuestion, accId, accName, surveyId, UserId, Unplanned, temp_account_id, survey,surveyObj } = route.params;
   const [ question, ...restQuestions ] = questions;
   const [ ShowSubmitModal, setSubmitModal]=useState(false);
   const { syncData, setSyncData } = useContext(ScreenContext);
   const formRef = useRef();
-  
+  console.log("41",surveyObj)
   let today = format(new Date(), 'yyyy-MM-dd');
   const onSubmit = async selectedOptions => {
     
@@ -334,7 +334,8 @@ const SurveyQue = ({ navigation, route }) => {
           UserId,
           Unplanned,
           temp_account_id,
-          survey: savedSurveyData
+          survey: savedSurveyData,
+          surveyObj : surveyObj
         });
       }  
   };
@@ -397,8 +398,8 @@ const SurveyQue = ({ navigation, route }) => {
         return(
           [
             {
-              Id: optionId ? optionId:selQues.mainField.optionId,
-              answer:questionType === 'Feedback' ? selQues.subLoopFeedbackText : 
+              loopingQtnType:questionType,
+              loopingQtnAnswer:questionType === 'Feedback' ? selQues.subLoopFeedbackText : 
                      questionType === 'Integer Enter Question' ? selQues.subLoopIntegerText : 
                      questionType === 'Text' ? selQues.subLoopText :
                      questionType === 'Slider' ? selQues.subLoopSlider : null
@@ -651,6 +652,9 @@ const SurveyQue = ({ navigation, route }) => {
                   component={CustomMultiText}
                   name="mainField"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
+                  object_c = {question.sQuestion.Object__c}
+                  filter_type_c = {question.sQuestion.Filter_Type__c}
+                  surveyObj = {surveyObj}
                   isUnplanned={false}
                   validate={value => {
                     if (!value || value.length === 0) {

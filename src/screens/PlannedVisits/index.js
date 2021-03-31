@@ -165,10 +165,12 @@ const PlannedVisits = ({ navigation }) => {
                             accId: item.accId,
                             accName: item.accName,
                             surveyId: srvDetails.surveyId,
-                            UserId: visits.UserId,  //Change this Back
+                            UserId: visits.UserId, 
+                            surveyObj:item, //Change this Back
                             Unplanned : false,
                             temp_account_id : item.hasOwnProperty('temp_account_id') ? item.temp_account_id : null,
                             survey: offlineSrvDetails
+                            
                           });
                         }}
                       />
