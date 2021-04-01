@@ -5,7 +5,7 @@
 import React, { useCallback, useEffect, useState, useContext } from 'react';
 import useSWR from 'swr';
 import PropTypes from 'prop-types';
-import { View, Text, FlatList,Modal, RefreshControl, ActivityIndicator } from 'react-native';
+import { Linking,View, Text, FlatList,Modal, RefreshControl, ActivityIndicator } from 'react-native';
 import { useFocusEffect, useTheme } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
@@ -28,13 +28,55 @@ const PlannedVisits = ({ navigation }) => {
   const [unSyncSurveys, setUnSyncSurveys] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { syncData, setSyncData } = useContext(ScreenContext);
+  const { syncData, setSyncData,isDeepLink,setIsDeepLink,hasDeepLinkDone,setHasDeepLinkDone} = useContext(ScreenContext);
 
   useFocusEffect(
     React.useCallback(() => {
       const loadUnSyncSurvey = async () => {
+        let initialUrl = await Linking.getInitialURL();
+        
         getVisitData();
         getUnsyncSurveys();
+        if(initialUrl)
+        {
+          if(!hasDeepLinkDone)
+          {
+            setIsDeepLink(true)
+            initialUrl = initialUrl.split('?').pop();
+            let accId = initialUrl.split('&')[0].split('=')[1];
+            let survId = initialUrl.split('&')[1].split('=')[1];
+            let surveyMaster = await getArrayDataFromStorage('SurveyMaster')
+            let surveyVisits = await getArrayDataFromStorage('Visits')
+            let offlineSrvDetails = unSyncSurveys?.find((z) => {
+              return z.userId === surveyVisits.UserId && z.accountId === accId && z.temp_account_id === null 
+                  && z.surveyId === survId && z.surveyDate === today && z.isUnplanned === false
+            })
+            let surveyItem = surveyVisits.visits?.find((z)=>{
+              return z.accId === accId
+            })
+            
+            if((surveyMaster && surveyMaster.data.length > 0) &&
+                (surveyVisits) &&
+                (surveyItem && Object.keys(surveyItem).length > 0))
+            {
+              surveyMaster = surveyMaster.data.find(y => y.surveyId === survId)
+              setIsDeepLink(false)
+              setHasDeepLinkDone(true)
+              navigation.navigate('SurveyQue', {
+                questions: surveyMaster.Questions,
+                firstQuestion: true,
+                accId: accId,
+                accName: "",
+                surveyId: survId,
+                UserId: surveyVisits.UserId, 
+                surveyObj:surveyItem === undefined ? {} : surveyItem, //Change this Back
+                Unplanned : false,
+                temp_account_id : null,
+                survey: offlineSrvDetails
+              });
+            }  
+          }
+        }
       };
       loadUnSyncSurvey();
     }, [syncData]),
@@ -100,7 +142,7 @@ const PlannedVisits = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
-
+     
       {
         isLoading ? 
         
@@ -110,7 +152,6 @@ const PlannedVisits = ({ navigation }) => {
           </View>
         
         :
-
           <FlatList
             data={visits?.visits || []}
             refreshControl={
@@ -143,9 +184,11 @@ const PlannedVisits = ({ navigation }) => {
                 {item.surveys.map((x, i) => {
                   
                   const srvDetails = (surveys?.data || []).find(y => y.surveyId === x.svyId);
+                  // console.log("153",JSON.stringify(srvDetails))
                   // const srvDetails = schema.find(y => y.surveyId === x.svyId);
                   if (srvDetails) {
                     let temp_account_id = item.temp_account_id ? item.temp_account_id : null;
+                    
                     let offlineSrvDetails = unSyncSurveys?.find((z) => {
                       return z.userId === visits.UserId && z.accountId === item.accId && z.temp_account_id === temp_account_id 
                         && z.surveyId === srvDetails.surveyId && z.surveyDate === today && z.isUnplanned === false

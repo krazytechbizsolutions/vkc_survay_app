@@ -48,7 +48,7 @@ const CustomMultiText = ({
                 object_c = object_c.replace(/\s/g, "").toLowerCase();
                 let AccountDataJSON = JSON.parse(data);
                 if(AccountDataJSON){
-                    console.log("51",surveyObj[filter_type_c.toLowerCase()],filter_type_c,AccountDataJSON.data.length)
+                    // console.log("51",surveyObj[filter_type_c.toLowerCase()],filter_type_c,AccountDataJSON.data.length)
                     AccountDataJSON = AccountDataJSON.data.filter(x => object_c.includes(x.accType.toLowerCase()) && x[filter_type_c.toLowerCase()] === surveyObj[filter_type_c.toLowerCase()] )
                     console.log("53",filter_type_c,AccountDataJSON.length)
                     setAccountData([...AccountDataJSON])

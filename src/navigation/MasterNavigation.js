@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useContext,useState,useEffect } from 'react';
-import { Image,View } from 'react-native';
+import { Image,View,Text } from 'react-native';
 import { useTheme,useRoute,useFocusEffect } from '@react-navigation/native';
 import Home from '@screens/Home';
 import SurveyQue from '@screens/SurveyQue';
@@ -20,6 +20,8 @@ const MainStackScreen = () => {
   const { token } = useContext(AuthContext);
   const { colors } = useTheme();
   const [syncData,setSyncData] = useState(false);
+  const [isDeepLink,setIsDeepLink] = useState(false);
+  const [hasDeepLinkDone,setHasDeepLinkDone] = useState(false);
   
 
   const ResetSyncData = () =>{
@@ -27,9 +29,14 @@ const MainStackScreen = () => {
   } 
 
   return (
-    <ScreenContext.Provider value={{syncData,setSyncData}}>
+    <ScreenContext.Provider value={{syncData,setSyncData,isDeepLink,setIsDeepLink,hasDeepLinkDone,setHasDeepLinkDone}}>
       <View style={{width:'100%',flex:1}}>
         {syncData ? <BackgroundSync Reset={ResetSyncData} /> : null}
+        {isDeepLink ?
+          <View style={{width:'100%',height:35,alignItems: 'center',justifyContent: 'center',backgroundColor:'#1890ff'}}>
+              <Text style={{color:'white'}}>Redirecting To Survey After Sync ...</Text>
+          </View> 
+        :null}
         <MainStack.Navigator
           screenOptions={{
             headerShown: false,
