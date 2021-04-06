@@ -162,7 +162,7 @@ class BackgroundSync extends React.Component{
                     ud.Questions.filter(usq => usq.sQuestion.qtnType === "Upload Image for choosing an Option").map(usq => {
                         usq.mainField.map(usqmf => {
                             usqmf.accountId = ud.accountId;
-                            delete usqmf.temp_account_id;
+                            // delete usqmf.temp_account_id;
                             unSyncedImages.push(usqmf);
                         })
                     })
@@ -216,7 +216,7 @@ class BackgroundSync extends React.Component{
                         storageData = storageData.map((visits)=>{
                             if(addedRetailers[visits.temp_account_id]) {
                                 visits.accountId = addedRetailers[visits.temp_account_id];
-                                delete visits.temp_account_id;
+                                // delete visits.temp_account_id;
                             }
                             return visits;
                         })
