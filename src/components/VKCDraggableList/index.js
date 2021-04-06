@@ -167,6 +167,7 @@ const VKCDraggableList = ({
                                 value={values.subLoopSingleSelect}
                                 valueField="Id"
                                 textField="Detailed_Survey_Option_Name__c"
+                                isSubLoop={true}
                                 question={loopingQuestion.loopingQtnName}
                                 validate={val => {
                                   if (!val) {
@@ -187,6 +188,7 @@ const VKCDraggableList = ({
                             value={values.subLoopSingleSelectList}
                             valueField="Id"
                             textField="Detailed_Survey_Option_Name__c"
+                            isSubLoop={true}
                             question={loopingQuestion.loopingQtnName}
                             validate={val => {
                               if (!val) {

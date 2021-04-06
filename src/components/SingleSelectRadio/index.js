@@ -21,31 +21,32 @@ const SingleSelectRadio = ({
   valueField,
   textField,
   placeholder = 'Please select value',
-  question
+  question,
+  isSubLoop
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const onSelectValue = item => {
     setIsVisible(false);
-
-   data = data.map(res => {
-      if(res.loopingQtnType === 'Ordering Question')
-      {
-        return res.subOrLoopingQtnOptions.map(result => {
-          result.isSelected = false;
-          return result;
-        })
-      }
-      return res
-    })
-
-    setFieldValue("subLoopFeedbackText", "");
-    setFieldValue("subLoopIntegerText", "");
-    setFieldValue("subLoopText", "");
-    setFieldValue("subLoopMultiSelect", "");
-    setFieldValue("subLoopSlider","");
-    setFieldValue("subLoopOrder","" );
-    
+    if(!isSubLoop)
+    {
+      data = data.map(res => {
+        if(res.loopingQtnType === 'Ordering Question')
+        {
+          return res.subOrLoopingQtnOptions.map(result => {
+            result.isSelected = false;
+            return result;
+          })
+        }
+        return res
+      })
+      setFieldValue("subLoopFeedbackText", "");
+      setFieldValue("subLoopIntegerText", "");
+      setFieldValue("subLoopText", "");
+      setFieldValue("subLoopMultiSelect", "");
+      setFieldValue("subLoopSlider","");
+      setFieldValue("subLoopOrder","" );
+    }
     setFieldValue(name, item);
     console.log("32",name,item)
     if (name !== 'childField') {
