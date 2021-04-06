@@ -36,14 +36,10 @@ const VKCDraggableList = ({
     setFieldValue("subLoopSlider", "");
   }
   const onSelect = (item, index) => {    
-    value = value.map((v, i) => {
-      if(i == index) v.isSelected = !v.isSelected;
-      return v;
-    })
+    value[index].isSelected = !item.isSelected;
         
     let selectedData = value.filter(x => x.isSelected);
-    data = data.map(x => { x.isSelected = false; return x;});
-    let nonSelectedData = data.filter(x => !(value || []).some(y => y[valueField] === x[valueField] && y.isSelected));
+    let nonSelectedData = data.filter(x => !(value || []).some(y => y[valueField] === x[valueField] && y.isSelected)).map(x => { x.isSelected = false; return x;});
     setFieldValue(
       name, 
       [...selectedData, ...nonSelectedData].map((x, i) => ({ ...x, seqNo: i + 1 })),
