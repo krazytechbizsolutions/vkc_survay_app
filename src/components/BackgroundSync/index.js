@@ -154,8 +154,18 @@ class BackgroundSync extends React.Component{
         
         if(unSyncedData.length > 0){
             let unSyncedImages = await this.getArrayFromStorage('unSyncedImages');
-
+            let unplannedVisitsForRetailerAccId = await this.getArrayFromStorage('UnplannedVisits');
+            
             unSyncedData = unSyncedData.map((ud)=>{
+                // check if the temp_account_id has account id...
+                if(ud.temp_account_id){
+                    unplannedVisitsForRetailerAccId.map((visits)=>{
+                        if(visits.temp_account_id === ud.temp_account_id) {
+                            ud.accountId = visits.accountId;
+                        }
+                    })
+                }
+
                 if(ud.accountId && ud.isCompleted && ud.syncStatus != 2){
                     ud.syncStatus = 1
                     // move the images from surveys to seperate unSyncedImages array...
