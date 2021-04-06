@@ -29,7 +29,7 @@ const VKCDraggableList = ({
   }, [])
 
   const onSelect = (item) => {    
-    let index = value.findIndex(x => x.optionId === item.optionId);
+    let index = value.findIndex(x => x[valueField] === item[valueField]);
     value[index].isSelected = !item.isSelected;
         
     let selectedData = value.filter(x => x.isSelected);
@@ -246,7 +246,7 @@ const VKCDraggableList = ({
                             isSubLoop={true}
                             validate={value => {
                               if (!value || value.length === 0) {
-                                return 'Please Enter Field Value';
+                                return 'Need To Prioritize atleast one value';
                               }
                               return '';
                             }}

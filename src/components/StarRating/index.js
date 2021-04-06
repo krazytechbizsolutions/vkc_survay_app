@@ -22,6 +22,10 @@ const StarRating = ({
   {
     const [rate,setRating]=useState(0)
 
+    useEffect(() =>{
+      setRating(value)
+    },[])
+
     const setting=(r)=>{
       let rate = parseFloat((Math.round(r * 2) / 2).toFixed(1))
       setRating(rate)
@@ -194,15 +198,17 @@ const StarRating = ({
                            
                             return (  
                                 <Field
-                                  data={res.subOrLoopingQtnOptions}
                                   component={VKCDraggableList}
                                   name="subLoopOrder"
+                                  data={res.subOrLoopingQtnOptions}
                                   value={values.subLoopOrder}
+                                  valueField="Id"
+                                  textField="Detailed_Survey_Option_Name__c"
                                   question={res.loopingQtnName}
                                   isSubLoop={true}
                                   validate={value => {
                                     if (!value || value.length === 0) {
-                                      return 'Please Enter Field Value';
+                                      return 'Need To Prioritize atleast one value';
                                     }
                                     return '';
                                   }}
