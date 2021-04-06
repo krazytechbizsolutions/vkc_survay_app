@@ -53,7 +53,7 @@ const CustomMultiText = ({
                 }
             })
 
-            // setSelectedData(value);
+            setSelectedData(value || []);
         }
     },[])
 
