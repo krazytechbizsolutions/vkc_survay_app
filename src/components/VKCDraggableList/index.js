@@ -28,11 +28,14 @@ const VKCDraggableList = ({
     }
   }, [])
 
-  const onSelect = (item) => {    
-    let index = value.findIndex(x => x[valueField] === item[valueField]);
-    value[index].isSelected = !item.isSelected;
+  const onSelect = (item, index) => {    
+    value = value.map((v, i) => {
+      if(i == index) v.isSelected = !v.isSelected;
+      return v;
+    })
         
     let selectedData = value.filter(x => x.isSelected);
+    data = data.map(x => { x.isSelected = false; return x;});
     let nonSelectedData = data.filter(x => !(value || []).some(y => y[valueField] === x[valueField] && y.isSelected));
     setFieldValue(
       name, 
@@ -51,7 +54,7 @@ const VKCDraggableList = ({
           data={value}
           renderItem={({ item, index }) => (
             <RectButton
-              onPress={() => onSelect(item)}
+              onPress={() => onSelect(item, index)}
               style={{
                 backgroundColor: item.isSelected ? 'red' : 'white',
                 margin: 5,
