@@ -160,7 +160,7 @@ class BackgroundSync extends React.Component{
                     ud.syncStatus = 1
                     // move the images from surveys to seperate unSyncedImages array...
                     ud.Questions.filter(usq => usq.sQuestion.qtnType === "Upload Image for choosing an Option").map(usq => {
-                        usq.mainField && usq.mainField.map(usqmf => {
+                        usq.selectedOptions && usq.selectedOptions.map(usqmf => {
                             usqmf.accountId = ud.accountId;
                             // delete usqmf.temp_account_id;
                             unSyncedImages.push(usqmf);

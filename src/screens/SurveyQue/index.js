@@ -288,7 +288,7 @@ const SurveyQue = ({ navigation, route }) => {
         savedSurveyData.Questions = savedSurveyData.Questions.map(sq => {
           return {
             sQuestion: sq.sQuestion,
-            selectedOptions: sq.selectedOptions
+            selectedOptions: sq.sQuestion.qtnType === 'Upload Image for choosing an Option' ? sq.mainField : sq.selectedOptions
           };
         });
 
