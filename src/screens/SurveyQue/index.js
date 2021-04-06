@@ -484,7 +484,7 @@ const SurveyQue = ({ navigation, route }) => {
                   textField="optionName"
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!value || value.length === 0) {
+                    if (!value || value.filter(v => v.isSelected).length === 0) {
                       return 'Need To Prioritize atleast one value';
                     }
                     return '';
@@ -544,7 +544,7 @@ const SurveyQue = ({ navigation, route }) => {
                   value={values.mainField}
                   question={question.sQuestion.Detailed_Survey_Question_Name__c}
                   validate={value => {
-                    if (!(value > -1)) {
+                    if (!value || !(value > -1)) {
                       return 'Please Enter Field Value';
                     }
                     return '';

@@ -245,7 +245,7 @@ const VKCDraggableList = ({
                             question={loopingQuestion.loopingQtnName}
                             isSubLoop={true}
                             validate={value => {
-                              if (!value || value.length === 0) {
+                              if (!value || value.filter(v => v.isSelected).length === 0) {
                                 return 'Need To Prioritize atleast one value';
                               }
                               return '';
