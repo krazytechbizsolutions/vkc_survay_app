@@ -30,7 +30,7 @@ const StarRating = ({
       let rate = parseFloat((Math.round(r * 2) / 2).toFixed(1))
       setRating(rate)
 
-      data = data.map(res => {
+      options = options.map(res => {
         if(res.loopingQtnType === 'Ordering Question')
         {
           return res.subOrLoopingQtnOptions.map(result => {
@@ -40,7 +40,7 @@ const StarRating = ({
         }
         return res
       })
-      
+
       setFieldValue("subLoopFeedbackText", "");
       setFieldValue("subLoopIntegerText", "");
       setFieldValue("subLoopText", "");
