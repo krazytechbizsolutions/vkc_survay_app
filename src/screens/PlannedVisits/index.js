@@ -27,6 +27,7 @@ const PlannedVisits = ({ navigation }) => {
   const [surveys, setSurvey] = useState(null);
   const [unSyncSurveys, setUnSyncSurveys] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   const { syncData, setSyncData,isDeepLink,setIsDeepLink,hasDeepLinkDone,setHasDeepLinkDone} = useContext(ScreenContext);
 
@@ -35,6 +36,9 @@ const PlannedVisits = ({ navigation }) => {
       const loadUnSyncSurvey = async () => {
         let initialUrl = await Linking.getInitialURL();
         
+        const token = await getToken();
+        setUserId(token.id.split('/').pop());
+
         getVisitData();
         getUnsyncSurveys();
         if(initialUrl)
@@ -48,7 +52,7 @@ const PlannedVisits = ({ navigation }) => {
             let surveyMaster = await getArrayDataFromStorage('SurveyMaster')
             let surveyVisits = await getArrayDataFromStorage('Visits')
             let offlineSrvDetails = unSyncSurveys?.find((z) => {
-              return z.userId === surveyVisits.UserId && z.accountId === accId && z.temp_account_id === null 
+              return z.userId === userId && z.accountId === accId && z.temp_account_id === null 
                   && z.surveyId === survId && z.surveyDate === today && z.isUnplanned === false
             })
             let surveyItem = surveyVisits.visits?.find((z)=>{
@@ -68,7 +72,7 @@ const PlannedVisits = ({ navigation }) => {
                 accId: accId,
                 accName: "",
                 surveyId: survId,
-                UserId: surveyVisits.UserId, 
+                UserId: userId, 
                 surveyObj:surveyItem === undefined ? {} : surveyItem, //Change this Back
                 Unplanned : false,
                 temp_account_id : null,
@@ -190,7 +194,7 @@ const PlannedVisits = ({ navigation }) => {
                     let temp_account_id = item.temp_account_id ? item.temp_account_id : null;
                     
                     let offlineSrvDetails = unSyncSurveys?.find((z) => {
-                      return z.userId === visits.UserId && z.accountId === item.accId && z.temp_account_id === temp_account_id 
+                      return z.userId === userId && z.accountId === item.accId && z.temp_account_id === temp_account_id 
                         && z.surveyId === srvDetails.surveyId && z.surveyDate === today && z.isUnplanned === false
                     })
                     return (
@@ -208,7 +212,7 @@ const PlannedVisits = ({ navigation }) => {
                             accId: item.accId,
                             accName: item.accName,
                             surveyId: srvDetails.surveyId,
-                            UserId: visits.UserId, 
+                            UserId: userId, 
                             surveyObj:item, //Change this Back
                             Unplanned : false,
                             temp_account_id : item.hasOwnProperty('temp_account_id') ? item.temp_account_id : null,

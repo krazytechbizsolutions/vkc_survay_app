@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 import TextEle from '@components/TextEle';
 import {plannedVisists,schema} from '../../components/BackgroundSync/tempdata.js'
 import { ScreenContext } from 'src/context/screenContext';
+import { getToken } from '@utils/index';
 
 const UnplannedVisits =({navigation})=>{
     let today = format(new Date(), 'yyyy-MM-dd');
@@ -17,6 +18,7 @@ const UnplannedVisits =({navigation})=>{
     const [surveys, setSurvey] =useState(null);
     const [unSyncSurveys, setUnSyncSurveys] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [userId, setUserId] = useState(null);
 
     const { syncData, setSyncData } = useContext(ScreenContext);
 
@@ -32,6 +34,8 @@ const UnplannedVisits =({navigation})=>{
     const getUnplannedData = async () => {
       setIsLoading(true);
 
+      const token = await getToken();
+      setUserId(token.id.split('/').pop());
       let unplannedVisitsData = await getArrayFromStorage('UnplannedVisits');
       unplannedVisitsData = unplannedVisitsData.filter((item) => item.dateAdded === format(new Date(), 'yyyy-MM-dd'));
       setUnplannedVisits(unplannedVisitsData);
@@ -155,7 +159,7 @@ const UnplannedVisits =({navigation})=>{
                                 let temp_account_id = item.temp_account_id ? item.temp_account_id : null;
                                 let accountId = item.isAddedRetailer ? item.accountId : item.accId;
                                 let offlineSrvDetails = unSyncSurveys?.find((z) => {
-                                  return z.userId === visits.UserId 
+                                  return z.userId === userId 
                                     && (!z.accountId || (z.accountId && z.accountId === accountId)) 
                                     && (!z.temp_account_id || (z.temp_account_id && z.temp_account_id === temp_account_id)) 
                                     && z.surveyId === x.surveyId && z.surveyDate === today && z.isUnplanned === true
@@ -177,8 +181,8 @@ const UnplannedVisits =({navigation})=>{
                                                 accId: accountId,
                                                 accName: item.accName,
                                                 surveyId: x.surveyId,
-                                                UserId: visits?.UserId,
-                                                surveyObj:visits?.UserId,  //Change this Back
+                                                UserId: userId,
+                                                surveyObj: userId,  //Change this Back
                                                 Unplanned : true,
                                                 temp_account_id : temp_account_id,
                                                 survey: offlineSrvDetails
