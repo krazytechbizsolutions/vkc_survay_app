@@ -59,6 +59,11 @@ const SingleSelectRadio = ({
       <TextEle variant="title" style={{ marginBottom: 10 }}>
         {question}
       </TextEle>
+      {touched[name] && errors[name] && (
+        <TextEle variant="caption" style={{ color: 'red', marginLeft: 5, marginVertical: 3 }}>
+          {errors[name]}
+        </TextEle>
+      )}
       <SafeAreaView style={{ flex: 1 }}>
           <FlatList
             data={data}
@@ -74,11 +79,6 @@ const SingleSelectRadio = ({
           />
         </SafeAreaView>
      
-      {touched[name] && errors[name] && (
-        <TextEle variant="caption" style={{ color: 'red', marginLeft: 5, marginVertical: 3 }}>
-          {errors[name]}
-        </TextEle>
-      )}
       <Modal
         isVisible={isVisible}
         style={{ backgroundColor: '#fff', margin: 0 }}

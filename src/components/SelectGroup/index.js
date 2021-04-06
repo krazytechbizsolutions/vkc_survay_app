@@ -13,12 +13,12 @@ const SelectGroup = ({
   data,
 }) => (
   <View>
+    <TextEle>{question}</TextEle>
     {touched[name] && errors[name] && (
       <TextEle variant="error" style={{ textAlign: 'center', marginVertical: 10 }}>
         {errors[name]}
       </TextEle>
     )}
-    <TextEle>{question}</TextEle>
     <ScrollView horizontal>
       <View>
         <View style={{ flexDirection: 'row' }}>

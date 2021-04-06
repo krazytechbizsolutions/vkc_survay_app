@@ -44,6 +44,11 @@ const StarRating = ({
           <TextEle variant="title" style={{ marginBottom: 10 }}>
             {question}
           </TextEle>
+          {touched[name] && errors[name] && (
+            <TextEle variant="caption" style={{ color: 'red', marginLeft: 5, marginVertical: 3 }}>
+              {errors[name]}
+            </TextEle>
+          )}
           <View style={{ marginTop: 30, margin: 10, flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
               <Rating
@@ -58,14 +63,6 @@ const StarRating = ({
                 style={{ paddingVertical: 10 }}
                 ratingCount={data.Max_Limit__c}
               />
-            </View>
-            <View style={{ flexDirection: 'row', marginTop: 10, justifyContent: 'center' }}>
-              {touched[name] && errors[name] && (
-                <TextEle variant="caption" style={{ color: 'red', marginLeft: 5, marginVertical: 3 }}>
-                  {errors[name]}
-                </TextEle>
-              )}
-            
             </View>
           </View>
 

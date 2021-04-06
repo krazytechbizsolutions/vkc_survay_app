@@ -47,8 +47,22 @@ const CustomMultiText = ({
             AsyncStorage.getItem('AccountData').then(data=>{
                 let AccountDataJSON = JSON.parse(data);
                 if(AccountDataJSON){
-                    AccountDataJSON = AccountDataJSON.data.filter(x => object_c.split(" & ").indexOf(x.accType) > -1 && x[filter_type_c.toLowerCase()] === surveyObj[filter_type_c.toLowerCase()] )
-                    console.log("53",filter_type_c,AccountDataJSON.length)
+                    let accKey = "";
+                    let surAccKey = "";
+                    if(filter_type_c === 'Country'){
+                        accKey = "country";
+                        surAccKey = 'country';
+                    } else if(filter_type_c === 'State'){
+                        accKey = 'state';
+                        surAccKey = 'state';
+                    } else if(filter_type_c === 'Territory'){
+                        accKey = 'region';
+                        surAccKey = 'region';
+                    } else if(filter_type_c === 'Area'){
+                        accKey = 'areaId';
+                        surAccKey = 'AreaId';
+                    } 
+                    AccountDataJSON = AccountDataJSON.data.filter(x => object_c.split(" & ").indexOf(x.accType) > -1 && x[accKey] === surveyObj[surAccKey] )
                     setAccountData([...AccountDataJSON])
                 }
             })
@@ -143,7 +157,7 @@ const CustomMultiText = ({
                   AccountData.every((element,index)=>{
                     if(tempShowAccountData.length < 5){
                         // console.log("138",element)
-                        if(element.accName.includes(e) ||(element.customer_code &&  element.customer_code.includes(e)))
+                        if((element.accName && element.accName.toLowerCase().includes(e.toLowerCase())) || (element.customer_code &&  element.customer_code.toLowerCase().includes(e.toLowerCase())))
                         {
                             if(isUnplanned)
                             {
@@ -275,8 +289,8 @@ const CustomMultiText = ({
         </View>
         :
         <View style={{width: '100%'}}>
-            <TextEle style={{color: 'red',fontSize:12}}>{errorMsg}</TextEle>
             <TextEle>{question}</TextEle>
+            <TextEle style={{color: 'red',fontSize:12}}>{errorMsg}</TextEle>
             <View style={{flex: 1,alignItems: 'center',justifyContent: 'flex-start',padding:10}}>
                 
                 <TouchableOpacity onPress={()=>setIsVisible(true)} style={{width:'100%'}}>

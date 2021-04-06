@@ -78,14 +78,14 @@ const VKCMediaPicker = ({
 
   return (
     <View style={{ margin: 20 }}>
+      <TextEle variant="title" style={{ marginBottom: 10 }}>
+        {question}
+      </TextEle>
       {touched[name] && errors[name] && (
         <TextEle variant="error" style={{ textAlign: 'center', marginVertical: 10 }}>
           {errors[name]}
         </TextEle>
       )}
-      <TextEle variant="title" style={{ marginBottom: 10 }}>
-        {question}
-      </TextEle>
       <VKCButton
         disable={value.length >= 10}
         variant="fill"
