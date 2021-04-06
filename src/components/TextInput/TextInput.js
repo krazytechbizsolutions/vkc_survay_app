@@ -32,6 +32,7 @@ const index = ({
           {!!isRequired && <Text variant="error"> * </Text>}
         </Text>
       )}
+      {errorMsg && <Text variant="error">{errorMsg}</Text>}
       <TextInput
         {...props}
         ref={innerRef}
@@ -44,7 +45,6 @@ const index = ({
         editable={editable || !disable}
         autoCapitalize="none"
       />
-      {errorMsg && <Text variant="error">{errorMsg}</Text>}
     </View>
   );
 };

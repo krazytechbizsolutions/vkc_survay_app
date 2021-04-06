@@ -14,14 +14,14 @@ const MultiSelection = ({
   isSubLoop
 }) => (
   <View>
+    <View style={{ marginVertical: 10 }}>
+      <TextEle>{question}</TextEle>
+    </View>
     {touched[name] && errors[name] && (
       <TextEle variant="caption" style={{ color: 'red', marginLeft: 5, marginVertical: 3 }}>
         {errors[name]}
       </TextEle>
     )}
-    <View style={{ marginVertical: 10 }}>
-      <TextEle>{question}</TextEle>
-    </View>
     <FlatList
       data={data}
       ItemSeparatorComponent={() => (

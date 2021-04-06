@@ -275,8 +275,8 @@ const CustomMultiText = ({
         </View>
         :
         <View style={{width: '100%'}}>
-            <TextEle style={{color: 'red',fontSize:12}}>{errorMsg}</TextEle>
             <TextEle>{question}</TextEle>
+            <TextEle style={{color: 'red',fontSize:12}}>{errorMsg}</TextEle>
             <View style={{flex: 1,alignItems: 'center',justifyContent: 'flex-start',padding:10}}>
                 
                 <TouchableOpacity onPress={()=>setIsVisible(true)} style={{width:'100%'}}>

@@ -24,7 +24,13 @@ const SliderQuestion = ({
       <TextEle variant="title" style={{ marginBottom: 10 }}>
         {question}
       </TextEle>
-    
+      
+      {touched[name] && errors[name] && (
+        <TextEle variant="caption" style={{ color: 'red', marginLeft: 5, marginVertical: 10 }}>
+          {errors[name]}
+        </TextEle>
+      )}
+      
       {isSubLoop ? 
         <>
           <Slider
@@ -82,11 +88,6 @@ const SliderQuestion = ({
       </View>
       }
       
-      {touched[name] && errors[name] && (
-        <TextEle variant="caption" style={{ color: 'red', marginLeft: 5, marginVertical: 10 }}>
-          {errors[name]}
-        </TextEle>
-      )}
     </View>
   );
 };
