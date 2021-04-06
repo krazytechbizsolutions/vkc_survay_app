@@ -141,10 +141,15 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    dexOptions{
+        javaMaxHeapSize "4g"
+    }
+
     defaultConfig {
         applicationId "com.vkc_app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        multiDexEnabled true
         versionCode 16
         versionName "2.0"
     }

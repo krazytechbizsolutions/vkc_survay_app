@@ -48,7 +48,7 @@ const SurveyQue = ({ navigation, route }) => {
             Sequence_No: sQuestion.Sequence_No__c,
           }
         : {};
-
+        console.log("51",selectedOptions)
       let answer = {};
       let selOptions = {};
       if (

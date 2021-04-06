@@ -28,6 +28,14 @@ const VKCDraggableList = ({
     }
   }, [])
 
+  const resetOtherValues = () => {
+    setFieldValue("subLoopFeedbackText", "");
+    setFieldValue("subLoopIntegerText", "");
+    setFieldValue("subLoopText", "");
+    setFieldValue("subLoopMultiSelect", "");
+    setFieldValue("subLoopSlider", "");
+  }
+
   const onSelect = (item) => {    
     let index = value.findIndex(x => x[valueField] === item[valueField]);
     value[index].isSelected = !item.isSelected;
@@ -38,6 +46,7 @@ const VKCDraggableList = ({
       name, 
       [...selectedData, ...nonSelectedData].map((x, i) => ({ ...x, seqNo: i + 1 })),
     );
+    resetOtherValues()
   };
 
   return (

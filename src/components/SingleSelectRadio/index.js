@@ -27,6 +27,24 @@ const SingleSelectRadio = ({
 
   const onSelectValue = item => {
     setIsVisible(false);
+
+   data = data.map(res => {
+      if(res.loopingQtnType === 'Ordering Question')
+      {
+        return res.subOrLoopingQtnOptions.map(result => {
+          result.isSelected = false;
+          return result;
+        })
+      }
+      return res
+    })
+
+    setFieldValue("subLoopFeedbackText", "");
+    setFieldValue("subLoopIntegerText", "");
+    setFieldValue("subLoopText", "");
+    setFieldValue("subLoopMultiSelect", "");
+    setFieldValue("subLoopSlider","");
+    setFieldValue("subLoopOrder", );
     setFieldValue(name, item);
     console.log("32",name,item)
     if (name !== 'childField') {
@@ -207,7 +225,9 @@ const SingleSelectRadio = ({
                                   question={res.loopingQtnName}
                                   isSubLoop={true}
                                   validate={value => {
-                                    if (!value || value.length === 0) {
+                                    let isSelected = value.find(x => x.isSelected)
+
+                                    if (isSelected) {
                                       return 'Need To Prioritize atleast one value';
                                     }
                                     return '';

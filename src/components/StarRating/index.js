@@ -29,6 +29,11 @@ const StarRating = ({
     const setting=(r)=>{
       let rate = parseFloat((Math.round(r * 2) / 2).toFixed(1))
       setRating(rate)
+      setFieldValue("subLoopFeedbackText", "");
+      setFieldValue("subLoopIntegerText", "");
+      setFieldValue("subLoopText", "");
+      setFieldValue("subLoopMultiSelect", "");
+      setFieldValue("subLoopSlider", "");
       setFieldValue('starRatingMainField', options.filter(x => parseFloat(x.optionName) === rate))
       setFieldValue(name, rate)
     }

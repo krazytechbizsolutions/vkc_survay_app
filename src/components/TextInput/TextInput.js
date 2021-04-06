@@ -21,6 +21,27 @@ const index = ({
   const error = getIn(errors, name);
   const touch = getIn(touched, name);
   const errorMsg = touch && error ? error : null;
+
+ const resetOtherValues = (currentval) => {
+    setFieldValue("subLoopSlider", "");
+
+    if(currentval === "subLoopText")
+    {
+      setFieldValue("subLoopFeedbackText", "");
+      setFieldValue("subLoopIntegerText", "");
+    }
+    else if(currentval === "subLoopIntegerText")
+    {
+      setFieldValue("subLoopFeedbackText", "");
+      setFieldValue("subLoopText", "");
+    }
+    else if(currentval === "subLoopFeedbackText")
+    {
+      setFieldValue("subLoopIntegerText", "");
+      setFieldValue("subLoopText", "");
+    }
+  }
+
   return (
     <View>
       <TextEle variant="title" style={{ marginBottom: 10 }}>
@@ -37,6 +58,7 @@ const index = ({
         ref={innerRef}
         style={[styles.textInput, inputStyle, errorMsg ? styles.errorBorder : {}]}
         onChangeText={itemValue => {
+          resetOtherValues(name);
           setFieldValue(name, itemValue);
         }}
         onBlur={() => setFieldTouched(name)}

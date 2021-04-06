@@ -24,6 +24,11 @@ const SelectImage = ({
 }) => {
   const flastListRef = useRef();
   const onSelectValue = item => {
+    setFieldValue("subLoopFeedbackText", "");
+    setFieldValue("subLoopIntegerText", "");
+    setFieldValue("subLoopText", "");
+    setFieldValue("subLoopMultiSelect", "");
+    setFieldValue("subLoopSlider", "");
     // setFieldTouched(name, true);
     setFieldValue(name, item);
   };
