@@ -225,9 +225,7 @@ const SingleSelectRadio = ({
                                   question={res.loopingQtnName}
                                   isSubLoop={true}
                                   validate={value => {
-                                    let isSelected = value.find(x => x.isSelected)
-
-                                    if (isSelected) {
+                                    if (!value || value.filter(v => v.isSelected).length === 0) {
                                       return 'Need To Prioritize atleast one value';
                                     }
                                     return '';
