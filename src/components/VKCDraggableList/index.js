@@ -29,6 +29,17 @@ const VKCDraggableList = ({
   }, [])
 
   const resetOtherValues = () => {
+    data = data.map(res => {
+      if(res.loopingQtnType === 'Ordering Question')
+      {
+        return res.subOrLoopingQtnOptions.map(result => {
+          result.isSelected = false;
+          return result;
+        })
+      }
+      return res
+    })
+
     setFieldValue("subLoopFeedbackText", "");
     setFieldValue("subLoopIntegerText", "");
     setFieldValue("subLoopText", "");
