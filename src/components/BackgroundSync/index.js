@@ -212,7 +212,7 @@ class BackgroundSync extends React.Component{
     }
 
     uploadUnsyncedRetailers = async () =>{   
-        let newRetailers = await getArrayFromStorage('newRetailers');
+        let newRetailers = await this.getArrayFromStorage('newRetailers');
         if(newRetailers.length > 0) {
             try {
                 let submitRetailersResponse = await axios.post(captureRetailerAPI, newRetailers)
@@ -221,7 +221,7 @@ class BackgroundSync extends React.Component{
                     addedRetailers = Object.fromEntries(addedRetailers.map((f) => [f.temp_account_id, f.Acc_SF_Id]))
 
                     const updateasfidFortaiInStorage = async (key, addedRetailers) => {
-                        let storageData = await getArrayFromStorage(key);
+                        let storageData = await this.getArrayFromStorage(key);
 
                         storageData = storageData.map((visits)=>{
                             if(addedRetailers[visits.temp_account_id]) {
