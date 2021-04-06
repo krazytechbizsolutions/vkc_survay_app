@@ -72,7 +72,7 @@ const SurveyQue = ({ navigation, route }) => {
               isLoopingQtn: x.isLoopingQtn,
               loopingQtnId: x.loopingQtnId,
               loopingQtnType: x.loopingQtnType,
-              selectedSubOrLoopingQtnOptions:AddSubLoopingOptions(selectedOptions,x.loopingQtnType,x.optionId).filter((x) => x)
+              ...AddSubLoopingOptions(selectedOptions,x.loopingQtnType,x.optionId)
             })),
           };
         }
@@ -102,23 +102,9 @@ const SurveyQue = ({ navigation, route }) => {
               ],
             };
           }
-          else if(selectedOptions.mainField.loopingQtnType === "Multi Select")
+          else 
           {
-            selectedSubOrLoopingQtnOptions = {
-              selectedSubOrLoopingQtnOptions: AddSubLoopingOptions(selectedOptions,selectedOptions.mainField.loopingQtnType).filter((x) => x),
-            };
-          }
-          else if(selectedOptions.mainField.loopingQtnType === "Ordering Question")
-          {
-            selectedSubOrLoopingQtnOptions = {
-              selectedSubOrLoopingQtnOptions: AddSubLoopingOptions(selectedOptions,selectedOptions.mainField.loopingQtnType).filter((x) => x),
-            };
-          }
-          else
-          {
-            selectedSubOrLoopingQtnOptions = {
-              selectedSubOrLoopingQtnOptions: AddSubLoopingOptions(selectedOptions,selectedOptions.mainField.loopingQtnType).filter((x) => x),
-            };
+            selectedSubOrLoopingQtnOptions = AddSubLoopingOptions(selectedOptions,selectedOptions.mainField.loopingQtnType);
           }
         }
         
@@ -164,7 +150,7 @@ const SurveyQue = ({ navigation, route }) => {
               isLoopingQtn: x.isLoopingQtn,
               loopingQtnId: x.loopingQtnId,
               loopingQtnType: x.loopingQtnType,
-              selectedSubOrLoopingQtnOptions:AddSubLoopingOptions(selectedOptions,x.loopingQtnType,x.optionId).filter((x) => x)
+              ...AddSubLoopingOptions(selectedOptions,x.loopingQtnType,x.optionId)
             })),
           };
         }
@@ -341,77 +327,39 @@ const SurveyQue = ({ navigation, route }) => {
   };
 
   const AddSubLoopingOptions = (selQues,questionType,optionId = null)=>{  
-    switch(questionType)
-    {
-      case 'Multi Select':
-   
-        return selQues.subLoopMultiSelect.map((val)=>{
-          return(
-                    {
-                      Id: val.Id,
-                      Sequence_No__c: val.Sequence_No__c,
-                    } 
-                )
-            })
-          break;
-  
-      case 'Single Select':
-        return(
-          [
-            {
-              Id: selQues.subLoopSingleSelect.Id,
-              Sequence_No__c: selQues.subLoopSingleSelect.Sequence_No__c,
-            }
-          ]
-        )
-        break;
-  
-      case 'Single Select List':
-        return(
-          [
-            {
-              Id: selQues.subLoopSingleSelectList.Id,
-              Sequence_No__c: selQues.subLoopSingleSelectList.Sequence_No__c,
-            }
-          ]
-        )
-        break;
+    let loopingQtnAnswer = "";
+    if(questionType === 'Feedback' || questionType === 'Integer Enter Question' || questionType === 'Text' || questionType === 'Slider'){
 
-        case 'Ordering Question':
-          return selQues.subLoopOrder.map((res)=>{
-              if(res.isSelected)
-              {
-                return(
-                  {
-                    Id: res.Id,
-                    Sequence_No__c: res.Sequence_No__c,
-                  }
-                )
-              }
-          })
-        break;
-  
-      case 'Feedback':
-      case 'Integer Enter Question':
-      case 'Text':
-      case 'Slider':
-        return(
-          [
-            {
-              loopingQtnType:questionType,
-              loopingQtnAnswer:questionType === 'Feedback' ? selQues.subLoopFeedbackText : 
-                     questionType === 'Integer Enter Question' ? selQues.subLoopIntegerText : 
-                     questionType === 'Text' ? selQues.subLoopText :
-                     questionType === 'Slider' ? selQues.subLoopSlider : null
-            }
-          ]
-        )
-        break;
-  
-      default:
-        return []
-        break;
+    loopingQtnAnswer = questionType === 'Feedback' ? selQues.subLoopFeedbackText : 
+                       questionType === 'Integer Enter Question' ? selQues.subLoopIntegerText : 
+                       questionType === 'Text' ? selQues.subLoopText :
+                       questionType === 'Slider' ? selQues.subLoopSlider : null;
+
+      return { loopingQtnAnswer: loopingQtnAnswer };
     }
+
+    let selectedSubOrLoopingQtnOptions = [];
+
+    if(questionType === 'Multi Select'){
+      selectedSubOrLoopingQtnOptions = selQues.subLoopMultiSelect.map((val)=>{
+        return { Id: val.Id, Sequence_No__c: val.Sequence_No__c }
+      })
+    } else if(questionType === 'Single Select'){
+      selectedSubOrLoopingQtnOptions = [ 
+        { Id: selQues.subLoopSingleSelect.Id, Sequence_No__c: selQues.subLoopSingleSelect.Sequence_No__c }
+      ]
+    } else if(questionType === 'Single Select List'){
+      selectedSubOrLoopingQtnOptions = [ 
+        { Id: selQues.subLoopSingleSelectList.Id, Sequence_No__c: selQues.subLoopSingleSelectList.Sequence_No__c }
+      ]
+    } else if(questionType === 'Ordering Question'){
+      selectedSubOrLoopingQtnOptions = selQues.subLoopOrder.map((res)=>{
+        if(res.isSelected) {
+          return { Id: res.Id, Sequence_No__c: res.Sequence_No__c }
+        }
+      })
+    }
+    return { selectedSubOrLoopingQtnOptions: selectedSubOrLoopingQtnOptions.filter((x) => x) }; 
   }
 
   const saveArrayInStorage = async (key, arr) => {
