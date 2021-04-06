@@ -29,23 +29,52 @@ const VKCDraggableList = ({
   }, [])
 
   const resetOtherValues = () => {
-    data = data.map(res => {
-      if(res.loopingQtnType === 'Ordering Question')
-      {
-        return res.subOrLoopingQtnOptions.map(result => {
-          result.isSelected = false;
-          return result;
-        })
+    
+   value = value.map((x)=>{
+      if(!x.isSelected){
+        if(x.loopingQtnType === 'Ordering Question')
+        {
+          x.subOrLoopingQtnOptions = x.subOrLoopingQtnOptions.map(result => {
+              result.isSelected = false;
+              return result;
+            })  
+            
+            setFieldValue("subLoopOrder","" );
+        }
+        else if(x.loopingQtnType === 'Feedback')
+        {
+          setFieldValue("subLoopFeedbackText", "");
+        }
+        else if(x.loopingQtnType === 'Integer Enter Question')
+        {
+          setFieldValue("subLoopIntegerText", "");
+        }
+        else if(x.loopingQtnType === 'Text')
+        {
+          setFieldValue("subLoopText", "");
+        }
+        else if(x.loopingQtnType === 'Multi Select')
+        {
+          setFieldValue("subLoopMultiSelect", "");
+        }
+        else if(x.loopingQtnType === 'Slider')
+        {
+          setFieldValue("subLoopSlider", "");
+        }
+        else if(x.loopingQtnType === 'Single Select')
+        {
+           setFieldValue("subLoopSingleSelect", "");
+        }
+        else if(x.loopingQtnType === 'Single Select List')
+        {
+          setFieldValue("subLoopSingleSelectList", "");
+        }
       }
-      return res
+      return x;
     })
-
-    setFieldValue("subLoopFeedbackText", "");
-    setFieldValue("subLoopIntegerText", "");
-    setFieldValue("subLoopText", "");
-    setFieldValue("subLoopMultiSelect", "");
-    setFieldValue("subLoopSlider", "");
   }
+
+
   const onSelect = (item, index) => {    
     value[index].isSelected = !item.isSelected;
         
