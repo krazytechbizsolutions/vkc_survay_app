@@ -44,7 +44,8 @@ const SingleSelectRadio = ({
     setFieldValue("subLoopText", "");
     setFieldValue("subLoopMultiSelect", "");
     setFieldValue("subLoopSlider","");
-    setFieldValue("subLoopOrder", );
+    setFieldValue("subLoopOrder","" );
+    
     setFieldValue(name, item);
     console.log("32",name,item)
     if (name !== 'childField') {

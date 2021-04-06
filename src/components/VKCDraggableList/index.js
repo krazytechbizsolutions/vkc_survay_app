@@ -51,7 +51,11 @@ const VKCDraggableList = ({
     <>
       <View>
         <TextEle>{question}</TextEle>
-        <TextEle style={{color: 'red',fontSize:12}}>{errorMsg}</TextEle>
+        {errors[name] && (
+        <TextEle variant="caption" style={{ color: 'red', marginLeft: 5, marginVertical: 3 }}>
+          {errors[name]}
+        </TextEle>
+      )}
       </View>
       {!!value && value.length > 0 && (
         <FlatList

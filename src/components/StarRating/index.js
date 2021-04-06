@@ -29,11 +29,24 @@ const StarRating = ({
     const setting=(r)=>{
       let rate = parseFloat((Math.round(r * 2) / 2).toFixed(1))
       setRating(rate)
+
+      data = data.map(res => {
+        if(res.loopingQtnType === 'Ordering Question')
+        {
+          return res.subOrLoopingQtnOptions.map(result => {
+            result.isSelected = false;
+            return result;
+          })
+        }
+        return res
+      })
+      
       setFieldValue("subLoopFeedbackText", "");
       setFieldValue("subLoopIntegerText", "");
       setFieldValue("subLoopText", "");
       setFieldValue("subLoopMultiSelect", "");
       setFieldValue("subLoopSlider", "");
+      setFieldValue("subLoopOrder","" );
       setFieldValue('starRatingMainField', options.filter(x => parseFloat(x.optionName) === rate))
       setFieldValue(name, rate)
     }
