@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "bundle-assets":"react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
@@ -11,6 +12,7 @@
     "lint:write": "eslint . --fix --quiet",
     "prettier": "prettier --write src/**/*.js",
     "clean-build": "cd android && gradlew clean",
+    "debug": "cd android && gradlew assembleDebug",
     "release": "cd android && gradlew assembleRelease"
   },
   "dependencies": {

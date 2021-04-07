@@ -96,7 +96,6 @@ const StarRating = ({
                                   name="subLoopMultiSelect"
                                   value={values.subLoopMultiSelect}
                                   question={res.loopingQtnName}
-                                  isSubLoop={true}
                                   validate={value => {
                                     if (!value || value.length === 0) {
                                       return 'Please Enter Field Value';
@@ -156,7 +155,6 @@ const StarRating = ({
                               name="subLoopFeedbackText"
                               value={values.subLoopFeedbackText}
                               question={res.loopingQtnName}
-                              isSubLoop={true}
                               validate={value => {
                                 if (!value) {
                                   return 'Please Enter Field Value';
@@ -178,7 +176,6 @@ const StarRating = ({
                                 name='subLoopIntegerText'
                                 value={values.subLoopIntegerText}
                                 question={res.loopingQtnName}
-                                isSubLoop={true}
                                 validate={value => {
                                   if (!value) {
                                     return 'Please Enter Field Value';
@@ -199,7 +196,6 @@ const StarRating = ({
                                 multiline={false}
                                 value={values.subLoopText}
                                 question={res.loopingQtnName}
-                                isSubLoop={true}
                                 validate={value => {
                                   if (!value) {
                                     return 'Please Enter Field Value';

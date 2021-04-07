@@ -16,6 +16,7 @@ const index = ({
   question,
   disable,
   isRequired,
+  isSubLoop,
   ...props
 }) => {
   const error = getIn(errors, name);
@@ -59,7 +60,11 @@ const index = ({
         ref={innerRef}
         style={[styles.textInput, inputStyle, errorMsg ? styles.errorBorder : {}]}
         onChangeText={itemValue => {
-          resetOtherValues(name);
+          if(!isSubLoop)
+          {
+            resetOtherValues(name);
+          }
+          
           setFieldValue(name, itemValue);
         }}
         onBlur={() => setFieldTouched(name)}

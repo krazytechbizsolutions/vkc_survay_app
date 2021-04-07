@@ -123,7 +123,6 @@ const SingleSelectRadio = ({
                               name="subLoopFeedbackText"
                               value={values.subLoopFeedbackText}
                               question={res.loopingQtnName}
-                              isSubLoop={true}
                               validate={value => {
                                 if (!value) {
                                   return 'Please Enter Field Value';
@@ -144,7 +143,6 @@ const SingleSelectRadio = ({
                                 name='subLoopIntegerText'
                                 value={values.subLoopIntegerText}
                                 question={res.loopingQtnName}
-                                isSubLoop={true}
                                 validate={value => {
                                   if (!value) {
                                     return 'Please Enter Field Value';
@@ -164,7 +162,6 @@ const SingleSelectRadio = ({
                                 name= 'subLoopText'
                                 value={values.subLoopText}
                                 question={res.loopingQtnName}
-                                isSubLoop={true}
                                 validate={value => {
                                   if (!value) {
                                     return 'Please Enter Field Value';
