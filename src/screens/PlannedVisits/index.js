@@ -34,53 +34,15 @@ const PlannedVisits = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       const loadUnSyncSurvey = async () => {
-        let initialUrl = await Linking.getInitialURL();
         
         const token = await getToken();
         setUserId(token.id.split('/').pop());
+        
+        await getVisitData();
+        await getUnsyncSurveys();
+        
+        await doDeepLinking();
 
-        getVisitData();
-        getUnsyncSurveys();
-        if(initialUrl)
-        {
-          if(!hasDeepLinkDone)
-          {
-            setIsDeepLink(true)
-            initialUrl = initialUrl.split('?').pop();
-            let accId = initialUrl.split('&')[0].split('=')[1];
-            let survId = initialUrl.split('&')[1].split('=')[1];
-            let surveyMaster = await getArrayDataFromStorage('SurveyMaster')
-            let surveyVisits = await getArrayDataFromStorage('Visits')
-            let offlineSrvDetails = unSyncSurveys?.find((z) => {
-              return z.userId === userId && z.accountId === accId && z.temp_account_id === null 
-                  && z.surveyId === survId && z.surveyDate === today && z.isUnplanned === false
-            })
-            let surveyItem = surveyVisits.visits?.find((z)=>{
-              return z.accId === accId
-            })
-            
-            if((surveyMaster && surveyMaster.data.length > 0) &&
-                (surveyVisits) &&
-                (surveyItem && Object.keys(surveyItem).length > 0))
-            {
-              surveyMaster = surveyMaster.data.find(y => y.surveyId === survId)
-              setIsDeepLink(false)
-              setHasDeepLinkDone(true)
-              navigation.navigate('SurveyQue', {
-                questions: surveyMaster.Questions,
-                firstQuestion: true,
-                accId: accId,
-                accName: "",
-                surveyId: survId,
-                UserId: userId, 
-                surveyObj:surveyItem === undefined ? {} : surveyItem, //Change this Back
-                Unplanned : false,
-                temp_account_id : null,
-                survey: offlineSrvDetails
-              });
-            }  
-          }
-        }
       };
       loadUnSyncSurvey();
     }, [syncData]),
@@ -98,9 +60,9 @@ const PlannedVisits = ({ navigation }) => {
   getArrayDataFromStorage = async (key) => {
     let storageData = await AsyncStorage.getItem(key);
     try{
-      storageData = storageData ? JSON.parse(storageData) : []
+      storageData = storageData ? JSON.parse(storageData) : null
     } catch(e){
-      storageData = [];
+      storageData = null;
     }
     return storageData;
   }
@@ -120,6 +82,71 @@ const PlannedVisits = ({ navigation }) => {
     setUnSyncSurveys(data.filter((res) => res.surveyDate === format(new Date(), 'yyyy-MM-dd')));
   }
   
+  const doDeepLinking = async () => {
+    let initialUrl = await Linking.getInitialURL();
+    if(initialUrl && !hasDeepLinkDone)
+    {
+      setIsDeepLink(true)
+      initialUrl = initialUrl.split('?').pop();
+      let accId = initialUrl.split('&')[0].split('=')[1];
+      let survId = initialUrl.split('&')[1].split('=')[1];
+
+      // check if the account exists...
+      let deepLinkPlannedVisit = visits?.visits?.find((z)=>{
+        return z.accId === accId
+      })
+
+      if(!deepLinkPlannedVisit){
+        console.log('TODO: PLACE "NO accounts exists" message here...')
+        setIsDeepLink(false);
+        setHasDeepLinkDone(true);
+        return;
+      }
+
+      let deepLinkPlannedVisitSurveyId = deepLinkPlannedVisit?.surveys?.find(y => y.svyId === survId);
+      if(!deepLinkPlannedVisitSurveyId){
+        console.log('TODO: PLACE "NO survey assigned in the account"/"Already survey captured" message here...');
+        setIsDeepLink(false);
+        setHasDeepLinkDone(true);
+        return;
+      }
+
+      let offlineSrvDetails = unSyncSurveys?.find((z) => {
+        return z.userId === userId && z.accountId === accId && z.temp_account_id === null 
+            && z.surveyId === survId && z.surveyDate === today && z.isUnplanned === false
+      })
+
+      if(offlineSrvDetails?.isCompleted){
+        console.log('TODO: PLACE "Already survey captured" message here...');
+        setIsDeepLink(false);
+        setHasDeepLinkDone(true);
+        return;
+      }
+      
+      let deepLinkPlannedVisitSurvey = surveys?.data?.find(y => y.surveyId === survId)
+      if(!deepLinkPlannedVisitSurvey){
+        console.log('TODO: PLACE "Survey master does not exist"/"Survey master not synced" message here...');
+        setIsDeepLink(false);
+        setHasDeepLinkDone(true);
+        return;
+      }
+
+      setIsDeepLink(false);
+      setHasDeepLinkDone(true);
+      navigation.navigate('SurveyQue', {
+        questions: deepLinkPlannedVisitSurvey.Questions,
+        firstQuestion: true,
+        accId: accId,
+        accName: deepLinkPlannedVisit.accName,
+        surveyId: survId,
+        UserId: userId, 
+        surveyObj: deepLinkPlannedVisit, 
+        Unplanned : false,
+        temp_account_id : null,
+        survey: offlineSrvDetails
+      });
+    }
+  }
 
   getArrayFromStorage = async (key) => {
     let storageData = await AsyncStorage.getItem(key);
