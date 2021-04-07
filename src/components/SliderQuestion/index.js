@@ -16,6 +16,12 @@ const SliderQuestion = ({
   const [sliderVal,setSliderVal] =useState(0)
 
   useEffect(() =>{
+    if(!data.Min_Limit__c){
+      data.Min_Limit__c = 0;
+    }
+    if(!data.Max_Limit__c){
+      data.Max_Limit__c = 100;
+    }
     setSliderVal(value);
   },[])
 
@@ -31,62 +37,30 @@ const SliderQuestion = ({
         </TextEle>
       )}
       
-      {isSubLoop ? 
-        <>
-          <Slider
-            style={{ marginTop: 20 }}
-            minimumValue={0}
-            maximumValue={100}
-            thumbTintColor="red"
-            minimumTrackTintColor="red"
-            maximumTrackTintColor="#000000"
-            value={value || 0}
-            onValueChange={val => {
-              setSliderVal(Math.floor(val));
-              setFieldValue(name, Math.floor(val));
-            }}
-          />
-          <View style={{width:'100%',justifyContent:'center',alignItems: 'center'}}>
-              <TextEle style={{color:'grey',marginBottom:-30}}>
-                {sliderVal}
-              </TextEle>
-          </View>
-        </>
-        :
-        <>
-          <Slider
-            style={{ marginTop: 20 }}
-            minimumValue={data.Min_Limit__c}
-            maximumValue={data.Max_Limit__c}
-            thumbTintColor="red"
-            minimumTrackTintColor="red"
-            maximumTrackTintColor="#000000"
-            value={value || data.Min_Limit__c}
-            onValueChange={val => {
-              setSliderVal(Math.floor(val));
-              setFieldValue(name, Math.floor(val));
-            }}
-          />
-           <View style={{width:'100%',justifyContent:'center',alignItems: 'center'}}>
-              <TextEle style={{color:'grey',marginBottom:-30}}>
-                {sliderVal}
-              </TextEle>
-          </View>
-        </>
-      } 
+      <Slider
+        style={{ marginTop: 20 }}
+        minimumValue={data.Min_Limit__c}
+        maximumValue={data.Max_Limit__c}
+        thumbTintColor="red"
+        minimumTrackTintColor="red"
+        maximumTrackTintColor="#000000"
+        value={value || data.Min_Limit__c}
+        onValueChange={val => {
+          setSliderVal(Math.floor(val));
+          setFieldValue(name, Math.floor(val));
+        }}
+      />
+       <View style={{width:'100%',justifyContent:'center',alignItems: 'center'}}>
+          <TextEle style={{color:'grey',marginBottom:-30}}>
+            {sliderVal}
+          </TextEle>
+      </View>
       
       
-      {isSubLoop ? 
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 10 }}>
-          <TextEle>0</TextEle>
-          <TextEle>100</TextEle>
-        </View>
-        :
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 10 }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 10 }}>
           <TextEle>{data.Min_Limit__c}</TextEle>
           <TextEle>{data.Max_Limit__c}</TextEle>
       </View>
-      }
       
     </View>
   );
