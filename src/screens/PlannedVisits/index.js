@@ -92,6 +92,11 @@ const PlannedVisits = ({ navigation }) => {
       let survId = initialUrl.split('&')[1].split('=')[1];
 
       // check if the account exists...
+      if(!visits){
+        console.log('TODO: PLACE "No Syncs done" message here...')
+        return;
+      }
+
       let deepLinkPlannedVisit = visits?.visits?.find((z)=>{
         return z.accId === accId
       })
