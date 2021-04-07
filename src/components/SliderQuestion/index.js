@@ -37,6 +37,10 @@ const SliderQuestion = ({
         </TextEle>
       )}
       
+      <View style={{width:'100%',justifyContent:'center',alignItems: 'center'}}>
+        <TextEle style={{color:'grey',marginBottom:-30}}> {sliderVal} </TextEle>
+      </View>
+
       <Slider
         style={{ marginTop: 20 }}
         minimumValue={data.Min_Limit__c}
@@ -50,11 +54,6 @@ const SliderQuestion = ({
           setFieldValue(name, Math.floor(val));
         }}
       />
-       <View style={{width:'100%',justifyContent:'center',alignItems: 'center'}}>
-          <TextEle style={{color:'grey',marginBottom:-30}}>
-            {sliderVal}
-          </TextEle>
-      </View>
       
       
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 10 }}>
