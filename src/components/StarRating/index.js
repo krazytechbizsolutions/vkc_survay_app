@@ -33,10 +33,14 @@ const StarRating = ({
       options = options.map(res => {
         if(res.loopingQtnType === 'Ordering Question')
         {
-          return res.subOrLoopingQtnOptions.map(result => {
+          res.subOrLoopingQtnOptions = res.subOrLoopingQtnOptions.map(result => {
             result.isSelected = false;
             return result;
           })
+
+          if(parseFloat(res.optionName) !== rate){
+            setFieldValue("subLoopOrder","");
+          }
         }
         return res
       })
@@ -46,7 +50,6 @@ const StarRating = ({
       setFieldValue("subLoopText", "");
       setFieldValue("subLoopMultiSelect", "");
       setFieldValue("subLoopSlider", "");
-      setFieldValue("subLoopOrder","" );
       setFieldValue('starRatingMainField', options.filter(x => parseFloat(x.optionName) === rate))
       setFieldValue(name, rate)
     }
@@ -144,7 +147,7 @@ const StarRating = ({
                               />
                           )
                         }
-                        else if(res.typeloopingQtnType === 'Feedback')
+                        else if(res.loopingQtnType === 'Feedback')
                           {
                             return(
                             <Field
@@ -220,6 +223,24 @@ const StarRating = ({
                                   validate={value => {
                                     if (!value || value.filter(v => v.isSelected).length === 0) {
                                       return 'Need To Prioritize atleast one value';
+                                    }
+                                    return '';
+                                  }}
+                                />
+                              )
+                          }
+                          else if(res.loopingQtnType === 'Slider'){
+                            return(
+                              <Field
+                                  component={SliderQuestion}
+                                  data={res}
+                                  name="subLoopSlider"
+                                  value={values.subLoopSlider}
+                                  question={res.loopingQtnName}
+                                  isSubLoop={true}
+                                  validate={value => {
+                                    if (!value) {
+                                      return 'Please Enter Field Value';
                                     }
                                     return '';
                                   }}
