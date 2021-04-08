@@ -38,7 +38,7 @@ const SurveyQue = ({ navigation, route }) => {
   const [ ShowSubmitModal, setSubmitModal]=useState(false);
   const { syncData, setSyncData } = useContext(ScreenContext);
   const formRef = useRef();
-  console.log("41",surveyObj)
+  // console.log("41",surveyObj)
   let today = format(new Date(), 'yyyy-MM-dd');
   const onSubmit = async selectedOptions => {
     

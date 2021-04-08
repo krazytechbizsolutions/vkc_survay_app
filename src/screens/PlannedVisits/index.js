@@ -39,9 +39,12 @@ const PlannedVisits = ({ navigation }) => {
         setUserId(token.id.split('/').pop());
         
         await getVisitData();
+        // console.log("Done Calling getVisitData",visits)
         await getUnsyncSurveys();
         
-        await doDeepLinking();
+        // console.log("Calling Deeplink")
+        let initialUrl = await Linking.getInitialURL();
+        await doDeepLinking(initialUrl);
 
       };
       loadUnSyncSurvey();
@@ -71,6 +74,8 @@ const PlannedVisits = ({ navigation }) => {
     setIsLoading(true);
     
     setVisits(await getArrayDataFromStorage('Visits'));
+    
+    console.log("76 After Setting Visits",visits);
     setSurvey(await getArrayDataFromStorage('SurveyMaster'));
     
     setRefreshing(false)
@@ -82,22 +87,25 @@ const PlannedVisits = ({ navigation }) => {
     setUnSyncSurveys(data.filter((res) => res.surveyDate === format(new Date(), 'yyyy-MM-dd')));
   }
   
-  const doDeepLinking = async () => {
-    let initialUrl = await Linking.getInitialURL();
+  const doDeepLinking = async (initialUrl) => {
+    console.log("96",initialUrl);
     if(initialUrl && !hasDeepLinkDone)
     {
       setIsDeepLink(true)
       initialUrl = initialUrl.split('?').pop();
       let accId = initialUrl.split('&')[0].split('=')[1];
       let survId = initialUrl.split('&')[1].split('=')[1];
-
+      let tempVisits = await getArrayDataFromStorage('Visits')
+      let tempSurveyMaster = await getArrayDataFromStorage('SurveyMaster')
+      let tempUnsyncedSurveys = await getArrayFromStorage('unSyncedQuestions');
       // check if the account exists...
-      if(!visits){
+      // console.log("105 Visits",visits)
+      if(!tempVisits){
         console.log('TODO: PLACE "No Syncs done" message here...')
         return;
       }
 
-      let deepLinkPlannedVisit = visits?.visits?.find((z)=>{
+      let deepLinkPlannedVisit = tempVisits?.visits?.find((z)=>{
         return z.accId === accId
       })
 
@@ -116,7 +124,7 @@ const PlannedVisits = ({ navigation }) => {
         return;
       }
 
-      let offlineSrvDetails = unSyncSurveys?.find((z) => {
+      let offlineSrvDetails = tempUnsyncedSurveys?.find((z) => {
         return z.userId === userId && z.accountId === accId && z.temp_account_id === null 
             && z.surveyId === survId && z.surveyDate === today && z.isUnplanned === false
       })
@@ -128,7 +136,7 @@ const PlannedVisits = ({ navigation }) => {
         return;
       }
       
-      let deepLinkPlannedVisitSurvey = surveys?.data?.find(y => y.surveyId === survId)
+      let deepLinkPlannedVisitSurvey = tempSurveyMaster?.data?.find(y => y.surveyId === survId)
       if(!deepLinkPlannedVisitSurvey){
         console.log('TODO: PLACE "Survey master does not exist"/"Survey master not synced" message here...');
         setIsDeepLink(false);
@@ -152,6 +160,13 @@ const PlannedVisits = ({ navigation }) => {
       });
     }
   }
+
+  useEffect(()=>{
+    Linking.addEventListener('url',event => {
+        console.log("In Change")
+        doDeepLinking(event.url)
+    })
+  },[])
 
   getArrayFromStorage = async (key) => {
     let storageData = await AsyncStorage.getItem(key);
