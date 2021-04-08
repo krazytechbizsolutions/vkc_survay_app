@@ -13,11 +13,12 @@ import { AuthContext } from 'src/context/authContext';
 import {ScreenContext} from 'src/context/screenContext';
 import VKCLogo from '../assets/Logo/VKC_Logo.jpg';
 import BackgroundSync from '@components/BackgroundSync'
+import { storeToken} from '../utils/index';
 
 const MainStack = createStackNavigator();
 
 const MainStackScreen = () => {
-  const { token } = useContext(AuthContext);
+  const { token,setToken } = useContext(AuthContext);
   const { colors } = useTheme();
   const [syncData,setSyncData] = useState(false);
   const [isDeepLink,setIsDeepLink] = useState(false);
@@ -28,10 +29,15 @@ const MainStackScreen = () => {
     setSyncData(false);
   } 
 
+  const moveToLogin = () =>{
+    storeToken(null);
+    setToken(null);
+  }
+
   return (
     <ScreenContext.Provider value={{syncData,setSyncData,isDeepLink,setIsDeepLink,hasDeepLinkDone,setHasDeepLinkDone}}>
       <View style={{width:'100%',flex:1}}>
-        {syncData ? <BackgroundSync Reset={ResetSyncData} /> : null}
+        {syncData ? <BackgroundSync Reset={ResetSyncData} ToLogin={moveToLogin} /> : null}
         {isDeepLink ?
           <View style={{width:'100%',height:35,alignItems: 'center',justifyContent: 'center',backgroundColor:'#1890ff'}}>
               <Text style={{color:'white'}}>Redirecting To Survey After Sync ...</Text>

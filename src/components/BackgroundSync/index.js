@@ -32,6 +32,10 @@ class BackgroundSync extends React.Component{
         this.performSync();
     }
 
+    moveToLogin = () => {
+        this.props.ToLogin()
+    }
+
     performSync = async () =>{
 
         const netInfo = await NetInfo.fetch();
@@ -82,7 +86,12 @@ class BackgroundSync extends React.Component{
                     await AsyncStorage.setItem('Visits', JSON.stringify(successResponse))
                 }
             }
-        } catch(e) { }  
+        } catch(e) { 
+            if (e.response.status === 401){
+                    this.moveToLogin()
+            }
+            console.log("From Rejection Of Promise",e)
+        }  
     }
 
     downloadSurveyMasters = async () => {
@@ -97,7 +106,11 @@ class BackgroundSync extends React.Component{
                 syncedDate: format(new Date(), 'yyyy-MM-dd'),
                 data: res.data
             }));
-        } catch(e) { }
+        } catch(e) {
+            if (e.response.status === 401){
+                this.moveToLogin()
+            }
+         }
     }
 
     downloadMultiTextAccountData = async () => {
@@ -112,7 +125,11 @@ class BackgroundSync extends React.Component{
                 syncedDate: format(new Date(), 'yyyy-MM-dd'),
                 data: res.data
             }));
-        } catch(e) { }
+        } catch(e) { 
+            if (e.response.status === 401){
+                this.moveToLogin()
+            }
+        }
     }
 
     isDataDownloadedForToday = async (key) => {
@@ -137,6 +154,10 @@ class BackgroundSync extends React.Component{
                 let serveySyncRes = await axios.post(captureSurveyApi,unSyncedQuestions)
                 await this.removeUnSyncedStatusSuccessDataInStorage('unSyncedQuestions', serveySyncRes.data.status === "Success");
             } catch (e) {
+                if (e.response.status === 401)
+                {
+                    this.moveToLogin()
+                }
                 await this.removeUnSyncedStatusSuccessDataInStorage('unSyncedQuestions', false);
             }
         }
@@ -242,7 +263,11 @@ class BackgroundSync extends React.Component{
                         return !addedRetailers[nr.temp_account_id]
                     })))
                 }
-            } catch(e) { }
+            } catch(e) { 
+                if (e.response.status === 401){
+                    this.moveToLogin()
+                }
+            }
         }
     }
 
@@ -257,6 +282,9 @@ class BackgroundSync extends React.Component{
                 let imageResponse = await axios.post(captureImageApi, data)
                 await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.imageName, imageResponse.data.status === "Success");
             } catch(e) {
+                if (e.response.status === 401){
+                    this.moveToLogin()
+                }
                 await this.updateOrRemoveSpecificEntryOfUnsyncedDataOfCurrentDayFromStorage('unSyncedImages', 'imageName', data.imageName, false);
             }
         }

@@ -1,7 +1,10 @@
 /* eslint-disable */
 import axios from 'axios';
 import Config from 'react-native-config';
+import React, {useContext} from 'react';
 import { storeToken, getToken } from './index';
+import { AuthContext } from 'src/context/authContext';
+
 
 const instance = axios.create({
   baseURL: Config.BASE_URL,
@@ -41,9 +44,9 @@ instance.interceptors.response.use(
   async function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-
+    console.log("Getting Error",error);
     if (error.response.status === 401) {
-      await storeToken(null);
+      return Promise.reject(error);
     }
 
     return Promise.reject(error);
