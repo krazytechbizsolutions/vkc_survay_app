@@ -10,10 +10,12 @@ import AddUnplannedVisits from '@screens/AddUnplannedVisits';
 import UnplannedVisits from '@screens/UnplannedVisits';
 import Login from '@screens/Login';
 import { AuthContext } from 'src/context/authContext';
+import {LocationContext} from 'src/context/locationContext';
 import {ScreenContext} from 'src/context/screenContext';
 import VKCLogo from '../assets/Logo/VKC_Logo.jpg';
 import BackgroundSync from '@components/BackgroundSync'
 import { storeToken} from '../utils/index';
+
 
 const MainStack = createStackNavigator();
 
@@ -23,6 +25,8 @@ const MainStackScreen = () => {
   const [syncData,setSyncData] = useState(false);
   const [isDeepLink,setIsDeepLink] = useState(false);
   const [hasDeepLinkDone,setHasDeepLinkDone] = useState(false);
+  const [checkInCoord,setCheckInCoord] = useState("ok")
+  const [checkOutCoord,setCheckOutCoord] = useState("")
   
 
   const ResetSyncData = () =>{
@@ -34,8 +38,14 @@ const MainStackScreen = () => {
     setToken(null);
   }
 
+
+
+  // useEffect(() => {
+  //   alert(checkInCoord)
+  // },[checkInCoord])
+
   return (
-    <ScreenContext.Provider value={{syncData,setSyncData,isDeepLink,setIsDeepLink,hasDeepLinkDone,setHasDeepLinkDone}}>
+    <ScreenContext.Provider value={{syncData,setSyncData,isDeepLink,setIsDeepLink,hasDeepLinkDone,setHasDeepLinkDone,checkInCoord,setCheckInCoord,checkOutCoord,setCheckOutCoord}}>
       <View style={{width:'100%',flex:1}}>
         {syncData ? <BackgroundSync Reset={ResetSyncData} ToLogin={moveToLogin} /> : null}
         {isDeepLink ?

@@ -28,6 +28,7 @@ import SubmitModal from '@components/SubmitModal';
 import RNFS from 'react-native-fs';
 import SpecialEfforts from '@components/CustomSpecialEfforts'
 import { ScreenContext } from '../../context/screenContext';
+import {getLocation} from '../../utils/index'
 
 console.disableYellowBox = true;
 const captureSurveyApi = '/services/apexrest/SRVY_SvyCapture_API';
@@ -36,7 +37,7 @@ const SurveyQue = ({ navigation, route }) => {
   const { questions, firstQuestion, accId, accName, surveyId, UserId, Unplanned, temp_account_id, survey,surveyObj } = route.params;
   const [ question, ...restQuestions ] = questions;
   const [ ShowSubmitModal, setSubmitModal]=useState(false);
-  const { syncData, setSyncData } = useContext(ScreenContext);
+  const { syncData, setSyncData,checkInCoord } = useContext(ScreenContext);
   const formRef = useRef();
   // console.log("41",surveyObj)
   let today = format(new Date(), 'yyyy-MM-dd');
@@ -262,6 +263,10 @@ const SurveyQue = ({ navigation, route }) => {
           temp_account_id: temp_account_id,
           surveyId: surveyId,
           surveyDate: today,
+          checkin_lat: parseFloat(checkInCoord.split(',')[0]),
+          checkin_long: parseFloat(checkInCoord.split(',')[1]),
+          checkout_lat: 12.67534628,
+          checkout_long: 77.15556722,
           isUnplanned: Unplanned,
           Questions: []
         }
@@ -292,6 +297,9 @@ const SurveyQue = ({ navigation, route }) => {
           };
         });
 
+        let coords = await getLocation();
+        savedSurveyData.checkout_lat = coords.latitude
+        savedSurveyData.checkout_long = coords.longitude
         savedSurveyData.isCompleted = true;
       }
 

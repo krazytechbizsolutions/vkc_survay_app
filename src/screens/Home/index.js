@@ -17,6 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import { ScreenContext } from 'src/context/screenContext';
 
+
 const Tab = createMaterialTopTabNavigator();
 const date = new Date().getDate();
 const month = new Date().getMonth() + 1;
@@ -25,6 +26,7 @@ const year = new Date().getFullYear();
 const Splash = ({ navigation }) => {
   const { setToken } = useContext(AuthContext);
   const { syncData, setSyncData } = useContext(ScreenContext);
+ 
 
   useEffect(()=>{
      NetInfo.addEventListener(status =>{

@@ -18,6 +18,7 @@ import { format } from 'date-fns';
 import {plannedVisists,schema} from '../../components/BackgroundSync/tempdata.js'
 import TextEle from '@components/TextEle';
 import { ScreenContext } from 'src/context/screenContext';
+import {getLocation} from '../../utils/index'
 
 const PlannedVisits = ({ navigation }) => {
   let today = format(new Date(), 'yyyy-MM-dd');
@@ -29,7 +30,7 @@ const PlannedVisits = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState(null);
 
-  const { syncData, setSyncData,isDeepLink,setIsDeepLink,hasDeepLinkDone,setHasDeepLinkDone} = useContext(ScreenContext);
+  const { syncData, setSyncData,isDeepLink,setIsDeepLink,hasDeepLinkDone,setHasDeepLinkDone,setCheckInCoord} = useContext(ScreenContext);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -253,6 +254,9 @@ const PlannedVisits = ({ navigation }) => {
                         text={srvDetails.surveyName}
                         disable={offlineSrvDetails?.isCompleted}
                         onPress={async () => {
+                          let coords = await getLocation();
+                          setCheckInCoord(`${coords.latitude},${coords.longitude}`)   
+
                           navigation.navigate('SurveyQue', {
                             questions: srvDetails.Questions,
                             firstQuestion: true,

@@ -263,6 +263,10 @@ class BackgroundSync extends React.Component{
                         return !addedRetailers[nr.temp_account_id]
                     })))
                 }
+                else{
+                    console.log(submitRetailersResponse.data.status)
+                }
+
             } catch(e) { 
                 if (e.response.status === 401){
                     this.moveToLogin()

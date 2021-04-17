@@ -9,7 +9,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Geolocation from 'react-native-geolocation-service';
 import { format } from 'date-fns';
 import { fields } from './fields';
-import { getLocation } from 'src/utils';
+// import { getLocation } from 'src/utils';
+import {getLocation} from '../../utils/index'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getToken} from '../../utils/index'
 import { v4 as uuidv4 } from 'uuid';
@@ -44,55 +45,14 @@ const AddRetailer = ({navigation}) => {
       fld.errorMessage = null;
       return fld;
     }))
-    getLocation();
+    getCordinates();
   },[])
 
-  const getLocation =  async() => {
-    const chckLocationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-    if (chckLocationPermission) {
-          Geolocation.getCurrentPosition(
-            (position) => {
-              setLatitude(position.coords.latitude);
-              setLongitude(position.coords.longitude);
-            },
-            (error) => {
-              // See error code charts below.
-              askLocation();
-              // console.log(error.code, error.message);
-            },
-            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-        );
-    } 
+  const getCordinates =  async() => {
+    let coord = await getLocation();
+    setLatitude(coord.latitude);
+    setLongitude(coord.longitude);
 };
-
-const askLocation = async () => {
-  try {
-        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            {
-                'title': 'Walkaroo Connect Needs Access To Your Location',
-                'message': 'We required Location permission in order to get device location ' +
-                    'Please grant us.'
-            }
-        )
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-              Geolocation.getCurrentPosition(
-                (position) => {
-                  setLatitude(position.coords.latitude);
-                  setLongitude(position.coords.longitude);
-                },
-                (error) => {
-                  // See error code charts below.
-                  console.log(error.code, error.message);
-                },
-                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-            );  
-        } else {
-            alert("You don't have access for the location");
-        }
-    } catch (err) {
-        alert(err)
-    }
-}
 
 
   const setFieldValue = (e,index) =>{

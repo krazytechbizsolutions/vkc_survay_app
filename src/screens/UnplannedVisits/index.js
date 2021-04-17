@@ -8,6 +8,7 @@ import TextEle from '@components/TextEle';
 import {plannedVisists,schema} from '../../components/BackgroundSync/tempdata.js'
 import { ScreenContext } from 'src/context/screenContext';
 import { getToken } from '@utils/index';
+import {getLocation} from '../../utils/index'
 
 const UnplannedVisits =({navigation})=>{
     let today = format(new Date(), 'yyyy-MM-dd');
@@ -20,7 +21,7 @@ const UnplannedVisits =({navigation})=>{
     const [isLoading, setIsLoading] = useState(false);
     const [userId, setUserId] = useState(null);
 
-    const { syncData, setSyncData } = useContext(ScreenContext);
+    const { syncData,setSyncData,setCheckInCoord,setCheckOutCoord } = useContext(ScreenContext);
 
     useFocusEffect(
       React.useCallback(() => {
@@ -175,6 +176,8 @@ const UnplannedVisits =({navigation})=>{
                                             text={x.surveyName}
                                             disable={offlineSrvDetails?.isCompleted}
                                             onPress={async () => {
+                                            let coords = await getLocation();
+                                            setCheckInCoord(`${coords.latitude},${coords.longitude}`)      
                                             navigation.navigate('SurveyQue', {
                                                 questions: x.Questions,
                                                 firstQuestion: true,
@@ -186,7 +189,7 @@ const UnplannedVisits =({navigation})=>{
                                                 Unplanned : true,
                                                 temp_account_id : temp_account_id,
                                                 survey: offlineSrvDetails
-                                            });
+                                              });
                                             }}
                                         />
                                     : null
