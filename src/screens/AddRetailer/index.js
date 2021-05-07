@@ -56,7 +56,14 @@ const AddRetailer = ({navigation}) => {
 
 
   const setFieldValue = (e,index) =>{
-    adrFields[index].value = e;
+    if(index === 8){
+      if(e.length <= 10){
+        adrFields[index].value = e;
+      }   
+    }
+    else{
+      adrFields[index].value = e;
+    }
     setFields([...adrFields])
   } 
 
@@ -111,8 +118,8 @@ const AddRetailer = ({navigation}) => {
     await saveObjectIntoArrayOfStorage('unSyncedImages', retailerImagePayload);
     
     Alert.alert(
-      'Add Retailer',
-      'Retailer saved.',
+      'Add Customer',
+      'Customer Successfully saved.',
       [{ text: 'OK', onPress: () => {
         if(!syncData){
           setSyncData(true)

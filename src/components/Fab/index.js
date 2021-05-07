@@ -7,7 +7,7 @@ import GroupAdd from '../../assets/icons/GroupAdd.svg';
 const actionItem = [
   {
     path: 'AddRetailer',
-    title: 'Create Retailer',
+    title: 'Add Customer',
     icon: <Storefront width={30} height={30} fill="black" />,
     type: 'Create',
   },

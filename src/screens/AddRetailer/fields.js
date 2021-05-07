@@ -138,7 +138,7 @@ export const fields = [
     errorMessage:null,
     isImportant:true,
     validate:function() {
-      this.errorMessage = this.value.length > 0 ? null : 'This Field cannot be empty';
+      this.errorMessage = this.value.length === 10 ? null : 'Please Enter A Valid Phone Number';
     }
   },
   {

@@ -74,7 +74,7 @@ const MainStackScreen = () => {
               <MainStack.Screen
                 name="AddRetailer"
                 component={AddRetailer}
-                options={{ headerShown: true, title: 'Add Retailer', headerTitleAlign: 'center' }}
+                options={{ headerShown: true, title: 'Add Customer', headerTitleAlign: 'center' }}
               />
               <MainStack.Screen
                 name="AddUnplannedVisits"
