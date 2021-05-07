@@ -56,14 +56,7 @@ const AddRetailer = ({navigation}) => {
 
 
   const setFieldValue = (e,index) =>{
-    if(index === 8){
-      if(e.length <= 10){
-        adrFields[index].value = e;
-      }   
-    }
-    else{
-      adrFields[index].value = e;
-    }
+    adrFields[index].value = e;
     setFields([...adrFields])
   } 
 
@@ -119,7 +112,7 @@ const AddRetailer = ({navigation}) => {
     
     Alert.alert(
       'Add Customer',
-      'Customer Successfully saved.',
+      'Customer saved.',
       [{ text: 'OK', onPress: () => {
         if(!syncData){
           setSyncData(true)
@@ -149,7 +142,7 @@ const AddRetailer = ({navigation}) => {
         {
         result.type === 1 ? 
           <View style={{width:'100%',height:50,borderWidth:1,marginTop:5,borderRadius:5,borderColor:"#90a4ae",paddingLeft:5}}>
-              <TextInput value={result.value} keyboardType = {result.isNum ? "numeric":""} onChangeText={(e)=>setFieldValue(e,index)} placeholder="Please Input A Value"/>
+              <TextInput value={result.value} maxLength={index === 8 ? 10 : 100} keyboardType = {result.isNum ? "numeric":""} onChangeText={(e)=>setFieldValue(e,index)} placeholder="Please Input A Value"/>
           </View>
         :
         result.type === 4 ?
